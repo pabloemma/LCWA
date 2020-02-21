@@ -213,10 +213,7 @@ class test_speed1():
             sys.exit(0)
         args = parser.parse_args()
         #check if there are any arguments
-        print "args",args
-        for k in range(len(sys.argv)):
-            print ' cli commands',sys.argv[k]
-       
+        
         
         self.loop_time = 60 # default 1 minutes before next speedtest
         
@@ -365,7 +362,6 @@ class test_speed1():
         """
         
         #print self.command
-        print " in run",self.command
         process = sp.Popen(self.command,
                          #stdout=outfile,
                          stdout=sp.PIPE,
