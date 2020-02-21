@@ -212,7 +212,9 @@ class test_speed1():
             sys.exit(0)
         args = parser.parse_args()
         #check if there are any arguments
-        
+        for k in range(len(sys.argv)):
+            print ' cli commands',sys.argv[k]
+       
         
         self.loop_time = 60 # default 1 minutes before next speedtest
         
