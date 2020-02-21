@@ -365,6 +365,7 @@ class test_speed1():
         """
         
         #print self.command
+        print " in run",self.command
         process = sp.Popen(self.command,
                          #stdout=outfile,
                          stdout=sp.PIPE,
