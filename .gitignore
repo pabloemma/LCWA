@@ -1,0 +1,4 @@
+#all pyc files
+*.pyc
+# the special file
+LCWA_d.txt
