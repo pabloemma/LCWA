@@ -167,7 +167,6 @@ class test_speed1():
         this method deals with arguments parsed
         """
         #instantiate the parser
-        print "in parser"
         parser = argp.ArgumentParser(
             prog='test_speed1',
             formatter_class=argp.RawDescriptionHelpFormatter,
