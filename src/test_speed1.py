@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 ### BEGIN INIT INFO for raspi startup
 # Provides:          test_speed1.py
 # Required-Start:    $remote_fs $syslog
