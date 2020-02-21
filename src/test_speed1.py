@@ -213,6 +213,7 @@ class test_speed1():
             sys.exit(0)
         args = parser.parse_args()
         #check if there are any arguments
+        print args
         for k in range(len(sys.argv)):
             print ' cli commands',sys.argv[k]
        
