@@ -20,7 +20,7 @@ Created on Feb 8, 2020
 This is based on the CLI program from speedtest
 It basically provides a python wrapper around the speedtest, so that we can fill
 the results in a file, which can then be plotted
-The original version of test_speed was pabsed on pyspeedtest and gave different results from
+The original version of test_speed was basesed on pyspeedtest and gave different results from
 the GUI
 
 
