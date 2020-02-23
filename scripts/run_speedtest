@@ -1,4 +1,4 @@
 #! /bin/sh
-
+export PYTHONPATH=/home/pi/.local/lib/python2.7/site-packages
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games
 python /home/pi/git/speedtest/src/test_speed1.py -t 10 -d /home/pi/git/speedtest/src/LCWA_d.txt -s 18002 &
