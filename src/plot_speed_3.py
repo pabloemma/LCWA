@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 '''
-Created on Feb 25, 2020
-trying to get python 3 to run
+Created on Jan 23, 2020
 
 @author: klein
 '''
@@ -17,6 +16,15 @@ import time
 import sys
 import os.path
 import dropbox
+
+
+
+def bytespdate2num(fmt, encoding='utf-8'):
+    def bytesconverter(b):
+        s = b.decode(encoding)
+        return (mdates.datestr2num(s))
+    return bytesconverter
+
 
 drop = False
 #for k in range(len(sys.argv)):
@@ -51,8 +59,8 @@ if(drop):
     myaccount = dbx.users_get_current_account()
     print('***************************dropbox************************************')
     print('*                                                                    *')
-    print ('first = ',myaccount.name.given_name,'last = ',myaccount.name.surname ) 
-    print ('email account = ',myaccount.email)
+    print( 'first = ',myaccount.name.given_name,'last = ',myaccount.name.surname  )
+    print( 'email account = ',myaccount.email)
     print('*                                                                    *')
     print('***************************dropbox************************************')
 
@@ -90,8 +98,9 @@ temp_file.close()
 x1,y1,y2 = np.loadtxt('temp.txt', delimiter=',',
                    unpack=True,usecols=(1,7,8),
 #        converters={ 1: md.strpdate2num('%d/%m/%Y-%H:%M:%S')})
-        converters={ 1: md.strpdate2num('%H:%M:%S')},skiprows=1)
-#        converters={ 0: md.datestr2num('%d/%m/%Y')})
+        #converters={ 1: md.strpdate2num('%H:%M:%S')},skiprows=1)
+        converters={0:bytespdate2num('%H:%M:%S')},skiprows=1)
+        #converters={ 0: md.strpdate2num('%d/%m/%Y')})
 
 
 np.set_printoptions(precision=2)
@@ -124,7 +133,6 @@ file2 = file1.replace('csv','pdf')
 print (file2)
 fig.savefig(file2, bbox_inches='tight')
 plt.show()
-
 
 
 if __name__ == '__main__':
