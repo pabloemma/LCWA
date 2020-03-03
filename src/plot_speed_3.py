@@ -10,6 +10,7 @@ Created on Jan 23, 2020
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as md
+import datetime
 import numpy as np
 import csv
 import time
@@ -19,11 +20,10 @@ import dropbox
 
 
 
-def bytespdate2num(fmt, encoding='utf-8'):
-    def bytesconverter(b):
-        s = b.decode(encoding)
-        return (mdates.datestr2num(s))
-    return bytesconverter
+def MyTime(b):
+    s=b.decode('ascii')
+     a =md.date2num(datetime.datetime.strptime(s,'%H:%M:%S'))    print(a)
+    return a
 
 
 drop = False
@@ -99,8 +99,8 @@ x1,y1,y2 = np.loadtxt('temp.txt', delimiter=',',
                    unpack=True,usecols=(1,7,8),
 #        converters={ 1: md.strpdate2num('%d/%m/%Y-%H:%M:%S')})
         #converters={ 1: md.strpdate2num('%H:%M:%S')},skiprows=1)
-        converters={0:bytespdate2num('%H:%M:%S')},skiprows=1)
-        #converters={ 0: md.strpdate2num('%d/%m/%Y')})
+        #converters={0:bytespdate2num('%H:%M:%S')},skiprows=1)
+        converters={ 1: MyTime},skiprows =1)
 
 
 np.set_printoptions(precision=2)
