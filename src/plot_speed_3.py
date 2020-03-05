@@ -18,11 +18,19 @@ import sys
 import os.path
 import dropbox
 
-
+def MyPythonVersion():
+    if (sys.version_info[0] == 3):
+        print(' we have python 3')
+        vers = True
+    else:
+            
+        vers = False
+    return vers
+    
 
 def MyTime(b):
     s=b.decode('ascii')
-     a =md.date2num(datetime.datetime.strptime(s,'%H:%M:%S'))    print(a)
+    a =md.date2num(datetime.datetime.strptime(s,'%H:%M:%S'))    
     return a
 
 
@@ -93,14 +101,22 @@ for line in open(file1, 'r'):
 temp_file.close()
    
 
-
+if(MyPythonVersion):
 #filename = "/Users/klein/speedfiles/2020-02-09speedfile.csv"        
-x1,y1,y2 = np.loadtxt('temp.txt', delimiter=',',
+    x1,y1,y2 = np.loadtxt('temp.txt', delimiter=',',
                    unpack=True,usecols=(1,7,8),
 #        converters={ 1: md.strpdate2num('%d/%m/%Y-%H:%M:%S')})
         #converters={ 1: md.strpdate2num('%H:%M:%S')},skiprows=1)
         #converters={0:bytespdate2num('%H:%M:%S')},skiprows=1)
         converters={ 1: MyTime},skiprows =1)
+#filename = "/Users/klein/speedfiles/2020-02-09speedfile.csv"  
+else:      
+    x1,y1,y2 = np.loadtxt('temp.txt', delimiter=',',
+                   unpack=True,usecols=(1,7,8),
+#        converters={ 1: md.strpdate2num('%d/%m/%Y-%H:%M:%S')})
+        converters={ 1: md.strpdate2num('%H:%M:%S')},skiprows=1)
+        #converters={0:bytespdate2num('%H:%M:%S')},skiprows=1)
+        #converters={ 1: MyTime},skiprows =1)
 
 
 np.set_printoptions(precision=2)
