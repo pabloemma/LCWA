@@ -162,7 +162,7 @@ class test_speed1():
         print('Version 4.00.0', 'runs on python3 now')
         print('\n\n\n')
         
-        
+         
     def GetArguments(self):
         """
         this method deals with arguments parsed
