@@ -22,6 +22,7 @@ class PacketSniff():
         
     #establish a socket
         self.so = s =socket.socket( socket.AF_INET , socket.SOCK_RAW ,  socket.IPPROTO_TCP) 
+        s.settimeout(0.0)
     # receive a packet
         while True:
             print s.recvfrom(65565)
