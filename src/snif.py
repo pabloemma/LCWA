@@ -35,8 +35,8 @@ while True:
 	s_addr = socket.inet_ntoa(iph[8])
 	d_addr = socket.inet_ntoa(iph[9])
 	
-	print 'Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr)
-	
+	#print 'Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr)
+	print (' destination address:  ' ,str(d_addr),'   source address:   ',str(s_addr))
 	tcp_header = packet[iph_length:iph_length+20]
 	
 	#now unpack them :)
