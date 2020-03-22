@@ -16,8 +16,9 @@ def sniffing(host):
     if os.name == 'nt':
         sock_protocol = IPPROTO_IP
     else:
-        sock_protocol = IPPROTO_ICMP
-    sniffer = socket(AF_INET, SOCK_RAW, sock_protocol)
+        #sock_protocol = IPPROTO_ICMP
+        sock_protocol = 0
+    sniffer = socket(AF_INET, SOCK_STREAM, sock_protocol)
     sniffer.bind((host, 1))
     sniffer.setsockopt(IPPROTO_IP, IP_HDRINCL, 1)
     #sniffer.settimeout(0.0)
