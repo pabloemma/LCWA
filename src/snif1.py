@@ -20,7 +20,7 @@ def sniffing(host):
         sock_protocol = 0
     sniffer = socket(AF_INET, SOCK_STREAM, sock_protocol)
     sniffer.bind((host, 1))
-    sniffer.setsockopt(IPPROTO_IP, IP_HDRINCL, 1)
+    #sniffer.setsockopt(IPPROTO_IP, IP_HDRINCL, 1)
     #sniffer.settimeout(0.0)
     sniffer.setblocking(0)
     if os.name == 'nt':
