@@ -13,7 +13,8 @@ except socket.error as msg:
 
 # receive a packet
 while True:
-	packet = s.recvfrom(65565)
+	conn, addr = s.accept()
+	packet = conn.recvfrom(65565)
 	
 	#packet string from tuple
 	packet = packet[0]
