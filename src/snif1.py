@@ -4,9 +4,12 @@ import os
 def recvData(sock):
     data = ''
     try:
+        print('1st')
         data = sock.recvfrom(65565)
-    except timeout:
-        data = ''
+        print('second')
+    except OSError:
+        data = ' '
+        print ('socket error')
     return data[0]
 
 def sniffing(host):
@@ -17,13 +20,17 @@ def sniffing(host):
     sniffer = socket(AF_INET, SOCK_RAW, sock_protocol)
     sniffer.bind((host, 1))
     sniffer.setsockopt(IPPROTO_IP, IP_HDRINCL, 1)
+    #sniffer.settimeout(0.0)
+    sniffer.setblocking(0)
     if os.name == 'nt':
         sniffer.ioctl(SIO_RCVALL, RCVALL_ON)
 
     count = 1
     try:
         while True:
+            print('in the loop')
             data = recvData(sniffer)
+            print('after receive')
             print(data)
             print(str(count) + ' : ' + data[:20])
             count += 1
