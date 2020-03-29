@@ -51,7 +51,7 @@ import platform # need to determine the OS
 import subprocess as sp
 import dropbox
 import socket # needed for hostname id
-from __builtin__ import True
+#from __builtin__ import True
 
 
 class test_speed1():
@@ -77,12 +77,12 @@ class test_speed1():
             try:
                 sp.call('/usr/local/bin/espeak " LCWA speedtest starting on Raspberry Pi"',shell=True)
             except:
-                print 'nospeak'
+                print( 'nospeak')
         elif platform.system() == 'Linux':
             try:
                 sp.call('/usr/bin/espeak " LCWA speedtest starting on Raspberry Pi"',shell=True)
             except:
-                print 'nospeak'
+                print ('nospeak')
     
     def ConnectDropBox(self):
         """
@@ -106,8 +106,8 @@ class test_speed1():
 
         self.myaccount = self.dbx.users_get_current_account()
         print('***************************dropbox*******************\n\n\n')
-        print self.myaccount.name.surname , self.myaccount.name.given_name
-        print self.myaccount.email
+        print( self.myaccount.name.surname , self.myaccount.name.given_name)
+        print (self.myaccount.email)
         print('\n\n ***************************dropbox*******************\n')
         
         
@@ -209,7 +209,7 @@ class test_speed1():
             temp1=["/usr/bin/speedtest","--progress=no","-f","csv"] # we want csv output by default         
         # do our arguments
         else:
-            print' Sorry we don\'t do Windows yet'
+            print(' Sorry we don\'t do Windows yet')
             sys.exit(0)
         args = parser.parse_args()
         #check if there are any arguments
@@ -352,7 +352,7 @@ class test_speed1():
         
         out,err = process.communicate()
         
-        print out
+        print (out)
         sys.exit(0)
             
                     
@@ -395,7 +395,7 @@ class test_speed1():
         if(self.Debug):
             self.myline = myline
             self.DebugProgram(3)
-        print myline
+        print (myline)
         self.output_file.write(myline)
         
         
@@ -463,12 +463,12 @@ class test_speed1():
         homedir = os.environ['HOME']
         self.docfile = filename #filename for dropbox
         filename = homedir + '/speedfiles/'+filename
-        print filename
+        print (filename)
         self.lcwa_filename = filename
         if os.path.isfile(filename):
-            self.output_file = open(filename,'a',0)
+            self.output_file = open(filename,'a')
         else :
-            self.output_file = open(filename,'w',0)
+            self.output_file = open(filename,'w')
             self.WriteOutputHeader() # first time we write a header
             
             
@@ -486,19 +486,19 @@ class test_speed1():
         temp = 'test_speed1_debug> '
         if(err == 1) :
             for k in range(len(self.ARGS)):
-                print temp,' cli commands',self.ARGS[k]
+                print( temp,' cli commands',self.ARGS[k])
         elif(err ==2):
-            print temp, 'command for program ', self.command 
+            print (temp, 'command for program ', self.command )
         elif(err ==3): 
-            print temp, 'Output :'
-            print self.myline
+            print (temp, 'Output :')
+            print (self.myline)
         elif(err == 4):
-            print temp,'Data block',self.inc
+            print( temp,'Data block',self.inc)
         elif(err == 5):
-            print temp,' output',self.output  #for debugging
+            print (temp,' output',self.output ) #for debugging
         elif(err==6):
-            print temp ,' my hostname ',self.hostname
-            print temp , 'my IP is '  , self.my_ip 
+            print (temp ,' my hostname ',self.hostname)
+            print (temp , 'my IP is '  , self.my_ip) 
             
     def GetIPinfo(self):
         """
