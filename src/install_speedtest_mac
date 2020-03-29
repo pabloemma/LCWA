@@ -15,9 +15,17 @@ brew install speedtest --force
 echo "now running speedtest, please accept license"
 speedtest
 
+echo "***********************************************\n"
 
-pip install update
-pip install dropbox
+echo "installing python3 and pip"
+
+brew install python3
+
+
+echo "***********************************************\n"
+
+pip3 install update
+pip3 install dropbox
 mkdir ~/speedfiles
 mkdir git
 cd git
@@ -28,7 +36,6 @@ git clone https://github.com/pabloemma/LCWA.git speedtest
 
 
 # now the matplotlib
-pip install matplotlib
 pip3 install matplotlib
 
 
