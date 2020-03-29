@@ -498,14 +498,14 @@ class test_speed1():
             print (temp,' output',self.output ) #for debugging
         elif(err==6):
             print (temp ,' my hostname ',self.hostname)
-            print (temp , 'my IP is '  , self.my_ip) 
+            #print (temp , 'my IP is '  , self.my_ip) 
             
     def GetIPinfo(self):
         """
         gets the host info
         """
         a = socket.gethostname()
-        self.my_ip = socket.gethostbyname(a)
+        #self.my_ip = socket.gethostbyname(a)
         
         # now chek the hostname if it is >4 characters strip rest
         # if it is shorter pad
