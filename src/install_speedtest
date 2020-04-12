@@ -10,7 +10,7 @@ sudo apt-get install speedtest
 pip install update
 pip install dropbox
 mkdir ~/speedfiles
-mkdir git
+mkdir ~/git
 cd git
 git clone https://github.com/pabloemma/LCWA.git speedtest
 sudo apt install espeak

@@ -6,14 +6,15 @@ from struct import *
 
 #create an INET, STREAMing socket
 try:
-	s = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
-except socket.error , msg:
-	print 'Socket could not be created. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+except socket.error as msg:
+	print ('Socket could not be created. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
 	sys.exit()
 
 # receive a packet
 while True:
-	packet = s.recvfrom(65565)
+	conn, addr = s.accept()
+	packet = conn.recvfrom(65565)
 	
 	#packet string from tuple
 	packet = packet[0]
@@ -35,7 +36,7 @@ while True:
 	s_addr = socket.inet_ntoa(iph[8])
 	d_addr = socket.inet_ntoa(iph[9])
 	
-	print 'Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr)
+	print( 'Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr))
 	#print (' destination address:  ' ,str(d_addr),'   source address:   ',str(s_addr))
 	tcp_header = packet[iph_length:iph_length+20]
 	

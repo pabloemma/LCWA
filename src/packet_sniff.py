@@ -13,6 +13,7 @@ The plan is to use it with the test_speed to debug LCWA speedissues
 '''
 
 import socket
+#import libpcap #needed for mac
 
 
 class PacketSniff():
@@ -20,12 +21,27 @@ class PacketSniff():
     
     def __init__(self):
         
+        
+        
+        
     #establish a socket
-        self.so = s =socket.socket( socket.AF_INET , socket.SOCK_RAW ,  socket.IPPROTO_TCP) 
+    
+        try:
+            self.so = s =socket.socket( socket.AF_INET , socket.SOCK_STREAM )
+        except socket.error as msg:
+            print ('Socket could not be created. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
+            sys.exit()
+
         s.settimeout(0.0)
+        print (s)
+        myHost = ''
+        myPort = 50007
+        self.so.bind((myHost,myPort))
     # receive a packet
         while True:
-            print s.recvfrom(65565)
+            self.so.listen(5)
+            print(socket.gethostname())
+            print( self.so.recvfrom(65565))
 
 if __name__ == '__main__':
     

@@ -11,6 +11,8 @@
 
 
 
+
+
 '''
 Created on Feb 8, 2020
 
@@ -72,17 +74,6 @@ class test_speed1():
         # check if we have espeak
         
 
-#    give an audio signal that program is starting
-        if platform.system() == 'Darwin':
-            try:
-                sp.call('/usr/local/bin/espeak " LCWA speedtest starting on Raspberry Pi"',shell=True)
-            except:
-                print 'nospeak'
-        elif platform.system() == 'Linux':
-            try:
-                sp.call('/usr/bin/espeak " LCWA speedtest starting on Raspberry Pi"',shell=True)
-            except:
-                print 'nospeak'
     
     def ConnectDropBox(self):
         """
