@@ -51,6 +51,7 @@ import platform # need to determine the OS
 import subprocess as sp
 import dropbox
 import socket # needed for hostname id
+import PlotClass as PC
 #from __builtin__ import True
 
 
@@ -71,18 +72,12 @@ class test_speed1():
         self.Debug = False
         # check if we have espeak
         
+        
+        
 
-#    give an audio signal that program is starting
-        if platform.system() == 'Darwin':
-            try:
-                sp.call('/usr/local/bin/espeak " LCWA speedtest starting on Raspberry Pi"',shell=True)
-            except:
-                print( 'nospeak')
-        elif platform.system() == 'Linux':
-            try:
-                sp.call('/usr/bin/espeak " LCWA speedtest starting on Raspberry Pi"',shell=True)
-            except:
-                print ('nospeak')
+                
+                #Instantiate the PlotClass
+                
     
     def ConnectDropBox(self):
         """
@@ -142,7 +137,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '4.00.0'
+        self.vs = '5.00.0'
 
         
         print(' History')
@@ -160,6 +155,7 @@ class test_speed1():
         print('Version 3.03.0', ' added a Debug switch')
         print('Version 3.04.0', 'get host name and add it to the filename')
         print('Version 4.00.0', 'runs on python3 now')
+        print('Version 5.00.0', 'runs on python3 now')
         print('\n\n\n')
         
          
@@ -462,6 +458,8 @@ class test_speed1():
         #otherwise we will create it
         homedir = os.environ['HOME']
         self.docfile = filename #filename for dropbox
+        self.input_path = homedir + '/speedfiles/'
+        self.input_filename
         filename = homedir + '/speedfiles/'+filename
         print (filename)
         self.lcwa_filename = filename
@@ -523,6 +521,29 @@ class test_speed1():
             self.DebugProgram(6)
         
         return
+    
+    def SoundAccoustic(self):
+        #    give an audio signal that program is starting
+        if platform.system() == 'Darwin':
+            try:
+                sp.call('/usr/local/bin/espeak " LCWA speedtest starting on Raspberry Pi"',shell=True)
+            except:
+                print( 'nospeak')
+        elif platform.system() == 'Linux':
+            try:
+                sp.call('/usr/bin/espeak " LCWA speedtest starting on Raspberry Pi"',shell=True)
+            except:
+                print ('nospeak')
+
+        
+    def DoPlots(self):
+        """ this creates the plot and ships it to dropbox"""
+        a =PC(self.input_path,self.input_file,self.cryptofile,False)
+        a.ReadTestData()
+        a.ConnectDropbox()
+        a.PushFileDropbox()
+        return
+
         
 if __name__ == '__main__':
     
