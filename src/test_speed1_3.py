@@ -301,6 +301,8 @@ class test_speed1():
                     f =open(self.lcwa_filename,"rb")
                     self.dbx.files_upload(f.read(),'/LCWA/'+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
                     print('wrote dropbox file')
+                    print (' now saving plotfile')
+                    self.DoPlots()
                     counter = 0 
 
             time.sleep(self.loop_time)
