@@ -25,7 +25,7 @@ class MyPlot(object):
     '''
 
 
-    def __init__(self, path , filename , token):
+    def __init__(self, path , filename , token , PlotFlag):
         '''
         Constructor
         file: is the speedtest filename
@@ -48,8 +48,9 @@ class MyPlot(object):
         
         self.dropbox_name = filename.replace('csv','pdf')
          
-        self.path = path    
-        
+        self.path = path
+        self.PlotFlag = PlotFlag    #Controls if there is a plot
+         
         
 
     
@@ -144,7 +145,8 @@ class MyPlot(object):
 
         print (self.output)
         fig.savefig(self.output, bbox_inches='tight')
-        plt.show()
+        if(PlotFlag):
+            plt.show()  #Uncomment for seeing the plot
 
 
 
@@ -211,7 +213,8 @@ if __name__ == '__main__':
     path = '/Users/klein/speedfiles'
     file = 'Pand_2020-03-02speedfile.csv'
     token ='/Users/klein/git/speedtest/LCWA/src/LCWA_d.txt'
-    MP = MyPlot(path,file,token)
+    PlotFlag = False
+    MP = MyPlot(path,file,token,PlotFlag)
     MP.ReadTestData()
     MP.ConnectDropbox()
     MP.PushFileDropbox()
