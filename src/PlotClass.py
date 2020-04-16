@@ -15,7 +15,6 @@ import csv
 import time
 import sys
 import os.path
-from builtins import True
 #import dropbox
 
 
@@ -26,7 +25,7 @@ class MyClass(object):
     '''
 
 
-    def __init__(self, file , token):
+    def __init__(self, path , filename , token):
         '''
         Constructor
         file: is the speedtest filename
@@ -39,6 +38,8 @@ class MyClass(object):
         self.MyPythonVersion()
         
         #now check if file is available, if not we exit
+        file = path+'/'+filename
+        
         if(self.IsFile(file)):
             self.InputFile = file
         if(self.IsFile(token)):
@@ -60,6 +61,82 @@ class MyClass(object):
             print(' you should switch to python 2')
             vers = False
         return vers
+
+    
+    
+    
+    def ReadFile(self):
+        """ reads the csv file from the speedfile directory"""
+        
+        self.temp_file = open(self.path+'/temp.txt',"w")
+        counter = 0
+        for line in open(self.file, 'r'):
+        
+            a = line.split(',')
+            if(len(a)< 9):
+                print ('problem',a)
+                print ('ignore data point at line ',counter+1)
+            else:
+                self.temp_file.write(line)
+
+            counter++1
+            
+
+        self.temp_file.close()
+        
+    def ReadTestData(self):
+        """
+        Reads the results with Matplotlib
+        """
+        
+
+        if(self.MyPythonVersion):
+            x1,y1,y2 = np.loadtxt(self.temp_file, delimiter=',',
+                   unpack=True,usecols=(1,7,8),
+                   converters={ 1: self.MyTime},skiprows =1)
+        else:      
+            x1,y1,y2 = np.loadtxt(self.temp_file, delimiter=',',
+                   unpack=True,usecols=(1,7,8),
+                   converters={ 1: md.strpdate2num('%H:%M:%S')},skiprows=1)
+        self.x1 = x1
+        self.y1 = y1
+        self.y2 = y2
+        
+    
+    def PlotTestData(self,x1,y1,y2):
+        """
+        Plots the tests
+        """
+        np.set_printoptions(precision=2)
+        fig=plt.figure() 
+        ax=fig.add_subplot(1,1,1)
+        ax.text(.1,.36,'Average $\mu$ and Standard deviation $\sigma$',weight='bold',transform=ax.transAxes,fontsize=13)
+        ax.text(.1,.23,r'$\mu_{up}     = $'+str(np.around(np.mean(y2),2))+' '+'[Mb/s]'+r'   $\sigma_{up} =     $'+str(np.around(np.std(y2),2)),transform=ax.transAxes,fontsize=12)
+        ax.text(.1,.3,r'$\mu_{down} = $'+str(np.around(np.mean(y1),2))+' '+'[Mb/s]'+r'   $\sigma_{down} = $'+str(np.around(np.std(y1),2)),transform=ax.transAxes,fontsize=12)
+
+        plt.plot_date(x1,y1,'bs',label='\n blue DOWN ')
+        plt.plot_date(x1,y2,'g^',label=' green UP')
+        #plt.text(1.,1.,r' $\sigma = .1$')
+        plt.grid(True)
+
+        ax.xaxis.set_major_locator(md.MinuteLocator(interval=60))
+        ax.xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+        plt.xlabel('Time')
+        plt.ylabel('Speed in Mbs')
+
+        plt.title('Speedtest LCWA using '+self.file)
+    
+        plt.legend(facecolor='ivory',loc="lower right",shadow=True, fancybox=True)
+        plt.ylim(0.,24.) # set yaxis limit
+        plt.xticks(rotation='vertical')
+        plt.tight_layout()
+        file2 = self.file.replace('csv','pdf')
+
+        print (file2)
+        fig.savefig(file2, bbox_inches='tight')
+        plt.show()
+
+
 
     
     
