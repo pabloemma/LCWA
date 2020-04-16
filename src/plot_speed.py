@@ -25,7 +25,6 @@ drop = False
 if len(sys.argv)==2:
     # check if file exists
     try:
-        os.path.isfile((sys.argv[1]))
         filename = sys.argv[1]
         file1=filename
     except:
@@ -72,6 +71,7 @@ y2 =[]
 
 temp_file = open('temp.txt',"w")
 counter = 0
+print('filename',file1)
 for line in open(file1, 'r'):
 
     a = line.split(',')
