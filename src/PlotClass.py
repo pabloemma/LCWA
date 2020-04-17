@@ -147,7 +147,7 @@ class MyPlot(object):
 
         print (self.output)
         fig.savefig(self.output, bbox_inches='tight')
-        if(PlotFlag):
+        if(self.PlotFlag):
             plt.show()  #Uncomment for seeing the plot
 
 

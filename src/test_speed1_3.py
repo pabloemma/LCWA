@@ -542,6 +542,7 @@ class test_speed1():
     def DoPlots(self):
         """ this creates the plot and ships it to dropbox"""
         a =PC.MyPlot(self.input_path,self.input_filename,self.cryptofile,False)
+        print(self.input_path,'   ', self.input_filename)
         a.ReadTestData()
         a.ConnectDropbox()
         a.PushFileDropbox()
