@@ -205,10 +205,10 @@ class MyPlot(object):
     
     
     
-    def PushFileDropbox(self):  
+    def PushFileDropbox(self,dropdir):  
         f =open(self.output,"rb")
 
-        self.dbx.files_upload(f.read(),'/LCWA/'+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
+        self.dbx.files_upload(f.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
 
        
 if __name__ == '__main__':
@@ -219,4 +219,4 @@ if __name__ == '__main__':
     MP = MyPlot(path,file,token,PlotFlag)
     MP.ReadTestData()
     MP.ConnectDropbox()
-    MP.PushFileDropbox()
+    MP.PushFileDropbox('/LCWA/ROTW/')

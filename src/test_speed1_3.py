@@ -137,7 +137,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.00.0'
+        self.vs = '5.01.0'
 
         
         print(' History')
@@ -155,7 +155,8 @@ class test_speed1():
         print('Version 3.03.0', ' added a Debug switch')
         print('Version 3.04.0', 'get host name and add it to the filename')
         print('Version 4.00.0', 'runs on python3 now')
-        print('Version 5.00.0', 'automaticall does plots and ships them to dropbox')
+        print('Version 5.00.0', 'automatically does plots and ships them to dropbox')
+        print('Version 5.01.0', 'new dropbox configuration')
         print('\n\n\n')
         
          
@@ -299,7 +300,7 @@ class test_speed1():
                     
                     
                     f =open(self.lcwa_filename,"rb")
-                    self.dbx.files_upload(f.read(),'/LCWA/'+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
+                    self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
                     print('wrote dropbox file')
                     print (' now saving plotfile')
                     self.DoPlots()
@@ -460,7 +461,10 @@ class test_speed1():
         # if filename exists we open in append mode
         #otherwise we will create it
         homedir = os.environ['HOME']
+        
         self.docfile = filename #filename for dropbox
+        self.SetDropDir() # determines the dropboxfolder
+        
         self.input_path = homedir + '/speedfiles/'
         self.input_filename = filename
         filename = homedir + '/speedfiles/'+filename
@@ -539,13 +543,29 @@ class test_speed1():
                 print ('nospeak')
 
         
+    def SetDropDir(self):
+        """
+        determines the directory on the dropbox according to the file name
+        There are 10 LC directories LC01..LC10, for the currently envisioned number of raspis
+        there is a ROTW (RestOfTheWorld), which takes all the other runs
+        """
+        #take the first 4 characters of the file
+        a = self.docfile[0:5]
+        if(a[0:2]=='LC'):
+            self.dropdir = '/LCWA/'+a+'/'
+        else:
+            self.dropdir = '/LCWA/ROTW'+'/'
+        return 
+    
+    
+    
     def DoPlots(self):
         """ this creates the plot and ships it to dropbox"""
         a =PC.MyPlot(self.input_path,self.input_filename,self.cryptofile,False)
         print(self.input_path,'   ', self.input_filename)
         a.ReadTestData()
         a.ConnectDropbox()
-        a.PushFileDropbox()
+        a.PushFileDropbox(self.dropdir)
         return
 
         
