@@ -155,7 +155,7 @@ class test_speed1():
         print('Version 3.03.0', ' added a Debug switch')
         print('Version 3.04.0', 'get host name and add it to the filename')
         print('Version 4.00.0', 'runs on python3 now')
-        print('Version 5.00.0', 'runs on python3 now')
+        print('Version 5.00.0', 'automaticall does plots and ships them to dropbox')
         print('\n\n\n')
         
          
@@ -335,7 +335,8 @@ class test_speed1():
         if( a.tm_min > 30 - temp) and ( a.tm_min < 30 + temp):
             return True
         else:
-            return False
+            #return False
+            return True
         
         
         
@@ -461,7 +462,7 @@ class test_speed1():
         homedir = os.environ['HOME']
         self.docfile = filename #filename for dropbox
         self.input_path = homedir + '/speedfiles/'
-        self.input_filename
+        self.input_filename = filename
         filename = homedir + '/speedfiles/'+filename
         print (filename)
         self.lcwa_filename = filename
@@ -540,7 +541,7 @@ class test_speed1():
         
     def DoPlots(self):
         """ this creates the plot and ships it to dropbox"""
-        a =PC(self.input_path,self.input_file,self.cryptofile,False)
+        a =PC.MyPlot(self.input_path,self.input_filename,self.cryptofile,False)
         a.ReadTestData()
         a.ConnectDropbox()
         a.PushFileDropbox()

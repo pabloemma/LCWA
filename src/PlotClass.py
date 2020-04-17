@@ -74,8 +74,8 @@ class MyPlot(object):
         
         
         
-        
-        self.temp_file = open(self.path+'/temp.txt',"r+")
+        self.temp_name = self.path+'/temp.txt'
+        self.temp_file = open(self.temp_name,'r+')
         counter = 0
         for line in open(self.InputFile, 'r'):
             print(line)
@@ -85,12 +85,13 @@ class MyPlot(object):
                 print ('ignore data point at line ',counter+1)
             else:
                 self.temp_file.write(line)
+                #print(line)
 
             counter = counter+1
             print('counter',counter)
             
 
-        #self.temp_file.close()
+        self.temp_file.close()
         
     def ReadTestData(self):
         """
@@ -98,14 +99,18 @@ class MyPlot(object):
         """
         
         self.ReadFile()
-        self.temp_file.seek(0)
-
+#        self.temp_file.seek(0)
+        #f=open(self.temp_name,'rb')
+        #f=open('/Users/klein/speedfiles/nuke_2020-04-17speedfile.csv') 
+        
+            
+        
         if(self.MyPythonVersion):
-            x1,y1,y2 = np.loadtxt(self.temp_file, delimiter=',',
+            x1,y1,y2 = np.loadtxt(self.temp_name, delimiter=',',
                    unpack=True,usecols=(1,7,8),
-                   converters={ 1: self.MyTime},skiprows =1)
+                   converters={ 1: self.MyTime},skiprows = 1)
         else:      
-            x1,y1,y2 = np.loadtxt(self.temp_file, delimiter=',',
+            x1,y1,y2 = np.loadtxt(self.temp_name, delimiter=',',
                    unpack=True,usecols=(1,7,8),
                    converters={ 1: md.strpdate2num('%H:%M:%S')},skiprows=1)
         self.x1 = x1
@@ -211,7 +216,7 @@ class MyPlot(object):
        
 if __name__ == '__main__':
     path = '/Users/klein/speedfiles'
-    file = 'Pand_2020-03-02speedfile.csv'
+    file = 'nuke_2020-04-17speedfile.csv'
     token ='/Users/klein/git/speedtest/LCWA/src/LCWA_d.txt'
     PlotFlag = False
     MP = MyPlot(path,file,token,PlotFlag)
