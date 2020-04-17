@@ -75,20 +75,17 @@ class MyPlot(object):
         
         
         self.temp_name = self.path+'/temp.txt'
-        self.temp_file = open(self.temp_name,'r+')
+        self.temp_file = open(self.temp_name,'w')
         counter = 0
         for line in open(self.InputFile, 'r'):
-            print(line)
             a = line.split(',')
             if(len(a)< 9):
                 print ('problem',a)
                 print ('ignore data point at line ',counter+1)
             else:
                 self.temp_file.write(line)
-                #print(line)
 
             counter = counter+1
-            print('counter',counter)
             
 
         self.temp_file.close()
