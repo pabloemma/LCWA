@@ -122,11 +122,13 @@ class test_speed1():
        
         
         print('\n \n \n')    
-        
+        start = "\033[1m"
+        stop = "\033[0m"
+
         print('****************************************************************** \n')   
         print('hello this is the LCWA speedtest version',self.vers)
         print('Written by Andi Klein using the CLI from speedtest')
-        print('Run date',datetime.datetime.now()) 
+        print('Run date',datetime.datetime.now(),'\n') 
         print('Running from ' , self.DigIP() )
         print('\n ')    
         
