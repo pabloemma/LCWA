@@ -483,6 +483,9 @@ class test_speed1():
             self.output_file = open(filename,'w')
             self.WriteOutputHeader() # first time we write a header
             
+        #Finally do the descriptor file
+        self.WriteDescriptor()
+            
             
     def WriteOutputHeader(self):       
         """
@@ -565,12 +568,12 @@ class test_speed1():
         """
         #take the first 4 characters of the file
         a = self.docfile[0:5]
-        print a[0:2]
+        print (a[0:2])
         if(a[0:2]=='LC'):
             self.dropdir = '/LCWA/'+a+'/'
         else:
             self.dropdir = '/LCWA/ROTW'+'/'
-        print self.dropdir
+        print (self.dropdir)
         return 
     
     
@@ -600,7 +603,13 @@ class test_speed1():
             a.ConnectDropbox()
             a.PushFileDropbox(self.dropdir)
             return
-
+        
+    def WriteDescriptor(self): 
+        """ this writes a short descriptor file for the speedtest"""
+        output_dict={'IP':self.DigIP(),'Date':datetime.datetime.now(),'Dropbox':self.dropdir, 'version':self.vs}
+        # Now print tit
+        for key,value in output_dict.items():
+            print(key , '  ',value)
         
 if __name__ == '__main__':
     
