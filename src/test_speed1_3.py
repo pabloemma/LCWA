@@ -127,6 +127,7 @@ class test_speed1():
         print('hello this is the LCWA speedtest version',self.vers)
         print('Written by Andi Klein using the CLI from speedtest')
         print('Run date',datetime.datetime.now()) 
+        print('Running from ' , self.DigIP() )
         print('\n ')    
         
         print('****************************************************************** \n')   
@@ -137,7 +138,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.0'
+        self.vs = '5.01.1'
 
         
         print(' History')
@@ -157,6 +158,7 @@ class test_speed1():
         print('Version 4.00.0', 'runs on python3 now')
         print('Version 5.00.0', 'automatically does plots and ships them to dropbox')
         print('Version 5.01.0', 'new dropbox configuration')
+        print('Version 5.01.0', 'added lookup of ip address')
         print('\n\n\n')
         
          
@@ -484,7 +486,8 @@ class test_speed1():
         """
         Write the header for the output file
         """
-        Header = 'day,time,server name, server id,latency,jitter,package , download, upload \n'
+        MyIP =self.DigIP()
+        Header = MyIP+'day,time,server name, server id,latency,jitter,package , download, upload \n'
         self.output_file.write(Header)
         
     def DebugProgram(self,err): 
@@ -508,6 +511,12 @@ class test_speed1():
             print (temp ,' my hostname ',self.hostname)
             #print (temp , 'my IP is '  , self.my_ip) 
             
+    def DigIP(self):
+        """ gets the ipaddress of the location"""
+        
+        stream = os.popen('dig +short myip.opendns.com @resolver1.opendns.com')
+        return stream.read().strip('\n')
+    
     def GetIPinfo(self):
         """
         gets the host info
@@ -523,7 +532,7 @@ class test_speed1():
         elif len(a) < 4:
             temp='xxxx'
             
-            self.hostname = a+temp[0:4-len(b)]+'_' #pad with xxxx
+            self.hostname = a+temp[0:4-len(a)]+'_' #pad with xxxx
         else:
             self.hostname = a+'_'
         
