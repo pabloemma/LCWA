@@ -565,10 +565,12 @@ class test_speed1():
         """
         #take the first 4 characters of the file
         a = self.docfile[0:5]
+        print a[0:2]
         if(a[0:2]=='LC'):
             self.dropdir = '/LCWA/'+a+'/'
         else:
             self.dropdir = '/LCWA/ROTW'+'/'
+        print self.dropdir
         return 
     
     
