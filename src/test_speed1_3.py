@@ -300,11 +300,13 @@ class test_speed1():
                     
                     
                     f =open(self.lcwa_filename,"rb")
+                    print (self.dropdir, '   ',self.docfile)
                     self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
                     print('wrote dropbox file')
-                    print (' now saving plotfile')
-                    self.DoPlots()
-                    counter = 0 
+                    if(counter > 0):
+                        print (' now saving plotfile')
+                        self.DoPlots()
+                    #counter = 0 
 
             time.sleep(self.loop_time)
 
@@ -337,7 +339,7 @@ class test_speed1():
             return True
         else:
             #return False
-            return True
+            return False
         
         
         
@@ -397,6 +399,7 @@ class test_speed1():
             self.DebugProgram(3)
         print (myline)
         self.output_file.write(myline)
+        self.output_file.flush() # to write to disk
         
         
     def CreateOutput(self,inc1):
@@ -563,10 +566,27 @@ class test_speed1():
         """ this creates the plot and ships it to dropbox"""
         a =PC.MyPlot(self.input_path,self.input_filename,self.cryptofile,False)
         print(self.input_path,'   ', self.input_filename)
-        a.ReadTestData()
-        a.ConnectDropbox()
-        a.PushFileDropbox(self.dropdir)
-        return
+        temp_file = self.input_path+self.input_filename
+
+        
+        with open(temp_file) as f:
+            count = 0
+            for line in f:
+                count += 1
+        print (count)
+        
+        
+        #count = len(open(temp_file).readlines(  ))
+        if (count < 2):
+            f.close()
+            return 
+        else:
+            f.close()
+            
+            a.ReadTestData()
+            a.ConnectDropbox()
+            a.PushFileDropbox(self.dropdir)
+            return
 
         
 if __name__ == '__main__':

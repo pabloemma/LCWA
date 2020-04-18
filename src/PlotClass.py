@@ -43,6 +43,8 @@ class MyPlot(object):
         
         if(self.IsFile(file)):
             self.InputFile = file
+            self.output = self.InputFile.replace('csv','pdf')
+
         if(self.IsFile(token)):
             self.TokenFile = token
         
@@ -103,10 +105,14 @@ class MyPlot(object):
             
         
         if(self.MyPythonVersion):
+           
             x1,y1,y2 = np.loadtxt(self.temp_name, delimiter=',',
                    unpack=True,usecols=(1,7,8),
                    converters={ 1: self.MyTime},skiprows = 1)
-        else:      
+            
+        else:
+          
+                  
             x1,y1,y2 = np.loadtxt(self.temp_name, delimiter=',',
                    unpack=True,usecols=(1,7,8),
                    converters={ 1: md.strpdate2num('%H:%M:%S')},skiprows=1)
@@ -143,7 +149,7 @@ class MyPlot(object):
         plt.ylim(0.,24.) # set yaxis limit
         plt.xticks(rotation='vertical')
         plt.tight_layout()
-        self.output = self.InputFile.replace('csv','pdf')
+        print('input file',self.InputFile)
 
         print (self.output)
         fig.savefig(self.output, bbox_inches='tight')
