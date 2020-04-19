@@ -92,7 +92,7 @@ class MyPlot(object):
 
         self.temp_file.close()
         
-    def ReadTestData(self):
+    def ReadTestData(self,legend):
         """
         Reads the results with Matplotlib
         """
@@ -102,7 +102,7 @@ class MyPlot(object):
         #f=open(self.temp_name,'rb')
         #f=open('/Users/klein/speedfiles/nuke_2020-04-17speedfile.csv') 
         
-            
+        self.legend = legend #legend is a dictionary'
         
         if(self.MyPythonVersion):
            
@@ -129,9 +129,16 @@ class MyPlot(object):
         np.set_printoptions(precision=2)
         fig=plt.figure() 
         ax=fig.add_subplot(1,1,1)
+        
+        #Add Ip address
+        
+        
         #ax.text(.1,.36,'Average $\mu$ and Standard deviation $\sigma$',weight='bold',transform=ax.transAxes,fontsize=13)
         #ax.text(.1,.23,r'$\mu_{up}     = $'+str(np.around(np.mean(y2),2))+' '+'[Mb/s]'+r'   $\sigma_{up} =     $'+str(np.around(np.std(y2),2)),transform=ax.transAxes,fontsize=12)
         #ax.text(.1,.3,r'$\mu_{down} = $'+str(np.around(np.mean(y1),2))+' '+'[Mb/s]'+r'   $\sigma_{down} = $'+str(np.around(np.std(y1),2)),transform=ax.transAxes,fontsize=12)
+
+        #add legend
+        ax.text(.05,.95,'MyIP = '+self.legend['IP'],weight='bold',transform=ax.transAxes,fontsize=13)
 
         plt.plot_date(x1,y1,'bs',label='\n blue DOWN ')
         plt.plot_date(x1,y2,'g^',label=' green UP')
@@ -219,10 +226,11 @@ class MyPlot(object):
        
 if __name__ == '__main__':
     path = '/Users/klein/speedfiles'
-    file = 'nuke_2020-04-17speedfile.csv'
-    token ='/Users/klein/git/speedtest/LCWA/src/LCWA_d.txt'
-    PlotFlag = False
+    file = 'Pand_2020-04-18speedfile.csv'
+    token ='/Users/klein/git/LCWA/src/LCWA_d.txt'
+    legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
+    PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag)
-    MP.ReadTestData()
+    MP.ReadTestData(legend)
     MP.ConnectDropbox()
     MP.PushFileDropbox('/LCWA/ROTW/')
