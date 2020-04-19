@@ -120,7 +120,7 @@ class MyPlot(object):
         self.y1 = y1
         self.y2 = y2
         self.PlotTestData(x1, y1, y2)
-        
+         
     
     def PlotTestData(self,x1,y1,y2):
         """
