@@ -599,16 +599,18 @@ class test_speed1():
         else:
             f.close()
             
-            a.ReadTestData()
+            a.ReadTestData(self.output_dict)
             a.ConnectDropbox()
             a.PushFileDropbox(self.dropdir)
             return
         
     def WriteDescriptor(self): 
         """ this writes a short descriptor file for the speedtest"""
-        output_dict={'IP':self.DigIP(),'Date':datetime.datetime.now(),'Dropbox':self.dropdir, 'version':self.vs}
-        # Now print tit
-        for key,value in output_dict.items():
+        self.output_dict={'IP':self.DigIP(),'Date':datetime.datetime.now(),'Dropbox':self.dropdir, 'version':self.vs}
+        # Now print it
+        
+        
+        for key,value in self.output_dict.items():
             print(key , '  ',value)
         
 if __name__ == '__main__':
