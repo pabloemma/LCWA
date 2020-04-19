@@ -138,7 +138,7 @@ class MyPlot(object):
         #ax.text(.1,.3,r'$\mu_{down} = $'+str(np.around(np.mean(y1),2))+' '+'[Mb/s]'+r'   $\sigma_{down} = $'+str(np.around(np.std(y1),2)),transform=ax.transAxes,fontsize=12)
 
         #add legend
-        ax.text(.05,.95,'MyIP = '+self.legend['IP'],weight='bold',transform=ax.transAxes,fontsize=13)
+        ax.text(.05,.95,'MyIP = '+self.legend['IP'],weight='bold',transform=ax.transAxes,fontsize=11)
 
         plt.plot_date(x1,y1,'bs',label='\n blue DOWN ')
         plt.plot_date(x1,y2,'g^',label=' green UP')
@@ -150,9 +150,9 @@ class MyPlot(object):
         plt.xlabel('Time')
         plt.ylabel('Speed in Mbs')
 
-        plt.title('Speedtest LCWA using '+self.InputFile)
+        plt.title('Speedtest LCWA '+self.InputFile)
     
-        plt.legend(facecolor='ivory',loc="lower right",shadow=True, fancybox=True)
+        plt.legend(facecolor='ivory',loc="upper right",shadow=True, fancybox=True)
         plt.ylim(0.,24.) # set yaxis limit
         plt.xticks(rotation='vertical')
         plt.tight_layout()
@@ -226,7 +226,8 @@ class MyPlot(object):
        
 if __name__ == '__main__':
     path = '/Users/klein/speedfiles'
-    file = 'Pand_2020-04-18speedfile.csv'
+    #file = 'Pand_2020-04-18speedfile.csv'
+    file = 'test.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
