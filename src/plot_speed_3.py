@@ -75,9 +75,13 @@ if(drop):
 # get dropbox file
 
     file = '/LCWA/'+ sys.argv[1]
+    
     dir = os.path.expanduser("~")
-    file1 = dir+'/scratch/'+sys.argv[1]
+    temp = sys.argv[1][5:]
+    file1 = dir+'/scratch/'+temp
     filename = dbx.files_download_to_file(file1,file)
+    #filename = dbx.files_download_to_file('/Users/klein/scratch/LC04_2020-04-20speedfile.csv','/LCWA/LC04/LC04_2020-04-20speedfile.csv')
+    
     #print filename         
 x1 = []
 y1 = []
