@@ -77,7 +77,15 @@ if(drop):
     file = '/LCWA/'+ sys.argv[1]
     
     dir = os.path.expanduser("~")
-    temp = sys.argv[1][5:]
+    print(len(sys.argv[1]))
+          
+    if (len(sys.argv[1])> 28):
+        
+        temp = sys.argv[1][5:]
+    
+    else:
+        
+        temp =  sys.argv[1]
     file1 = dir+'/scratch/'+temp
     filename = dbx.files_download_to_file(file1,file)
     #filename = dbx.files_download_to_file('/Users/klein/scratch/LC04_2020-04-20speedfile.csv','/LCWA/LC04/LC04_2020-04-20speedfile.csv')
