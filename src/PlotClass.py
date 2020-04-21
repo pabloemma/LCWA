@@ -207,7 +207,7 @@ class MyPlot(object):
          
          
          
-         #connect to dropbox
+         #connect to dropbox 
         self.dbx=dropbox.Dropbox(self.data.strip('\n'))
 
         self.myaccount = self.dbx.users_get_current_account()
