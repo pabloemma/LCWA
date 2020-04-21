@@ -612,6 +612,7 @@ class test_speed1():
         
         for key,value in self.output_dict.items():
             print(key , '  ',value)
+            #print (self.output_dict['IP'])
         
 if __name__ == '__main__':
     

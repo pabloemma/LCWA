@@ -138,7 +138,8 @@ class MyPlot(object):
         #ax.text(.1,.3,r'$\mu_{down} = $'+str(np.around(np.mean(y1),2))+' '+'[Mb/s]'+r'   $\sigma_{down} = $'+str(np.around(np.std(y1),2)),transform=ax.transAxes,fontsize=12)
 
         #add legend
-        ax.text(.05,.95,'MyIP = '+self.legend['IP'],weight='bold',transform=ax.transAxes,fontsize=11)
+        print(self.legend)
+        ax.text(.05,.95,'MyIP = '+self.DigIP(),weight='bold',transform=ax.transAxes,fontsize=11)
 
         plt.plot_date(x1,y1,'bs',label='\n blue DOWN ')
         plt.plot_date(x1,y2,'g^',label=' green UP')
@@ -215,7 +216,12 @@ class MyPlot(object):
         print (self.myaccount.email)
         print('\n\n ***************************dropbox*******************\n')
 
-    
+    def DigIP(self):
+        """ gets the ipaddress of the location"""
+        
+        stream = os.popen('dig +short myip.opendns.com @resolver1.opendns.com')
+        return stream.read().strip('\n')
+   
     
     
     def PushFileDropbox(self,dropdir):  
