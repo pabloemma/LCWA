@@ -14,8 +14,7 @@ import numpy as np
 from pathlib import Path # this is python 3
 import matplotlib.pyplot as plt
 import matplotlib.dates as md
-
-
+from matplotlib.backends.backend_pdf import PdfPages
 
 
 
@@ -70,7 +69,7 @@ class PlotAll(object):
         """
         
         #First make the part of the file which is depending on the date
-        MyFileName = self.GetCurrentFileName()
+        self.MyFileName=MyFileName = self.GetCurrentFileName()
         
         #next block determines how many graphs we will do
         graph_count = 0
@@ -102,8 +101,20 @@ class PlotAll(object):
                 self.ReadTestData()
                 
                 self.PlotTestData(k)
-                
-        plt.show()
+        #plt.show()        
+        #self.fig.savefig(self.pdffilepath, bbox_inches='tight')
+
+        with PdfPages(self.pdffilepath) as pdf:
+            pdf.savefig(self.fig)
+            if graph_count > 4:       
+                pdf.savefig(self.fig1)
+            if graph_count >8: 
+                pdf.savefig(self.fig2)        
+        
+        
+        #self.pdf.savefig(self.fig) 
+        #self.fig.show()
+        plt.close()
 
     def DropFileExists(self,path):
         try:
@@ -198,9 +209,16 @@ class PlotAll(object):
         #In a first tage we just get 4 plots on a canvas
         #create plotarrays
         row,column = 2,2
-        self.fig, self.axarr = plt.subplots(row,column)  # this plot will have x rows and y columns        
+        self.fig, self.axarr = plt.subplots(row,column)  # this plot will have x rows and y columns  
+        if graph_count > 4:      
+            self.fig1, self.axarr1 = plt.subplots(row,column)  # this plot will have x rows and y columns        
+        if graph_count > 8:      
+            self.fig2, self.axarr2 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         
-    
+            #create output file
+        pdffile=self.MyFileName.replace('csv','pdf')
+        self.pdffilepath = self.SetTempDirectory()+'/LCWA_TOTAL_'+pdffile
+
         
     def PlotTestData(self,k):
         """
@@ -249,6 +267,47 @@ class PlotAll(object):
             self.axarr[i][k-2].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr[i][k-2].set_ylim(ylow,yhigh) # set yaxis limit
 
+        if k > 3 and k <6:
+            i=0
+            l=k-4
+            self.axarr1[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr1[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
+            self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            self.axarr1[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+            
+        elif k >5  and k < 8:
+            
+            i=1
+            l=k-6
+            self.axarr1[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr1[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
+            self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            self.axarr1[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+
+        if k > 7 and k <10:
+            i=0
+            l=k-8
+            self.axarr2[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr2[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
+            self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            self.axarr2[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+            
+        elif k > 9  and k < 12:
+            
+            i=1
+            l=k-10
+            self.axarr2[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr2[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
+            self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            self.axarr2[i][l].set_ylim(ylow,yhigh) # set yaxis limit
 
 
         #plt.show()  #Uncomment for seeing the plot

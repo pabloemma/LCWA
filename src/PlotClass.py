@@ -9,6 +9,7 @@ is called by test_speed3
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as md
+
 import datetime
 import numpy as np
 import csv
