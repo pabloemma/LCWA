@@ -239,7 +239,7 @@ class PlotAll(object):
             self.axarr[i][k].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr[i][k].set_ylim(ylow,yhigh) # set yaxis limit
             
-        elif k == 2 and k < 4:
+        elif k >1  and k < 4:
             
             i=1
             self.axarr[i][k-2].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
