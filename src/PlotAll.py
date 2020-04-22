@@ -216,7 +216,7 @@ class PlotAll(object):
             self.fig2, self.axarr2 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         
             #create output file
-        pdffile=self.MyFileName.replace('csv','pdf')
+        self.pdffile=pdffile=self.MyFileName.replace('csv','pdf')
         self.pdffilepath = self.SetTempDirectory()+'/LCWA_TOTAL_'+pdffile
 
         
@@ -311,6 +311,10 @@ class PlotAll(object):
 
 
         #plt.show()  #Uncomment for seeing the plot
+    def PushFileDropbox(self):  
+        f =open(self.SetTempDirectory()+'/LCWA_TOTAL_'+self.pdffile,"rb")
+        dropdir ='/LCWA/ALL_LCWA/'
+        self.dbx.files_upload(f.read(),dropdir+'LCWA_TOTAL_'+self.pdffile,mode=dropbox.files.WriteMode('overwrite', None))
         
  
  
@@ -330,3 +334,4 @@ if __name__ == '__main__':
     PA=PlotAll(token_file,dirlist)
     PA.ConnectDropbox()
     PA.GetFiles()
+    PA.PushFileDropbox()
