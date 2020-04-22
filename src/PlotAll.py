@@ -82,6 +82,9 @@ class PlotAll(object):
 
         print ('we have ',graph_count,'  plots')
         
+        # setup the canvas
+        
+        self.PlotSetup(graph_count)
         
         #Here starts the loop
         for k in range(len(self.DirList)):
@@ -98,7 +101,9 @@ class PlotAll(object):
 
                 self.ReadTestData()
                 
-
+                self.PlotTestData(k)
+                
+        plt.show()
 
     def DropFileExists(self,path):
         try:
@@ -188,18 +193,24 @@ class PlotAll(object):
         """
         Creates the plotting environment
         """
-        
+        # we will have a max of 5 plots/ canvas
+        #graph_count gives us the number we have
+        #In a first tage we just get 4 plots on a canvas
+        #create plotarrays
+        row,column = 2,2
+        self.fig, self.axarr = plt.subplots(row,column)  # this plot will have x rows and y columns        
         
     
-    
         
-    def PlotTestData(self,x1,y1,y2):
+    def PlotTestData(self,k):
         """
         Plots the tests
+        x1: date
+        y1: download
+        y2:upload
+        k_spectrum # number of graph we have done
         """
         np.set_printoptions(precision=2)
-        fig=plt.figure() 
-        ax=fig.add_subplot(1,1,1)
         
         #Add Ip address
         
@@ -209,31 +220,38 @@ class PlotAll(object):
         #ax.text(.1,.3,r'$\mu_{down} = $'+str(np.around(np.mean(y1),2))+' '+'[Mb/s]'+r'   $\sigma_{down} = $'+str(np.around(np.std(y1),2)),transform=ax.transAxes,fontsize=12)
 
         #add legend
-        print(self.legend)
-        ax.text(.05,.95,'MyIP = '+self.DigIP(),weight='bold',transform=ax.transAxes,fontsize=11)
+        #print(self.legend)
+        x1,y1,y2 = self.x1,self.y1,self.y2
+        
+        
+        ms1=3. #markersize
+        xpos = .05 #text position
+        ypos = .05
+        ylow = 0.
+        yhigh = 24.
+        print('number',k)
+        if k < 2:
+            i=0
+            self.axarr[i][k].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr[i][k].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr[i][k].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr[i][k].transAxes,fontsize=9)
+            self.axarr[i][k].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr[i][k].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            self.axarr[i][k].set_ylim(ylow,yhigh) # set yaxis limit
+            
+        elif k == 2 and k < 4:
+            
+            i=1
+            self.axarr[i][k-2].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr[i][k-2].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr[i][k-2].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr[i][k-2].transAxes,fontsize=9)
+            self.axarr[i][k-2].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr[i][k-2].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            self.axarr[i][k-2].set_ylim(ylow,yhigh) # set yaxis limit
 
-        plt.plot_date(x1,y1,'bs',label='\n blue DOWN ')
-        plt.plot_date(x1,y2,'g^',label=' green UP')
-        #plt.text(1.,1.,r' $\sigma = .1$')
-        plt.grid(True)
 
-        ax.xaxis.set_major_locator(md.MinuteLocator(interval=60))
-        ax.xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-        plt.xlabel('Time')
-        plt.ylabel('Speed in Mbs')
 
-        plt.title('Speedtest LCWA '+self.InputFile)
-    
-        plt.legend(facecolor='ivory',loc="upper right",shadow=True, fancybox=True)
-        plt.ylim(0.,24.) # set yaxis limit
-        plt.xticks(rotation='vertical')
-        plt.tight_layout()
-        print('input file',self.InputFile)
-
-        print (self.output)
-        fig.savefig(self.output, bbox_inches='tight')
-        if(self.PlotFlag):
-            plt.show()  #Uncomment for seeing the plot
+        #plt.show()  #Uncomment for seeing the plot
         
  
  
