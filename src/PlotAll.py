@@ -164,13 +164,14 @@ class PlotAll(object):
         #self.legend = legend #legend is a dictionary'
         
            
-        x1,y1,y2 = np.loadtxt(self.temp_name, delimiter=',',
-                   unpack=True,usecols=(1,7,8),
+        x1,y0,y1,y2 = np.loadtxt(self.temp_name, delimiter=',',
+                   unpack=True,usecols=(1,6,7,8),
                    converters={ 1: self.MyTime},skiprows = 1)
             
         self.x1 = x1
         self.y1 = y1
         self.y2 = y2
+        self.y0 = y0
 
     
     def SetTempDirectory(self):
@@ -239,7 +240,7 @@ class PlotAll(object):
 
         #add legend
         #print(self.legend)
-        x1,y1,y2 = self.x1,self.y1,self.y2
+        x1,y0,y1,y2 = self.x1,self.y0,self.y1,self.y2
         
         
         ms1=3. #markersize
@@ -252,6 +253,7 @@ class PlotAll(object):
             i=0
             self.axarr[i][k].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr[i][k].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr[i][k].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
             self.axarr[i][k].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr[i][k].transAxes,fontsize=9)
             self.axarr[i][k].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
@@ -262,6 +264,7 @@ class PlotAll(object):
             i=1
             self.axarr[i][k-2].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr[i][k-2].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr[i][k-2].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
             self.axarr[i][k-2].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr[i][k-2].transAxes,fontsize=9)
             self.axarr[i][k-2].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k-2].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
@@ -272,6 +275,7 @@ class PlotAll(object):
             l=k-4
             self.axarr1[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr1[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr1[i][l].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
             self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
             self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
@@ -283,6 +287,7 @@ class PlotAll(object):
             l=k-6
             self.axarr1[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr1[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr1[i][l].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
             self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
             self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
@@ -293,6 +298,7 @@ class PlotAll(object):
             l=k-8
             self.axarr2[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr2[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr1[i][l].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
             self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
             self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
@@ -304,6 +310,7 @@ class PlotAll(object):
             l=k-10
             self.axarr2[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr2[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            self.axarr1[i][l].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
             self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
             self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
