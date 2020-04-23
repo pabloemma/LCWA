@@ -8,6 +8,7 @@
 # Short-Description: Start daemon at boot time
 # Description:       Enable service provided by daemon.
 ### END INIT INFO
+#from builtins import True
 
 
 
@@ -311,10 +312,38 @@ class test_speed1():
                         print (' now saving plotfile')
                         self.DoPlots()
                     #counter = 0 
+                elif self.FlushTime(): # It is close to midnight, we flush the last file and exit to ensure we laod trhe latest software
+                    f =open(self.lcwa_filename,"rb")
+                    print (self.dropdir, '   ',self.docfile)
+                    self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
+                    print (' now saving plotfile')
+                    self.DoPlots()
+                    print('midnight exiting')
+                    sys.exit(0)
+                    #counter = 0 
+                    
 
             time.sleep(self.loop_time)
 
+    def FlushTime(self):
+        
+        """
+        checks time and if its close tp midnight returns True
+        """
+        timelimit = 23*60.+ 45  # this is how many minutes are to 23:45
+        
+        b=  datetime.datetime.now()
+        #fill in tuple
+        a=b.timetuple()
+        current_minute = a[3]*60. + a[4]
+        if(current_minute > timelimit):
+            return True
+        else:
+            return False
             
+
+
+                 
     def WriteTimer(self):
         """
         determines the time

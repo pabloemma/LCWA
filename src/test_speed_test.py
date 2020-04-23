@@ -8,7 +8,7 @@
 # Short-Description: Start daemon at boot time
 # Description:       Enable service provided by daemon.
 ### END INIT INFO
-from builtins import True
+#from builtins import True
 
 
 
@@ -141,7 +141,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.1'
+        self.vs = '5.01.2'
 
         
         print(' History')
@@ -161,7 +161,8 @@ class test_speed1():
         print('Version 4.00.0', 'runs on python3 now')
         print('Version 5.00.0', 'automatically does plots and ships them to dropbox')
         print('Version 5.01.0', 'new dropbox configuration')
-        print('Version 5.01.0', 'added lookup of ip address')
+        print('Version 5.01.1', 'added lookup of ip address')
+        print('Version 5.01.2', 'stop at 23:45 to 24:00, flush data and exit')
         print('\n\n\n')
         
          
