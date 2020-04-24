@@ -53,6 +53,7 @@ import subprocess as sp
 import dropbox
 import socket # needed for hostname id
 import PlotClass as PC
+import uuid
 #from __builtin__ import True
 
 
@@ -71,8 +72,9 @@ class test_speed1():
         self.DropFlag = False # default no dropbox connection
         
         self.Debug = False
-        # check if we have espeak
         
+        # check if we have espeak
+        self.GetMacAddress()
         
         
 
@@ -141,7 +143,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.2'
+        self.vs = '5.01.3'
 
         
         print(' History')
@@ -163,6 +165,7 @@ class test_speed1():
         print('Version 5.01.0', 'new dropbox configuration')
         print('Version 5.01.1', 'added lookup of ip address')
         print('Version 5.01.2', 'stop at 23:45 to 24:00, flush data and exit')
+        print('Version 5.01.3', 'Create textfile with important values')
         print('\n\n\n')
         
          
@@ -309,6 +312,12 @@ class test_speed1():
                     print (self.dropdir, '   ',self.docfile)
                     self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
                     print('wrote dropbox file')
+                    # write textfile
+                    self.WriteDescriptor()
+                    self.docfile1 = self.docfile.replace('csv','txt')
+                    f1=open(self.textfile,"rb")
+                    self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
+    
                     if(counter > 0):
                         print (' now saving plotfile')
                         self.DoPlots()
@@ -317,6 +326,11 @@ class test_speed1():
                     f =open(self.lcwa_filename,"rb")
                     print (self.dropdir, '   ',self.docfile)
                     self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
+                    self.WriteDescriptor()
+                    self.docfile1 = self.docfile.replace('csv','txt')
+                    f1=open(self.textfile,"rb")
+                    self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
+
                     print (' now saving plotfile')
                     self.DoPlots()
                     print('midnight exiting')
@@ -636,13 +650,27 @@ class test_speed1():
         
     def WriteDescriptor(self): 
         """ this writes a short descriptor file for the speedtest"""
-        self.output_dict={'IP':self.DigIP(),'Date':datetime.datetime.now(),'Dropbox':self.dropdir, 'version':self.vs}
+        self.output_dict={'IP':self.DigIP(),
+                          'Date':datetime.datetime.now(),
+                          'Dropbox':self.dropdir, 
+                          'MacAddress':self.Mac,
+                          'File':self.docfile,
+                          'version':self.vs}
         # Now print it
+        self.textfile = self.lcwa_filename.replace('csv','txt')
+        with open(self.textfile, 'w') as f:
         
         
-        for key,value in self.output_dict.items():
-            print(key , '  ',value)
+            for key,value in self.output_dict.items():
+                print(key , '  ',value, file = f)
             #print (self.output_dict['IP'])
+        f.close()
+           
+    def GetMacAddress(self):
+        """ gets the raspi mac address"""
+ 
+        self.Mac = ':'.join(['{:02x}'.format((uuid.getnode() >> ele) & 0xff) 
+        for ele in range(0,8*6,8)][::-1]) 
         
 if __name__ == '__main__':
     
