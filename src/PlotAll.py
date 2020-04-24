@@ -15,7 +15,7 @@ from pathlib import Path # this is python 3
 import matplotlib.pyplot as plt
 import matplotlib.dates as md
 from matplotlib.backends.backend_pdf import PdfPages
-
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 
 class PlotAll(object):
@@ -104,6 +104,7 @@ class PlotAll(object):
         #plt.show()        
         #self.fig.savefig(self.pdffilepath, bbox_inches='tight')
 
+        #plt.show()
         with PdfPages(self.pdffilepath) as pdf:
             pdf.savefig(self.fig)
             if graph_count > 4:       
@@ -245,16 +246,39 @@ class PlotAll(object):
         
         ms1=3. #markersize
         xpos = .05 #text position
-        ypos = .05
+        ypos = 1.02
         ylow = 0.
         yhigh = 24.
+        ylow1=0.
+        yhigh1=50.
+        
+        bbox=(0.03,.03,1.,0.3)
         print('number',k)
         if k < 2:
             i=0
             self.axarr[i][k].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr[i][k].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            self.axarr[i][k].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
-            self.axarr[i][k].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr[i][k].transAxes,fontsize=9)
+            
+            axins2 = inset_axes(self.axarr[i][k],width="100%", height="100%",
+              #bbox_to_anchor=(0,0,1.,.4)  )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][k].transAxes )
+            axins2.get_xaxis().set_visible(False)
+            
+            axins2.spines['bottom'].set_color('red')
+            axins2.spines['top'].set_color('red')
+            axins2.yaxis.label.set_color('red')
+            axins2.tick_params(axis='y', colors='red')
+
+            axins2.yaxis.label.set_color('red')
+            
+            axins2.set_ylim(ylow1,yhigh1)
+            axins2.yaxis.set_label_position("right")
+            axins2.yaxis.tick_right()
+            
+            
+            #self.axarr[i][k].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+            axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+            self.axarr[i][k].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr[i][k].transAxes,fontsize=8)
             self.axarr[i][k].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr[i][k].set_ylim(ylow,yhigh) # set yaxis limit
@@ -264,7 +288,21 @@ class PlotAll(object):
             i=1
             self.axarr[i][k-2].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr[i][k-2].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            self.axarr[i][k-2].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+            axins2 = inset_axes(self.axarr[i][k-2],width="100%", height="100%",
+              #bbox_to_anchor=(0,0,1.,.4)  )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][k-2].transAxes )
+            axins2.get_xaxis().set_visible(False)
+            
+            axins2.spines['bottom'].set_color('red')
+            axins2.spines['top'].set_color('red')
+            axins2.yaxis.label.set_color('red')
+            axins2.tick_params(axis='y', colors='red')
+            axins2.set_ylim(ylow1,yhigh1)
+            axins2.yaxis.set_label_position("right")
+            axins2.yaxis.tick_right()
+
+            
+            axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
             self.axarr[i][k-2].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr[i][k-2].transAxes,fontsize=9)
             self.axarr[i][k-2].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k-2].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
@@ -275,7 +313,23 @@ class PlotAll(object):
             l=k-4
             self.axarr1[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr1[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            self.axarr1[i][l].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+            axins2 = inset_axes(self.axarr[i][l],width="100%", height="100%",
+              #bbox_to_anchor=(0,0,1.,.4)  )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][l].transAxes )
+            axins2.get_xaxis().set_visible(False)
+            
+            axins2.spines['bottom'].set_color('red')
+            axins2.spines['top'].set_color('red')
+            axins2.yaxis.label.set_color('red')
+            axins2.tick_params(axis='y', colors='red')
+            axins2.set_ylim(ylow1,yhigh1)
+            axins2.yaxis.set_label_position("right")
+            axins2.yaxis.tick_right()
+
+            axins2.yaxis.label.set_color('red')
+            axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+
+            
             self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
             self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
@@ -287,7 +341,22 @@ class PlotAll(object):
             l=k-6
             self.axarr1[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr1[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            self.axarr1[i][l].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+            axins2 = inset_axes(self.axarr[i][l],width="100%", height="100%",
+              #bbox_to_anchor=(0,0,1.,.4)  )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][l].transAxes )
+            axins2.get_xaxis().set_visible(False)
+            
+            axins2.spines['bottom'].set_color('red')
+            axins2.spines['top'].set_color('red')
+            axins2.yaxis.label.set_color('red')
+            axins2.tick_params(axis='y', colors='red')
+            axins2.set_ylim(ylow1,yhigh1)
+            axins2.yaxis.set_label_position("right")
+            axins2.yaxis.tick_right()
+
+            axins2.yaxis.label.set_color('red')
+            axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+
             self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
             self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
@@ -298,7 +367,22 @@ class PlotAll(object):
             l=k-8
             self.axarr2[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr2[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            self.axarr1[i][l].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+            axins2 = inset_axes(self.axarr[i][l],width="100%", height="100%",
+              #bbox_to_anchor=(0,0,1.,.4)  )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][l].transAxes )
+            axins2.get_xaxis().set_visible(False)
+            
+            axins2.spines['bottom'].set_color('red')
+            axins2.spines['top'].set_color('red')
+            axins2.yaxis.label.set_color('red')
+            axins2.tick_params(axis='y', colors='red')
+            axins2.set_ylim(ylow1,yhigh1)
+            axins2.yaxis.set_label_position("right")
+            axins2.yaxis.tick_right()
+
+            axins2.yaxis.label.set_color('red')
+            axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+
             self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
             self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
@@ -310,7 +394,22 @@ class PlotAll(object):
             l=k-10
             self.axarr2[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr2[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            self.axarr1[i][l].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+            axins2 = inset_axes(self.axarr[i][l],width="100%", height="100%",
+              #bbox_to_anchor=(0,0,1.,.4)  )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][l].transAxes )
+            axins2.get_xaxis().set_visible(False)
+            
+            axins2.spines['bottom'].set_color('red')
+            axins2.spines['top'].set_color('red')
+            axins2.yaxis.label.set_color('red')
+            axins2.tick_params(axis='y', colors='red')
+            axins2.set_ylim(ylow1,yhigh1)
+            axins2.yaxis.set_label_position("right")
+            axins2.yaxis.tick_right()
+
+            axins2.yaxis.label.set_color('red')
+            axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+
             self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
             self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
