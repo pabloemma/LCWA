@@ -212,10 +212,10 @@ class PlotAll(object):
         #create plotarrays
         row,column = 2,2
         self.fig, self.axarr = plt.subplots(row,column)  # this plot will have x rows and y columns  
-        if graph_count > 4:      
-            self.fig1, self.axarr1 = plt.subplots(row,column)  # this plot will have x rows and y columns        
-        if graph_count > 8:      
-            self.fig2, self.axarr2 = plt.subplots(row,column)  # this plot will have x rows and y columns        
+        #if graph_count > 4:      
+        self.fig1, self.axarr1 = plt.subplots(row,column)  # this plot will have x rows and y columns        
+        #if graph_count > 8:      
+        self.fig2, self.axarr2 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         
             #create output file
         self.pdffile=pdffile=self.MyFileName.replace('csv','pdf')
@@ -250,9 +250,9 @@ class PlotAll(object):
         ylow = 0.
         yhigh = 24.
         ylow1=0.
-        yhigh1=50.
+        yhigh1=30.
         
-        bbox=(0.03,.03,1.,0.3)
+        bbox=(0.03,.03,1.,0.25)
         print('number',k)
         if k < 2:
             i=0
@@ -313,9 +313,9 @@ class PlotAll(object):
             l=k-4
             self.axarr1[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr1[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            axins2 = inset_axes(self.axarr[i][l],width="100%", height="100%",
+            axins2 = inset_axes(self.axarr1[i][l],width="100%", height="100%",
               #bbox_to_anchor=(0,0,1.,.4)  )
-              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][l].transAxes )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr1[i][l].transAxes )
             axins2.get_xaxis().set_visible(False)
             
             axins2.spines['bottom'].set_color('red')
@@ -341,9 +341,9 @@ class PlotAll(object):
             l=k-6
             self.axarr1[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr1[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            axins2 = inset_axes(self.axarr[i][l],width="100%", height="100%",
+            axins2 = inset_axes(self.axarr1[i][l],width="100%", height="100%",
               #bbox_to_anchor=(0,0,1.,.4)  )
-              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][l].transAxes )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr1[i][l].transAxes )
             axins2.get_xaxis().set_visible(False)
             
             axins2.spines['bottom'].set_color('red')
@@ -367,9 +367,9 @@ class PlotAll(object):
             l=k-8
             self.axarr2[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr2[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            axins2 = inset_axes(self.axarr[i][l],width="100%", height="100%",
+            axins2 = inset_axes(self.axarr2[i][l],width="100%", height="100%",
               #bbox_to_anchor=(0,0,1.,.4)  )
-              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][l].transAxes )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr2[i][l].transAxes )
             axins2.get_xaxis().set_visible(False)
             
             axins2.spines['bottom'].set_color('red')
@@ -394,9 +394,9 @@ class PlotAll(object):
             l=k-10
             self.axarr2[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
             self.axarr2[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            axins2 = inset_axes(self.axarr[i][l],width="100%", height="100%",
+            axins2 = inset_axes(self.axarr2[i][l],width="100%", height="100%",
               #bbox_to_anchor=(0,0,1.,.4)  )
-              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][l].transAxes )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr2[i][l].transAxes )
             axins2.get_xaxis().set_visible(False)
             
             axins2.spines['bottom'].set_color('red')
