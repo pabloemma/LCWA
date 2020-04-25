@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as md
 from matplotlib.backends.backend_pdf import PdfPages
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+import ast
 
 
 class PlotAll(object):
@@ -89,13 +90,17 @@ class PlotAll(object):
         #Here starts the loop
         for k in range(len(self.DirList)):
             temp = '/LCWA/'+self.DirList[k]+'/'+self.DirList[k]+MyFileName # file on dropbox
+            temp_text = '/LCWA/'+self.DirList[k]+'/'+self.DirList[k]+MyFileName.replace('csv','txt')
             temp_local = self.SetTempDirectory()+'/'+self.DirList[k]+MyFileName
+            temp_local_text = self.SetTempDirectory()+'/'+self.DirList[k]+MyFileName.replace('csv','txt')
             if self.DropFileExists(temp):
                 print ("getting file " ,temp, '   and storing it at : ',temp_local)
                 
-                filename = self.dbx.files_download_to_file(temp_local,temp)
-                
+                self.dbx.files_download_to_file(temp_local,temp)
+                self.dbx.files_download_to_file(temp_local_text,temp_text)
                 # Read the local file
+                self.ReadTextFile(temp_local_text)
+                
                 self.ReadFile(temp_local)
 
                 self.ReadTestData()
@@ -142,8 +147,6 @@ class PlotAll(object):
         counter = 0
         for line in open(InputFile, 'r'):
             a = line.split(',')
-            if(counter==0):
-                self.MyIP =a[0].strip('day')
             if(len(a)< 9):
                 print ('problem',a)
                 print ('ignore data point at line ',counter+1)
@@ -479,7 +482,23 @@ class PlotAll(object):
         dropdir ='/LCWA/ALL_LCWA/'
         self.dbx.files_upload(f.read(),dropdir+'LCWA_TOTAL_'+self.pdffile,mode=dropbox.files.WriteMode('overwrite', None))
         
+    def ReadTextFile(self,file):
+        """ reads text information file"""
+
  
+
+        with open(file, 'r') as f1:
+            s = f1.readlines()
+            IP = s[0].split()
+            self.MyIP = IP[1]
+
+
+        
+                 
+
+        
+        
+        
  
 if __name__ == '__main__':
     #create the list
