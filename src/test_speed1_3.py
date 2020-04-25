@@ -671,6 +671,12 @@ class test_speed1():
  
         self.Mac = ':'.join(['{:02x}'.format((uuid.getnode() >> ele) & 0xff) 
         for ele in range(0,8*6,8)][::-1]) 
+    
+    def CleanUpDropbox(self):
+        """ this will check the dropbox folder for files that are older than a week and delete them"""
+        
+        self.dbx.files_delete(path, parent_rev)
+        pass
         
 if __name__ == '__main__':
     

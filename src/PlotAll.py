@@ -76,6 +76,7 @@ class PlotAll(object):
 
         for k in range(len(self.DirList)):
             temp = '/LCWA/'+self.DirList[k]+'/'+self.DirList[k]+MyFileName # file on dropbox
+            print(temp)
             if self.DropFileExists(temp):
                 graph_count = graph_count+1
 
@@ -89,7 +90,6 @@ class PlotAll(object):
         for k in range(len(self.DirList)):
             temp = '/LCWA/'+self.DirList[k]+'/'+self.DirList[k]+MyFileName # file on dropbox
             temp_local = self.SetTempDirectory()+'/'+self.DirList[k]+MyFileName
-            #print(temp)
             if self.DropFileExists(temp):
                 print ("getting file " ,temp, '   and storing it at : ',temp_local)
                 
@@ -216,6 +216,7 @@ class PlotAll(object):
         self.fig1, self.axarr1 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         #if graph_count > 8:      
         self.fig2, self.axarr2 = plt.subplots(row,column)  # this plot will have x rows and y columns        
+        self.fig3, self.axarr3 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         
             #create output file
         self.pdffile=pdffile=self.MyFileName.replace('csv','pdf')
@@ -365,11 +366,11 @@ class PlotAll(object):
         if k > 7 and k <10:
             i=0
             l=k-8
-            self.axarr2[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
-            self.axarr2[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            axins2 = inset_axes(self.axarr2[i][l],width="100%", height="100%",
+            self.axarr3[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr3[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            axins2 = inset_axes(self.axarr3[i][l],width="100%", height="100%",
               #bbox_to_anchor=(0,0,1.,.4)  )
-              bbox_to_anchor=bbox   , bbox_transform=self.axarr2[i][l].transAxes )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr3[i][l].transAxes )
             axins2.get_xaxis().set_visible(False)
             
             axins2.spines['bottom'].set_color('red')
@@ -383,20 +384,20 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
-            self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
-            self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            self.axarr2[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+            self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=9)
+            self.axarr3[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr3[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            self.axarr3[i][l].set_ylim(ylow,yhigh) # set yaxis limit
             
         elif k > 9  and k < 12:
             
             i=1
             l=k-10
-            self.axarr2[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
-            self.axarr2[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
-            axins2 = inset_axes(self.axarr2[i][l],width="100%", height="100%",
+            self.axarr3[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr3[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            axins2 = inset_axes(self.axarr3[i][l],width="100%", height="100%",
               #bbox_to_anchor=(0,0,1.,.4)  )
-              bbox_to_anchor=bbox   , bbox_transform=self.axarr2[i][l].transAxes )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr3[i][l].transAxes )
             axins2.get_xaxis().set_visible(False)
             
             axins2.spines['bottom'].set_color('red')
@@ -410,10 +411,10 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
-            self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
-            self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            self.axarr2[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+            self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=9)
+            self.axarr3[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr3[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            self.axarr3[i][l].set_ylim(ylow,yhigh) # set yaxis limit
 
 
         #plt.show()  #Uncomment for seeing the plot
@@ -428,7 +429,7 @@ if __name__ == '__main__':
     #create the list
     temp = 'LC'
     dirlist = []
-    for k in range(1,11):
+    for k in range(1,16):
         if (k<10):
             temp1 = temp+'0'+str(k)+'_'
         else:
