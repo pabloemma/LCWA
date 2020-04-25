@@ -281,7 +281,7 @@ class PlotAll(object):
             
             #self.axarr[i][k].plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
-            self.axarr[i][k].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr[i][k].transAxes,fontsize=8)
+            self.axarr[i][k].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr[i][k].transAxes,fontsize=8)
             self.axarr[i][k].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr[i][k].set_ylim(ylow,yhigh) # set yaxis limit
@@ -306,7 +306,7 @@ class PlotAll(object):
 
             
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
-            self.axarr[i][k-2].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr[i][k-2].transAxes,fontsize=9)
+            self.axarr[i][k-2].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr[i][k-2].transAxes,fontsize=9)
             self.axarr[i][k-2].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k-2].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr[i][k-2].set_ylim(ylow,yhigh) # set yaxis limit
@@ -333,7 +333,7 @@ class PlotAll(object):
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
             
-            self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
+            self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
             self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr1[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -360,7 +360,7 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
+            self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
             self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr1[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -386,7 +386,7 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
+            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
             self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr2[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -413,7 +413,7 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
+            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
             self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr2[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -440,7 +440,7 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=9)
+            self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=9)
             self.axarr3[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr3[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr3[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -467,7 +467,7 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP,weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=9)
+            self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=9)
             self.axarr3[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr3[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr3[i][l].set_ylim(ylow,yhigh) # set yaxis limit
