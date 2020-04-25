@@ -107,10 +107,9 @@ class PlotAll(object):
         #plt.show()
         with PdfPages(self.pdffilepath) as pdf:
             pdf.savefig(self.fig)
-            if graph_count > 4:       
-                pdf.savefig(self.fig1)
-            if graph_count >8: 
-                pdf.savefig(self.fig2)        
+            pdf.savefig(self.fig1)
+            pdf.savefig(self.fig2)        
+            pdf.savefig(self.fig3)        
         
         
         #self.pdf.savefig(self.fig) 
