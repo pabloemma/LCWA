@@ -25,7 +25,7 @@ class PlotAll(object):
     '''
 
 
-    def __init__(self, token_file , dir_list):
+    def __init__(self, token_file , dir_list,filedate = None):
         '''
         Constructor
         '''
@@ -35,6 +35,7 @@ class PlotAll(object):
         # List of directories to check
         self.DirList = dir_list
         
+        self.filedate = filedate
         
         
  
@@ -97,9 +98,11 @@ class PlotAll(object):
                 print ("getting file " ,temp, '   and storing it at : ',temp_local)
                 
                 self.dbx.files_download_to_file(temp_local,temp)
-                self.dbx.files_download_to_file(temp_local_text,temp_text)
+                self.MyIP ='' #will be overwritten by readtextfile                               
+                if self.DropFileExists(temp_text):
+                    self.dbx.files_download_to_file(temp_local_text,temp_text)
                 # Read the local file
-                self.ReadTextFile(temp_local_text)
+                    self.ReadTextFile(temp_local_text)
                 
                 self.ReadFile(temp_local)
 
@@ -133,9 +136,14 @@ class PlotAll(object):
         """
         this creates the part of the current filename which depends on the date
         """
-        self.current_day = datetime.date.today()
-        a = datetime.datetime.today().strftime('%Y-%m-%d')
-        return a+'speedfile.csv'  
+        
+        if(self.filedate == None):
+            self.current_day = datetime.date.today()
+            a = datetime.datetime.today().strftime('%Y-%m-%d')
+            return a+'speedfile.csv' 
+        else:
+            return self.filedate+'speedfile.csv'
+             
 
     def ReadFile(self, InputFile):
         """ reads the csv file from the speedfile directory"""
@@ -306,7 +314,7 @@ class PlotAll(object):
 
             
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
-            self.axarr[i][k-2].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr[i][k-2].transAxes,fontsize=9)
+            self.axarr[i][k-2].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr[i][k-2].transAxes,fontsize=8)
             self.axarr[i][k-2].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k-2].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr[i][k-2].set_ylim(ylow,yhigh) # set yaxis limit
@@ -333,7 +341,7 @@ class PlotAll(object):
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
             
-            self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
+            self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=8)
             self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr1[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -360,7 +368,7 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=9)
+            self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=8)
             self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr1[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -386,7 +394,7 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
+            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=8)
             self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr2[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -413,7 +421,7 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=9)
+            self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=8)
             self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr2[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -440,7 +448,7 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=9)
+            self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=8)
             self.axarr3[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr3[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr3[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -467,7 +475,7 @@ class PlotAll(object):
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
 
-            self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=9)
+            self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=8)
             self.axarr3[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr3[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr3[i][l].set_ylim(ylow,yhigh) # set yaxis limit
@@ -501,6 +509,10 @@ class PlotAll(object):
         
  
 if __name__ == '__main__':
+    from os.path import expanduser
+    home = expanduser("~")
+    
+    
     #create the list
     temp = 'LC'
     dirlist = []
@@ -511,9 +523,11 @@ if __name__ == '__main__':
             temp1 = temp+str(k)+'_'
             
         dirlist.append(temp1)
-    token_file = '/Users/klein/git/LCWA/src/LCWA_d.txt'
+    token_file = home+'/git/LCWA/src/LCWA_d.txt'
     tempdir = 'scratch'
-    PA=PlotAll(token_file,dirlist)
+    datefile = '2020-04-22' 
+     # " default is none"
+    PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropbox()
     PA.GetFiles()
     PA.PushFileDropbox()
