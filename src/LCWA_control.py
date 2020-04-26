@@ -66,7 +66,8 @@ class MyControl(object):
                         print("deleting file ",item.path_display )
                         self.PA.dbx.files_delete(item.path_display)
                     
-                 
+    def MailPlot(self): 
+        """will send the plots to people in the email list"""            
     
     def DoPlotting(self):
         
