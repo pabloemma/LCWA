@@ -17,6 +17,8 @@ import matplotlib.dates as md
 from matplotlib.backends.backend_pdf import PdfPages
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import ast
+from os.path import expanduser
+
 
 
 class PlotAll(object):
@@ -30,7 +32,9 @@ class PlotAll(object):
         Constructor
         '''
         #File for dropbox key
-        self.TokenFile =  token_file
+        home = expanduser("~")
+
+        self.TokenFile = home+token_file
         
         # List of directories to check
         self.DirList = dir_list
@@ -509,8 +513,6 @@ class PlotAll(object):
         
  
 if __name__ == '__main__':
-    from os.path import expanduser
-    home = expanduser("~")
     
     
     #create the list
@@ -523,7 +525,7 @@ if __name__ == '__main__':
             temp1 = temp+str(k)+'_'
             
         dirlist.append(temp1)
-    token_file = home+'/git/LCWA/src/LCWA_d.txt'
+    token_file = '/git/LCWA/src/LCWA_d.txt'
     tempdir = 'scratch'
     datefile = '2020-04-22' 
      # " default is none"
