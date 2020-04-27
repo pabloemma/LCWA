@@ -74,7 +74,7 @@ if __name__ == '__main__':
     recipients='pabloemma@casitadongaspar.com, pabloemma@gmail.com'
     message =' this is the LCWA file '
     subject = 'pdf file'
-    impo_file = '/Users/klein/private/andifile'
+    impo_file = '/Users/klein/private/LCWA/andifile'
     MM=MyMail(file,recipients,subject,message)
     MM.send_email_pdf_figs(impo_file)
     

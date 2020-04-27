@@ -7,6 +7,9 @@ Created on Apr 24, 2020
 import PlotAll as PL
 import dropbox
 import datetime
+import SendFileMail as SFM
+import os
+import datetime
 
 
 class MyControl(object):
@@ -66,9 +69,28 @@ class MyControl(object):
                         print("deleting file ",item.path_display )
                         self.PA.dbx.files_delete(item.path_display)
                     
-    def MailPlot(self): 
-        """will send the plots to people in the email list"""            
-    
+    def MailPlot(self,recipient_list): 
+        """will send the plots to people in the email list""" 
+        
+        with open(recipient_list)  as f:
+            Lines = f.readlines()
+        b=''
+        for line in Lines: 
+            a=line.strip()
+            if(b != ''):
+                b = b +','+a
+            else:
+                b = a
+
+        subject = ' LCWA speedtest for '+ datetime.datetime.today().strftime('%Y-%m-%d')
+
+        
+        
+        message = ' this is the daily Raspberry PI report'
+        file = self.PA.pdf   
+        
+        sa = SFM.MyMail(file,b,subject, message)         
+        sa.send_email_pdf_figs('/Users/klein/private/LCWA/andifile')
     def DoPlotting(self):
         
         temp = 'LC'
@@ -89,4 +111,10 @@ class MyControl(object):
         
 if __name__ == '__main__':
     #create the list
+    from pathlib import Path
+    home = str(Path.home())   
+    recipient_list = home+'/private/LCWA/recipient_list.txt'
+    
+    
     MC = MyControl()
+    MC.MailPlot(recipient_list)

@@ -490,7 +490,8 @@ class PlotAll(object):
 
         #plt.show()  #Uncomment for seeing the plot
     def PushFileDropbox(self):  
-        self.pdf = f =open(self.SetTempDirectory()+'/LCWA_TOTAL_'+self.pdffile,"rb")
+        self.pdf = self.SetTempDirectory()+'/LCWA_TOTAL_'+self.pdffile
+        f =open(self.pdf,"rb")
         dropdir ='/LCWA/ALL_LCWA/'
         self.dbx.files_upload(f.read(),dropdir+'LCWA_TOTAL_'+self.pdffile,mode=dropbox.files.WriteMode('overwrite', None))
         
