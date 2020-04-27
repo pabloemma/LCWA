@@ -18,13 +18,15 @@ class MyControl(object):
     '''
 
 
-    def __init__(self):
+    def __init__(self, backupdir):
         '''
         Constructor
         '''
         
         
         #first get everything setup with dropbox by excuting DoPlotting
+        
+        self.backupdir = backupdir
         
         self.DoPlotting()
         
@@ -65,7 +67,11 @@ class MyControl(object):
                         print ('path  = ', item.path_display )
                         print ('fileID = ' , item.id)
                         print ('date = ', item.server_modified)
-                    # here we delete the files
+                    # here we backup and delete the files
+                        backupfile = self.backupdir+item.name
+                        print("backing up file ",item.path_display, ' to',backupfile)
+                        self.dbx.files_download_to_file(backupfile,item.path_display)
+                       
                         print("deleting file ",item.path_display )
                         self.PA.dbx.files_delete(item.path_display)
                     
@@ -114,7 +120,7 @@ if __name__ == '__main__':
     from pathlib import Path
     home = str(Path.home())   
     recipient_list = home+'/private/LCWA/recipient_list.txt'
-    
+    backupdir = home+'/LCWA_backup'
     
     MC = MyControl()
     
