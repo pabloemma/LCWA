@@ -490,7 +490,7 @@ class PlotAll(object):
 
         #plt.show()  #Uncomment for seeing the plot
     def PushFileDropbox(self):  
-        f =open(self.SetTempDirectory()+'/LCWA_TOTAL_'+self.pdffile,"rb")
+        self.pdf = f =open(self.SetTempDirectory()+'/LCWA_TOTAL_'+self.pdffile,"rb")
         dropdir ='/LCWA/ALL_LCWA/'
         self.dbx.files_upload(f.read(),dropdir+'LCWA_TOTAL_'+self.pdffile,mode=dropbox.files.WriteMode('overwrite', None))
         
@@ -527,7 +527,7 @@ if __name__ == '__main__':
         dirlist.append(temp1)
     token_file = '/git/LCWA/src/LCWA_d.txt'
     tempdir = 'scratch'
-    datefile = '2020-04-22' 
+    datefile = '2020-04-26' 
      # " default is none"
     PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropbox()
