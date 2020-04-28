@@ -95,8 +95,11 @@ class MyControl(object):
         message = ' this is the daily Raspberry PI report'
         file = self.PA.pdf   
         
-        sa = SFM.MyMail(file,b,subject, message)         
-        sa.send_email_pdf_figs('/Users/klein/private/LCWA/andifile')
+        sa = SFM.MyMail(file,b,subject, message)
+        from pathlib import Path
+        home = str(Path.home())   
+         
+        sa.send_email_pdf_figs(home+'/private/LCWA/andifile')
     def DoPlotting(self):
         
         temp = 'LC'
