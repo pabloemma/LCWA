@@ -125,7 +125,7 @@ if __name__ == '__main__':
     recipient_list = home+'/private/LCWA/recipient_list.txt'
     backupdir = home+'/LCWA_backup'
     
-    MC = MyControl()
+    MC = MyControl(backupdir)
     
     #Here we check if we are close to a time window
     timestamp = datetime.datetime.now().time() # Throw away the date information
