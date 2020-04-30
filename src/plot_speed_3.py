@@ -30,8 +30,15 @@ def MyPythonVersion():
 
 def MyTime(b):
     s=b.decode('ascii')
-    a =md.date2num(datetime.datetime.strptime(s,'%H:%M:%S'))    
+    #print(s)
+    a =md.date2num(datetime.datetime.strptime(s,'%H:%M:%S'))  
+      
     return a
+def MyDate(bb):
+    s=bb.decode('ascii')
+    #print(s)
+    aa =md.date2num(datetime.datetime.strptime(s,'%d/%m/%Y'))    
+    return aa
 
 
 drop = False
@@ -114,13 +121,47 @@ temp_file.close()
    
 
 if(MyPythonVersion):
+    with open('temp.txt') as f:
+        for i, l in enumerate(f):
+            pass
+        lines=i   # used for arrays
+
+    dtype=np.dtype(np.float64)
+    x0 =np.zeros(lines)
+    y1=np.zeros(lines)
+    y2=np.zeros(lines)
+    format = "%d/%m/%Y %H:%M:%S"
+    
+    
+
+    with open('temp.txt', newline='') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+        k=0
+        for row in spamreader:
+            #print(', '.join(row))
+            #print(row[0],row[7])  
+            
+            if(k>0):
+                date_str = row[0]+' '+row[1]
+
+                aa =md.date2num(datetime.datetime.strptime(date_str,format))
+                x0[k-1] = aa
+                y1[k-1] = row[7]
+                y2[k-1] = row[8]
+                #print(x0[k-1] , '  ',y1[k-1])
+
+            #print(aa)
+            k=k+1
+            
+            
+    
 #filename = "/Users/klein/speedfiles/2020-02-09speedfile.csv"        
-    x1,y1,y2 = np.loadtxt('temp.txt', delimiter=',',
-                   unpack=True,usecols=(1,7,8),
-#        converters={ 1: md.strpdate2num('%d/%m/%Y-%H:%M:%S')})
-        #converters={ 1: md.strpdate2num('%H:%M:%S')},skiprows=1)
-        #converters={0:bytespdate2num('%H:%M:%S')},skiprows=1)
-        converters={ 1: MyTime},skiprows =1)
+#    x0,x1,y1,y2 = np.loadtxt('temp.txt', delimiter=',',
+#                  unpack=True,usecols=(0,1,7,8),
+#        converters={ 0:MyDate, 1: MyTime},skiprows =1)
+#    print(x0[1],x1[1])
+
+
 #filename = "/Users/klein/speedfiles/2020-02-09speedfile.csv"  
 else:      
     x1,y1,y2 = np.loadtxt('temp.txt', delimiter=',',
@@ -138,13 +179,13 @@ ax.text(.1,.36,'Average $\mu$ and Standard deviation $\sigma$',weight='bold',tra
 ax.text(.1,.23,r'$\mu_{up}     = $'+str(np.around(np.mean(y2),2))+' '+'[Mb/s]'+r'   $\sigma_{up} =     $'+str(np.around(np.std(y2),2)),transform=ax.transAxes,fontsize=12)
 ax.text(.1,.3,r'$\mu_{down} = $'+str(np.around(np.mean(y1),2))+' '+'[Mb/s]'+r'   $\sigma_{down} = $'+str(np.around(np.std(y1),2)),transform=ax.transAxes,fontsize=12)
 
-plt.plot_date(x1,y1,'bs',label='\n blue DOWN ')
-plt.plot_date(x1,y2,'g^',label=' green UP')
+plt.plot_date(x0,y1,'bs',label='\n blue DOWN ')
+plt.plot_date(x0,y2,'g^',label=' green UP')
 #plt.text(1.,1.,r' $\sigma = .1$')
 plt.grid(True)
-
-ax.xaxis.set_major_locator(md.MinuteLocator(interval=60))
-ax.xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+print(x0)
+ax.xaxis.set_major_locator(md.MinuteLocator(interval=1440))
+ax.xaxis.set_major_formatter(md.DateFormatter('%d/%m/%y %H:%M'))
 plt.xlabel('Time')
 plt.ylabel('Speed in Mbs')
 if(drop):
