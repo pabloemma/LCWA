@@ -56,7 +56,7 @@ class MyControl(object):
             print('now checking ',temp)
 
         
-            MyDir = self.PA.dbx.files_list_folder(temp,recursive=True)
+            MyDir = self.PA.dbx.files_list_folder(temp) #do NOT use recursive, since that does not work for shared folders
         
             for item in MyDir.entries:
                 if isinstance(item, dropbox.files.FileMetadata):
@@ -118,6 +118,65 @@ class MyControl(object):
         PA.GetFiles()
         PA.PushFileDropbox()
         
+    def CreateHistory(self):
+        """ reads csv files from different days and then adds them into one large file
+        """
+        #Again we loop over the different directories
+        #first delete all old history files
+        delete_cmd ='rm '+str(Path.home()) +'/scratch/*history.txt'  
+
+        os.system(delete_cmd)
+        
+        temp = 'LC'
+        dirlist = []
+        for k in range(1,16):
+            if (k<10):
+                temp1 = temp+'0'+str(k)+'_'
+            else:
+                temp1 = temp+str(k)+'_'
+            
+            dirlist.append(temp1)
+            
+        for k in range(len(dirlist)):
+            temp = '/LCWA/'+dirlist[k] # file on dropbox
+            print('now working on combining files in  ',temp)
+
+        
+            MyDir = self.PA.dbx.files_list_folder(temp)
+            for item in MyDir.entries:
+                if isinstance(item, dropbox.files.FileMetadata):
+                    now = datetime.datetime.now() #determine how old a file is
+                    diff = now - item.server_modified #take the difference
+                   
+                    if(diff.days > 7 ):
+                        pass# we are only using 7 days
+                    else:
+                        #open file, read it , remove first line
+                        #make sure that it is a csv file
+                        if "csv" in item.path_display:
+                            self.ReadFile(dirlist[k]+'history.txt', item.path_display)
+                        
+       
+    def ReadFile(self,file,path_display):    
+        
+        home = str(Path.home())   
+        temp = home+'/scratch/tempfile.txt'
+        self.PA.dbx.files_download_to_file(temp,path_display)
+        # now read the file , strip firts line and add to summary file
+        with open(temp,"r") as f:
+            rows = f.readlines()[1:] # strips the first line
+        filename = home+'/scratch/'+file
+        if os.path.isfile(filename):
+            output_file = open(filename,'a')
+        else :
+            output_file = open(filename,'w')
+
+        output_file.writelines(rows)
+        output_file.close()
+        
+        
+       
+        
 if __name__ == '__main__':
     #create the list
     from pathlib import Path
@@ -135,3 +194,4 @@ if __name__ == '__main__':
         print (start <= timestamp <= end) # >>> depends on what time it is
     
         MC.MailPlot(recipient_list)
+    MC.CreateHistory()
