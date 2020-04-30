@@ -118,6 +118,11 @@ class MyControl(object):
         PA.GetFiles()
         PA.PushFileDropbox()
         
+    def DoHistoryPlot(self):
+        """ takes all the history csv files and plots them
+        """
+        
+        
     def CreateHistory(self):
         """ reads csv files from different days and then adds them into one large file
         """
