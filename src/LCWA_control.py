@@ -154,7 +154,7 @@ class MyControl(object):
                         #open file, read it , remove first line
                         #make sure that it is a csv file
                         if "csv" in item.path_display:
-                            self.ReadFile(dirlist[k]+'history.txt', item.path_display)
+                            self.ReadFile(dirlist[k]+'history.csv', item.path_display)
                         
        
     def ReadFile(self,file,path_display):    
