@@ -62,7 +62,8 @@ class MyControl(object):
                 if isinstance(item, dropbox.files.FileMetadata):
                     now = datetime.datetime.now() #determine how old a file is
                     diff = now - item.server_modified #take the difference
-                    if(diff.days > 8 ):
+                    print('difference in days',diff.days)
+                    if(diff.days > 7 ):
                         print ('name = ' , item.name)
                         print ('path  = ', item.path_display )
                         print ('fileID = ' , item.id)
@@ -70,7 +71,7 @@ class MyControl(object):
                     # here we backup and delete the files
                         backupfile = self.backupdir+item.name
                         print("backing up file ",item.path_display, ' to',backupfile)
-                        self.dbx.files_download_to_file(backupfile,item.path_display)
+                        self.PA.dbx.files_download_to_file(backupfile,item.path_display)
                        
                         print("deleting file ",item.path_display )
                         self.PA.dbx.files_delete(item.path_display)
@@ -128,7 +129,7 @@ class MyControl(object):
         """
         #Again we loop over the different directories
         #first delete all old history files
-        delete_cmd ='rm '+str(Path.home()) +'/scratch/*history.txt'  
+        delete_cmd ='rm '+str(Path.home()) +'/scratch/*history.csv'  
 
         os.system(delete_cmd)
         
@@ -187,7 +188,7 @@ if __name__ == '__main__':
     from pathlib import Path
     home = str(Path.home())   
     recipient_list = home+'/private/LCWA/recipient_list.txt'
-    backupdir = home+'/LCWA_backup'
+    backupdir = home+'/LCWA_backup/'
     
     MC = MyControl(backupdir)
     
