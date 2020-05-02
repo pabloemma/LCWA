@@ -154,7 +154,7 @@ class MyControl(object):
                     now = datetime.datetime.now() #determine how old a file is
                     diff = now - item.server_modified #take the difference
                    
-                    if(diff.days > 7 ):
+                    if(diff.days > 4 ):
                         pass# we are only using 7 days
                     else:
                         #open file, read it , remove first line
