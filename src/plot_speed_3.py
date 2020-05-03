@@ -130,7 +130,7 @@ if(MyPythonVersion):
     x0 =np.zeros(lines)
     y1=np.zeros(lines)
     y2=np.zeros(lines)
-    format = "%d/%m/%Y %H:%M:%S"
+    format1 = "%d/%m/%Y %H:%M:%S"
     
     
 
@@ -144,7 +144,7 @@ if(MyPythonVersion):
             if(k>0):
                 date_str = row[0]+' '+row[1]
 
-                aa =md.date2num(datetime.datetime.strptime(date_str,format))
+                aa =md.date2num(datetime.datetime.strptime(date_str,format1))
                 x0[k-1] = aa
                 y1[k-1] = row[7]
                 y2[k-1] = row[8]

@@ -33,10 +33,26 @@ class MakePlots(object):
         
         #We just check how many lines the files has.
         # need this to initialize the numpy arrays
+        temp_file = open('temp.txt',"w")
+        counter = 0
+
+        
         with open(self.filename) as f:
             for i, l in enumerate(f):
-                pass
-        lines=i  
+                a=l.split(',')
+                if(len(a)< 9):
+                    print ('problem',a)
+                    print ('ignore data point at line ',counter+1)
+                else:
+                    temp_file.write(l)
+                    counter = counter + 1
+            lines=i
+            temp_file.close()
+                
+                
+                
+ 
+ 
         
         x0 =np.zeros(lines)
         y1=np.zeros(lines)
@@ -46,13 +62,15 @@ class MakePlots(object):
          
          
         #  fille the arrays
-        with open(self.filename, newline='') as csvfile:
+        with open('temp.txt', newline='') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
             k=0
             for row in spamreader:
             #print(', '.join(row))
             #print(row[0],row[7])  
-                if(len(row) < 8):
+                #print(len(row))
+                if(len(row) < 3):
+                    
                     pass
                 else:
                     if(k>0):
