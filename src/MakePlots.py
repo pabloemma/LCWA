@@ -46,7 +46,7 @@ class MakePlots(object):
                 else:
                     temp_file.write(l)
                     counter = counter + 1
-            lines=i
+            lines=counter-1
             temp_file.close()
                 
                 
@@ -69,17 +69,13 @@ class MakePlots(object):
             #print(', '.join(row))
             #print(row[0],row[7])  
                 #print(len(row))
-                if(len(row) < 3):
+                if(k>0):
+                    date_str = row[0]+' '+row[1]
                     
-                    pass
-                else:
-                    if(k>0):
-                        date_str = row[0]+' '+row[1]
-                    
-                        aa =md.date2num(datetime.datetime.strptime(date_str,format_file))
-                        x0[k-1] = aa
-                        y1[k-1] = row[7]
-                        y2[k-1] = row[8]
+                    aa =md.date2num(datetime.datetime.strptime(date_str,format_file))
+                    x0[k-1] = aa
+                    y1[k-1] = row[7]
+                    y2[k-1] = row[8]
                 #print(x0[k-1] , '  ',y1[k-1])
 
             #print(aa)
@@ -113,7 +109,7 @@ class MakePlots(object):
         plt.ylim(0.,24.) # set yaxis limit
         plt.xticks(rotation='vertical')
         plt.tight_layout()
-        file2 = self.filename.replace('csv','pdf')
+        self.file2 = file2 = self.filename.replace('csv','pdf')
 
         print (file2)
         fig.savefig(file2, bbox_inches='tight')
