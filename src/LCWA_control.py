@@ -43,7 +43,7 @@ class MyControl(object):
         #loop over directories and check if anyone has something older than one week
         temp = 'LC'
         dirlist = []
-        for k in range(1,16):
+        for k in range(1,20):
             if (k<10):
                 temp1 = temp+'0'+str(k)+'_'
             else:
@@ -105,7 +105,7 @@ class MyControl(object):
         
         temp = 'LC'
         dirlist = []
-        for k in range(1,16):
+        for k in range(1,20):
             if (k<10):
                 temp1 = temp+'0'+str(k)+'_'
             else:
@@ -135,7 +135,7 @@ class MyControl(object):
         
         temp = 'LC'
         dirlist = []
-        for k in range(1,16):
+        for k in range(1,20):
             if (k<10):
                 temp1 = temp+'0'+str(k)+'_'
             else:
@@ -199,5 +199,5 @@ if __name__ == '__main__':
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
-        MC.MailPlot(recipient_list)
+    MC.MailPlot(recipient_list)
     MC.CreateHistory()

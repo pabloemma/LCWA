@@ -122,6 +122,7 @@ class PlotAll(object):
             pdf.savefig(self.fig1)
             pdf.savefig(self.fig2)        
             pdf.savefig(self.fig3)        
+            pdf.savefig(self.fig4)        
         
         
         #self.pdf.savefig(self.fig) 
@@ -231,6 +232,7 @@ class PlotAll(object):
         #if graph_count > 8:      
         self.fig2, self.axarr2 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         self.fig3, self.axarr3 = plt.subplots(row,column)  # this plot will have x rows and y columns        
+        self.fig4, self.axarr4 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         
             #create output file
         self.pdffile=pdffile=self.MyFileName.replace('csv','pdf')
@@ -484,7 +486,59 @@ class PlotAll(object):
             self.axarr3[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             self.axarr3[i][l].set_ylim(ylow,yhigh) # set yaxis limit
 
+##############################
+        if k > 15 and k <18:
+            i=0
+            l=k-16
+            self.axarr4[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr4[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            axins2 = inset_axes(self.axarr4[i][l],width="100%", height="100%",
+              #bbox_to_anchor=(0,0,1.,.4)  )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr4[i][l].transAxes )
+            axins2.get_xaxis().set_visible(False)
+            
+            axins2.spines['bottom'].set_color('red')
+            axins2.spines['top'].set_color('red')
+            axins2.yaxis.label.set_color('red')
+            axins2.tick_params(axis='y', colors='red')
+            axins2.set_ylim(ylow1,yhigh1)
+            axins2.yaxis.set_label_position("right")
+            axins2.yaxis.tick_right()
 
+            axins2.yaxis.label.set_color('red')
+            axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+
+            self.axarr4[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr4[i][l].transAxes,fontsize=8)
+            self.axarr4[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr4[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            self.axarr4[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+            
+        elif k > 17  and k < 20:
+            
+            i=1
+            l=k-18
+            self.axarr4[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr4[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            axins2 = inset_axes(self.axarr4[i][l],width="100%", height="100%",
+              #bbox_to_anchor=(0,0,1.,.4)  )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr4[i][l].transAxes )
+            axins2.get_xaxis().set_visible(False)
+            
+            axins2.spines['bottom'].set_color('red')
+            axins2.spines['top'].set_color('red')
+            axins2.yaxis.label.set_color('red')
+            axins2.tick_params(axis='y', colors='red')
+            axins2.set_ylim(ylow1,yhigh1)
+            axins2.yaxis.set_label_position("right")
+            axins2.yaxis.tick_right()
+
+            axins2.yaxis.label.set_color('red')
+            axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+
+            self.axarr4[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr4[i][l].transAxes,fontsize=8)
+            self.axarr4[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr4[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            self.axarr4[i][l].set_ylim(ylow,yhigh) # set yaxis limit
 
 
 
@@ -519,7 +573,7 @@ if __name__ == '__main__':
     #create the list
     temp = 'LC'
     dirlist = []
-    for k in range(1,16):
+    for k in range(1,20):
         if (k<10):
             temp1 = temp+'0'+str(k)+'_'
         else:
@@ -528,7 +582,7 @@ if __name__ == '__main__':
         dirlist.append(temp1)
     token_file = '/git/LCWA/src/LCWA_d.txt'
     tempdir = 'scratch'
-    datefile = '2020-04-26' 
+    datefile = '2020-05-02' 
      # " default is none"
     PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropbox()
