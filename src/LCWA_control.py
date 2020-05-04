@@ -199,5 +199,5 @@ if __name__ == '__main__':
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
-    MC.MailPlot(recipient_list)
+        MC.MailPlot(recipient_list)
     MC.CreateHistory()
