@@ -19,13 +19,13 @@ class MakePlots(object):
     '''
 
 
-    def __init__(self, filename):
+    def __init__(self, filename=None):
         '''
         Constructor
         '''
         self.filename=filename
         
-    def ReadCSVFile(self):
+    def ReadCSVFile(self,filenam=None):
         """
         reads in the csv file 
         """
@@ -36,8 +36,11 @@ class MakePlots(object):
         temp_file = open('temp.txt',"w")
         counter = 0
 
-        
-        with open(self.filename) as f:
+        if (filenam==None) :
+            filename=self.filename
+        else:
+            filename=filenam       
+        with open(filename) as f:
             for i, l in enumerate(f):
                 a=l.split(',')
                 if(len(a)< 9):
