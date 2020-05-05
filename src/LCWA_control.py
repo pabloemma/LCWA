@@ -5,6 +5,7 @@ Created on Apr 24, 2020
 '''
 
 import PlotAll as PL
+import MakePlots as MP
 import dropbox
 import datetime
 import SendFileMail as SFM
@@ -32,6 +33,9 @@ class MyControl(object):
         
         self.CleanupDropbox()
         
+        #initialize the Makeplots class
+        
+        self.MP1 = MP.MakePlots()
         
         
     def CleanupDropbox(self):
@@ -180,7 +184,17 @@ class MyControl(object):
         output_file.writelines(rows)
         output_file.close()
         
-        
+    def PlotHistory(self):  
+        """
+        plot the history file
+        """
+       
+       
+       
+        file = str(Path.home())+'/scratch/LC04_history.csv'   
+
+        self.MP1.ReadCSVFile(file) 
+        self.MP1.MakeThePlots()
        
         
 if __name__ == '__main__':
@@ -201,3 +215,4 @@ if __name__ == '__main__':
     
         MC.MailPlot(recipient_list)
     MC.CreateHistory()
+    #MC.PlotHistory()

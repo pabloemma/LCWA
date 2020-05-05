@@ -39,7 +39,7 @@ class MakePlots(object):
         if (filenam==None) :
             filename=self.filename
         else:
-            filename=filenam       
+            self.filename=filename=filenam       
         with open(filename) as f:
             for i, l in enumerate(f):
                 a=l.split(',')
