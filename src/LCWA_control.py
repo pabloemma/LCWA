@@ -205,8 +205,7 @@ class MyControl(object):
                 pass
     def PushFileDropbox(self,k):  
         
-        
-        f =open(str(Path.home())+'/scratch/'+self.dirlist[k]+'history.csv',"rb")
+        f = open(str(Path.home())+'/scratch/'+self.dirlist[k]+'history.pdf',"rb") 
         dropdirfile = '/LCWA/'+self.dirlist[k]+'/'+self.dirlist[k]+'history.pdf'
         self.PA.dbx.files_upload(f.read(),dropdirfile,mode=dropbox.files.WriteMode('overwrite', None))
  
