@@ -200,9 +200,16 @@ class MyControl(object):
             
                 self.MP1.ReadCSVFile(file) 
                 self.MP1.MakeThePlots()
+                self.PushFileDropbox(k)
             else:
                 pass
-       
+    def PushFileDropbox(self,k):  
+        
+        
+        f =open(str(Path.home())+'/scratch/'+self.dirlist[k]+'history.csv',"rb")
+        dropdirfile = '/LCWA/'+self.dirlist[k]+'/'+self.dirlist[k]+'history.pdf'
+        self.PA.dbx.files_upload(f.read(),dropdirfile,mode=dropbox.files.WriteMode('overwrite', None))
+ 
         
 if __name__ == '__main__':
     #create the list
