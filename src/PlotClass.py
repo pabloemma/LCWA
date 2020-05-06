@@ -154,7 +154,7 @@ class MyPlot(object):
 
         plt.title('Speedtest LCWA '+self.InputFile)
     
-        plt.legend(facecolor='ivory',loc="upper right",shadow=True, fancybox=True)
+        plt.legend(facecolor='ivory',loc="center left",shadow=True, fancybox=True)
         plt.ylim(0.,24.) # set yaxis limit
         plt.xticks(rotation='vertical')
         plt.tight_layout()
