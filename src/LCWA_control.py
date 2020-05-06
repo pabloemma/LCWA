@@ -147,6 +147,7 @@ class MyControl(object):
             
             dirlist.append(temp1)
             
+        self.dirlist = dirlist    
         for k in range(len(dirlist)):
             temp = '/LCWA/'+dirlist[k] # file on dropbox
             print('now working on combining files in  ',temp)
@@ -189,12 +190,18 @@ class MyControl(object):
         plot the history file
         """
        
+        for k in range(len(self.dirlist)):
        
        
-        file = str(Path.home())+'/scratch/LC04_history.csv'   
+            file = str(Path.home())+'/scratch/'+self.dirlist[k]+'history.csv'   
+            print('plotting history file  ' ,file)
 
-        self.MP1.ReadCSVFile(file) 
-        self.MP1.MakeThePlots()
+            if os.path.isfile(file):
+            
+                self.MP1.ReadCSVFile(file) 
+                self.MP1.MakeThePlots()
+            else:
+                pass
        
         
 if __name__ == '__main__':
@@ -215,4 +222,5 @@ if __name__ == '__main__':
     
         MC.MailPlot(recipient_list)
     MC.CreateHistory()
+    MC.PlotHistory()
     #MC.PlotHistory()

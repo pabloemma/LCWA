@@ -116,7 +116,7 @@ class MakePlots(object):
 
         print (file2)
         fig.savefig(file2, bbox_inches='tight')
-        plt.show()
+        #plt.show()
 
 
 
