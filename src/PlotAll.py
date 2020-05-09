@@ -490,8 +490,8 @@ class PlotAll(object):
         if k > 15 and k <18:
             i=0
             l=k-16
-            self.axarr4[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
-            self.axarr4[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            #self.axarr4[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            #self.axarr4[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
             axins2 = inset_axes(self.axarr4[i][l],width="100%", height="100%",
               #bbox_to_anchor=(0,0,1.,.4)  )
               bbox_to_anchor=bbox   , bbox_transform=self.axarr4[i][l].transAxes )
@@ -507,6 +507,11 @@ class PlotAll(object):
 
             axins2.yaxis.label.set_color('red')
             axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+
+            self.axarr4[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr4[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+
+
 
             self.axarr4[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr4[i][l].transAxes,fontsize=8)
             self.axarr4[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
@@ -582,7 +587,7 @@ if __name__ == '__main__':
         dirlist.append(temp1)
     token_file = '/git/LCWA/src/LCWA_d.txt'
     tempdir = 'scratch'
-    datefile = '2020-05-02' 
+    datefile = '2020-05-08' 
      # " default is none"
     PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropbox()
