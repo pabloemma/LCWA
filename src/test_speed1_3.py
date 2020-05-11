@@ -143,7 +143,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.4'
+        self.vs = '5.01.5'
 
         
         print(' History')
@@ -167,6 +167,8 @@ class test_speed1():
         print('Version 5.01.2', 'stop at 23:45 to 24:00, flush data and exit')
         print('Version 5.01.3', 'Create textfile with important values')
         print('Version 5.01.4', 'test of distro')
+        print('Version 5.01.5', 'timestamp in log file')
+        
         print('\n\n\n')
         
          
