@@ -97,7 +97,7 @@ class MyControl(object):
 
         
         
-        message = ' this is the daily Raspberry PI report'
+        message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n red packet loss'
         file = self.PA.pdf   
         
         sa = SFM.MyMail(file,b,subject, message)
