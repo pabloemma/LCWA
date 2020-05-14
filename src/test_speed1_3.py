@@ -143,7 +143,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.5'
+        self.vs = '5.01.6'
 
         
         print(' History')
@@ -168,6 +168,7 @@ class test_speed1():
         print('Version 5.01.3', 'Create textfile with important values')
         print('Version 5.01.4', 'test of distro')
         print('Version 5.01.5', 'timestamp in log file')
+        print('Version 5.01.6', 'added close_fds=True to popen')
         
         print('\n\n\n')
         
@@ -419,6 +420,7 @@ class test_speed1():
                          #stdout=outfile,
                          stdout=sp.PIPE,
                          stderr=sp.PIPE,
+                         close_fds=True,
                          universal_newlines=True)
         
         out,err = process.communicate()
