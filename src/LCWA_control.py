@@ -223,10 +223,10 @@ if __name__ == '__main__':
     timestamp = datetime.datetime.now().time() # Throw away the date information
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
-    #if(start<timestamp<=end):
-      #  print (start <= timestamp <= end) # >>> depends on what time it is
+    if(start<timestamp<=end):
+        print (start <= timestamp <= end) # >>> depends on what time it is
     
-    MC.MailPlot(recipient_list)
+        MC.MailPlot(recipient_list)
     MC.CreateHistory()
     MC.PlotHistory()
     #MC.PlotHistory()
