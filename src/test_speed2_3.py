@@ -211,14 +211,12 @@ class test_speed1():
         #list of argument lists
         
         
-        timeoutcmd = '/usr/bin/timeout -k 300 200 '
-        mac_timeoutcmd = '/usr/local/bin/gtimeout -k 300 200 '
         # here some of the defaults
         #Of courss Mac has the stuff in different places than Linux
         if platform.system() == 'Darwin':
-            temp1=[mac_timeoutcmd+"/usr/local/bin/speedtest","--progress=no","-f","csv"] # we want csv output by default
+            temp1=["/usr/local/bin/timeout","-k","300","200","/usr/local/bin/speedtest","--progress=no","-f","csv"] # we want csv output by default
         elif platform.system() == 'Linux':
-            temp1=[timeoutcmd+"/usr/bin/speedtest","--progress=no","-f","csv"] # we want csv output by default         
+            temp1=["/usr/bin/timeout", "-k", "300"," 200","/usr/bin/speedtest","--progress=no","-f","csv"] # we want csv output by default         
         # do our arguments
         else:
             print(' Sorry we don\'t do Windows yet')
@@ -246,9 +244,9 @@ class test_speed1():
             if(args.servers):
                 if platform.system() == 'Darwin':
 
-                    self.command = [mac_timeoutcmd+"/usr/local/bin/speedtest", '-L'] #because argparse does not take single args
+                    self.command = ["/usr/local/bin/timeout","-k","300","200","/usr/local/bin/speedtest", '-L'] #because argparse does not take single args
                 elif platform.system() == 'Linux':
-                    self.command=[timeoutcmd+"/usr/bin/speedtest",'-L'] # we want csv output by default         
+                    self.command=["/usr/bin/timeout", "-k", "300"," 200","/usr/bin/speedtest",'-L'] # we want csv output by default         
                    
                 
                 self.RunShort()
@@ -256,9 +254,9 @@ class test_speed1():
             if(args.version):
                 if platform.system() == 'Darwin':
 
-                    self.command = [mac_timeoutcmd+"/usr/local/bin/speedtest", '-V'] #because argparse does not take single args
+                    self.command = ["/usr/local/bin/timeout","-k","300","200","/usr/local/bin/speedtest", '-V'] #because argparse does not take single args
                 elif platform.system() == 'Linux':
-                    self.command=[timeoutcmd+"/usr/bin/speedtest",'-V'] # we want csv output by default         
+                    self.command=["/usr/bin/timeout", "-k", "300"," 200","/usr/bin/speedtest",'-V'] # we want csv output by default         
                 
                 self.RunShort()
                 sys.exit(0)
