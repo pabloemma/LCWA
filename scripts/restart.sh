@@ -7,7 +7,7 @@ then
     echo "Process running ...";
 else
 
-python3 /home/pi/git/speedtest/src/test_speed1_3.py -t 10 -d /home/pi/git/speedtest/src/LCWA_d.txt -s 18002 > /home/pi/run_speedtest.log 2>&1 &
+python3 /home/pi/git/speedtest/src/test_speed1_3.py -t 10 -d /home/pi/git/speedtest/src/LCWA_d.txt -s 18002 > /home/pi/run_speedtest_restart.log 2>&1 &
 
 echo "Starting the process";
 fi;
