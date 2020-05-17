@@ -143,7 +143,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.6'
+        self.vs = '5.01.7'
 
         
         print(' History')
