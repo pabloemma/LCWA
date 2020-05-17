@@ -143,7 +143,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.7'
+        self.vs = '5.01.8'
 
         
         print(' History')
@@ -170,6 +170,7 @@ class test_speed1():
         print('Version 5.01.5', 'timestamp in log file')
         print('Version 5.01.6', 'added close_fds=True to popen')
         print('Version 5.01.7', 'added using timeout command')
+        print('Version 5.01.8', 'better error message')
         
         print('\n\n\n')
         
@@ -425,7 +426,8 @@ class test_speed1():
                          universal_newlines=True)
         
         out,err = process.communicate()
-        print("error",err)
+        if process.returncode != 0:
+            print("error",err)
         a=str(out)
         #a is now a tuple , which we fill into a csv list
         self.CreateOutput(a)

@@ -27,11 +27,20 @@ class MyControl(object):
         
         #first get everything setup with dropbox by excuting DoPlotting
         
+ 
+        self.low_range = 1
+        self.hi_range = 21  # number of boxes we have out
+
+        
+        
         self.backupdir = backupdir
         
         self.DoPlotting()
         
         self.CleanupDropbox()
+
+
+
         
         #initialize the Makeplots class
         
@@ -47,7 +56,7 @@ class MyControl(object):
         #loop over directories and check if anyone has something older than one week
         temp = 'LC'
         dirlist = []
-        for k in range(1,20):
+        for k in range(self.low_range,self.hi_range):
             if (k<10):
                 temp1 = temp+'0'+str(k)+'_'
             else:
@@ -109,7 +118,7 @@ class MyControl(object):
         
         temp = 'LC'
         dirlist = []
-        for k in range(1,20):
+        for k in range(self.low_range,self.hi_range):
             if (k<10):
                 temp1 = temp+'0'+str(k)+'_'
             else:
@@ -140,7 +149,7 @@ class MyControl(object):
         
         temp = 'LC'
         dirlist = []
-        for k in range(1,20):
+        for k in range(self.low_range,self.hi_range):
             if (k<10):
                 temp1 = temp+'0'+str(k)+'_'
             else:
