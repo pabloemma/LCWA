@@ -416,7 +416,7 @@ class test_speed1():
         this is the heart of the wrapper, using the CLI command
         """
         
-        print (self.command)
+        #print (self.command)
         
         process = sp.Popen(self.command,
                          #stdout=outfile,
