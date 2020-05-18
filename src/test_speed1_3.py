@@ -143,7 +143,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.8'
+        self.vs = '5.01.9'
 
         
         print(' History')
@@ -171,6 +171,7 @@ class test_speed1():
         print('Version 5.01.6', 'added close_fds=True to popen')
         print('Version 5.01.7', 'added using timeout command')
         print('Version 5.01.8', 'better error message')
+        print('Version 5.01.9', 'date and time output')
         
         print('\n\n\n')
         
@@ -316,7 +317,10 @@ class test_speed1():
                     f =open(self.lcwa_filename,"rb")
                     print (self.dropdir, '   ',self.docfile)
                     self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
-                    print('wrote dropbox file')
+                    now=datetime.datetime.now()
+                    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+
+                    print(dt_string,'   wrote dropbox file')
                     # write textfile
                     self.WriteDescriptor()
                     self.docfile1 = self.docfile.replace('csv','txt')
@@ -335,8 +339,10 @@ class test_speed1():
                     self.docfile1 = self.docfile.replace('csv','txt')
                     f1=open(self.textfile,"rb")
                     self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
+                    now=datetime.datetime.now()
+                    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
-                    print (' now saving plotfile')
+                    print (dt_string,' now saving plotfile')
                     self.DoPlots()
                     print('midnight exiting')
                     sys.exit(0)
