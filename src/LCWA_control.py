@@ -75,7 +75,7 @@ class MyControl(object):
                 if isinstance(item, dropbox.files.FileMetadata):
                     now = datetime.datetime.now() #determine how old a file is
                     diff = now - item.server_modified #take the difference
-                    print('difference in days',diff.days)
+                    #print('difference in days',diff.days)
                     if(diff.days > 7 ):
                         print ('name = ' , item.name)
                         print ('path  = ', item.path_display )

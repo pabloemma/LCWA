@@ -233,12 +233,53 @@ class PlotAll(object):
         self.fig2, self.axarr2 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         self.fig3, self.axarr3 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         self.fig4, self.axarr4 = plt.subplots(row,column)  # this plot will have x rows and y columns        
+ 
+ # the nex section is for pyhhtonizing the plotting
+        
+        # we will create a large array of figures and axarr
+ 
+ 
+ 
         
             #create output file
         self.pdffile=pdffile=self.MyFileName.replace('csv','pdf')
         self.pdffilepath = self.SetTempDirectory()+'/LCWA_TOTAL_'+pdffile
 
+    def PlotTestData1(self,k):
+        """
+        Plots the tests
+        x1: date
+        y1: download
+        y2:upload
+        k_spectrum # number of graph we have done
+        """
         
+        np.set_printoptions(precision=2)
+        
+        #Add Ip address
+        
+        
+        #ax.text(.1,.36,'Average $\mu$ and Standard deviation $\sigma$',weight='bold',transform=ax.transAxes,fontsize=13)
+        #ax.text(.1,.23,r'$\mu_{up}     = $'+str(np.around(np.mean(y2),2))+' '+'[Mb/s]'+r'   $\sigma_{up} =     $'+str(np.around(np.std(y2),2)),transform=ax.transAxes,fontsize=12)
+        #ax.text(.1,.3,r'$\mu_{down} = $'+str(np.around(np.mean(y1),2))+' '+'[Mb/s]'+r'   $\sigma_{down} = $'+str(np.around(np.std(y1),2)),transform=ax.transAxes,fontsize=12)
+
+        #add legend
+        #print(self.legend)
+        x1,y0,y1,y2 = self.x1,self.y0,self.y1,self.y2
+        
+        
+        ms1=3. #markersize
+        xpos = .05 #text position
+        ypos = 1.02
+        ylow = 0.
+        yhigh = 24.
+        ylow1=0.
+        yhigh1=30.
+        
+        bbox=(0.03,.03,1.,0.25)
+        print('number',k)
+
+            
     def PlotTestData(self,k):
         """
         Plots the tests
