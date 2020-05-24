@@ -43,10 +43,12 @@ class MakePlots(object):
         with open(filename) as f:
             for i, l in enumerate(f):
                 a=l.split(',')
+                #print(l)
                 if(len(a)< 9):
                     print ('problem',a)
                     print ('ignore data point at line ',counter+1)
                 else:
+                    
                     temp_file.write(l)
                     counter = counter + 1
             lines=counter-1
@@ -63,14 +65,16 @@ class MakePlots(object):
         format_file = "%d/%m/%Y %H:%M:%S"
 
          
-         
+        print('filename',filename)
+        
         #  fille the arrays
-        with open('temp.txt', newline='') as csvfile:
-            spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+        with open('temp.txt',newline='') as csvfile:
+            spamreader = csv.reader(x.replace('\0', '') for x in csvfile)
+            #spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
             k=0
-            for row in spamreader:
-            #print(', '.join(row))
-            #print(row[0],row[7])  
+            for  row in spamreader:
+                #print(', '.join(row))
+                #print(row[0],row[7])  
                 #print(len(row))
                 if(k>0):
                     date_str = row[0]+' '+row[1]
