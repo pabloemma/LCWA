@@ -124,6 +124,7 @@ class PlotAll(object):
             pdf.savefig(self.fig2)        
             pdf.savefig(self.fig3)        
             pdf.savefig(self.fig4)        
+            pdf.savefig(self.fig5)        
         
         
         #self.pdf.savefig(self.fig) 
@@ -234,6 +235,7 @@ class PlotAll(object):
         self.fig2, self.axarr2 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         self.fig3, self.axarr3 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         self.fig4, self.axarr4 = plt.subplots(row,column)  # this plot will have x rows and y columns        
+        self.fig5, self.axarr5 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         
         
         
@@ -654,6 +656,75 @@ class PlotAll(object):
             elif(np.around(np.mean(y1),2) <= 7. ):
                 self.axarr4[i][l].set_ylim(ylow,yhigh3) # set yaxis limit
 
+##########
+        if k > 19 and k <22:
+            i=0
+            l=k-20
+            #self.axarr5[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            #self.axarr5[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            axins2 = inset_axes(self.axarr5[i][l],width="100%", height="100%",
+              #bbox_to_anchor=(0,0,1.,.4)  )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr5[i][l].transAxes )
+            axins2.get_xaxis().set_visible(False)
+            
+            axins2.spines['bottom'].set_color('red')
+            axins2.spines['top'].set_color('red')
+            axins2.yaxis.label.set_color('red')
+            axins2.tick_params(axis='y', colors='red')
+            axins2.set_ylim(ylow1,yhigh1)
+            axins2.yaxis.set_label_position("right")
+            axins2.yaxis.tick_right()
+
+            axins2.yaxis.label.set_color('red')
+            axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+
+            self.axarr5[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr5[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+
+
+
+            self.axarr5[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr5[i][l].transAxes,fontsize=8)
+            self.axarr5[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr5[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            if(np.around(np.mean(y1),2) > 12.):
+                self.axarr5[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+            elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
+                self.axarr5[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
+            elif(np.around(np.mean(y1),2) <= 7. ):
+                self.axarr5[i][l].set_ylim(ylow,yhigh3) # set yaxis limit
+            
+        elif k > 21  and k < 24:
+            
+            i=1
+            l=k-22
+            self.axarr5[i][l].plot_date(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
+            self.axarr5[i][l].plot_date(x1,y2,'g^',label='\n green UP ',ms=ms1)
+            axins2 = inset_axes(self.axarr5[i][l],width="100%", height="100%",
+              #bbox_to_anchor=(0,0,1.,.4)  )
+              bbox_to_anchor=bbox   , bbox_transform=self.axarr5[i][l].transAxes )
+            axins2.get_xaxis().set_visible(False)
+            
+            axins2.spines['bottom'].set_color('red')
+            axins2.spines['top'].set_color('red')
+            axins2.yaxis.label.set_color('red')
+            axins2.tick_params(axis='y', colors='red')
+            axins2.set_ylim(ylow1,yhigh1)
+            axins2.yaxis.set_label_position("right")
+            axins2.yaxis.tick_right()
+
+            axins2.yaxis.label.set_color('red')
+            axins2.plot_date(x1,y0,'r+',label='\n red packet loss ',ms=ms1)
+
+            self.axarr5[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr5[i][l].transAxes,fontsize=8)
+            self.axarr5[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
+            self.axarr5[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            if(np.around(np.mean(y1),2) > 12.):
+                self.axarr5[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+            elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
+                self.axarr5[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
+            elif(np.around(np.mean(y1),2) <= 7. ):
+                self.axarr5[i][l].set_ylim(ylow,yhigh3) # set yaxis limit
+
 
 
         #plt.show()  #Uncomment for seeing the plot
@@ -687,7 +758,7 @@ if __name__ == '__main__':
     #create the list
     temp = 'LC'
     dirlist = []
-    for k in range(1,20):
+    for k in range(1,21+1):
         if (k<10):
             temp1 = temp+'0'+str(k)+'_'
         else:
@@ -696,7 +767,7 @@ if __name__ == '__main__':
         dirlist.append(temp1)
     token_file = '/git/LCWA/src/LCWA_d.txt'
     tempdir = 'scratch'
-    datefile = '2020-05-23' 
+    datefile = '2020-05-25' 
      # " default is none"
     PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropbox()
