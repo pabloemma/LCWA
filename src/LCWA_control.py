@@ -107,7 +107,15 @@ class MyControl(object):
 
         
         
-        message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n red packet loss'
+        message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n red packet loss \n \
+        \n\n *************** News Flash ************* \n \n \
+        the yaxis gets now set by the mean of the distribution \n \
+        meaning that if the mean is larger than 12 it is a 20 Mbs account \n \
+        between 7 and 12 it is a 10 Mbs \n \
+        smaller than 7, it is a 5 Mbs account. \n \
+        then the limits will be 0,22  0,12  and 0,7 \n \
+        \n\n******************************************'
+
         file = self.PA.pdf   
         
         sa = SFM.MyMail(file,b,subject, message)
