@@ -108,7 +108,7 @@ class MyControl(object):
         
         
         message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n red packet loss \n \
-        \n\n *************** News Flash ************* \n \n \
+        \n\n *************** News Flash 5-25-2020 ************* \n \n \
         the yaxis gets now set by the mean of the distribution \n \
         meaning that if the mean is larger than 12 it is a 20 Mbs account \n \
         between 7 and 12 it is a 10 Mbs \n \
