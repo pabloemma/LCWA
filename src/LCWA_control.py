@@ -107,14 +107,7 @@ class MyControl(object):
 
         
         
-        message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n red packet loss \n \
-        \n\n *************** News Flash 5-25-2020 ************* \n \n \
-        the yaxis gets now set by the mean of the distribution \n \
-        meaning that if the mean is larger than 12 it is a 20 Mbs account \n \
-        between 7 and 12 it is a 10 Mbs \n \
-        smaller than 7, it is a 5 Mbs account. \n \
-        then the limits will be 0,22  0,12  and 0,7 \n \
-        \n\n******************************************'
+        message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n red packet loss \n '
 
         file = self.PA.pdf   
         
@@ -136,8 +129,8 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_d.txt'
         tempdir = 'scratch'
-        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2020-05-15')
-        self.PA =PA =PL.PlotAll(token_file,dirlist)
+        self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2020-05-29')
+        #self.PA =PA =PL.PlotAll(token_file,dirlist)
         PA.ConnectDropbox()
         PA.GetFiles()
         PA.PushFileDropbox()
@@ -242,10 +235,10 @@ if __name__ == '__main__':
     timestamp = datetime.datetime.now().time() # Throw away the date information
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
-    if(start<timestamp<=end):
-        print (start <= timestamp <= end) # >>> depends on what time it is
+    #if(start<timestamp<=end):
+        #print (start <= timestamp <= end) # >>> depends on what time it is
     
-        MC.MailPlot(recipient_list)
+    MC.MailPlot(recipient_list)
     MC.CreateHistory()
     MC.PlotHistory()
     #MC.PlotHistory()
