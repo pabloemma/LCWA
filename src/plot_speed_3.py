@@ -94,6 +94,7 @@ if(drop):
         
         temp =  sys.argv[1]
     file1 = dir+'/scratch/'+temp
+    print(file,'  ',file1)
     filename = dbx.files_download_to_file(file1,file)
     #filename = dbx.files_download_to_file('/Users/klein/scratch/LC04_2020-04-20speedfile.csv','/LCWA/LC04/LC04_2020-04-20speedfile.csv')
     
@@ -194,7 +195,20 @@ else:
     plt.title('Speedtest LCWA using '+file1)
     
 plt.legend(facecolor='ivory',loc="lower right",shadow=True, fancybox=True)
-plt.ylim(0.,24.) # set yaxis limit
+
+if(np.around(np.mean(y1),2) > 21.):
+    plt.ylim(0.,41.) # set yaxis limit
+elif(np.around(np.mean(y1),2) <= 21. and np.around(np.mean(y1),2) > 12.):
+    plt.ylim(0.,24.) # set yaxis limit
+elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
+    plt.ylim(0.,12.) # set yaxis limit
+             # set yaxis limit
+elif(np.around(np.mean(y1),2) <= 7. ):
+    plt.ylim(0.,7.) # set yaxis limit
+print('mean  ' ,np.around(np.mean(y1),2) )
+print('std  ' ,np.around(np.std(y1),2) )
+
+ # set yaxis limit
 plt.xticks(rotation='vertical')
 plt.tight_layout()
 file2 = file1.replace('csv','pdf')

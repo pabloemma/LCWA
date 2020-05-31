@@ -155,7 +155,17 @@ class MyPlot(object):
         plt.title('Speedtest LCWA '+self.InputFile)
     
         plt.legend(facecolor='ivory',loc="center left",shadow=True, fancybox=True)
-        plt.ylim(0.,24.) # set yaxis limit
+        if(np.around(np.mean(y1),2) > 21.):
+            plt.ylim(0.,41.) # set yaxis limit
+        elif(np.around(np.mean(y1),2) <= 21. and np.around(np.mean(y1),2) > 12.):
+            plt.ylim(0.,24.) # set yaxis limit
+        elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
+            plt.ylim(0.,12.) # set yaxis limit
+             # set yaxis limit
+        elif(np.around(np.mean(y1),2) <= 7. ):
+            plt.ylim(0.,7.) # set yaxis limit
+
+        
         plt.xticks(rotation='vertical')
         plt.tight_layout()
         print('input file',self.InputFile)

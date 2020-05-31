@@ -328,6 +328,7 @@ class PlotAll(object):
         
         yhigh2 = 12. #limits for 10 Mbs
         yhigh3 = 7. #limits for 5 Mbs
+        yhigh4 = 40. #limits for LC19, double pppoe accounts
         
         bbox=(0.03,.03,1.,0.25)
         print('number',k)
@@ -650,11 +651,13 @@ class PlotAll(object):
             self.axarr4[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr4[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             if(np.around(np.mean(y1),2) > 12.):
-                self.axarr4[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+                self.axarr5[i][l].set_ylim(ylow,yhigh) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr4[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
                 self.axarr4[i][l].set_ylim(ylow,yhigh3) # set yaxis limit
+            if(k ==19):
+                self.axarr5[i][l].set_ylim(ylow,yhigh4)    
 
 ##########
         if k > 19 and k <22:
@@ -767,7 +770,7 @@ if __name__ == '__main__':
         dirlist.append(temp1)
     token_file = '/git/LCWA/src/LCWA_d.txt'
     tempdir = 'scratch'
-    datefile = '2020-05-25' 
+    datefile = '2020-05-29' 
      # " default is none"
     PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropbox()
