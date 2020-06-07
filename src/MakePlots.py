@@ -99,7 +99,8 @@ class MakePlots(object):
         np.set_printoptions(precision=2)
         fig=plt.figure() 
         ax=fig.add_subplot(1,1,1)
-
+        y1=self.y1
+        y2=self.y2
         plt.plot_date(self.x0,self.y1,'bs',label='\n blue DOWN ',markersize =2)
         plt.plot_date(self.x0,self.y2,'g^',label=' green UP',markersize =2)
 #plt.text(1.,1.,r' $\sigma = .1$')
@@ -111,9 +112,18 @@ class MakePlots(object):
         plt.ylabel('Speed in Mbs')
         
         plt.title('Speedtest LCWA using '+self.filename)
-    
+        print(' mean',np.around(np.mean(y1),2))
         plt.legend(facecolor='ivory',loc="lower right",shadow=True, fancybox=True)
-        plt.ylim(0.,24.) # set yaxis limit
+        if(np.around(np.mean(y1),2) > 20.):
+            plt.ylim(0.,41.) # set yaxis limit
+        elif(np.around(np.mean(y1),2) <= 21. and np.around(np.mean(y1),2) > 12.):
+            plt.ylim(0.,24.) # set yaxis limit
+        elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
+            plt.ylim(0.,12.) # set yaxis limit
+             # set yaxis limit
+        elif(np.around(np.mean(y1),2) <= 7. ):
+            plt.ylim(0.,7.) # set yaxis limit
+
         plt.xticks(rotation='vertical')
         plt.tight_layout()
         self.file2 = file2 = self.filename.replace('csv','pdf')
@@ -135,7 +145,7 @@ if __name__ == '__main__':
     from pathlib import Path
     home = str(Path.home()) 
     
-    File = home+'/scratch/LC04_history.csv' 
+    File = home+'/scratch/LC19_history.csv' 
     MP=MakePlots(File)
     MP.ReadCSVFile()
     MP.MakeThePlots() 
