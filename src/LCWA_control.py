@@ -177,7 +177,7 @@ class MyControl(object):
                         #open file, read it , remove first line
                         #make sure that it is a csv file
                         if "csv" in item.path_display:
-                            self.ReadFile(dirlist[k]+'history.csv', item.path_display)
+                            self.ReadFile(dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.csv', item.path_display)
                         
        
     def ReadFile(self,file,path_display):    
@@ -205,7 +205,7 @@ class MyControl(object):
         for k in range(len(self.dirlist)):
        
        
-            file = str(Path.home())+'/scratch/'+self.dirlist[k]+'history.csv'   
+            file = str(Path.home())+'/scratch/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.csv'   
             print('plotting history file  ' ,file)
 
             if os.path.isfile(file):
@@ -217,8 +217,8 @@ class MyControl(object):
                 pass
     def PushFileDropbox(self,k):  
         
-        f = open(str(Path.home())+'/scratch/'+self.dirlist[k]+'history.pdf',"rb") 
-        dropdirfile = '/LCWA/'+self.dirlist[k]+'/'+self.dirlist[k]+'history.pdf'
+        f = open(str(Path.home())+'/scratch/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.pdf',"rb") 
+        dropdirfile = '/LCWA/'+self.dirlist[k]+'/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.pdf'
         self.PA.dbx.files_upload(f.read(),dropdirfile,mode=dropbox.files.WriteMode('overwrite', None))
  
         
