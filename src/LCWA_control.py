@@ -235,8 +235,8 @@ if __name__ == '__main__':
     timestamp = datetime.datetime.now().time() # Throw away the date information
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
-    #start = datetime.time(7,15)
-    #end = datetime.time(7,25)
+    start = datetime.time(7,50)
+    end = datetime.time(7,59)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
