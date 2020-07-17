@@ -745,7 +745,10 @@ class PlotAll(object):
         with open(file, 'r') as f1:
             s = f1.readlines()
             IP = s[0].split()
-            self.MyIP = IP[1]
+            try:
+                self.MyIP = IP[1]
+            except:
+                self.MyIP = '999.99.99.1'
 
 
         
