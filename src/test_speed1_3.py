@@ -143,7 +143,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.9'
+        self.vs = '5.01.10'
 
         
         print(' History')
@@ -172,6 +172,7 @@ class test_speed1():
         print('Version 5.01.7', 'added using timeout command')
         print('Version 5.01.8', 'better error message')
         print('Version 5.01.9', 'date and time output')
+        print('Version 5.01.10', 'catching network problems')
         
         print('\n\n\n')
         
@@ -316,36 +317,46 @@ class test_speed1():
                     
                     f =open(self.lcwa_filename,"rb")
                     print (self.dropdir, '   ',self.docfile)
-                    self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
-                    now=datetime.datetime.now()
-                    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+                    try:
+                        self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
+                        now=datetime.datetime.now()
+                        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
-                    print(dt_string,'   wrote dropbox file')
+                        print(dt_string,'   wrote dropbox file')
                     # write textfile
-                    self.WriteDescriptor()
-                    self.docfile1 = self.docfile.replace('csv','txt')
-                    f1=open(self.textfile,"rb")
-                    self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
+                        self.WriteDescriptor()
+                        self.docfile1 = self.docfile.replace('csv','txt')
+                        f1=open(self.textfile,"rb")
+                        self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
     
-                    if(counter > 0):
-                        print (' now saving plotfile')
-                        self.DoPlots()
+                        if(counter > 0):
+                            print (' now saving plotfile')
+                            self.DoPlots()
+                    except:
+                        self.Logging(' Cannot connect to dropbox, will try in 10 minues again')
+
+                        time.sleep(10*60)
                     #counter = 0 
                 elif self.FlushTime(): # It is close to midnight, we flush the last file and exit to ensure we laod trhe latest software
-                    f =open(self.lcwa_filename,"rb")
-                    print (self.dropdir, '   ',self.docfile)
-                    self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
-                    self.WriteDescriptor()
-                    self.docfile1 = self.docfile.replace('csv','txt')
-                    f1=open(self.textfile,"rb")
-                    self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
-                    now=datetime.datetime.now()
-                    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+                    try:
+                        f =open(self.lcwa_filename,"rb")
+                        print (self.dropdir, '   ',self.docfile)
+                        self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
+                        self.WriteDescriptor()
+                        self.docfile1 = self.docfile.replace('csv','txt')
+                        f1=open(self.textfile,"rb")
+                        self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
+                        now=datetime.datetime.now()
+                        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
-                    print (dt_string,' now saving plotfile')
-                    self.DoPlots()
-                    print('midnight exiting')
-                    sys.exit(0)
+                        print (dt_string,' now saving plotfile')
+                        self.DoPlots()
+                        print('midnight exiting')
+                        sys.exit(0)
+                    except:
+                        self.Logging('Midnight save aborted due to network problem')
+                        sys.exit(0)
+                        
                     #counter = 0 
                     
 
@@ -691,6 +702,13 @@ class test_speed1():
         
         self.dbx.files_delete(path, parent_rev)
         pass
+ 
+    def Logging(self,message):
+        """
+        prints out erroro message with time
+        """
+        print(datetime.datetime.now(),' speedtest error > ',message)
+ 
         
 if __name__ == '__main__':
     
