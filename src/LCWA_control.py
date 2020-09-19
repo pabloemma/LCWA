@@ -29,7 +29,7 @@ class MyControl(object):
         
  
         self.low_range = 1
-        self.hi_range = 22  # number of boxes we have out
+        self.hi_range = 24  # number of boxes we have out
 
         
         
