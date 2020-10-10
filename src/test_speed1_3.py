@@ -173,7 +173,7 @@ class test_speed1():
         print('Version 5.01.8', 'better error message')
         print('Version 5.01.9', 'date and time output')
         print('Version 5.01.10', 'catching network problems')
-        print('Version 5.01.11', 'force LC12 to connect to NMSURF')
+        print('Version 5.01.11', 'force LC12 to connect to NMSURF, done in the arg parse section')
         
         print('\n\n\n')
         
