@@ -143,7 +143,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.10'
+        self.vs = '5.01.11'
 
         
         print(' History')
@@ -173,6 +173,7 @@ class test_speed1():
         print('Version 5.01.8', 'better error message')
         print('Version 5.01.9', 'date and time output')
         print('Version 5.01.10', 'catching network problems')
+        print('Version 5.01.11', 'force LC12 to connect to NMSURF')
         
         print('\n\n\n')
         
@@ -268,7 +269,11 @@ class test_speed1():
                 t=['-s',args.serverid]
                 temp1.extend(t)
             else: # make cybermesa the default
-                t=['-s','18002']
+                # temp fix for LC12 to go to NMsurf server
+                if(socket.gethostname == 'LC12'):
+                    t=['-s','9686']    # go to NMSURF                
+                else:
+                    t=['-s','18002']
                 temp1.extend(t)
               
             
