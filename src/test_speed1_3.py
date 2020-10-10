@@ -270,7 +270,7 @@ class test_speed1():
                 temp1.extend(t)
             else: # make cybermesa the default
                 # temp fix for LC12 to go to NMsurf server
-                if(socket.gethostname == 'LC12'):
+                if(socket.gethostname() == 'LC12'):
                     t=['-s','9686']    # go to NMSURF                
                 else:
                     t=['-s','18002']
