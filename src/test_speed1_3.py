@@ -266,7 +266,11 @@ class test_speed1():
                 sys.exit(0)
                 
             if(args.serverid != None):
-                t=['-s',args.serverid]
+                if(socket.gethostname() == 'LC12'):
+                    t=['-s','9686']    # go to NMSURF                
+                else:
+                    t=['-s',args.serverid]
+                
                 temp1.extend(t)
             else: # make cybermesa the default
                 # temp fix for LC12 to go to NMsurf server
