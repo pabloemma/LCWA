@@ -269,8 +269,8 @@ class test_speed1():
             if(args.serverid != None):
                 if(socket.gethostname() == 'LC12'):
                     t=['-s','9686']    # go to NMSURF                
-                elif(socket.gethostname() == 'LC24'):
-                    t=['-s','9686']    # go to NMSURF                
+                #elif(socket.gethostname() == 'LC24'):
+                    #t=['-s','9686']    # go to NMSURF                
                 else:
                     t=['-s',args.serverid]
                 
@@ -279,8 +279,8 @@ class test_speed1():
                 # temp fix for LC12 to go to NMsurf server
                 if(socket.gethostname() == 'LC12'):
                     t=['-s','9686']    # go to NMSURF                
-                elif(socket.gethostname() == 'LC24'):
-                    t=['-s','9686']    # go to NMSURF                
+                #elif(socket.gethostname() == 'LC24'):
+                    #t=['-s','9686']    # go to NMSURF                
                 else:
                     t=['-s','18002']
                 temp1.extend(t)
