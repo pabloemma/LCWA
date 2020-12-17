@@ -124,6 +124,10 @@ class MakePlots(object):
         elif(np.around(np.mean(y1),2) <= 7. ):
             plt.ylim(0.,7.) # set yaxis limit
 
+#        I am taking out variable ylimits and replace it with hardwired of 22.
+        plt.ylim(0.,24.)
+
+
         plt.xticks(rotation='vertical')
         plt.tight_layout()
         self.file2 = file2 = self.filename.replace('csv','pdf')

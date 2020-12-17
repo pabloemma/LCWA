@@ -129,16 +129,13 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_d.txt'
         tempdir = 'scratch'
-        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2020-10-11')
+        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2020-12-05')
         self.PA =PA =PL.PlotAll(token_file,dirlist)
         PA.ConnectDropbox()
         PA.GetFiles()
         PA.PushFileDropbox()
         
-    def DoHistoryPlot(self):
-        """ takes all the history csv files and plots them
-        """
-        
+       
         
     def CreateHistory(self):
         """ reads csv files from different days and then adds them into one large file
@@ -236,8 +233,8 @@ if __name__ == '__main__':
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
     # for a different date use the line 132
-    #start = datetime.time(8,24)
-    #end = datetime.time(8,33)
+    #start = datetime.time(8,12)
+    #end = datetime.time(8,22)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
