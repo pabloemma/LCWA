@@ -60,6 +60,7 @@ class MakePlots(object):
  
         
         x0 =np.zeros(lines)
+        xti=np.zeros(lines)
         y1=np.zeros(lines)
         y2=np.zeros(lines)
         format_file = "%d/%m/%Y %H:%M:%S"
@@ -78,9 +79,11 @@ class MakePlots(object):
                 #print(len(row))
                 if(k>0):
                     date_str = row[0]+' '+row[1]
-                    
+                    temp = time.mktime(datetime.datetime.strptime(date_str, "%d/%m/%Y %H:%M:%S").timetuple())
+                    print(temp)
                     aa =md.date2num(datetime.datetime.strptime(date_str,format_file))
                     x0[k-1] = aa
+                    xti[k-1] = temp # for root time
                     y1[k-1] = row[7]
                     y2[k-1] = row[8]
                 #print(x0[k-1] , '  ',y1[k-1])
@@ -90,7 +93,9 @@ class MakePlots(object):
         self.x0 = x0
         self.y1 = y1
         self.y2 = y2
+        self.xti = xti
         
+        return [self.xti , self.y1,self.y2]
         
         
     def MakeThePlots(self):
@@ -149,7 +154,7 @@ if __name__ == '__main__':
     from pathlib import Path
     home = str(Path.home()) 
     
-    File = home+'/scratch/LC19_history.csv' 
+    File = home+'/scratch/LC04_2020-12-17speedfile.csv' 
     MP=MakePlots(File)
     MP.ReadCSVFile()
     MP.MakeThePlots() 

@@ -182,14 +182,14 @@ class PlotAll(object):
         #self.legend = legend #legend is a dictionary'
         
            
-        x1,y0,y1,y2 = np.loadtxt(self.temp_name, delimiter=',',
-                   unpack=True,usecols=(1,6,7,8),
+        x1,y1,y2 , y0 = np.loadtxt(self.temp_name, delimiter=',',
+                   unpack=True,usecols=(1,7,8,9),
                    converters={ 1: self.MyTime},skiprows = 1)
             
-        self.x1 = x1
-        self.y1 = y1
-        self.y2 = y2
-        self.y0 = y0
+        self.x1 = x1 #time
+        self.y1 = y1 #download
+        self.y2 = y2 #uplooad
+        self.y0 = y0 # before vs 6: packet loss, with vs 6: latency measured in ms (averaged over 10)
 
     
     def SetTempDirectory(self):
@@ -323,8 +323,8 @@ class PlotAll(object):
         ypos = 1.02
         ylow = 0. #regular y axis limits
         yhigh = 24.
-        ylow1=0. # limits for packet loss
-        yhigh1=12.
+        ylow1=0. # limits for packet loss, now for latency
+        yhigh1=50.
         
         yhigh2 = 12. #limits for 10 Mbs
         yhigh3 = 7. #limits for 5 Mbs
@@ -332,7 +332,7 @@ class PlotAll(object):
         
         #overwrite default max axis
         
-        yhigh1=yhigh2=yhigh3=24.
+        yhigh2=yhigh3=24.
         
         bbox=(0.03,.03,1.,0.25)
         print('number',k)

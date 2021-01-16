@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 ### BEGIN INIT INFO for raspi startup
 # Provides:          test_speed1.py
 # Required-Start:    $remote_fs $syslog
@@ -54,6 +54,9 @@ import dropbox
 import socket # needed for hostname id
 import PlotClass as PC
 import uuid
+
+from tcp_latency import measure_latency
+
 #from __builtin__ import True
 
 
@@ -73,7 +76,7 @@ class test_speed1():
         
         self.Debug = False
         
-        # check if we have espeak
+       
         self.GetMacAddress()
         
         
@@ -143,7 +146,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '5.01.12'
+        self.vs = '6.00.01'
 
         
         print(' History')
@@ -175,6 +178,7 @@ class test_speed1():
         print('Version 5.01.10', 'catching network problems')
         print('Version 5.01.11', 'force LC12 to connect to NMSURF, done in the arg parse section')
         print('Version 5.01.12', 'force LC24 to connect to NMSURF, done in the arg parse section')
+        print('Version 6.00.01', 'now with latency measurement to currently cybermese')
         
         print('\n\n\n')
         
@@ -208,6 +212,7 @@ class test_speed1():
         #parser.add_argument("-p","--pwfile",help = "The passwordfile" )
         parser.add_argument("-d","--dpfile",help = "The file for the dropbox" )
         parser.add_argument("-a","--adebug",action='store_true',help = "a debug version" )
+        parser.add_argument("-l","--latency",help = "the ip addresss of the latency server" )
 
         #parser.add_argument("-ip","--ip=ARG",help = "Attempt to bind to the specified IP address when connecting to servers" )
         
@@ -290,12 +295,21 @@ class test_speed1():
             if(args.ip != None):
                 t=['--ip=',args.ip]
                 temp1.extend(t)
-                
+            if(args.latency != None):
+                t=['--latency=',args.latency]
+                self.latency_server =  args.latency
+            else: #default is cybermesa  
+                t=['--latency=','65.19.14.51'] 
+                self.latency_server =  '65.19.14.51'
+
             if(args.host != None):
                 t=['--host=',args.host]
                 temp1.extend(t)
             if(args.time != None):
                 self.loop_time = int(args.time)*60 # time between speedtests
+ 
+ 
+ 
                 
             #if(args.pwfile != None ) and (args.dpfile != None):
             if(args.dpfile != None):
@@ -392,8 +406,17 @@ class test_speed1():
         else:
             return False
             
-
-
+    def GetLatency(self):
+        """determines latency from speedbox to  speed server
+        retunrs the average
+         """
+        temp = measure_latency(host=self.latency_server , port=80, runs=10, timeout=2.5)
+        #calculate average
+        sum = 0.
+        for k in range(0,len(temp)-1):
+            sum = sum + temp[k]
+        
+        return sum/len(temp)
                  
     def WriteTimer(self):
         """
@@ -457,6 +480,7 @@ class test_speed1():
                          universal_newlines=True)
         
         out,err = process.communicate()
+
         if process.returncode != 0:
             print("error",err)
         a=str(out)
@@ -535,7 +559,9 @@ class test_speed1():
             except ValueError:
                 print('bad float conversion')
                 self.output.append(-999.)
-                
+        # now add the latency measurement 
+        lat = self.GetLatency()
+        self.output.append(lat)       
             
         return 
 
@@ -575,7 +601,7 @@ class test_speed1():
         Write the header for the output file
         """
         MyIP =self.DigIP()
-        Header = MyIP+',day,time,server name, server id,latency,jitter,package , download, upload \n'
+        Header = MyIP+',day,time,server name, server id,latency,jitter,package , download, upload , latency measured\n'
         self.output_file.write(Header)
         
     def DebugProgram(self,err): 
