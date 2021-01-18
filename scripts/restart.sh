@@ -1,9 +1,7 @@
 
 #!/bin/bash
 
-echo "installing tcp_latency"
 
-pip3 install tcp_latency
 
 if [ $(ps -efa | grep -v grep | grep test_speed1_3.py -c) -gt 0 ] ;
 then
