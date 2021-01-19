@@ -107,7 +107,8 @@ class MyControl(object):
 
         
         
-        message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n red packet loss \n  \n'
+        message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n \
+        NEW: red latency \n  \n'
 
         file = self.PA.pdf   
         
@@ -233,7 +234,7 @@ if __name__ == '__main__':
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
     # for a different date use the line 132
-    #start = datetime.time(8,12)
+    #start = datetime.time(8,10)
     #end = datetime.time(8,22)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is

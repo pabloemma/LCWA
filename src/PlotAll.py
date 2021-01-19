@@ -324,7 +324,7 @@ class PlotAll(object):
         ylow = 0. #regular y axis limits
         yhigh = 24.
         ylow1=0. # limits for packet loss, now for latency
-        yhigh1=50.
+        yhigh1=100.
         
         yhigh2 = 12. #limits for 10 Mbs
         yhigh3 = 7. #limits for 5 Mbs
