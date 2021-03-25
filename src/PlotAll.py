@@ -285,7 +285,7 @@ class PlotAll(object):
         xpos = .05 #text position
         ypos = 1.02
         ylow = 0. #regular y axis limits
-        yhigh = 24.
+        yhigh = 30.
         ylow1=0. # limits for packet loss
         yhigh1=30.
         
@@ -322,7 +322,7 @@ class PlotAll(object):
         xpos = .05 #text position
         ypos = 1.02
         ylow = 0. #regular y axis limits
-        yhigh = 24.
+        yhigh = 30.
         ylow1=0. # limits for packet loss, now for latency
         yhigh1=100.
         
@@ -661,7 +661,8 @@ class PlotAll(object):
             elif(np.around(np.mean(y1),2) <= 7. ):
                 self.axarr4[i][l].set_ylim(ylow,yhigh3) # set yaxis limit
             if(k ==19):
-                self.axarr5[i][l].set_ylim(ylow,yhigh4)    
+                self.axarr4[i][l].set_ylim(ylow,yhigh4)    
+                #self.axarr5[i][l].set_ylim(0.,1000.)    
 
 ##########
         if k > 19 and k <22:
@@ -777,7 +778,7 @@ if __name__ == '__main__':
         dirlist.append(temp1)
     token_file = '/git/LCWA/src/LCWA_d.txt'
     tempdir = 'scratch'
-    datefile = '2020-05-29' 
+    datefile = '2021-03-24' 
      # " default is none"
     PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropbox()
