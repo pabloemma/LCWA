@@ -370,6 +370,7 @@ class PlotAll(object):
                 self.axarr[i][k].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
                 self.axarr[i][k].set_ylim(ylow,yhigh3) # set yaxis limit
+            if(k==0): self.axarr[i][k].set_ylim(ylow,200.) # for mike ault
             
         elif k >1  and k < 4:
             
