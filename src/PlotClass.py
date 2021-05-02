@@ -155,7 +155,9 @@ class MyPlot(object):
         plt.title('Speedtest LCWA '+self.InputFile)
     
         plt.legend(facecolor='ivory',loc="center left",shadow=True, fancybox=True)
-        if(np.around(np.mean(y1),2) > 21.):
+        if(np.around(np.mean(y1),2) > 60.): #starlink
+            plt.ylim(0.,200.) # set yaxis limit
+        elif(np.around(np.mean(y1),2) <= 60. and np.around(np.mean(y1),2) > 21.):
             plt.ylim(0.,41.) # set yaxis limit
         elif(np.around(np.mean(y1),2) <= 21. and np.around(np.mean(y1),2) > 12.):
             plt.ylim(0.,24.) # set yaxis limit
@@ -244,7 +246,8 @@ class MyPlot(object):
 if __name__ == '__main__':
     path = '/Users/klein/speedfiles'
     #file = 'Pand_2020-04-18speedfile.csv'
-    file = 'test.csv'
+    #file = 'test.csv'
+    file = 'LC01_2021-05-02speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
