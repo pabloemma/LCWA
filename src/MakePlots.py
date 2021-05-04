@@ -118,8 +118,11 @@ class MakePlots(object):
         
         plt.title('Speedtest LCWA using '+self.filename)
         print(' mean',np.around(np.mean(y1),2))
-        plt.legend(facecolor='ivory',loc="lower right",shadow=True, fancybox=True)
-        if(np.around(np.mean(y1),2) > 20.):
+        plt.legend(facecolor='ivory',loc="upper left",shadow=True, fancybox=True)
+ 
+        if(np.around(np.mean(y1),2) >30.): 
+            plt.ylim(0.,200.) # set yaxis limit
+        elif(np.around(np.mean(y1),2) <= 30. and np.around(np.mean(y1),2) > 21.):
             plt.ylim(0.,41.) # set yaxis limit
         elif(np.around(np.mean(y1),2) <= 21. and np.around(np.mean(y1),2) > 12.):
             plt.ylim(0.,24.) # set yaxis limit
@@ -130,7 +133,7 @@ class MakePlots(object):
             plt.ylim(0.,7.) # set yaxis limit
 
 #        I am taking out variable ylimits and replace it with hardwired of 22.
-        plt.ylim(0.,24.)
+        #plt.ylim(0.,24.)
 
 
         plt.xticks(rotation='vertical')
