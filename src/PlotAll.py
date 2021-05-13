@@ -333,6 +333,7 @@ class PlotAll(object):
         #overwrite default max axis
         
         yhigh2=yhigh3=24.
+        yveryhigh = 200.
         
         bbox=(0.03,.03,1.,0.25)
         print('number',k)
@@ -364,13 +365,17 @@ class PlotAll(object):
             self.axarr[i][k].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             print(np.around(np.mean(y1),2))
-            if(np.around(np.mean(y1),2) > 12.):
+            if(np.around(np.mean(y1),2) >30.): 
+                 # set yaxis limit
+                self.axarr[i][k].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 30. and np.around(np.mean(y1),2) > 12.):
                 self.axarr[i][k].set_ylim(ylow,yhigh) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr[i][k].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
                 self.axarr[i][k].set_ylim(ylow,yhigh3) # set yaxis limit
-            if(k==0): self.axarr[i][k].set_ylim(ylow,200.) # for mike ault
+            #if(k==0): self.axarr[i][k].set_ylim(ylow,200.) # for mike ault
             
         elif k >1  and k < 4:
             
