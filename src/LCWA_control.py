@@ -108,7 +108,7 @@ class MyControl(object):
         
         
         message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n \
-        NEW: red latency \n  \n'
+        NEW: chaged LC01 scaling \n  \n'
 
         file = self.PA.pdf   
         
@@ -130,7 +130,7 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_d.txt'
         tempdir = 'scratch'
-        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2021-04-16')
+        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2021-05-14')
         self.PA =PA =PL.PlotAll(token_file,dirlist)
         PA.ConnectDropbox()
         PA.GetFiles()
@@ -234,8 +234,8 @@ if __name__ == '__main__':
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
     # for a different date use the line 132
-    #start = datetime.time(6,25)
-    #end = datetime.time(6,35)
+    #start = datetime.time(8,10)
+    #end = datetime.time(8,35)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
