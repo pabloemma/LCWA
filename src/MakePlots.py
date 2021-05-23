@@ -79,8 +79,13 @@ class MakePlots(object):
                 #print(len(row))
                 if(k>0):
                     date_str = row[0]+' '+row[1]
-                    temp = time.mktime(datetime.datetime.strptime(date_str, "%d/%m/%Y %H:%M:%S").timetuple())
-                    print(temp)
+                    try:
+                        temp = time.mktime(datetime.datetime.strptime(date_str, "%d/%m/%Y %H:%M:%S").timetuple())
+                        print(temp)
+                    except: 
+                        print("problems with file",self.filename)
+                        continue
+                        
                     aa =md.date2num(datetime.datetime.strptime(date_str,format_file))
                     x0[k-1] = aa
                     xti[k-1] = temp # for root time

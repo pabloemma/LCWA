@@ -700,8 +700,13 @@ class PlotAll(object):
             self.axarr5[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr5[i][l].transAxes,fontsize=8)
             self.axarr5[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr5[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            if(np.around(np.mean(y1),2) > 12.):
-                self.axarr5[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+            if(np.around(np.mean(y1),2) >30.): 
+                 # set yaxis limit
+                self.axarr[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 30. and np.around(np.mean(y1),2) > 12.):
+                self.axarr[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr5[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
@@ -732,8 +737,15 @@ class PlotAll(object):
             self.axarr5[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr5[i][l].transAxes,fontsize=8)
             self.axarr5[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr5[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            if(np.around(np.mean(y1),2) > 12.):
-                self.axarr5[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+            if(np.around(np.mean(y1),2) >30.): 
+                 # set yaxis limit
+                self.axarr[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 30. and np.around(np.mean(y1),2) > 12.):
+                self.axarr[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+
+            
+    
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr5[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
