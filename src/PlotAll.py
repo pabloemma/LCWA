@@ -328,12 +328,12 @@ class PlotAll(object):
         
         yhigh2 = 12. #limits for 10 Mbs
         yhigh3 = 7. #limits for 5 Mbs
-        yhigh4 = 40. #limits for LC19, double pppoe accounts
+        yhigh4 = 80. #limits for LC19, double pppoe accounts
         
         #overwrite default max axis
         
         yhigh2=yhigh3=24.
-        yveryhigh = 200.
+        yveryhigh = 70.
         
         bbox=(0.03,.03,1.,0.25)
         print('number',k)
