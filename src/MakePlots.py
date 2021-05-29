@@ -125,9 +125,9 @@ class MakePlots(object):
         print(' mean',np.around(np.mean(y1),2))
         plt.legend(facecolor='ivory',loc="upper left",shadow=True, fancybox=True)
  
-        if(np.around(np.mean(y1),2) >30.): 
-            plt.ylim(0.,200.) # set yaxis limit
-        elif(np.around(np.mean(y1),2) <= 30. and np.around(np.mean(y1),2) > 21.):
+        if(np.around(np.mean(y1),2) >25.): 
+            plt.ylim(0.,70.) # set yaxis limit
+        elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 21.):
             plt.ylim(0.,41.) # set yaxis limit
         elif(np.around(np.mean(y1),2) <= 21. and np.around(np.mean(y1),2) > 12.):
             plt.ylim(0.,24.) # set yaxis limit
