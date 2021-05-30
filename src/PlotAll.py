@@ -661,7 +661,7 @@ class PlotAll(object):
             self.axarr4[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr4[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             if(np.around(np.mean(y1),2) > 12.):
-                self.axarr5[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+                self.axarr4[i][l].set_ylim(ylow,yhigh) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr4[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
@@ -702,10 +702,10 @@ class PlotAll(object):
             self.axarr5[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             if(np.around(np.mean(y1),2) >30.): 
                  # set yaxis limit
-                self.axarr[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                self.axarr5[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
                         
             elif(np.around(np.mean(y1),2) <= 30. and np.around(np.mean(y1),2) > 12.):
-                self.axarr[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+                self.axarr5[i][l].set_ylim(ylow,yhigh) # set yaxis limit
 
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr5[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
@@ -739,10 +739,10 @@ class PlotAll(object):
             self.axarr5[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             if(np.around(np.mean(y1),2) >30.): 
                  # set yaxis limit
-                self.axarr[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                self.axarr5[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
                         
             elif(np.around(np.mean(y1),2) <= 30. and np.around(np.mean(y1),2) > 12.):
-                self.axarr[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+                self.axarr5[i][l].set_ylim(ylow,yhigh) # set yaxis limit
 
             
     
