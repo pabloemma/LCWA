@@ -131,7 +131,7 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_d.txt'
         #tempdir = 'scratch'
-        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2021-05-29')
+        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2021-06-09')
         self.PA =PA =PL.PlotAll(token_file,dirlist)
         PA.ConnectDropbox()
         PA.GetFiles()
@@ -235,8 +235,8 @@ if __name__ == '__main__':
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
     # for a different date use the line 132
-    #start = datetime.time(10,33)
-    #end = datetime.time(10,38)
+    #start = datetime.time(7,38)
+    #end = datetime.time(7,41)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
