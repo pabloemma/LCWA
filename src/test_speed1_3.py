@@ -146,7 +146,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '6.00.01'
+        self.vs = '6.00.02'
 
         
         print(' History')
@@ -179,6 +179,7 @@ class test_speed1():
         print('Version 5.01.11', 'force LC12 to connect to NMSURF, done in the arg parse section')
         print('Version 5.01.12', 'force LC24 to connect to NMSURF, done in the arg parse section')
         print('Version 6.00.01', 'now with latency measurement to currently cybermese')
+        print('Version 6.00.02', 'minor change in PlotCalss do do the scaling on the single pdf files better')
         
         print('\n\n\n')
         
