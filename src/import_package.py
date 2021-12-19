@@ -4,7 +4,7 @@
 import subprocess
 import sys
 
-def InstallPackage(package):
+def InstallPackage(package ):
     # checks if program is installed, if not will try it with piup
 
     try:
@@ -16,3 +16,6 @@ def InstallPackage(package):
     
     else:
         print('package  ', package, '  is already installed')
+
+if __name__ == "__main__":
+    InstallPackage('iperf3')
