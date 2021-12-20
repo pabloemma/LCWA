@@ -146,7 +146,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '6.00.02'
+        self.vs = '7.00.01'
 
         
         print(' History')
@@ -180,6 +180,7 @@ class test_speed1():
         print('Version 5.01.12', 'force LC24 to connect to NMSURF, done in the arg parse section')
         print('Version 6.00.01', 'now with latency measurement to currently cybermese')
         print('Version 6.00.02', 'minor change in PlotCalss do do the scaling on the single pdf files better')
+        print('Version 7.00.01', 'major upgrade , replace speetetst with iperf')
         
         print('\n\n\n')
         
