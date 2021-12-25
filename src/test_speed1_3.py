@@ -57,6 +57,8 @@ import uuid
 
 from tcp_latency import measure_latency
 
+import iperf_client as ipe
+
 #from __builtin__ import True
 
 
@@ -82,8 +84,9 @@ class test_speed1():
         
 
                 
-                #Instantiate the PlotClass
+        
                 
+
     
     def ConnectDropBox(self):
         """
@@ -245,6 +248,9 @@ class test_speed1():
             temp1.extend(se)
             self.command = temp1
             #self.keyfile('LCWA_p.txt')
+            self.latency_server = '65.19.14.51'
+            print('NOTE temporary assignmnet of latency sevrer',self.latency_server)
+
             return
         else:
             if(args.adebug):
@@ -319,7 +325,9 @@ class test_speed1():
                 self.cryptofile = args.dpfile
                 self.DropFlag = True
                 self.ConnectDropBox() # establish the contact to dropbox
-                
+
+
+
         self.command = temp1 
         if(self.Debug):
             self.DebugProgram(2)     
@@ -750,6 +758,11 @@ class test_speed1():
         prints out erroro message with time
         """
         print(datetime.datetime.now(),' speedtest error > ',message)
+
+    def SetupIperf3(self):
+
+        """"instantiate the iperf client  for vs 7 and above"""
+
  
         
 if __name__ == '__main__':
