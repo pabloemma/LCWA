@@ -218,6 +218,8 @@ class test_speed1():
         parser.add_argument("-d","--dpfile",help = "The file for the dropbox" )
         parser.add_argument("-a","--adebug",action='store_true',help = "a debug version" )
         parser.add_argument("-l","--latency",help = "the ip addresss of the latency server" )
+        parser.add_argument("-ipf","--iperf",help = "the ip addresss of the iperf  server and port, format =xx.xx.xx.xx:yyyy" )
+        parser.add_argument("-ipfd","--iperf_duration",help = "the duration of the iperf" )
 
         #parser.add_argument("-ip","--ip=ARG",help = "Attempt to bind to the specified IP address when connecting to servers" )
         
@@ -250,6 +252,21 @@ class test_speed1():
             #self.keyfile('LCWA_p.txt')
             self.latency_server = '65.19.14.51'
             print('NOTE temporary assignmnet of latency sevrer',self.latency_server)
+
+#       print('line 256 temporary block')
+            if(args.iperf == None):
+                print('running iperf version, setting up iperf')
+                args.iperf='192.168.2.125:5102'
+                decode_iperf = args.iperf.partition(':')
+                self.iperf_server = decode_iperf[0]
+                self.iperf_port = decode_iperf[2]
+                if(args.iperf_duration != None):
+                    self.iperf_duration = int(args.iperf_duration)
+                else:
+                    self.iperf_duration = 25    
+                # Now setup iperf system
+                self.SetupIperf3()
+
 
             return
         else:
@@ -316,8 +333,18 @@ class test_speed1():
             if(args.time != None):
                 self.loop_time = int(args.time)*60 # time between speedtests
  
- 
- 
+            if(args.iperf != None):
+                print('running iperf version, setting up iperf')
+                decode_iperf = args.iperf.partition(':')
+                self.iperf_server = decode_iperf[0]
+                self.iperf_port = decode_iper[2]
+                if(args.iperf_duration != None):
+                    self.iperf_duration = int(args.iperf_duration)
+                else:
+                    self.iperf_duration = 25    
+                # Now setup iperf system
+                self.SetupIperf3()
+
                 
             #if(args.pwfile != None ) and (args.dpfile != None):
             if(args.dpfile != None):
@@ -762,7 +789,8 @@ class test_speed1():
     def SetupIperf3(self):
 
         """"instantiate the iperf client  for vs 7 and above"""
-
+        print('setting up iperf client \n\n')
+        self.myiperf = ipe.myclient(self.iperf_server,self.iperf_port,self.iperf_duration)
  
         
 if __name__ == '__main__':
