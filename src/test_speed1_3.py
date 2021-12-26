@@ -336,7 +336,7 @@ class test_speed1():
                 print('running iperf version, setting up iperf')
                 decode_iperf = args.iperf.partition(':')
                 self.iperf_server = decode_iperf[0]
-                self.iperf_port = decode_iper[2]
+                self.iperf_port = decode_iperf[2]
                 if(args.iperf_duration != None):
                     self.iperf_duration = int(args.iperf_duration)
                 else:
