@@ -223,7 +223,7 @@ class test_speed1():
 
         #parser.add_argument("-ip","--ip=ARG",help = "Attempt to bind to the specified IP address when connecting to servers" )
         
-        
+        self.run_iperf= True
         
         #list of argument lists
         
@@ -259,13 +259,13 @@ class test_speed1():
                 args.iperf='192.168.2.125:5102'
                 decode_iperf = args.iperf.partition(':')
                 self.iperf_server = decode_iperf[0]
-                self.iperf_port = decode_iperf[2]
+                self.iperf_port = int(decode_iperf[2])
                 if(args.iperf_duration != None):
                     self.iperf_duration = int(args.iperf_duration)
                 else:
                     self.iperf_duration = 25    
                 # Now setup iperf system
-                self.SetupIperf3()
+                #self.SetupIperf3()
 
 
             return
@@ -507,32 +507,59 @@ class test_speed1():
         this is the heart of the wrapper, using the CLI command
         """
         
-        #print (self.command)
         
-        process = sp.Popen(self.command,
+
+        # split bewteen iperf and speedtest
+        if(self.run_iperf):
+            #self.SetupIperf3()
+
+            #self.output = self.myiperf.RunTestTCP()
+            self.command =["/usr/local/bin/timeout","-k","300","200","/usr/local/bin/python3","/Users/klein/visual studio/LCWA/src/iperf_client.py"]
+            print (self.command)
+            process = sp.Popen(self.command,
                          #stdout=outfile,
                          stdout=sp.PIPE,
                          stderr=sp.PIPE,
                          close_fds=True,
                          universal_newlines=True)
         
-        out,err = process.communicate()
+            out,err = process.communicate()
+            print('runloop',out,type(out))
+            self.CreateIperfOutput(out)
+       # now create outputline from tuple
+            myline=''
+            for k in range(len(self.output)-1):
+                myline=myline+str(self.output[k])+','
+            myline = myline+str(self.output[len(self.output)-1])+'\n'
 
-        if process.returncode != 0:
-            print("error",err)
-        a=str(out)
-        #a is now a tuple , which we fill into a csv list
-        self.CreateOutput(a)
+        else:
+            process = sp.Popen(self.command,
+                         #stdout=outfile,
+                         stdout=sp.PIPE,
+                         stderr=sp.PIPE,
+                         close_fds=True,
+                         universal_newlines=True)
         
-        if(self.Debug):
-            self.DebugProgram(5)
+            out,err = process.communicate()
+
+            if process.returncode != 0:
+                print("error",err)
+            a=str(out)
+            #a is now a tuple , which we fill into a csv list
+            self.CreateOutput(a)
+        
+            if(self.Debug):
+                self.DebugProgram(5)
         
 
-        myline=''
+            myline=''
         # now create outputline from tuple
-        for k in range(len(self.output)-1):
-            myline=myline+str(self.output[k])+','
-        myline = myline+str(self.output[len(self.output)-1])+'\n'
+            for k in range(len(self.output)-1):
+                myline=myline+str(self.output[k])+','
+            myline = myline+str(self.output[len(self.output)-1])+'\n'
+
+            print(self.output)
+            print(myline)
 
         
         #check for date, we will open new file at midnight
@@ -548,8 +575,26 @@ class test_speed1():
         print (myline)
         self.output_file.write(myline)
         self.output_file.flush() # to write to disk
-        
-        
+
+    def CreateIperfOutput(self,iperfout): 
+        """create output for iperf run"""  
+        b=iperfout.replace('"','')
+        c=b.replace('[','')
+        d=c.replace(']','')
+        e=d.split(',')
+        self.output=[]
+        for k in [0,1,2,3,4]:
+            self.output.append(e[k])
+        for k in [5,6,7,8,9,10]:
+            try:
+                float(e[k])
+                self.output.append(float(e[k]))
+            except ValueError:
+                print('bad float conversion')
+                self.output.append(-10000.)
+
+            
+
     def CreateOutput(self,inc1):
         """
         this takes the output line tuple and creates the csv line for the outputfile
@@ -791,7 +836,7 @@ class test_speed1():
         """"instantiate the iperf client  for vs 7 and above"""
         print('setting up iperf client \n\n')
         self.myiperf = ipe.myclient(self.iperf_server,self.iperf_port,self.iperf_duration)
- 
+        self.myiperf.LoadParameters()
         
 if __name__ == '__main__':
     
