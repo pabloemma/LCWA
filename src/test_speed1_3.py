@@ -515,7 +515,7 @@ class test_speed1():
             #self.SetupIperf3()
 
             #self.output = self.myiperf.RunTestTCP()
-            self.command =["/usr/bin/timeout","-k","300","200","/usr/local/bin/python3","/home/pi/speedtest/LCWA/src/iperf_client.py"]
+            self.command =["/usr/bin/timeout","-k","300","200","/usr/bin/python3","/home/pi/speedtest/LCWA/src/iperf_client.py"]
             print (self.command)
             process = sp.Popen(self.command,
                          #stdout=outfile,
