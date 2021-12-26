@@ -223,8 +223,7 @@ class test_speed1():
 
         #parser.add_argument("-ip","--ip=ARG",help = "Attempt to bind to the specified IP address when connecting to servers" )
         
-        self.run_iperf= True
-        
+         
         #list of argument lists
         
         
@@ -341,9 +340,11 @@ class test_speed1():
                 if(args.iperf_duration != None):
                     self.iperf_duration = int(args.iperf_duration)
                 else:
-                    self.iperf_duration = 25    
+                    self.iperf_duration = 25 
+                self.run_iperf= True
+   
                 # Now setup iperf system
-                self.SetupIperf3()
+                #self.SetupIperf3()
 
                 
             #if(args.pwfile != None ) and (args.dpfile != None):
