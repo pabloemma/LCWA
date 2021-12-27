@@ -532,6 +532,7 @@ class test_speed1():
             for k in range(len(self.output)-1):
                 myline=myline+str(self.output[k])+','
             myline = myline+str(self.output[len(self.output)-1])+'\n'
+            print(myline)
 
         else:
             process = sp.Popen(self.command,
