@@ -75,7 +75,7 @@ class myclient():
         #print('StartTime',result.timesecs)
         #print('TX Mbps', result.sent_Mbps)
         #print('RX Mbps',result.received_Mbps)
-        output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%Y/%m/%d'))
+        output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%d/%m/%Y'))
         output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%H:%M:%S'))
         output.append('iperf3')
         output.append(dummy)
@@ -86,7 +86,7 @@ class myclient():
         output.append(result.sent_Mbps)
         output.append('0')
         
-        #print(output)
+        print(output)
         return output
 
     def RunTestUDP(self):
@@ -130,9 +130,15 @@ if __name__ == '__main__':
     #server_ip = '63.229.162.245' #LCWA
     #server_port = 5201
     #while(True):
-    server_ip = '192.168.2.125' #"GH at LC20"
+
+
+    server_ip = '192.168.0.111'
+
+    #server_ip = '192.168.2.125' #"GH at LC20"
     server_port = 5201
     
+    
+
     mycli = myclient(server_ip,server_port, duration=25)
     mycli.LoadParameters()
 

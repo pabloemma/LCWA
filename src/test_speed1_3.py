@@ -225,17 +225,20 @@ class test_speed1():
         
          
         #list of argument lists
-        self.run_iperf = False #default
+        self.run_iperf = True #default
         
         # here some of the defaults
         #Of courss Mac has the stuff in different places than Linux
         if platform.system() == 'Darwin':
             self.timeout_command = "/usr/local/bin/timeout"
-            self.speedtest = "/usr/local/bin/speedtest"
+            self.speedtest = "/usr/local/bin/speedtest/"
+            
+            self.speedtest_srcdir = '/Users/klein/\'visual studio\'/LCWA/src/'
             temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
         elif platform.system() == 'Linux':
-            self.speedtest = "/usr/bin/speedtest"
+            self.speedtest = "/usr/bin/speedtest/"
             self.timeout_command = "/usr/bin/timeout"
+            self.speedtest_srcdir = '/home/pi/git/speedtest/src/'
 
             temp1=[self.timeout_command, "-k", "300"," 200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default         
         # do our arguments
@@ -515,7 +518,7 @@ class test_speed1():
             #self.SetupIperf3()
 
             #self.output = self.myiperf.RunTestTCP()
-            self.command =["/usr/bin/timeout","-k","300","200","/usr/bin/python3","/home/pi/git/speedtest/src/iperf_client.py"]
+            self.command =[self.timeout_command,"-k","300","200","/usr/bin/python3",self.speedtest_srcdir+"iperf_client.py"]
             print (self.command)
             process = sp.Popen(self.command,
                          #stdout=outfile,
@@ -592,6 +595,7 @@ class test_speed1():
                 float(e[k])
                 self.output.append(float(e[k]))
             except ValueError:
+
                 print('bad float conversion')
                 self.output.append(-10000.)
 
