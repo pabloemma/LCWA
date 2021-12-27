@@ -225,7 +225,7 @@ class test_speed1():
         
          
         #list of argument lists
-        
+        self.run_iperf = False #default
         
         # here some of the defaults
         #Of courss Mac has the stuff in different places than Linux
