@@ -21,7 +21,7 @@ class myclient():
         'blksize':1024,
         'json_output':True, #False: Terminal output, True Json output
         'num_streams':10,
-        'verbose':False
+        'verbose':False,
         'reverse': True
         } 
 
