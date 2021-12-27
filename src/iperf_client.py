@@ -22,6 +22,7 @@ class myclient():
         'json_output':True, #False: Terminal output, True Json output
         'num_streams':10,
         'verbose':False
+        'reverse': True
         } 
 
 
@@ -54,6 +55,8 @@ class myclient():
                 self.mycl.num_streams = val
             elif( key == 'verbose'):
                 self.mycl.verbose = val
+           elif( key == 'reverse'):
+                self.mycl.reverse = val
 
         #print('protocol',self.mycl.protocol)        
             
