@@ -55,9 +55,9 @@ class myclient():
                 self.mycl.num_streams = val
             elif( key == 'verbose'):
                 self.mycl.verbose = val
-           elif( key == 'reverse'):
+            elif( key == 'reverse'):
                 self.mycl.reverse = val
-
+ 
         #print('protocol',self.mycl.protocol)        
             
             
