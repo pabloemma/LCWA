@@ -101,7 +101,7 @@ class myclient():
         #print('running udp \n\n\n')
         self.mycl1.protocol='udp'
         self.mycl1.blksize= 100000
-        self.mycl1.num_streams= 2
+        self.mycl1.num_streams= 10
         self.mycl1.duration= 5
         
 
