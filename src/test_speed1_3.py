@@ -230,9 +230,14 @@ class test_speed1():
         # here some of the defaults
         #Of courss Mac has the stuff in different places than Linux
         if platform.system() == 'Darwin':
-            temp1=["/usr/local/bin/timeout","-k","300","200","/usr/local/bin/speedtest","--progress=no","-f","csv"] # we want csv output by default
+            self.timeout_command = "/usr/local/bin/timeout"
+            self.speedtest = "/usr/local/bin/speedtest"
+            temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
         elif platform.system() == 'Linux':
-            temp1=["/usr/bin/timeout", "-k", "300"," 200","/usr/bin/speedtest","--progress=no","-f","csv"] # we want csv output by default         
+            self.speedtest = "/usr/bin/speedtest"
+            self.timeout_command = "/usr/bin/timeout"
+
+            temp1=[self.timeout_command, "-k", "300"," 200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default         
         # do our arguments
         else:
             print(' Sorry we don\'t do Windows yet')
@@ -276,21 +281,16 @@ class test_speed1():
                 self.Prompt = 'Test_speed1_Debug>'
             #make cyber mesa the default
             if(args.servers):
-                if platform.system() == 'Darwin':
-
-                    self.command = ["/usr/local/bin/timeout","-k","300","200","/usr/local/bin/speedtest", '-L'] #because argparse does not take single args
-                elif platform.system() == 'Linux':
-                    self.command=["/usr/bin/timeout", "-k", "300"," 200","/usr/bin/speedtest",'-L'] # we want csv output by default         
-                   
+ 
+                self.command = [self.timeout_command,"-k","300","200","/usr/local/bin/speedtest", '-L'] #because argparse does not take single args
+                  
                 
                 self.RunShort()
                 sys.exit(0)
             if(args.version):
-                if platform.system() == 'Darwin':
+                
 
-                    self.command = ["/usr/local/bin/timeout","-k","300","200","/usr/local/bin/speedtest", '-V'] #because argparse does not take single args
-                elif platform.system() == 'Linux':
-                    self.command=["/usr/bin/timeout", "-k", "300"," 200","/usr/bin/speedtest",'-V'] # we want csv output by default         
+                self.command = [self.timeout_command,"-k","300","200",self.speedtest, '-V'] #because argparse does not take single args
                 
                 self.RunShort()
                 sys.exit(0)
