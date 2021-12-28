@@ -595,7 +595,8 @@ class test_speed1():
     def CreateIperfOutput(self,iperfout): 
         """create output for iperf run"""  
         b=iperfout.replace('"','')
-        c=b.replace('[','')
+        b1=b.replace('\'','')
+        c=b1.replace('[','')
         d=c.replace(']','')
         e=d.split(',')
         self.output=[]
