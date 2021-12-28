@@ -1,5 +1,7 @@
 # this is a iperf3 clien script by ak
-import iperf3 as ipe
+import iperf3 as ipe  #iperf3 library, does not allow for multiple connections
+
+#from pyperf2 import Server, Client  # this would be with iperf2
 from operator import itemgetter
 import datetime as dt
 import time
@@ -135,10 +137,12 @@ if __name__ == '__main__':
     #while(True):
 
 
-    server_ip = '192.168.0.111'
+    #server_ip = '192.168.0.111'
 
-    #server_ip = '192.168.2.125' #"GH at LC20"
+    server_ip = '192.168.2.125' #"GH at LC20"
     server_port = 5201
+
+    #server_port = 5001 # GH temporary iperf2
     
     
 
