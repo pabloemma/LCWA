@@ -600,7 +600,9 @@ class test_speed1():
         d=c.replace(']','')
         e=d.split(',')
         self.output=[]
-        for k in [0,1,2,3,4]:
+        self.output = [now.strftime("%d/%m/%Y"),now.strftime("%H:%M:%S")]
+
+        for k in [2,3,4]:
             self.output.append(e[k])
         for k in [5,6,7,8,9,10]:
             try:
