@@ -583,7 +583,7 @@ class test_speed1():
                 #we have a new day
             self.output_file.close()
             self.OpenFile()
-
+ 
         
         if(self.Debug):
             self.myline = myline
