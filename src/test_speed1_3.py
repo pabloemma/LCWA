@@ -80,10 +80,28 @@ class test_speed1():
         
        
         self.GetMacAddress()
-        
-        
+        self.Setup()
 
-                
+    def Setup(self):
+        """" checvks for systerm version and sets some path"""
+        
+        #lets get the python interpreter"
+        self.python_exec = sys.executable
+
+        #lets get the operating system
+        if platform.system() == 'Darwin':
+            self.timeout_command = "/usr/local/bin/timeout"
+            self.speedtest = "/usr/local/bin/speedtest/"
+            
+            self.speedtest_srcdir = '/Users/klein/visual studio/LCWA/src/'
+  #           temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
+        elif platform.system() == 'Linux':
+            self.speedtest = "/usr/bin/speedtest/"
+            self.timeout_command = "/usr/bin/timeout"
+            self.speedtest_srcdir = '/home/pi/git/speedtest/src/'
+
+ #           temp1=[self.timeout_command, "-k", "300"," 200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default         
+               
         
                 
 
@@ -149,7 +167,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '7.00.01'
+        self.vs = '7.01.01'
 
         
         print(' History')
@@ -184,6 +202,7 @@ class test_speed1():
         print('Version 6.00.01', 'now with latency measurement to currently cybermese')
         print('Version 6.00.02', 'minor change in PlotCalss do do the scaling on the single pdf files better')
         print('Version 7.00.01', 'major upgrade , replace speetetst with iperf')
+        print('Version 7.01.01', 'added Setup function to determine the different path and find the python interpreter')
         
         print('\n\n\n')
         
@@ -230,16 +249,8 @@ class test_speed1():
         # here some of the defaults
         #Of courss Mac has the stuff in different places than Linux
         if platform.system() == 'Darwin':
-            self.timeout_command = "/usr/local/bin/timeout"
-            self.speedtest = "/usr/local/bin/speedtest/"
-            
-            self.speedtest_srcdir = '/Users/klein/\'visual studio\'/LCWA/src/'
             temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
         elif platform.system() == 'Linux':
-            self.speedtest = "/usr/bin/speedtest/"
-            self.timeout_command = "/usr/bin/timeout"
-            self.speedtest_srcdir = '/home/pi/git/speedtest/src/'
-
             temp1=[self.timeout_command, "-k", "300"," 200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default         
         # do our arguments
         else:
@@ -518,7 +529,7 @@ class test_speed1():
             #self.SetupIperf3()
 
             #self.output = self.myiperf.RunTestTCP()
-            self.command =[self.timeout_command,"-k","300","200","/usr/bin/python3",self.speedtest_srcdir+"iperf_client.py"]
+            self.command =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py"]
             print (self.command)
             process = sp.Popen(self.command,
                          #stdout=outfile,
