@@ -244,11 +244,11 @@ class MyPlot(object):
 
        
 if __name__ == '__main__':
-    path = '/Users/klein/speedfiles'
+    path = '/home/pi/speedfiles'
     file = 'LC04_2021-12-28speedfile.csv'
     #file = 'test.csv'
     #file = 'LC01_2021-05-02speedfile.csv'
-    token ='/Users/klein/git/LCWA/src/LCWA_d.txt'
+    token ='/home/pi/git/speedtest/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag)
