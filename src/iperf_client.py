@@ -22,7 +22,7 @@ class myclient():
         'protocol':'tcp',
         'blksize':1024,
         'json_output':True, #False: Terminal output, True Json output
-        'num_streams':10,
+        'num_streams':5,
         'verbose':False,
         'reverse': True
         } 
@@ -132,14 +132,14 @@ class myclient():
         quit()
 if __name__ == '__main__':
     import time
-    #server_ip = '63.229.162.245' #LCWA
+    server_ip = '63.229.162.245' #LCWA
     #server_port = 5201
     #while(True):
 
 
     #server_ip = '192.168.0.111'
 
-    server_ip = '192.168.2.125' #"GH at LC20"
+    #server_ip = '192.168.2.125' #"GH at LC20"
     server_port = 5201
 
     #server_port = 5001 # GH temporary iperf2
