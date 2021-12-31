@@ -7,10 +7,11 @@ import datetime as dt
 import time
 # for argument parser
 import argparse as argp
+import sys
 
 class myclient():
 
-    def __init__(self,server_ip ,server_port, duration):
+    def __init__(self):
         # server_ip : address of iperf3 server
         # server_port: port to communicate; default 5021
         # duration : time of test, default 10 seconds
@@ -19,26 +20,14 @@ class myclient():
 
 
 
-        # here we set up the communication parameters
-        self.communication_dict={'duration':10,
-        'protocol':'tcp',
-        'blksize':1024,
-        'json_output':True, #False: Terminal output, True Json output
-        'num_streams':5,
-        'verbose':False,
-        'reverse': True
-        } 
+ 
 
 
 
 
 
 
-
-        #establish connection tcp:
-        self.mycl.server_hostname = self.server_ip = server_ip
-        self.mycl.port = self.server_port = server_port
-        
+       
     def GetArguments(self):
         """get host ip, port and other arguments
         iperfhost : server ip address
@@ -54,57 +43,78 @@ class myclient():
         iperf_parser.add_argument("-s","--serverip",help = "Specify server ip" )
         iperf_parser.add_argument("-p","--serverport",help = "Specifyserver port " )
         iperf_parser.add_argument("-d","--duration",help = "Specify duration of iperf" )
-        iperf_parser.add_argument("-n","--numstreams",help = "Specify numberof streams" )
-        iperf_parser.add_argument("-b","--blksize",help = "Specify blocksize")
+        iperf_parser.add_argument("-n","--numstream",help = "Specify numberof streams" )
+        iperf_parser.add_argument("-b","--blksize",help = "Specify block size" )
+        iperf_parser.add_argument("-dd","--debug",action='store_true',help = "debug system")
+        iperf_parser.add_argument("-r","--reverse",action='store_true',help = "run iperf in reverse mode")
+        iperf_parser.add_argument("-v","--verbose",action='store_true',help = "verbose mode")
+        #iperf_parser.add_argument("-h","--help",action='store_true',help = "print out menu")
+        iperf_parser.add_argument("-j","--json",action='store_true',help = "json output")
 
 
     # get the arguments
         args = iperf_parser.parse_args()
 
+       # we need to give it default values
+        self.server_ip = '63.229.162.245'
+        self.server_port = 5201
+        self.duration = 10
+        self.numstream = 1
+        self.blksize = 100000
+        self.debug = True
+        self.reverse = False
+        self.verbose = False
+        self.json_output = True
 
 
         # here we deal with the arguments.
-        # if no arguments pased use default
-        if(len(sys.argv) == 1):
-            # we need to give it default values
-            self.server_ip = '63.229.162.245'
-            self.server_port = 5102
-            self.duration = 10
-            self.numstream = 1
-            self.blksize = 100000
-        
+        if(args.serverip != None) :
+            self.server_ip = args.serverip
 
-        # now let's print out the configuration
-        
-        pass
+        if(args.serverport != None):
+            self.server_port = args.serverport
 
+        if(args.duration != None):
+            self.duration = args.duration
 
+        if(args.numstream != None):
+            self.numstream = args.numstream
 
+        if(args.blksize != None):
+            self.blksize = args.blksize
 
-    def LoadParameters(self):
-        
-        #puts the iperf3 parameters into the client system
-        # we loop over the communication dictionary
+        if(args.debug ):
+            self.debug = args.debug
+  
+        if(args.verbose ):
+            self.verbose = args.verbose
 
-        for key,val in self.communication_dict.items():
-            if( key == 'protocol'):
-                self.mycl.protocol = val
-            elif( key == 'blksize'):
-                self.mycl.blksize = val
-            elif( key == 'json_output'):
-                self.mycl.json_output = val
-            elif( key == 'duration'):
-                self.mycl.duration = val
-            elif( key == 'num_streams'):
-                self.mycl.num_streams = val
-            elif( key == 'verbose'):
-                self.mycl.verbose = val
-            elif( key == 'reverse'):
-                self.mycl.reverse = val
+        if(args.reverse ):
+            self.reverse = args.reverse
  
-        #print('protocol',self.mycl.protocol)        
-            
-            
+        if(args.json ):
+            self.json_outpout = args.json
+ 
+      
+        
+
+        # now let's print out the configuration if we debug
+        
+        if self.debug:
+            print('\n\n **********************  this is the iperf client ****************** \n\n')
+            print('server host   ',self.server_ip)
+            print('server port   ',self.server_port)
+            print('Duration      ',self.duration)
+            print('Num streams   ', self.numstream)
+            print('Blocksize     ',self.blksize)
+            print('Verbose     ',self.verbose)
+            print('Reverse     ',self.reverse)
+            print('Json Output ',self.json_output)
+
+        return
+
+
+             
             
       
 
@@ -114,14 +124,17 @@ class myclient():
         dummy = 'xxxx'
         self.mycl.server_hostname = self.server_ip
         self.mycl.port = self.server_port
-        #print('before the run',self.mycl.protocol,self.mycl.num_streams)
+
+        self.mycl.verbose = self.verbose
+        self.mycl.json_output = self.json_output
+        self.mycl.num_streams = self.numstream
+        self.mycl.duration = self.duration
+        self.mycl.blksize = self.blksize
+        self.mycl.reverse = self.reverse
+
+
+
         result = self.mycl.run()
-        #print('result',result.system_info,'\n\n')
-        #print('protocol',result.protocol,'\n\n')
-        #print('Time',result.time)
-        #print('StartTime',result.timesecs)
-        #print('TX Mbps', result.sent_Mbps)
-        #print('RX Mbps',result.received_Mbps)
         output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%d/%m/%Y'))
         output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%H:%M:%S'))
         output.append('iperf3')
@@ -144,57 +157,35 @@ class myclient():
         self.mycl1.server_port = self.server_port
         #print('running udp \n\n\n')
         self.mycl1.protocol='udp'
-        self.mycl1.blksize= 200000
-        self.mycl1.num_streams= 5
-        self.mycl1.duration= 5
+        self.mycl1.json_output = self.json_output
+        self.mycl1.num_streams = self.numstream
+        self.mycl1.duration = self.duration
+        self.mycl1.blksize = self.blksize
+        self.mycl1.reverse = self.reverse
         
 
         
  
         resultudp = self.mycl1.run()
-        #print('protocol',resultudp.protocol,'\n\n')
         self.output.append(resultudp.jitter_ms)
         self.output.append(resultudp.packets)
         self.output.append(resultudp.lost_percent)
-        #print('jitter',resultudp.jitter_ms)
-        #print('packet',resultudp.packets)
-        #print('packet_loss',resultudp.lost_packets)
-        #print('packet loss in percent',resultudp.lost_percent)
         time.sleep(2)
         print(self.output)
 
         return self.output
 
-    def SetValues(self,client_key,client_value):
-        # sets value fo the dictionary for the iperf functions
-        # 
-        pass
-
+ 
     def EndClient(self):
         quit()
 if __name__ == '__main__':
     import time
-    server_ip = '63.229.162.245' #LCWA
-    #server_port = 5201
-    #while(True):
-
-
-    #server_ip = '192.168.0.111'
-
-    #server_ip = '192.168.2.125' #"GH at LC20"
-    server_port = 5201
-
-    #server_port = 5001 # GH temporary iperf2
-    
-    
-
-    mycli = myclient(server_ip,server_port, duration=25)
-    mycli.LoadParameters()
-
+ 
+    mycli = myclient()
+    mycli.GetArguments()
     mycli.RunTestTCP()
     mycli.RunTestUDP()
 
-    #mycli.EndClient()
-
+ 
         
  
