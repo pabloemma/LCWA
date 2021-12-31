@@ -75,13 +75,13 @@ class myclient():
             self.server_port = args.serverport
 
         if(args.duration != None):
-            self.duration = args.duration
+            self.duration = int(args.duration)
 
         if(args.numstream != None):
-            self.numstream = args.numstream
+            self.numstream = int(args.numstream)
 
         if(args.blksize != None):
-            self.blksize = args.blksize
+            self.blksize = int(args.blksize)
 
         if(args.debug ):
             self.debug = args.debug
