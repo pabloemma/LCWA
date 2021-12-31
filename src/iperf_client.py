@@ -5,6 +5,8 @@ import iperf3 as ipe  #iperf3 library, does not allow for multiple connections
 from operator import itemgetter
 import datetime as dt
 import time
+# for argument parser
+import argparse as argp
 
 class myclient():
 
@@ -37,7 +39,47 @@ class myclient():
         self.mycl.server_hostname = self.server_ip = server_ip
         self.mycl.port = self.server_port = server_port
         
- 
+    def GetArguments(self):
+        """get host ip, port and other arguments
+        iperfhost : server ip address
+        iperfport ; server port
+        duration : legth
+        numstreams ;  number of streams; careful too many loads down the cpu
+        
+        """
+        #right now it is only pass
+        #instantiate the parser
+
+        iperf_parser = argp.ArgumentParser(description='cli for iperf')
+        iperf_parser.add_argument("-s","--serverip",help = "Specify server ip" )
+        iperf_parser.add_argument("-p","--serverport",help = "Specifyserver port " )
+        iperf_parser.add_argument("-d","--duration",help = "Specify duration of iperf" )
+        iperf_parser.add_argument("-n","--numstreams",help = "Specify numberof streams" )
+        iperf_parser.add_argument("-b","--blksize",help = "Specify blocksize")
+
+
+    # get the arguments
+        args = iperf_parser.parse_args()
+
+
+
+        # here we deal with the arguments.
+        # if no arguments pased use default
+        if(len(sys.argv) == 1):
+            # we need to give it default values
+            self.server_ip = '63.229.162.245'
+            self.server_port = 5102
+            self.duration = 10
+            self.numstream = 1
+            self.blksize = 100000
+        
+
+        # now let's print out the configuration
+        
+        pass
+
+
+
 
     def LoadParameters(self):
         
