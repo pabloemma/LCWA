@@ -154,6 +154,10 @@ class myclient():
         output.append(result.sent_Mbps)
         output.append('0')
         
+
+
+        if(self.debug):
+            self.PrintResults()
         #print(output)
         return output
 
@@ -200,8 +204,10 @@ class myclient():
             sys.exit()
 
 
-
-
+    def PrintResults(self,result):
+        """called in debug mode, provides more infor"""
+        print('\n\n\n********************************  more info *************************\n\n')
+        print('Local CPU Load        ',result.local_cpu_total)
 
 
 
