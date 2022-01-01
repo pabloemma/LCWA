@@ -57,11 +57,12 @@ class myclient():
 
        # we need to give it default values
         self.server_ip = '63.229.162.245'
+        #self.server_ip = '192.168.2.125'
         self.server_port = 5201
         self.duration = 10
         self.numstream = 1
         self.blksize = 100000
-        self.debug = True
+        self.debug = False
         self.reverse = False
         self.verbose = False
         self.json_output = True
@@ -146,7 +147,7 @@ class myclient():
         output.append(result.sent_Mbps)
         output.append('0')
         
-        print(output)
+        #print(output)
         return output
 
     def RunTestUDP(self):
