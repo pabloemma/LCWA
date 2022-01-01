@@ -207,7 +207,13 @@ class myclient():
     def PrintResults(self,result):
         """called in debug mode, provides more infor"""
         print('\n\n\n********************************  more info *************************\n\n')
-        print('Local CPU Load        ',result.local_cpu_total)
+        print('Total local CPU Load        ',result.local_cpu_total)
+        print('local user CPU Load         ',result.local_cpu_user)
+        print('local system CPU Load       ',result.local_cpu_system)
+        print('Total remote CPU Load        ',result.local_cpu_total)
+        print('remote user CPU Load         ',result.local_cpu_user)
+        print('remote system CPU Load       ',result.local_cpu_system)
+         print('\n*************************************************************************\n\n')
 
 
 
