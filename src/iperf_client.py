@@ -8,6 +8,7 @@ import time
 # for argument parser
 import argparse as argp
 import sys
+import socket
 
 class myclient():
 
@@ -50,6 +51,8 @@ class myclient():
         iperf_parser.add_argument("-v","--verbose",action='store_true',help = "verbose mode")
         #iperf_parser.add_argument("-h","--help",action='store_true',help = "print out menu")
         iperf_parser.add_argument("-j","--json",action='store_true',help = "json output")
+
+        iperf_parser.add_argument("-gp","--getport",action='store_true',help = "get port according to host name")
 
 
     # get the arguments
@@ -95,6 +98,9 @@ class myclient():
  
         if(args.json ):
             self.json_outpout = args.json
+
+        if(args.getport):
+            self.GetPort() # get port number according to speedbox name
  
       
         
@@ -176,7 +182,28 @@ class myclient():
 
         return self.output
 
- 
+    def GetPort(self):
+        """Determine port according to host name"""
+        self.hostname = socket.gethostname()
+        
+        if self.hostname[:2] == 'LC':
+            temp = int(self.hostname[2:4])
+            if ( temp == 4):
+                self.server_port = 5201
+                return
+            else:
+                print('not a recognized speedbox, exiting')
+                sys.exit()
+        else:
+            print('Not implemented hostname')
+            sys.exit()
+
+
+
+
+
+
+
     def EndClient(self):
         quit()
 if __name__ == '__main__':
