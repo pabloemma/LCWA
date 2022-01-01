@@ -157,7 +157,7 @@ class myclient():
 
 
         if(self.debug):
-            self.PrintResults()
+            self.PrintResults(result)
         #print(output)
         return output
 
