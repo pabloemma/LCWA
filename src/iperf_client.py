@@ -117,7 +117,8 @@ class myclient():
             print('Verbose     ',self.verbose)
             print('Reverse     ',self.reverse)
             print('Json Output ',self.json_output)
-
+            print('\n\n **********************  this is the iperf client ****************** \n\n')
+ 
         return
 
 
