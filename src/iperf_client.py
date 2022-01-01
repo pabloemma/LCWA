@@ -213,7 +213,7 @@ class myclient():
         print('Total remote CPU Load        ',result.local_cpu_total)
         print('remote user CPU Load         ',result.local_cpu_user)
         print('remote system CPU Load       ',result.local_cpu_system)
-         print('\n*************************************************************************\n\n')
+        print('\n*************************************************************************\n\n')
 
 
 
