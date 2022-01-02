@@ -3,7 +3,10 @@
 sudo apt install iperf3
 
 cd ~/git/speedtest/iperf3
-tar -zxf iperf3_ak.tgz
+
+tar -zxf iperf_ak.tgz
+
+
 cd iperf3-0.1.11
 
 python3 setup.py install
