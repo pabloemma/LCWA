@@ -17,8 +17,8 @@ class myclient():
         # server_port: port to communicate; default 5021
         # duration : time of test, default 10 seconds
         # Instantiate the iperf3
-        self.mycl = mycl = ipe.Client()
-
+        self.output =output = []
+ 
 
 
  
@@ -59,8 +59,8 @@ class myclient():
         args = iperf_parser.parse_args()
 
        # we need to give it default values
-        self.server_ip = '63.229.162.245'
-        #self.server_ip = '192.168.2.125'
+        #self.server_ip = '63.229.162.245'
+        self.server_ip = '192.168.2.125'
         self.server_port = 5201
         self.duration = 10
         self.numstream = 1
@@ -128,7 +128,8 @@ class myclient():
 
     def RunTestTCP(self):
         # run the iperf test with tcp first
-        self.output =output = []
+        self.mycl = mycl = ipe.Client()
+        
         dummy = 'xxxx'
         self.mycl.server_hostname = self.server_ip
         self.mycl.port = self.server_port
@@ -141,7 +142,7 @@ class myclient():
         self.mycl.reverse = self.reverse
 
 
-
+        output = self.output
         result = self.mycl.run()
         output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%d/%m/%Y'))
         output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%H:%M:%S'))
@@ -158,8 +159,8 @@ class myclient():
 
         if(self.debug):
             self.PrintResults(result)
-        #print(output)
-        return output
+        
+        return 
 
     def RunTestUDP(self):
         #Now run it with udp
@@ -183,9 +184,8 @@ class myclient():
         self.output.append(resultudp.packets)
         self.output.append(resultudp.lost_percent)
         time.sleep(2)
-        print(self.output)
-
-        return self.output
+ 
+        return 
 
     def GetPort(self):
         """Determine port according to host name"""
@@ -215,7 +215,27 @@ class myclient():
         print('remote system CPU Load       ',result.local_cpu_system)
         print('\n*************************************************************************\n\n')
 
+    def SetReverse(self):
+        """this sets the reverse to opposite the previous value and then we run again
+        so if you start with reverse now it will make a regular connection """
+        if(self.reverse):
+            self.reverse = False
+        else:
+            self.reverse = True
 
+    def CreateOutput(self):
+        """parses the output and creates a new one for the test_speed program"""
+        print(len(self.output))
+        temp1=[]
+        for k in range (0,7):
+            temp1.append(self.output[k])
+        for k in range (20,26):
+            temp1.append(self.output[k])
+        print(temp1)
+        if self.debug:
+            print(' full output from tcp and udp both regular and reverse \n\n')
+            print(self.output)
+        return self.output
 
     def EndClient(self):
         quit()
@@ -226,7 +246,11 @@ if __name__ == '__main__':
     mycli.GetArguments()
     mycli.RunTestTCP()
     mycli.RunTestUDP()
-
+    mycli.SetReverse()
+    mycli.RunTestTCP()
+    mycli.RunTestUDP()
+    mycli.CreateOutput()
+ 
  
         
  
