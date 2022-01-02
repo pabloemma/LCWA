@@ -9,4 +9,4 @@ tar -zxf iperf_ak.tgz
 
 cd iperf3-0.1.11
 
-python3 setup.py install
+sudo python3 setup.py install
