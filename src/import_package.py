@@ -18,4 +18,4 @@ def InstallPackage(package ):
         print('package  ', package, '  is already installed')
 
 if __name__ == "__main__":
-    InstallPackage('iperf3')
+    InstallPackage('ntplib')
