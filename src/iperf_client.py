@@ -59,8 +59,8 @@ class myclient():
         args = iperf_parser.parse_args()
 
        # we need to give it default values
-        self.server_ip = '63.229.162.245'
-        #self.server_ip = '192.168.2.125'
+        #self.server_ip = '63.229.162.245'
+        self.server_ip = '192.168.2.125'
         self.server_port = 5201
         self.duration = 10
         self.numstream = 1
