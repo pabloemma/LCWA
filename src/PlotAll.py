@@ -400,8 +400,14 @@ class PlotAll(object):
             self.axarr[i][k-2].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr[i][k-2].transAxes,fontsize=8)
             self.axarr[i][k-2].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k-2].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            if(np.around(np.mean(y1),2) > 12.):
+            if(np.around(np.mean(y1),2) >25.): 
+                 # set yaxis limit
+                self.axarr[i][k-2].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 12.):
                 self.axarr[i][k-2].set_ylim(ylow,yhigh) # set yaxis limit
+
+
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr[i][k-2].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
