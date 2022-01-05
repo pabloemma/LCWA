@@ -441,10 +441,10 @@ class PlotAll(object):
  
             if(np.around(np.mean(y1),2) >25.): 
                  # set yaxis limit
-                self.axarr[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                self.axarr1[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
                         
             elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 12.):
-                self.axarr[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+                self.axarr1[i][l].set_ylim(ylow,yhigh) # set yaxis limit
 
  
  
@@ -482,8 +482,16 @@ class PlotAll(object):
             self.axarr1[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr1[i][l].transAxes,fontsize=8)
             self.axarr1[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr1[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            if(np.around(np.mean(y1),2) > 12.):
+
+            if(np.around(np.mean(y1),2) >25.): 
+                 # set yaxis limit
+                self.axarr1[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 12.):
                 self.axarr1[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+
+
+
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr1[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
@@ -513,8 +521,21 @@ class PlotAll(object):
             self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=8)
             self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            if(np.around(np.mean(y1),2) > 12.):
+            if(np.around(np.mean(y1),2) >25.): 
+                 # set yaxis limit
+                self.axarr2[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 12.):
                 self.axarr2[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+
+
+
+            elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
+                self.axarr2[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
+ 
+ 
+ 
+ 
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr2[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
@@ -545,8 +566,16 @@ class PlotAll(object):
             self.axarr2[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr2[i][l].transAxes,fontsize=8)
             self.axarr2[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr2[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            if(np.around(np.mean(y1),2) > 12.):
+ 
+            if(np.around(np.mean(y1),2) >25.): 
+                 # set yaxis limit
+                self.axarr2[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 12.):
                 self.axarr2[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+
+
+ 
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr2[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
@@ -577,8 +606,15 @@ class PlotAll(object):
             self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=8)
             self.axarr3[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr3[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            if(np.around(np.mean(y1),2) > 12.):
+            if(np.around(np.mean(y1),2) >25.): 
+                 # set yaxis limit
+                self.axarr3[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 12.):
                 self.axarr3[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+
+  
+  
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr3[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
@@ -609,8 +645,15 @@ class PlotAll(object):
             self.axarr3[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr3[i][l].transAxes,fontsize=8)
             self.axarr3[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr3[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            if(np.around(np.mean(y1),2) > 12.):
+            if(np.around(np.mean(y1),2) >25.): 
+                 # set yaxis limit
+                self.axarr3[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 12.):
                 self.axarr3[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+
+
+
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr3[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
@@ -646,8 +689,17 @@ class PlotAll(object):
             self.axarr4[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr4[i][l].transAxes,fontsize=8)
             self.axarr4[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr4[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            if(np.around(np.mean(y1),2) > 12.):
+
+            if(np.around(np.mean(y1),2) >25.): 
+                 # set yaxis limit
+                self.axarr4[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 12.):
                 self.axarr4[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+
+
+
+
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr4[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
@@ -678,8 +730,16 @@ class PlotAll(object):
             self.axarr4[i][l].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr4[i][l].transAxes,fontsize=8)
             self.axarr4[i][l].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr4[i][l].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            if(np.around(np.mean(y1),2) > 12.):
+
+            if(np.around(np.mean(y1),2) >25.): 
+                 # set yaxis limit
+                self.axarr4[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
+                        
+            elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 12.):
                 self.axarr4[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+
+
+
             elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
                 self.axarr4[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
