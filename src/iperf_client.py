@@ -135,6 +135,8 @@ class myclient():
         self.mycl.server_hostname = self.server_ip
         self.mycl.port = self.server_port
 
+        print(self.server_port,'****')
+
         self.mycl.verbose = self.verbose
         self.mycl.json_output = self.json_output
         self.mycl.num_streams = self.numstream
