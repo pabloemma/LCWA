@@ -214,9 +214,9 @@ class myclient():
         print('Total local CPU Load        ',result.local_cpu_total)
         print('local user CPU Load         ',result.local_cpu_user)
         print('local system CPU Load       ',result.local_cpu_system)
-        print('Total remote CPU Load        ',result.local_cpu_total)
-        print('remote user CPU Load         ',result.local_cpu_user)
-        print('remote system CPU Load       ',result.local_cpu_system)
+        print('Total remote CPU Load        ',result.remote_cpu_total)
+        print('remote user CPU Load         ',result.remote_cpu_user)
+        print('remote system CPU Load       ',result.remote_cpu_system)
         print('\n*************************************************************************\n\n')
 
     def SetReverse(self):
