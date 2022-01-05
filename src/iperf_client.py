@@ -248,12 +248,12 @@ if __name__ == '__main__':
  
     mycli = myclient()
     mycli.GetArguments()
-    mycli.RunTestTCP()
-    #mycli.RunTestUDP()
+    #mycli.RunTestTCP()
+    mycli.RunTestUDP()
     #mycli.SetReverse()
     #mycli.RunTestTCP()
     #mycli.RunTestUDP()
-    mycli.CreateOutput()
+    #mycli.CreateOutput()
  
  
         
