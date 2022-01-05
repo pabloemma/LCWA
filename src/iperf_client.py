@@ -18,7 +18,7 @@ class myclient():
         # duration : time of test, default 10 seconds
         # Instantiate the iperf3
         self.output =output = []
-        self.time_sleep = 10
+        self.time_sleep = 1
  
 
 
