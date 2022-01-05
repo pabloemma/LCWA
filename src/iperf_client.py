@@ -18,6 +18,7 @@ class myclient():
         # duration : time of test, default 10 seconds
         # Instantiate the iperf3
         self.output =output = []
+        self.time_sleep = 10
  
 
 
@@ -160,6 +161,7 @@ class myclient():
         if(self.debug):
             self.PrintResults(result)
         
+        time.sleep(self.time_sleep)
         return 
 
     def RunTestUDP(self):
@@ -183,7 +185,7 @@ class myclient():
         self.output.append(resultudp.jitter_ms)
         self.output.append(resultudp.packets)
         self.output.append(resultudp.lost_percent)
-        time.sleep(2)
+        time.sleep(self.time_sleep)
  
         return 
 
