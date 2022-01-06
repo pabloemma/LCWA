@@ -217,7 +217,8 @@ class test_speed1():
             formatter_class=argp.RawDescriptionHelpFormatter,
             epilog=textwrap.dedent('''
             Output format:
-            day,time,server name, server id,latency[ms],jitter[ms],package loss[%], download Mb/s, updload Mb/s
+           day,time,server name, server id,latency[ms],jitter[ms],package loss[%], download Mb/s, updload Mb/s’*
+            
             If you don't  give a filename for the password and the key, \n
             you will not coinnect to the output
             dropbox 
