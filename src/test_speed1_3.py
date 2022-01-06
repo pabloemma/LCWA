@@ -218,7 +218,7 @@ class test_speed1():
             epilog=textwrap.dedent('''
             Output format:
            day,time,server name, server id,latency[ms],jitter[ms],package loss[%], download Mb/s, updload Mb/s’*
-            
+
             If you don't  give a filename for the password and the key, \n
             you will not coinnect to the output
             dropbox 
@@ -275,7 +275,8 @@ class test_speed1():
 #       print('line 256 temporary block')
             if(args.iperf == None):
                 print('running iperf version, setting up iperf')
-                args.iperf='192.168.2.125:5102'
+                #args.iperf='192.168.2.125:5102'
+                args.iperf='63.229.162.245:5102'
                 decode_iperf = args.iperf.partition(':')
                 self.iperf_server = decode_iperf[0]
                 self.iperf_port = int(decode_iperf[2])
@@ -530,7 +531,8 @@ class test_speed1():
             #self.SetupIperf3()
 
             #self.output = self.myiperf.RunTestTCP()
-            self.command =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py"]
+            #self.command =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py","-ipf","63.229.162.245"]
+            self.command =[self.timeout_command,"-k","300","200","/usr/local/bin/python3",self.speedtest_srcdir+"iperf_client.py","-ipf","63.229.162.245"]
             print (self.command)
             process = sp.Popen(self.command,
                          #stdout=outfile,
