@@ -233,8 +233,8 @@ class myclient():
         temp1=[]
         for k in range (0,7):
             temp1.append(self.output[k])
-        #for k in range (20,26):
-        #    temp1.append(self.output[k])
+        for k in range (20,26):
+            temp1.append(self.output[k])
         print(temp1)
         if self.debug:
             print(' full output from tcp and udp both regular and reverse \n\n')
@@ -249,10 +249,10 @@ if __name__ == '__main__':
     mycli = myclient()
     mycli.GetArguments()
     mycli.RunTestTCP()
-    #mycli.RunTestUDP()
-    #mycli.SetReverse()
-    #mycli.RunTestTCP()
-    #mycli.RunTestUDP()
+    mycli.RunTestUDP()
+    mycli.SetReverse()
+    mycli.RunTestTCP()
+    mycli.RunTestUDP()
     mycli.CreateOutput()
  
  
