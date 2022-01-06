@@ -231,10 +231,13 @@ class myclient():
         """parses the output and creates a new one for the test_speed program"""
         print(len(self.output))
         temp1=[]
-        for k in range (0,7):
+        for k in range (0,9):
             temp1.append(self.output[k])
-        for k in range (20,26):
-            temp1.append(self.output[k])
+        # temporary
+        temp1.append(0)
+        temp1.append(0)
+        #for k in range (20,26):
+        #    temp1.append(self.output[k])
         print(temp1)
         if self.debug:
             print(' full output from tcp and udp both regular and reverse \n\n')
@@ -249,10 +252,10 @@ if __name__ == '__main__':
     mycli = myclient()
     mycli.GetArguments()
     mycli.RunTestTCP()
-    mycli.RunTestUDP()
-    mycli.SetReverse()
-    mycli.RunTestTCP()
-    mycli.RunTestUDP()
+    #mycli.RunTestUDP()
+    #mycli.SetReverse()
+    #mycli.RunTestTCP()
+    #mycli.RunTestUDP()
     mycli.CreateOutput()
  
  
