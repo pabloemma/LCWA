@@ -60,8 +60,8 @@ class myclient():
         args = iperf_parser.parse_args()
 
        # we need to give it default values
-        #self.server_ip = '63.229.162.245'
-        self.server_ip = '192.168.2.125'
+        self.server_ip = '63.229.162.245'
+        #self.server_ip = '192.168.2.125'
         self.server_port = 5201
         self.duration = 10
         self.numstream = 1
@@ -135,8 +135,7 @@ class myclient():
         self.mycl.server_hostname = self.server_ip
         self.mycl.port = self.server_port
 
-        print(self.server_port,'****')
-
+ 
         self.mycl.verbose = self.verbose
         self.mycl.json_output = self.json_output
         self.mycl.num_streams = self.numstream
@@ -253,8 +252,8 @@ if __name__ == '__main__':
     mycli.GetArguments()
     mycli.RunTestTCP()
     #mycli.RunTestUDP()
-    #mycli.SetReverse()
-    #mycli.RunTestTCP()
+    mycli.SetReverse()
+    mycli.RunTestTCP()
     #mycli.RunTestUDP()
     mycli.CreateOutput()
  
