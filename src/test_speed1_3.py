@@ -70,7 +70,13 @@ class test_speed1():
         #print (' in init')        # before we do anything, let's determine the python version
 
         self.chosentime = chosentime # how long to wait in seconds before next reading
-          
+
+         # here we read in the configuration file
+         # first we locate where the directory with test_speed1_3 py is located
+         # the configuration file is then  at ../config
+        
+        
+         
             
         self.WriteHeader()
         
@@ -202,7 +208,7 @@ class test_speed1():
         print('Version 6.00.01', 'now with latency measurement to currently cybermese')
         print('Version 6.00.02', 'minor change in PlotCalss do do the scaling on the single pdf files better')
         print('Version 7.00.01', 'major upgrade , replace speetetst with iperf')
-        print('Version 7.01.01', 'added Setup function to determine the different path and find the python interpreter')
+        print('Version 7.01.02', 'added config file')
         
         print('\n\n\n')
         
