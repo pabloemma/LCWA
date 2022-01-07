@@ -531,8 +531,8 @@ class test_speed1():
             #self.SetupIperf3()
 
             #self.output = self.myiperf.RunTestTCP()
-            #self.command =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py","-ipf","63.229.162.245"]
-            self.command =[self.timeout_command,"-k","300","200","/usr/local/bin/python3",self.speedtest_srcdir+"iperf_client.py","-ipf","63.229.162.245"]
+            self.command =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py","-s","63.229.162.245"]
+            #self.command =[self.timeout_command,"-k","300","200","/usr/local/bin/python3",self.speedtest_srcdir+"iperf_client.py","-s","63.229.162.245"]
             print (self.command)
             process = sp.Popen(self.command,
                          #stdout=outfile,
@@ -542,6 +542,7 @@ class test_speed1():
                          universal_newlines=True)
         
             out,err = process.communicate()
+            print('error',err)
             print('runloop',out,type(out))
             self.CreateIperfOutput(out)
        # now create outputline from tuple
