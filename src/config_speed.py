@@ -34,11 +34,11 @@ class MyConfig():
 
     def DecodeVariables(self,jsondict):
         """decodes the json dictionary in to variables"""
-        self.srcdir = jsondict['directory']['srcdir']
-        self.datadir = jsondict['directory']['datadir']
 
         #these are depending on the operating system
         mysystem = platform.system()
+        self.srcdir = jsondict[mysystem]['srcdir']
+        self.datadir = jsondict[mysystem]['datadir']
 
         self.timeout = jsondict[mysystem]['timeout']
         self.speedtest = jsondict[mysystem]['speedtest']

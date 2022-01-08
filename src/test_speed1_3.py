@@ -93,6 +93,7 @@ class test_speed1():
         
         #lets get the python interpreter"
         self.python_exec = sys.executable
+        self.myplatform = platform.system()
 
         #lets get the operating system
         #if platform.system() == 'Darwin':
@@ -112,9 +113,19 @@ class test_speed1():
         confdir = workdir.replace('src','config')
 
         # chek if we run it as a service
-        status = os.system('systemctl is-active --quiet sshd')
-        if(status == 0):
-            print('we are running the program under systemd',status)  # will return 0 for active else inactive.    
+        # because of Gordon's wishes, but now we firts have to
+        #check it is not a mac: If it is a mac the config file is at its usual point
+        # if linux, it depends how the machine is setup
+        if(self.myplatform == 'Darwin'):
+            MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
+        else:
+            status = os.system('systemctl is-active --quiet stupid')
+            if(status == 0):
+                print('we are running the program under systemd',status)  # will return 0 for active else inactive.    
+                confdir = '/etc/speedtest/'
+            MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
+            
+
         MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
         
         self.timeout_command = MyConfig.timeout
