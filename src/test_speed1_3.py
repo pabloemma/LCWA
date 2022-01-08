@@ -58,6 +58,7 @@ import uuid
 from tcp_latency import measure_latency
 
 import iperf_client as ipe
+import config_speed as cs
 
 #from __builtin__ import True
 
@@ -75,8 +76,7 @@ class test_speed1():
          # first we locate where the directory with test_speed1_3 py is located
          # the configuration file is then  at ../config
         
-        
-         
+          
             
         self.WriteHeader()
         
@@ -95,20 +95,27 @@ class test_speed1():
         self.python_exec = sys.executable
 
         #lets get the operating system
-        if platform.system() == 'Darwin':
-            self.timeout_command = "/usr/local/bin/timeout"
-            self.speedtest = "/usr/local/bin/speedtest/"
+        #if platform.system() == 'Darwin':
+        #    self.timeout_command = "/usr/local/bin/timeout"
+        #    self.speedtest = "/usr/local/bin/speedtest/"
             
-            self.speedtest_srcdir = '/Users/klein/visual studio/LCWA/src/'
+        #    self.speedtest_srcdir = '/Users/klein/visual studio/LCWA/src/'
   #           temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
-        elif platform.system() == 'Linux':
-            self.speedtest = "/usr/bin/speedtest/"
-            self.timeout_command = "/usr/bin/timeout"
-            self.speedtest_srcdir = '/home/pi/git/speedtest/src/'
+        #elif platform.system() == 'Linux':
+        #    self.speedtest = "/usr/bin/speedtest/"
+        #    self.timeout_command = "/usr/bin/timeout"
+        #    self.speedtest_srcdir = '/home/pi/git/speedtest/src/'
 
  #           temp1=[self.timeout_command, "-k", "300"," 200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default         
-               
+        # lets get the config file
+        workdir = os.path.dirname(__file__)
+        confdir = workdir.replace('src','config')
+
+        MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
         
+        self.timeout_command = MyConfig.timeout
+        self.speedtest = MyConfig.speedtest
+        self.speedtest_srcdir = MyConfig.srcdir
                 
 
     
