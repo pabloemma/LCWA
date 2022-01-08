@@ -95,19 +95,6 @@ class test_speed1():
         self.python_exec = sys.executable
         self.myplatform = platform.system()
 
-        #lets get the operating system
-        #if platform.system() == 'Darwin':
-        #    self.timeout_command = "/usr/local/bin/timeout"
-        #    self.speedtest = "/usr/local/bin/speedtest/"
-            
-        #    self.speedtest_srcdir = '/Users/klein/visual studio/LCWA/src/'
-  #           temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
-        #elif platform.system() == 'Linux':
-        #    self.speedtest = "/usr/bin/speedtest/"
-        #    self.timeout_command = "/usr/bin/timeout"
-        #    self.speedtest_srcdir = '/home/pi/git/speedtest/src/'
-
- #           temp1=[self.timeout_command, "-k", "300"," 200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default         
         # lets get the config file
         workdir = os.path.dirname(__file__)
         confdir = workdir.replace('src','config')
