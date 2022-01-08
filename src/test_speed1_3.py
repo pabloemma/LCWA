@@ -111,6 +111,10 @@ class test_speed1():
         workdir = os.path.dirname(__file__)
         confdir = workdir.replace('src','config')
 
+        # chek if we run it as a service
+        status = os.system('systemctl is-active --quiet sshd')
+        if(status == 0):
+            print('we are running the program under systemd',status)  # will return 0 for active else inactive.    
         MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
         
         self.timeout_command = MyConfig.timeout
@@ -180,7 +184,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '7.01.01'
+        self.vs = '7.01.02'
 
         
         print(' History')
