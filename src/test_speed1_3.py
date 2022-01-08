@@ -106,11 +106,14 @@ class test_speed1():
         if(self.myplatform == 'Darwin'):
             MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
         else:
-            status = os.system('systemctl is-active --quiet stupid')
+            status = os.system('systemctl is-active --quiet lcwa_speed')
             if(status == 0):
                 print('we are running the program under systemd',status)  # will return 0 for active else inactive.    
-                confdir = '/etc/speedtest/'
-            MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
+                confdir = '/etc/lcwa-speed/'
+                MyConfig = cs.MyConfig(confdir+'/lcwa-speed.json')
+ 
+            else:
+                MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
             
 
         MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
