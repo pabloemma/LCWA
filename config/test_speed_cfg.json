@@ -1,15 +1,19 @@
 
 {
-    "directory":{
-        "srcdir" : "/Users/klein/visual studio/LCWA/src/",
-        "datadir" : "/Users/klein/speedfiles/"
-    },
+
     "Darwin" : {
         "timeout" : "/usr/local/bin/timeout",
-        "speedtest" : "/usr/local/bin/speedtest"
+        "speedtest" : "/usr/local/bin/speedtest",
+        "srcdir" : "/Users/klein/visual studio/LCWA/src/",
+        "datadir" : "/Users/klein/speedfiles/"
+
     },
     "Linux" : {
         "timeout" : "/usr/bin/timeout",
-        "speedtest" : "/usr/bin/speedtest"
+        "speedtest" : "/usr/bin/speedtest",
+        "srcdir" : "/home/pi/git/speediles/src/",
+        "datadir" : "/home/git/speedfiles/"
+
     }
-}
+}   
+
