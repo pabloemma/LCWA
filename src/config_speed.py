@@ -4,6 +4,7 @@ Using json (sigh)"""
 
 import json
 import os
+import sys
 import platform
 
 
@@ -43,10 +44,20 @@ class MyConfig():
         self.timeout = jsondict[mysystem]['timeout']
         self.speedtest = jsondict[mysystem]['speedtest']
 
+    # now we read in the variables which are crucial for running
+    # first we determine if we are running iperf or speedtest
 
+        if(jsondict["Control"]['runmode'] == 'iperf'):
+            self.runmode = 'iperf'
+        elif (jsondict["Control"]['runmode'] == 'speedtest'):
+            self.runmode = 'speedtest'
+        else:
+            print('that runmode is unknown',jsondict["Control"]['runmode'] )
+            sys.exit()
 
         print('\n\n ***************** configuration**************\n')
         print(' We are running on platform ' , mysystem, '\n')
+        print(' We are running ',self.runmode,'\n')
 
         print('Sourcedir            ',self.srcdir)
         print('Datadir              ',self.datadir)
