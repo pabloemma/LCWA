@@ -36,6 +36,9 @@ class MyConfig():
     def DecodeVariables(self,jsondict):
         """decodes the json dictionary in to variables"""
 
+        #bold face begin and end
+        bfb = '\033[1m'
+        bfe = '\033[0m'
         #these are depending on the operating system
         mysystem = platform.system()
         self.srcdir = jsondict[mysystem]['srcdir']
@@ -76,7 +79,8 @@ class MyConfig():
         print('speedtest command    ', self.speedtest)
         print('\n !!!!!!!!!!!!!!!!!!!!!!!!!!!!!     run parameters \n')
         if(self.runmode == 'iperf'):
-            print('Running ',self.runmode,'  mode  \n')
+            
+            print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
             print('IP of server       ',self.serverip)
             print('Port               ',self.serverport)
             print('Duration           ',self.iperf_duration)
