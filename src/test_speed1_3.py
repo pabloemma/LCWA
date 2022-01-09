@@ -86,7 +86,7 @@ class test_speed1():
         
        
         self.GetMacAddress()
-        self.Setup()
+        #self.Setup() # now done ir agrparse
 
     def Setup(self, config_file = None  ):
         """" checks for systerm version and sets some path
@@ -232,6 +232,7 @@ class test_speed1():
         print('Version 6.00.02', 'minor change in PlotCalss do do the scaling on the single pdf files better')
         print('Version 7.00.01', 'major upgrade , replace speetetst with iperf')
         print('Version 7.01.02', 'added config file')
+        print('Version 7.01.03', 'added Gordon wish for /etc location for config file')
         
         print('\n\n\n')
         
@@ -269,14 +270,27 @@ class test_speed1():
         parser.add_argument("-l","--latency",help = "the ip addresss of the latency server" )
         parser.add_argument("-ipf","--iperf",help = "the ip addresss of the iperf  server and port, format =xx.xx.xx.xx:yyyy" )
         parser.add_argument("-ipfd","--iperf_duration",help = "the duration of the iperf" )
+        parser.add_argument("-c","--conf",help = "the full path of the configuration file" )
 
         #parser.add_argument("-ip","--ip=ARG",help = "Attempt to bind to the specified IP address when connecting to servers" )
         
+
+             
+
+
          
         #list of argument lists
         self.run_iperf = True #default
         
-        # here some of the defaults
+        args = parser.parse_args()
+        #check if there are any arguments
+        #first we check if config file is determend by commandline
+        if(args.conf != None):
+            self.Setup(args.conf)
+        else:
+            self.Setup()
+ 
+       # here some of the defaults
         #Of courss Mac has the stuff in different places than Linux
         if platform.system() == 'Darwin':
             temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
@@ -286,9 +300,9 @@ class test_speed1():
         else:
             print(' Sorry we don\'t do Windows yet')
             sys.exit(0)
-        args = parser.parse_args()
-        #check if there are any arguments
-        
+
+
+
         
         self.loop_time = 60 # default 1 minutes before next speedtest
         
