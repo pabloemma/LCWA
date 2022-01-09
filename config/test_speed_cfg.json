@@ -16,13 +16,14 @@
 
     },
     "Control" : {
-        "runmode" : "iperf"
+        "runmode" : "Iperf"
     },
     "Iperf" : {
         "port"  : "5201",
         "serverip" : "63.229.162.245",
         "duration"  : 10,
         "numstreams" : 2,
+        "blksize"   : 1024,
         "reverse"   : "False"
     },
     "Speedtest" : {

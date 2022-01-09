@@ -47,9 +47,21 @@ class MyConfig():
     # now we read in the variables which are crucial for running
     # first we determine if we are running iperf or speedtest
 
-        if(jsondict["Control"]['runmode'] == 'iperf'):
+        if(jsondict["Control"]["runmode"] == 'Iperf'):
             self.runmode = 'iperf'
-        elif (jsondict["Control"]['runmode'] == 'speedtest'):
+            self.serverip = jsondict["Iperf"]["serverip"]
+            self.serverport = jsondict["Iperf"]["port"]
+            self.iperf_numstreams = jsondict["Iperf"]["numstreams"]
+            self.iperf_blksize = jsondict["Iperf"]["blksize"]
+            self.iperf_duration = jsondict["Iperf"]["duration"]
+            if(jsondict["Iperf"]["reverse"]== 'True'):
+                self.iperf_reverse = True
+            else:
+                self.iperf_reverse =  False
+
+            
+            
+        elif (jsondict["Control"]['runmode'] == 'Speedtest'):
             self.runmode = 'speedtest'
         else:
             print('that runmode is unknown',jsondict["Control"]['runmode'] )
@@ -57,12 +69,25 @@ class MyConfig():
 
         print('\n\n ***************** configuration**************\n')
         print(' We are running on platform ' , mysystem, '\n')
-        print(' We are running ',self.runmode,'\n')
 
         print('Sourcedir            ',self.srcdir)
         print('Datadir              ',self.datadir)
         print('timeout command      ',self.timeout)
         print('speedtest command    ', self.speedtest)
+        print('\n !!!!!!!!!!!!!!!!!!!!!!!!!!!!!     run parameters \n')
+        if(self.runmode == 'iperf'):
+            print('Running ',self.runmode,'  mode  \n')
+            print('IP of server       ',self.serverip)
+            print('Port               ',self.serverport)
+            print('Duration           ',self.iperf_duration)
+            print('Block size         ',self.iperf_blksize)
+            print('Number of streams  ',self.iperf_numstreams)
+            
+            print('running reverse    ',self.iperf_reverse)
+
+        else:
+                print(' Running ',self.runmode,'  mode  \n')
+        
 
         print('***************************** end of configuration***************\n\n')
 
