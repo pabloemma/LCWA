@@ -88,8 +88,9 @@ class test_speed1():
         self.GetMacAddress()
         self.Setup()
 
-    def Setup(self):
-        """" checvks for systerm version and sets some path"""
+    def Setup(self, config_file = None  ):
+        """" checks for systerm version and sets some path
+        The deafult is the config file created from the program """
         
         #lets get the python interpreter"
         self.python_exec = sys.executable
@@ -104,19 +105,29 @@ class test_speed1():
         #check it is not a mac: If it is a mac the config file is at its usual point
         # if linux, it depends how the machine is setup
         if(self.myplatform == 'Darwin'):
-            MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
+            if config_file == None :
+                config_file = confdir+'/test_speed_cfg.json'
+                MyConfig = cs.MyConfig(config_file)
         else:
-            status = os.system('systemctl is-active --quiet lcwa_speed')
-            if(status == 0):
-                print('we are running the program under systemd',status)  # will return 0 for active else inactive.    
-                confdir = '/etc/lcwa-speed/'
-                MyConfig = cs.MyConfig(confdir+'/lcwa-speed.json')
+            if config_file == None :
+                
+                status = os.system('systemctl is-active --quiet lcwa_speed')
+                if(status == 0):
+                    print('we are running the program under systemd',status)  # will return 0 for active else inactive.    
+                    confdir = '/etc/lcwa-speed/'
+                    config_file = confdir+'/lcwa-speed.json'
  
+                    MyConfig = cs.MyConfig(config_file)
+ 
+                else:
+                    config_file = confdir+'/test_speed_cfg.json'
+
+                    MyConfig = cs.MyConfig(config_file)
             else:
-                MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
+                MyConfig = cs.MyConfig(config_file)
             
 
-        MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
+        #MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
         
         self.timeout_command = MyConfig.timeout
         self.speedtest = MyConfig.speedtest
