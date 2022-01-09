@@ -14,6 +14,23 @@
         "srcdir" : "/home/pi/git/speediles/src/",
         "datadir" : "/home/git/speedfiles/"
 
+    },
+    "Control" : {
+        "runmode" : "iperf"
+    },
+    "Iperf" : {
+        "port"  : "5201",
+        "serverip" : "63.229.162.245",
+        "duration"  : 10,
+        "numstreams" : 2,
+        "reverse"   : "False"
+    },
+    "Speedtest" : {
+        "serverip" : "63.229.162.245",
+        "serverid" : 18002,
+        "time_window" : 10
     }
-}   
+
+}
+ 
 
