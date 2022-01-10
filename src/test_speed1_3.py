@@ -127,7 +127,7 @@ class test_speed1():
                 MyConfig = cs.MyConfig(config_file)
             
 
-        #MyConfig = cs.MyConfig(confdir+'/test_speed_cfg.json')
+        
         
         self.timeout_command = MyConfig.timeout
         self.speedtest = MyConfig.speedtest
@@ -196,8 +196,8 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '7.01.02'
-
+        self.vs = '7.01.03'
+ 
         
         print(' History')
         print('version 2.02', '  trying to catch the random bad data sent by the CLI')
