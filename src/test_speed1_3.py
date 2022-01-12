@@ -301,7 +301,7 @@ class test_speed1():
         else:
             print('Unknown run mode' , self.runmode)
         
-    
+     
     
         self.loop_time = 60 # default 1 minutes before next speedtest
         
