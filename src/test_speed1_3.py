@@ -129,9 +129,10 @@ class test_speed1():
 
         
         
-        self.timeout_command = MyConfig.timeout
-        self.speedtest = MyConfig.speedtest
-        self.speedtest_srcdir = MyConfig.srcdir
+        self.timeout_command = MyConfig.timeout #where the system has the timeout
+        self.speedtest = MyConfig.speedtest     # location of the Ookla speedtest
+        self.speedtest_srcdir = MyConfig.srcdir # the src dir where all the routines are
+        self.runmode = MyConfig.runmode         #ookla or iperf
                 
 
     
@@ -290,20 +291,18 @@ class test_speed1():
         else:
             self.Setup()
  
-       # here some of the defaults
-        #Of courss Mac has the stuff in different places than Linux
-        if platform.system() == 'Darwin':
+
+
+        #chekc if we run the ookla or iperf version
+        if self.runmode == 'speedtest':
             temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
-        elif platform.system() == 'Linux':
-            temp1=[self.timeout_command, "-k", "300"," 200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default         
-        # do our arguments
+        elif self.runmode == 'iperf':
+            temp1 =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py"]
         else:
-            print(' Sorry we don\'t do Windows yet')
-            sys.exit(0)
-
-
-
+            print('Unknown run mode' , self.runmode)
         
+    
+    
         self.loop_time = 60 # default 1 minutes before next speedtest
         
         if(len(sys.argv) == 1):
