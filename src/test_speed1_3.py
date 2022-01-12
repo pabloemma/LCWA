@@ -111,7 +111,7 @@ class test_speed1():
         else:
             if config_file == None :
                 
-                status = os.system('systemctl is-active --quiet lcwa_speed')
+                status = os.system('systemctl is-active --quiet lcwa-speed*')
                 if(status == 0):
                     print('we are running the program under systemd',status)  # will return 0 for active else inactive.    
                     confdir = '/etc/lcwa-speed/'
