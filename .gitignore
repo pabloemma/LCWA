@@ -2,3 +2,7 @@
 *.pyc
 # the special file
 LCWA_d.txt
+doc/test_speed1_new.aux
+doc/test_speed1_new.log
+doc/test_speed1_new.pdf
+doc/usepack.aux
