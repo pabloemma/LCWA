@@ -197,7 +197,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '7.01.03'
+        self.vs = '7.01.04'
  
         
         print(' History')
@@ -234,6 +234,7 @@ class test_speed1():
         print('Version 7.00.01', 'major upgrade , replace speetetst with iperf')
         print('Version 7.01.02', 'added config file')
         print('Version 7.01.03', 'added Gordon wish for /etc location for config file')
+        print('Version 7.01.04', 'Revamped command line and arparse section')
         
         print('\n\n\n')
         
