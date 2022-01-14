@@ -316,11 +316,11 @@ class test_speed1():
  
 
 
-        #chekc if we run the ookla or iperf version
+        #chekc if we run the ookla or iperf version, temp1 is speedtest, temp2 is iperf
         if self.runmode == 'Speedtest':
             temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
         elif self.runmode == 'Iperf':
-            temp1 =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py"]
+            temp2 =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py"]
         else:
             print('Unknown run mode' , self.runmode)
         
@@ -352,76 +352,98 @@ class test_speed1():
             self.Debug = True
             self.Prompt = 'Test_speed1_Debug>'
             #make cyber mesa the default
-        if(args.servers):
+
+        if(args.dpfile != None):
+            self.cryptofile = self.speedtest_srcdir+args.dpfile
+            #self.DropFlag = True
+            self.ConnectDropBox() # establish the contact to dropbox
+        
+        #In case we have also None in the config file
+        if(self.cryptofile != None):
+            self.cryptofile = self.speedtest_srcdir+self.cryptofile
+            self.ConnectDropBox()
+
+        if self.runmode == 'Speedtest':
+
+        # here is the block for speedtest    
+            if(args.servers):
  
-            self.command = [self.timeout_command,"-k","300","200",self.speedtest, '-L'] #because argparse does not take single args
+                self.command = [self.timeout_command,"-k","300","200",self.speedtest, '-L'] #because argparse does not take single args
                   
                 
-            self.RunShort()
-            sys.exit(0)
-        if(args.version):
+                self.RunShort()
+                sys.exit(0)
+            if(args.version):
                 
 
-            self.command = [self.timeout_command,"-k","300","200",self.speedtest, '-V'] #because argparse does not take single args
+                self.command = [self.timeout_command,"-k","300","200",self.speedtest, '-V'] #because argparse does not take single args
                 
-            self.RunShort()
-            sys.exit(0)
+                self.RunShort()
+                sys.exit(0)
                 
-        if(args.serverid != None):
-            if(socket.gethostname() == 'LC12'):
-                t=['-s','9686']    # go to NMSURF                
-            else:
+            if(args.serverid != None):
+            #if(socket.gethostname() == 'LC12'):
+             #   t=['-s','9686']    # go to NMSURF                
+            #else:
                 t=['-s',args.serverid]
                 
-            temp1.extend(t)
-        else: # make cybermesa the default
-                # temp fix for LC12 to go to NMsurf server
-            if(socket.gethostname() == 'LC12'):
-                t=['-s','9686']    # go to NMSURF                
-                #elif(socket.gethostname() == 'LC24'):
-                    #t=['-s','9686']    # go to NMSURF                
-            else:
+                temp1.extend(t)
+            else: # make cybermesa the default
+ 
                 t=['-s','18002']
-            temp1.extend(t)
+                temp1.extend(t)
               
             
 
-        if(args.ip != None):
-            t=['--ip=',args.ip]
-            temp1.extend(t)
+            if(args.ip != None):
+                t=['--ip=',args.ip]
+                temp1.extend(t)
         
-        if(args.latency != None):
-            t=['--latency=',args.latency]
-            self.latency_server =  args.latency
-        else: #default is cybermesa  
-            t=['--latency=','65.19.14.51'] 
-            self.latency_server =  '65.19.14.51'
+            if(args.latency != None):
+                t=['--latency=',args.latency]
+                self.latency_server =  args.latency
+            else: #default is cybermesa  
+                t=['--latency=','65.19.14.51'] 
+                self.latency_server =  '65.19.14.51'
 
-        if(args.host != None):
-            t=['--host=',args.host]
-            temp1.extend(t)
+            if(args.host != None):
+                t=['--host=',args.host]
+                temp1.extend(t)
  
-        if(args.time != None):
-            self.loop_time = int(args.time)*60 # time between speedtests
- 
-        if(args.iperf != None):
-            print('running iperf version, setting up iperf')
-            self.iperf_server = args.iperf
+            if(args.time != None):
+                self.loop_time = int(args.time)*60 # time between speedtests
+        elif self.runmode == 'Iperf':
+            if(args.iperf != None):
+                print('running iperf version, setting up iperf')
+                self.iperf_server = args.iperf
 
-        if(args.iperf_duration != None):
-            self.iperf_duration = int(args.iperf_duration)
+            if(args.iperf_duration != None):
+                self.iperf_duration = int(args.iperf_duration)
    
- 
+
                 
             #if(args.pwfile != None ) and (args.dpfile != None):
-        if(args.dpfile != None):
-            self.cryptofile = args.dpfile
-            #self.DropFlag = True
-            self.ConnectDropBox() # establish the contact to dropbox
+
+            
+ 
+        #form command
+
+
+        if self.runmode == 'Speedtest':
+            self.command = temp1 
+        elif self.runmode == 'Iperf':
+            temp2.extend(["-s",self.iperf_server])
+
+
+            self.command = temp2
+
+        else:
+            self.Logging(' Unknown runmode')
 
 
 
-        self.command = temp1 
+
+
         if(self.Debug):
             self.DebugProgram(2)     
         return 
@@ -580,7 +602,7 @@ class test_speed1():
             #self.SetupIperf3()
 
             #self.output = self.myiperf.RunTestTCP()
-            self.command =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py","-s","63.229.162.245"]
+            #self.command =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py","-s","63.229.162.245"]
             #self.command =[self.timeout_command,"-k","300","200","/usr/local/bin/python3",self.speedtest_srcdir+"iperf_client.py","-s","63.229.162.245"]
             print (self.command)
             process = sp.Popen(self.command,
