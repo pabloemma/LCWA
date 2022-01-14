@@ -292,7 +292,7 @@ class test_speed1():
         parser.add_argument("-d","--dpfile",help = "The file for the dropbox" )
         parser.add_argument("-a","--adebug",action='store_true',help = "a debug version" )
         parser.add_argument("-l","--latency",help = "the ip addresss of the latency server" )
-        parser.add_argument("-ipf","--iperf",help = "the ip addresss of the iperf  server and port, format =xx.xx.xx.xx:yyyy" )
+        parser.add_argument("-ipf","--iperf",help = "the ip addresss of the iperf  server , format =xx.xx.xx.xx" )
         parser.add_argument("-ipfd","--iperf_duration",help = "the duration of the iperf" )
         parser.add_argument("-c","--conf",help = "the full path of the configuration file" )
 
@@ -400,14 +400,14 @@ class test_speed1():
         if(args.host != None):
             t=['--host=',args.host]
             temp1.extend(t)
+ 
         if(args.time != None):
             self.loop_time = int(args.time)*60 # time between speedtests
  
         if(args.iperf != None):
             print('running iperf version, setting up iperf')
-            decode_iperf = args.iperf.partition(':')
-            self.iperf_server = decode_iperf[0]
-            self.iperf_port = decode_iperf[2]
+            self.iperf_server = args.iperf
+
         if(args.iperf_duration != None):
             self.iperf_duration = int(args.iperf_duration)
    
