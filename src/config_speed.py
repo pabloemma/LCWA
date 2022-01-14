@@ -47,17 +47,22 @@ class MyConfig():
         self.timeout = jsondict[mysystem]['timeout']
         self.speedtest = jsondict[mysystem]['speedtest']
 
+        self.debug = jsondict["Control"]["debug"]
+        self.cryptofile = jsondict["Control"]["cryptofile"]
+
     # now we read in the variables which are crucial for running
     # first we determine if we are running iperf or speedtest
 
         if(jsondict["Control"]["runmode"] == 'Iperf'):
-            self.runmode = 'iperf'
+            self.runmode = jsondict["Control"]["runmode"]
             self.serverip = jsondict["Iperf"]["serverip"]
-            self.serverport = jsondict["Iperf"]["port"]
+            self.serverport = jsondict["Iperf"]["serverport"]
             self.iperf_numstreams = jsondict["Iperf"]["numstreams"]
             self.iperf_blksize = jsondict["Iperf"]["blksize"]
             self.iperf_duration = jsondict["Iperf"]["duration"]
-            if(jsondict["Iperf"]["reverse"]== 'True'):
+            self.latency_ip = jsondict["Iperf"]["latency_ip"]
+
+            if(jsondict["Iperf"]["reverse"]== True):
                 self.iperf_reverse = True
             else:
                 self.iperf_reverse =  False
@@ -65,7 +70,12 @@ class MyConfig():
             
             
         elif (jsondict["Control"]['runmode'] == 'Speedtest'):
-            self.runmode = 'speedtest'
+            self.runmode = jsondict["Control"]["runmode"]
+            self.latency_ip =       jsondict["Speedtest"]["latency_ip"]
+            self.serverip =         jsondict["Speedtest"]["serverip"]
+            self.serverid =         jsondict["Speedtest"]["serverid"]
+            self.time_window =      jsondict["Speedtest"]["time_window"]
+            
         else:
             print('that runmode is unknown',jsondict["Control"]['runmode'] )
             sys.exit()
@@ -78,7 +88,7 @@ class MyConfig():
         print('timeout command      ',self.timeout)
         print('speedtest command    ', self.speedtest)
         print('\n !!!!!!!!!!!!!!!!!!!!!!!!!!!!!     run parameters \n')
-        if(self.runmode == 'iperf'):
+        if(self.runmode == 'Iperf'):
             
             print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
             print('IP of server       ',self.serverip)
@@ -90,7 +100,11 @@ class MyConfig():
             print('running reverse    ',self.iperf_reverse)
 
         else:
-                print(' Running ',self.runmode,'  mode  \n')
+            print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
+            print('Latency server       ',self.latency_ip)
+            print('Server IP            ',self.serverip)
+            print('Server ID            ',self.serverid)
+            print('times intervals      ',self.time_window)
         
 
         print('***************************** end of configuration***************\n\n')

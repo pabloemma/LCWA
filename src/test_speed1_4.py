@@ -10,7 +10,9 @@
 ### END INIT INFO
 #from builtins import True
 
-
+#!!!!!!!!!!!!!!!!!!!!!!!!! this is really the original test_speed1_3.py !!!!!!!!!!!!!!!!!!!
+#!!!!!!!!!!!!!!!!!!!!!!!!! Before I start working on the argparse !!!!!!!!!!!!!!!!!!!!!!!!!
+#!!!!!!!!!!!!!!!!!!!!!!!!!DO NOT USE THIS VERSION!!!!!!!!!!!!!!!!!!!!!!!!
 
 '''
 Created on Feb 8, 2020
@@ -80,7 +82,7 @@ class test_speed1():
             
         self.WriteHeader()
         
-        #self.DropFlag = False # default no dropbox connection
+        self.DropFlag = False # default no dropbox connection
         
         self.Debug = False
         
@@ -130,26 +132,9 @@ class test_speed1():
         
         
         self.timeout_command = MyConfig.timeout #where the system has the timeout
+        self.speedtest = MyConfig.speedtest     # location of the Ookla speedtest
         self.speedtest_srcdir = MyConfig.srcdir # the src dir where all the routines are
         self.runmode = MyConfig.runmode         #ookla or iperf
-        self.Debug = MyConfig.debug
-        self.cryptofile = MyConfig.cryptofile
-
-        #speedtest variables
-        self.latency_server = MyConfig.latency_ip
-        self.speedtest = MyConfig.speedtest     # location of the Ookla speedtest
-
-    
-        #iperf variables
-        self.iperf_server =     MyConfig.serverip
-        self.iperf_port =       MyConfig.serverport
-        self.iperf_duration =   MyConfig.iperf_duration
-        self.iperf_blksize =    MyConfig.iperf_blksize
-        self.iperf_numstreams = MyConfig.iperf_numstreams
-        self.iperf_reverse    = MyConfig.iperf_reverse
-        
-
-
                 
 
     
@@ -299,7 +284,7 @@ class test_speed1():
 
          
         #list of argument lists
-        #_AK self.run_iperf = True #default
+        self.run_iperf = True #default
         
         args = parser.parse_args()
         #check if there are any arguments
@@ -312,9 +297,9 @@ class test_speed1():
 
 
         #chekc if we run the ookla or iperf version
-        if self.runmode == 'Speedtest':
+        if self.runmode == 'speedtest':
             temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
-        elif self.runmode == 'Iperf':
+        elif self.runmode == 'iperf':
             temp1 =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py"]
         else:
             print('Unknown run mode' , self.runmode)
@@ -323,101 +308,112 @@ class test_speed1():
     
         self.loop_time = 60 # default 1 minutes before next speedtest
         
- 
-        #if no cli args then everything comes from the config file
-        # this means that we need to get all the variables defined here
-        # Since they have different length we need to make sure we handle all of them.
-        # For the Ookla version we need to have the following variables define:
-        # serverid : 18002,NMSURF or whatever
-        # timewindow: time inetravl for testing
-        # latency_ip: the ip of the latency server
-        
- 
-        if self.Debug:
-            self.DebugProgram(1)
-                
-            self.Prompt = 'Test_speed1_Debug>'
+        if(len(sys.argv) == 1):
+            # we need to give it a server as default use cyber mesa
+            se =['-s','18002']
+            temp1.extend(se)
+            self.command = temp1
+            #self.keyfile('LCWA_p.txt')
+            self.latency_server = '65.19.14.51'
+            print('NOTE temporary assignmnet of latency sevrer',self.latency_server)
 
- 
- 
-     
-        if(args.adebug):
-            self.ARGS = sys.argv
-            self.DebugProgram(1)
-            self.Debug = True
-            self.Prompt = 'Test_speed1_Debug>'
+#       print('line 256 temporary block')
+            if(args.iperf == None):
+                print('running iperf version, setting up iperf')
+                #args.iperf='192.168.2.125:5102'
+                args.iperf='63.229.162.245:5102'
+                decode_iperf = args.iperf.partition(':')
+                self.iperf_server = decode_iperf[0]
+                self.iperf_port = int(decode_iperf[2])
+                if(args.iperf_duration != None):
+                    self.iperf_duration = int(args.iperf_duration)
+                else:
+                    self.iperf_duration = 25    
+                # Now setup iperf system
+                #self.SetupIperf3()
+
+
+            return
+        else:
+            if(args.adebug):
+                self.ARGS = sys.argv
+                self.DebugProgram(1)
+                self.Debug = True
+                self.Prompt = 'Test_speed1_Debug>'
             #make cyber mesa the default
-        if(args.servers):
+            if(args.servers):
  
-            self.command = [self.timeout_command,"-k","300","200","/usr/local/bin/speedtest", '-L'] #because argparse does not take single args
+                self.command = [self.timeout_command,"-k","300","200","/usr/local/bin/speedtest", '-L'] #because argparse does not take single args
                   
                 
-            self.RunShort()
-            sys.exit(0)
-        if(args.version):
+                self.RunShort()
+                sys.exit(0)
+            if(args.version):
                 
 
-            self.command = [self.timeout_command,"-k","300","200",self.speedtest, '-V'] #because argparse does not take single args
+                self.command = [self.timeout_command,"-k","300","200",self.speedtest, '-V'] #because argparse does not take single args
                 
-            self.RunShort()
-            sys.exit(0)
+                self.RunShort()
+                sys.exit(0)
                 
-        if(args.serverid != None):
-            if(socket.gethostname() == 'LC12'):
-                t=['-s','9686']    # go to NMSURF                
-            else:
-                t=['-s',args.serverid]
-                
-            temp1.extend(t)
-        else: # make cybermesa the default
-                # temp fix for LC12 to go to NMsurf server
-            if(socket.gethostname() == 'LC12'):
-                t=['-s','9686']    # go to NMSURF                
+            if(args.serverid != None):
+                if(socket.gethostname() == 'LC12'):
+                    t=['-s','9686']    # go to NMSURF                
                 #elif(socket.gethostname() == 'LC24'):
                     #t=['-s','9686']    # go to NMSURF                
-            else:
-                t=['-s','18002']
-            temp1.extend(t)
+                else:
+                    t=['-s',args.serverid]
+                
+                temp1.extend(t)
+            else: # make cybermesa the default
+                # temp fix for LC12 to go to NMsurf server
+                if(socket.gethostname() == 'LC12'):
+                    t=['-s','9686']    # go to NMSURF                
+                #elif(socket.gethostname() == 'LC24'):
+                    #t=['-s','9686']    # go to NMSURF                
+                else:
+                    t=['-s','18002']
+                temp1.extend(t)
               
             
 
-        if(args.ip != None):
-            t=['--ip=',args.ip]
-            temp1.extend(t)
-        
-        if(args.latency != None):
-            t=['--latency=',args.latency]
-            self.latency_server =  args.latency
-        else: #default is cybermesa  
-            t=['--latency=','65.19.14.51'] 
-            self.latency_server =  '65.19.14.51'
+            if(args.ip != None):
+                t=['--ip=',args.ip]
+                temp1.extend(t)
+            if(args.latency != None):
+                t=['--latency=',args.latency]
+                self.latency_server =  args.latency
+            else: #default is cybermesa  
+                t=['--latency=','65.19.14.51'] 
+                self.latency_server =  '65.19.14.51'
 
-        if(args.host != None):
-            t=['--host=',args.host]
-            temp1.extend(t)
-        if(args.time != None):
-            self.loop_time = int(args.time)*60 # time between speedtests
+            if(args.host != None):
+                t=['--host=',args.host]
+                temp1.extend(t)
+            if(args.time != None):
+                self.loop_time = int(args.time)*60 # time between speedtests
  
-        if(args.iperf != None):
-            print('running iperf version, setting up iperf')
-            decode_iperf = args.iperf.partition(':')
-            self.iperf_server = decode_iperf[0]
-            self.iperf_port = decode_iperf[2]
-            if(args.iperf_duration != None):
-                self.iperf_duration = int(args.iperf_duration)
-            else:
-                self.iperf_duration = 25 
-            self.run_iperf= True
+            if(args.iperf != None):
+                print('running iperf version, setting up iperf')
+                decode_iperf = args.iperf.partition(':')
+                self.iperf_server = decode_iperf[0]
+                self.iperf_port = decode_iperf[2]
+                if(args.iperf_duration != None):
+                    self.iperf_duration = int(args.iperf_duration)
+                else:
+                    self.iperf_duration = 25 
+                self.run_iperf= True
    
                 # Now setup iperf system
                 #self.SetupIperf3()
 
                 
             #if(args.pwfile != None ) and (args.dpfile != None):
-        if(args.dpfile != None):
-            self.cryptofile = args.dpfile
-            #self.DropFlag = True
-            self.ConnectDropBox() # establish the contact to dropbox
+            if(args.dpfile != None):
+                #self.keyfile = args.pwfile
+                self.cryptofile = args.dpfile
+                self.DropFlag = True
+                self.ConnectDropBox() # establish the contact to dropbox
 
 
 
@@ -576,7 +572,7 @@ class test_speed1():
         
 
         # split bewteen iperf and speedtest
-        if(self.runmode == 'Iperf'):
+        if(self.run_iperf):
             #self.SetupIperf3()
 
             #self.output = self.myiperf.RunTestTCP()
@@ -601,7 +597,7 @@ class test_speed1():
             myline = myline+str(self.output[len(self.output)-1])+'\n'
             print(myline)
 
-        elif(self.runmode == 'Speedtest'):
+        else:
             process = sp.Popen(self.command,
                          #stdout=outfile,
                          stdout=sp.PIPE,
@@ -629,9 +625,8 @@ class test_speed1():
 
             print(self.output)
             print(myline)
-        else:
-            print('Unknown Run Mode ',self.runmode, ' will exit')
-            sys.exit(0)
+
+        
         #check for date, we will open new file at midnight
         if(date.today()>self.current_day):
                 #we have a new day
