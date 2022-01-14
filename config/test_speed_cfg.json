@@ -16,21 +16,24 @@
 
     },
     "Control" : {
-        "runmode" : "Iperf"
+        "runmode" : "Iperf",
+        "debug"   : false,
+        "cryptofile" : "LCWA_d.txt"
     },
     "Iperf" : {
-        "port"  : "5201",
+        "serverport"  : "5201",
         "serverip" : "63.229.162.245",
         "duration"  : 10,
         "numstreams" : 2,
         "blksize"   : 1024,
-        "reverse"   : "False"
+        "latency_ip" : "65.19.14.51",
+        "reverse"   : false
     },
     "Speedtest" : {
         "serverip" : "63.229.162.245",
         "serverid" : 18002,
         "time_window" : 10,
-        "latency_ip " : "65.19.14.51"
+        "latency_ip" : "65.19.14.51"
     }
 }
  
