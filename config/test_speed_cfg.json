@@ -11,7 +11,7 @@
     "Linux" : {
         "timeout" : "/usr/bin/timeout",
         "speedtest" : "/usr/bin/speedtest",
-        "srcdir" : "/home/pi/git/speediles/src/",
+        "srcdir" : "/home/pi/git/speedtest/src/",
         "datadir" : "/home/git/speedfiles/"
 
     },
