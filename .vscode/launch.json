@@ -6,6 +6,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
+            "args"   : ["-ipf" , "192.168.2.125"],
             "console": "integratedTerminal"
         }
     ]
