@@ -135,19 +135,24 @@ class test_speed1():
         self.Debug = MyConfig.debug
         self.cryptofile = MyConfig.cryptofile
 
-        #speedtest variables
-        self.latency_server = MyConfig.latency_ip
-        self.speedtest = MyConfig.speedtest     # location of the Ookla speedtest
-
-    
+  
+        if (self.runmode == 'Iperf'):
         #iperf variables
-        self.iperf_server =     MyConfig.serverip
-        self.iperf_port =       MyConfig.serverport
-        self.iperf_duration =   MyConfig.iperf_duration
-        self.iperf_blksize =    MyConfig.iperf_blksize
-        self.iperf_numstreams = MyConfig.iperf_numstreams
-        self.iperf_reverse    = MyConfig.iperf_reverse
-        
+            self.iperf_server =     MyConfig.serverip
+            self.iperf_port =       MyConfig.serverport
+            self.iperf_duration =   MyConfig.iperf_duration
+            self.iperf_blksize =    MyConfig.iperf_blksize
+            self.iperf_numstreams = MyConfig.iperf_numstreams
+            self.iperf_reverse    = MyConfig.iperf_reverse
+        else:
+
+            self.latency_server =   MyConfig.latency_ip
+            self.serverip =         MyConfig.serverip
+            self.latency_server =   MyConfig.latency_ip
+            self.loop_time =        MyConfig.time_window
+            self.speedtest =        MyConfig.speedtest     # location of the Ookla speedtest
+
+       
 
 
                 
@@ -349,7 +354,7 @@ class test_speed1():
             #make cyber mesa the default
         if(args.servers):
  
-            self.command = [self.timeout_command,"-k","300","200","/usr/local/bin/speedtest", '-L'] #because argparse does not take single args
+            self.command = [self.timeout_command,"-k","300","200",self.speedtest, '-L'] #because argparse does not take single args
                   
                 
             self.RunShort()
@@ -403,15 +408,10 @@ class test_speed1():
             decode_iperf = args.iperf.partition(':')
             self.iperf_server = decode_iperf[0]
             self.iperf_port = decode_iperf[2]
-            if(args.iperf_duration != None):
-                self.iperf_duration = int(args.iperf_duration)
-            else:
-                self.iperf_duration = 25 
-            self.run_iperf= True
+        if(args.iperf_duration != None):
+            self.iperf_duration = int(args.iperf_duration)
    
-                # Now setup iperf system
-                #self.SetupIperf3()
-
+ 
                 
             #if(args.pwfile != None ) and (args.dpfile != None):
         if(args.dpfile != None):
