@@ -17,9 +17,8 @@ class MyTime():
         """get time from ntp server and then sync with it"""
         
         response = self.cntp.request('us.pool.ntp.org',version = 3)
-        if(abs(response.offset) < 10):
-          print("we have less thhan 20 sec time walk")
-        else:
+        if(abs(response.offset) > 10):
+          #here we copuld reset the system time if we would like to do this 
           print('need to sync time')
 
         print('timedifference  ',response.offset)
