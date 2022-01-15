@@ -108,6 +108,10 @@ class test_speed1():
             if config_file == None :
                 config_file = confdir+'/test_speed_cfg.json'
                 MyConfig = cs.MyConfig(config_file)
+            else:
+                        
+                MyConfig = cs.MyConfig(config_file)
+
         else:
             if config_file == None :
                 
