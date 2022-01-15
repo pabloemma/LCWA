@@ -54,11 +54,13 @@ import dropbox
 import socket # needed for hostname id
 import PlotClass as PC
 import uuid
+import ntplib
 
 from tcp_latency import measure_latency
 
 import iperf_client as ipe
 import config_speed as cs
+import set_time as st
 
 #from __builtin__ import True
 
@@ -87,6 +89,19 @@ class test_speed1():
        
         self.GetMacAddress()
         #self.Setup() # now done ir agrparse
+        # here we wait for the program to start until we rach the time
+
+        MyT = st.MyTime()
+        MyT.GetTime()
+        host = socket.gethostname()
+        if(host[0:2] == 'LC'):
+            MyT.SetStart(host)
+        else:
+            MyT.SetStart('LC00')
+        
+
+
+
 
     def Setup(self, config_file = None  ):
         """" checks for systerm version and sets some path
@@ -225,7 +240,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '7.01.04'
+        self.vs = '7.01.05'
  
         
         print(' History')
@@ -263,6 +278,7 @@ class test_speed1():
         print('Version 7.01.02', 'added config file')
         print('Version 7.01.03', 'added Gordon wish for /etc location for config file')
         print('Version 7.01.04', 'Revamped command line and arparse section')
+        print('Version 7.01.05', 'added a call to ntp server, start of syncing the speedboxes')
         
         print('\n\n\n')
         
@@ -947,7 +963,8 @@ class test_speed1():
         print('setting up iperf client \n\n')
         self.myiperf = ipe.myclient(self.iperf_server,self.iperf_port,self.iperf_duration)
         self.myiperf.LoadParameters()
-        
+     
+    
 if __name__ == '__main__':
     
     server1 = 'speed-king.cybermesa.com:8080'
