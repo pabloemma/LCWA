@@ -27,6 +27,8 @@
         "numstreams" : 2,
         "blksize"   : 1024,
         "latency_ip" : "65.19.14.51",
+        "time_window" : 10,
+
         "reverse"   : false
     },
     "Speedtest" : {

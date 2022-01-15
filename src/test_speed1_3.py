@@ -144,6 +144,8 @@ class test_speed1():
             self.iperf_blksize =    MyConfig.iperf_blksize
             self.iperf_numstreams = MyConfig.iperf_numstreams
             self.iperf_reverse    = MyConfig.iperf_reverse
+            self.loop_time =        MyConfig.time_window
+            
         else:
 
             self.latency_server =   MyConfig.latency_ip
@@ -368,7 +370,9 @@ class test_speed1():
         if(self.cryptofile[0] == 'L'): # need to add the system path
                 self.cryptofile = self.speedtest_srcdir + self.cryptofile
  
-
+        if(args.time != None):
+                self.loop_time = int(args.time)*60 # time between speedtests
+ 
         if self.runmode == 'Speedtest':
 
         # here is the block for speedtest    
@@ -416,8 +420,6 @@ class test_speed1():
                 t=['--host=',args.host]
                 temp1.extend(t)
  
-            if(args.time != None):
-                self.loop_time = int(args.time)*60 # time between speedtests
         elif self.runmode == 'Iperf':
             if(args.iperf != None):
                 print('running iperf version, setting up iperf')

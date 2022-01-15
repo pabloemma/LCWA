@@ -61,6 +61,7 @@ class MyConfig():
             self.iperf_blksize = jsondict["Iperf"]["blksize"]
             self.iperf_duration = jsondict["Iperf"]["duration"]
             self.latency_ip = jsondict["Iperf"]["latency_ip"]
+            self.time_window =      jsondict["Iperf"]["time_window"]
 
             if(jsondict["Iperf"]["reverse"]== True):
                 self.iperf_reverse = True
