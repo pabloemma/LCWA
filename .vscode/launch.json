@@ -6,7 +6,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args"   : ["-ipf" , "192.168.2.125"],
+            "args"   : ["-ipf" , "192.168.2.125","-d","LCWA_d.txt"],
             "console": "integratedTerminal"
         }
     ]

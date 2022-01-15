@@ -354,14 +354,20 @@ class test_speed1():
             #make cyber mesa the default
 
         if(args.dpfile != None):
-            self.cryptofile = self.speedtest_srcdir+args.dpfile
+            self.cryptofile = args.dpfile
+            if(self.cryptofile[0] == 'L'): # need to add the system path
+                self.cryptofile = self.speedtest_srcdir + self.cryptofile
+ 
             #self.DropFlag = True
             self.ConnectDropBox() # establish the contact to dropbox
         
         #In case we have also None in the config file
-        if(self.cryptofile != None):
-            self.cryptofile = self.speedtest_srcdir+self.cryptofile
-            self.ConnectDropBox()
+        if (args.dpfile == None and self.cryptofile == None):
+            self.Logging('You need to provide path for cryptofile, will not connect to dropbox')
+
+        if(self.cryptofile[0] == 'L'): # need to add the system path
+                self.cryptofile = self.speedtest_srcdir + self.cryptofile
+ 
 
         if self.runmode == 'Speedtest':
 
