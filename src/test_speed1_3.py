@@ -144,14 +144,14 @@ class test_speed1():
             self.iperf_blksize =    MyConfig.iperf_blksize
             self.iperf_numstreams = MyConfig.iperf_numstreams
             self.iperf_reverse    = MyConfig.iperf_reverse
-            self.loop_time =        MyConfig.time_window
+            self.loop_time =        MyConfig.time_window*60
             
         else:
 
             self.latency_server =   MyConfig.latency_ip
             self.serverip =         MyConfig.serverip
             self.latency_server =   MyConfig.latency_ip
-            self.loop_time =        MyConfig.time_window
+            self.loop_time =        MyConfig.time_window*60
             self.speedtest =        MyConfig.speedtest     # location of the Ookla speedtest
 
        
