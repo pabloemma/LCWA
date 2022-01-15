@@ -328,7 +328,7 @@ class test_speed1():
         
      
     
-        self.loop_time = 60 # default 1 minutes before next speedtest
+       
         
  
         #if no cli args then everything comes from the config file
