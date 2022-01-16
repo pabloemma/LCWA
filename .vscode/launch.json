@@ -6,7 +6,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args"   : ["-c","/Users/klein/visual studio/LCWA/config/speedtest.cfg","-d","LCWA_d.txt"],
+            "args"   : ["-c","/Users/klein/visual studio/LCWA/config/speedtest.cfg"],
             "console": "integratedTerminal"
         }
     ]
