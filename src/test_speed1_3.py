@@ -389,6 +389,8 @@ class test_speed1():
 
         if(self.cryptofile[0] == 'L'): # need to add the system path
                 self.cryptofile = self.speedtest_srcdir + self.cryptofile
+                self.ConnectDropBox() # establish the contact to dropbox
+
  
         if(args.time != None):
                 self.loop_time = int(args.time)*60 # time between speedtests

@@ -15,8 +15,10 @@ class MyTime():
   def GetTime(self):
 
         """get time from ntp server and then sync with it"""
-        
-        response = self.cntp.request('us.pool.ntp.org',version = 3)
+        try:
+          response = self.cntp.request('us.pool.ntp.org',version = 3)
+        except:
+          return
         if(abs(response.offset) > 10):
           #here we copuld reset the system time if we would like to do this 
           print('need to sync time')
