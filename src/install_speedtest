@@ -1,3 +1,4 @@
+#vs 0.0.1
 sudo apt-get install gnupg1 apt-transport-https dirmngr
 export INSTALL_KEY=379CE192D401AB61
 export DEB_DISTRO=$(lsb_release -sc)
@@ -7,16 +8,16 @@ echo "deb https://ookla.bintray.com/debian ${DEB_DISTRO} main" | sudo tee /etc/a
 sudo apt-get update
 
 sudo apt-get install speedtest
-pip install update
-pip install dropbox
+pip3 install update
+pip3 install dropbox
 
 mkdir ~/speedfiles
 mkdir ~/git
 cd git
 git clone https://github.com/pabloemma/LCWA.git speedtest
-sudo apt install espeak
-sudo apt install pulseaudio
-pulseaudio -D
+#sudo apt install espeak
+#sudo apt install pulseaudio
+#pulseaudio -D
 
 # now the matplotlib
 sudo apt-get update
@@ -26,6 +27,7 @@ pip install cairocffi
 sudo pip install backports.functools_lru_cache
 sudo apt-get install at-spi2-core
 sudo apt-get install python-gi-cairo
-pip install matplotlib
+sudo apt-get install iperf3
+pip3 install matplotlib
 pip3 install pydig
 pip3 install tcp_latency
