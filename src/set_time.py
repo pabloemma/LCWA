@@ -42,7 +42,7 @@ class MyTime():
         print('reached start time at', datetime.now())        
         return
       else:
-        wait_time = self.mytime+timedelta(0,MyNumber)) - if(datetime.now()
+        wait_time = self.mytime+timedelta(0,MyNumber) - if(datetime.now()
         time.sleep(wait_time+1)
 
 
