@@ -1,6 +1,7 @@
 from datetime import  date , datetime , timezone, timedelta
 import ntplib
 import socket
+import time
 
 
 class MyTime():
@@ -42,7 +43,7 @@ class MyTime():
         print('reached start time at', datetime.now())        
         return
       else:
-        wait_time = self.mytime+timedelta(0,MyNumber) - if(datetime.now()
+        wait_time = (self.mytime+timedelta(0,MyNumber)) - datetime.now()
         time.sleep(wait_time+1)
 
 
