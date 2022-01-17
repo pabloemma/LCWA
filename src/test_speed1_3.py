@@ -84,7 +84,7 @@ class test_speed1():
         
         #self.DropFlag = False # default no dropbox connection
         
-        self.Debug = False
+        #self.Debug = False
         
        
         self.GetMacAddress()
