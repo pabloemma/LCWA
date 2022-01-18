@@ -5,14 +5,16 @@
         "timeout" : "/usr/local/bin/timeout",
         "speedtest" : "/usr/local/bin/speedtest",
         "srcdir" : "/Users/klein/visual studio/LCWA/src/",
-        "datadir" : "/Users/klein/speedfiles/"
+        "datadir" : "/Users/klein/speedfiles/",
+        "conf_dir" : "/Users/klein/visual studio/LCWA/config/"
 
     },
     "Linux" : {
         "timeout" : "/usr/bin/timeout",
         "speedtest" : "/usr/bin/speedtest",
         "srcdir" : "/home/pi/git/speedtest/src/",
-        "datadir" : "/home/git/speedfiles/"
+        "datadir" : "/home/git/speedfiles/",
+        "conf_dir" : "/home/pi/git/speedtest/src/config/"
 
     },
     "Control" : {

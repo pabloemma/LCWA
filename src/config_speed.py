@@ -49,6 +49,7 @@ class MyConfig():
 
         self.debug = jsondict["Control"]["debug"]
         self.cryptofile = jsondict["Control"]["cryptofile"]
+        self.conf_dir = jsondict[mysystem]['conf_dir']
 
     # now we read in the variables which are crucial for running
     # first we determine if we are running iperf or speedtest
