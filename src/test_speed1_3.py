@@ -153,7 +153,7 @@ class test_speed1():
         self.runmode = MyConfig.runmode         #ookla or iperf
         self.Debug = MyConfig.debug
         self.cryptofile = MyConfig.cryptofile
-        self.conf_dir = MyConfig.conf_dir
+        self.speedtest_conf_dir = MyConfig.conf_dir
 
   
         if (self.runmode == 'Iperf'):
