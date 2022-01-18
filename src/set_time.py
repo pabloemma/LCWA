@@ -1,4 +1,4 @@
-from datetime import  date , datetime , timezone, timedelta
+from datetime import  date , datetime , timedelta
 import ntplib
 import socket
 import time
