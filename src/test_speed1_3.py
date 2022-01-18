@@ -112,6 +112,7 @@ class test_speed1():
         self.myplatform = platform.system()
 
         # lets get the config file
+
         workdir = os.path.dirname(__file__)
         confdir = workdir.replace('src','config')
 
@@ -153,7 +154,7 @@ class test_speed1():
         self.runmode = MyConfig.runmode         #ookla or iperf
         self.Debug = MyConfig.debug
         self.cryptofile = MyConfig.cryptofile
-        self.speedtest_confdir = MyConfig.conf_dir
+        
 
   
         if (self.runmode == 'Iperf'):
@@ -379,7 +380,7 @@ class test_speed1():
         if(args.dpfile != None):
             self.cryptofile = args.dpfile
             if(self.cryptofile[0] == 'L'): # need to add the system path
-                self.cryptofile = self.speedtest_confdir + self.cryptofile
+                self.cryptofile = self.speedtest_srcdir + self.cryptofile
  
             #self.DropFlag = True
             self.ConnectDropBox() # establish the contact to dropbox
@@ -389,7 +390,7 @@ class test_speed1():
             self.Logging('You need to provide path for cryptofile, will not connect to dropbox')
 
         if(self.cryptofile[0] == 'L'): # need to add the system path
-            self.cryptofile = self.speedtest_confdir + self.cryptofile
+            self.cryptofile = self.speedtest_srcdir + self.cryptofile
             self.ConnectDropBox() # establish the contact to dropbox
         else:
             self.ConnectDropBox()
