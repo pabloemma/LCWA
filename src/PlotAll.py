@@ -874,7 +874,7 @@ if __name__ == '__main__':
         dirlist.append(temp1)
     token_file = '/git/LCWA/src/LCWA_d.txt'
     tempdir = 'scratch'
-    datefile = '2021-03-24' 
+    datefile = '2022-01-18' 
      # " default is none"
     PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropbox()

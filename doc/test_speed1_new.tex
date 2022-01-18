@@ -62,7 +62,6 @@ If you want to use the OOkla speedtest, you will need to install the following:
 \item On dropbox also create a folder called ``LCWA'', this is where the files will go.
 \end{enumerate}
 
-Following is a list for the iperf server to get this installed.
 
 \begin{enumerate}
 \item install iperf3 \textbf{(not iperf or iperf2)}
@@ -73,9 +72,12 @@ Following is a list for the iperf server to get this installed.
 \section{Running and controlling the program}
 
 The program has currently two different ways to run; either speedtest, which is a wrapper around the OOkla speedtest  or iperf, which will run an iperf test to a server on the LCWA network. The issue with the Ookla server is, that the result is depending on quite a few parameters beyond LCWA's control. The current server is with cybermesa,
-and we have noticed that the server is sometimes slow. Also, since we go outside onto the internet, the results are also influenced by whatever traffic is going on.
+and we have noticed that the server is sometimes slow. Also, since we go outside onto the internet, the results are  influenced by whatever traffic is going on. The iperf test really checks thge available bandwidth within the LCWA network, and is therefore a better measure of what we provide.
 
-In progress
+The program chechs every 10 minutes the bandwith, and records this is a file in the directory /home/pi/speedfiles. Every hour around xx:30 the csv file gets plotted into a pdf file and both are shipped to the corresponding dropbox.
+
+
+
 
 
 
