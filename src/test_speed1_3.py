@@ -144,7 +144,7 @@ class test_speed1():
 
                     MyConfig = cs.MyConfig(config_file)
             else:
-                MyConfig = cs.MyConfig(config_file)
+                MyConfig = cs.MyConfig(confdir+config_file)
             
 
         
