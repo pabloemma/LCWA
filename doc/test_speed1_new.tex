@@ -32,7 +32,18 @@ Until 2022, the program was using Ookla's speedtest and reporting those numbers.
 
 \section{Installation}
 
-Working on this section
+Before you can do anything, you have to clone the repo. Create a directory ~/git/speedtest with mkdir -p ~git/speedtest.
+
+\begin{itemize}
+\item cd git/speedtest
+\item git clone https://github.com/pabloemma/LCWA .
+\item cd ../src
+\item ./install\_speedtest  2$>$\&1 $|$ tee install.log
+\end{itemize}
+
+\vspace{3cm}
+
+
 If you want to use the OOkla speedtest, you will need to install the following:
 \begin{enumerate}
 \item	Install the speedtest CLI from  https://www.speedtest.net/apps/cli
