@@ -281,7 +281,7 @@ class test_speed1():
         print('Version 7.01.03', 'added Gordon wish for /etc location for config file')
         print('Version 7.01.04', 'Revamped command line and arparse section')
         print('Version 7.01.05', 'added a call to ntp server, start of syncing the speedboxes')
-        
+         
         print('\n\n\n')
         
          
