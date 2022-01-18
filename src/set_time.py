@@ -44,7 +44,8 @@ class MyTime():
         return
       else:
         wait_time = (self.mytime+timedelta(0,MyNumber)) - datetime.now()
-        time.sleep(wait_time.total_seconds()+1)
+        #print(wait_time.total_seconds())
+        time.sleep(int(wait_time.total_seconds())+1)
 
 
 
