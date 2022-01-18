@@ -10,7 +10,8 @@ sudo apt-get update
 
 #sudo apt-get install speedtest
 echo "installing pip3"
-sudo apt-get install pip3
+sudo apt-get -y install python3-pip
+
 pip3 install update
 pip3 install dropbox
 
@@ -24,8 +25,8 @@ echo "installing matplotlib"
 sudo apt-get update
 sudo apt-get install build-essential python-dev git scons swigsudo apt sudo apt install libffi-dev libffi6
 
-pip install cairocffi
-sudo pip install backports.functools_lru_cache
+pip3 install cairocffi
+sudo pip3 install backports.functools_lru_cache
 sudo apt-get install at-spi2-core
 sudo apt-get install python-gi-cairo
 sudo apt-get install iperf3
@@ -33,3 +34,4 @@ pip3 install matplotlib
 pip3 install pydig
 pip3 install tcp_latency
 pip3 install iperf3
+pip3 install ntplib
