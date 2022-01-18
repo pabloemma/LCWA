@@ -35,7 +35,19 @@ Until 2022, the program was using Ookla's speedtest and reporting those numbers.
 Working on this section
 If you want to use the OOkla speedtest, you will need to install the following:
 \begin{enumerate}
-\item	Install the speedtest CLI from  https://www.speedtest.net/apps/cli\item Once installed you need to run it once to accept the license\item pip install dropbox%\item pip install pycryptodome\item Mac: brew install git, Linux it is usually supplied, otherwise sudo apt get install git , or yum install git\item mkdir ~/speedfiles (below your home directory)\item mkdir git\item cd git\item git clone https://github.com/pabloemma/speedtest.git speedtest (this you only do once, after this your command will be git pull , which will update you to the latest version)\item You will need a dropbox account and setup an app. If you have a dropbox account, log in and then go to https://www.dropbox.com/developers/documentation, click on ``App console'' in the upper right corner and create a new app. There click on permission type and select which one you want. Once you generated the app, click on the button Generate under``Generated Access Token ''\item Copy into clipboard the Access token, which is very long\item open the file LCWA\_d.txt in your speedtest directory, remove the line and paste your access token.\item On dropbox also create a folder called ``LCWA'', this is where the files will go.
+\item	Install the speedtest CLI from  https://www.speedtest.net/apps/cli
+\item Once installed you need to run it once to accept the license
+\item pip install dropbox
+%\item pip install pycryptodome
+\item Mac: brew install git, Linux it is usually supplied, otherwise sudo apt get install git , or yum install git
+\item mkdir ~/speedfiles (below your home directory)
+\item mkdir git
+\item cd git
+\item git clone https://github.com/pabloemma/speedtest.git speedtest (this you only do once, after this your command will be git pull , which will update you to the latest version)
+\item You will need a dropbox account and setup an app. If you have a dropbox account, log in and then go to https://www.dropbox.com/developers/documentation, click on ``App console'' in the upper right corner and create a new app. There click on permission type and select which one you want. Once you generated the app, click on the button Generate under``Generated Access Token ''
+\item Copy into clipboard the Access token, which is very long
+\item open the file LCWA\_d.txt in your speedtest directory, remove the line and paste your access token.
+\item On dropbox also create a folder called ``LCWA'', this is where the files will go.
 \end{enumerate}
 
 Following is a list for the iperf server to get this installed.
@@ -47,6 +59,9 @@ Following is a list for the iperf server to get this installed.
 
 
 \section{Running and controlling the program}
+
+The program has currently two different ways to run; either speedtest, which is a wrapper around the OOkla speedtest  or iperf, which will run an iperf test to a server on the LCWA network. The issue with the Ookla server is, that the result is depending on quite a few parameters beyond LCWA's control. The current server is with cybermesa,
+and we have noticed that the server is sometimes slow. Also, since we go outside onto the internet, the results are also influenced by whatever traffic is going on.
 
 In progress
 
