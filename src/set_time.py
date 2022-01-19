@@ -19,7 +19,7 @@ class MyTime():
         try:
           response = self.cntp.request('us.pool.ntp.org',version = 3)
         except:
-          return
+          return False
         if(abs(response.offset) > 10):
           #here we copuld reset the system time if we would like to do this 
           print('need to sync time')
@@ -27,7 +27,7 @@ class MyTime():
         print('timedifference  ',response.offset)
         self.mytime = datetime.fromtimestamp(response.tx_time)
         print (datetime.fromtimestamp(response.tx_time))
-
+        return True
   def SetStart(self,hostname):
 
     temp = hostname
