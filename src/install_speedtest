@@ -34,6 +34,7 @@ sudo pip3 install backports.functools_lru_cache
 sudo apt-get install at-spi2-core
 sudo apt-get install python-gi-cairo
 sudo apt-get install iperf3
+sudo apt-get install dnsutils
 pip3 install matplotlib
 pip3 install pydig
 pip3 install tcp_latency

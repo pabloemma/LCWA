@@ -2,6 +2,7 @@
 \documentclass[12pt]{article}
 %\Large
 \include{usepack}
+\usepackage{times}
 %\include{my_environ}
 %for version counter
 
@@ -38,14 +39,25 @@ Before you can do anything, you have to clone the repo. Create a directory ~/git
 \item cd git/speedtest
 \item git clone https://github.com/pabloemma/LCWA .
 \item if you need a different branch: git fetch; git branch -v -a; git checkout branchname
-\item cd ../src
-\item ./install\_speedtest  2$>$\&1 $|$ tee install.log
+%\item cd ../src
+\%item ./install\_speedtest  2$>$\&1 $|$ tee install.log
+
 \end{itemize}
 
 \vspace{3cm}
 
+\subsubsection{Installing on a Linux raspberry pi system}
+In this case you should be able to use the provided install script : install|\_speedtest. There is also a mac installation script, but this is currently outdated.
+\begin{verbatim}
 
-If you want to use the OOkla speedtest, you will need to install the following:
+ cd ../src
+ ./install_speedtest  2>&1 | tee install.log
+\end{verbatim}
+
+If the installation crashes, please send me the install.log file.
+
+\subsubsection{general instructions for running the system on your own}
+In the following a discussion on what you need to install the project:
 \begin{enumerate}
 \item	Install the speedtest CLI from  https://www.speedtest.net/apps/cli
 \item Once installed you need to run it once to accept the license
