@@ -4,9 +4,9 @@ export INSTALL_KEY=379CE192D401AB61
 export DEB_DISTRO=$(lsb_release -sc)
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $INSTALL_KEY
 #echo "deb https://ookla.bintray.com/debian ${DEB_DISTRO} main" | sudo tee /etc/apt/sources.list.d/speedtest.list
-cd git/speedtest/support_files
+cd /home/pi/git/speedtest/support_files
 tar -zxf ookla-speedtest-1.1.1-linux-armhf.tgz
-sudo cp speedtest /usr/bint
+sudo cp speedtest /usr/bin
 /usr/bin/speedtest
 
 echo "updating"
