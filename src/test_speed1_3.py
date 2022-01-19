@@ -748,7 +748,9 @@ class test_speed1():
         #First rempve all double quotes
         tt=inc1.replace('"','')
         inc=tt.split(',')
-
+        if(len(inc) == 12 ):  #this would be the case for the latest speetetst version
+            inc.pop() #drop last
+ 
         # cehck data integrity
         if(len(inc) < 2):
             print('bad data block')
