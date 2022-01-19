@@ -117,7 +117,8 @@ class test_speed1():
 
         # lets get the config file
 
-        workdir = os.path.dirname(__file__)
+        
+        workdir = os.path.dirname(os.path.abspath(__file__))
         confdir = workdir.replace('src','config')
 
         # chek if we run it as a service
