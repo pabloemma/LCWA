@@ -144,7 +144,10 @@ class test_speed1():
 
                     MyConfig = cs.MyConfig(config_file)
             else:
-                MyConfig = cs.MyConfig(confdir+'/'+config_file)
+                if(config_file[0] =='/'): #it already has full path in it
+                   MyConfig = cs.MyConfig(config_file) 
+                else:
+                    MyConfig = cs.MyConfig(confdir+'/'+config_file)
             
 
         
