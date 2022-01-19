@@ -249,7 +249,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '7.01.05'
+        self.vs = '7.01.06'
  
         
         print(' History')
@@ -288,6 +288,7 @@ class test_speed1():
         print('Version 7.01.03', 'added Gordon wish for /etc location for config file')
         print('Version 7.01.04', 'Revamped command line and arparse section')
         print('Version 7.01.05', 'added a call to ntp server, start of syncing the speedboxes')
+        print('Version 7.01.06', 'add a line to txt file to write runmode')
          
         print('\n\n\n')
         
@@ -940,7 +941,8 @@ class test_speed1():
                           'Dropbox':self.dropdir, 
                           'MacAddress':self.Mac,
                           'File':self.docfile,
-                          'version':self.vs}
+                          'version':self.vs,
+                          'runmode': self.runmode}
         # Now print it
         self.textfile = self.lcwa_filename.replace('csv','txt')
         with open(self.textfile, 'w') as f:
