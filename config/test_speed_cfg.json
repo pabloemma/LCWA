@@ -38,6 +38,34 @@
         "serverid" : 18002,
         "time_window" : 10,
         "latency_ip" : "65.19.14.51" 
+    },
+    "ClusterControl" : {
+        "LC01" : "Iperf",
+        "LC02" : "Iperf",
+        "LC03" : "Iperf",
+        "LC04" : "Iperf",
+        "LC05" : "Iperf",
+        "LC06" : "Iperf",
+        "LC07" : "Iperf",
+        "LC08" : "Iperf",
+        "LC09" : "Iperf",
+        "LC10" : "Iperf",
+        "LC11" : "Iperf",
+        "LC12" : "Iperf",
+        "LC13" : "Iperf",
+        "LC14" : "Iperf",
+        "LC15" : "Iperf",
+        "LC16" : "Iperf",
+        "LC17" : "Iperf",
+        "LC18" : "Iperf",
+        "LC19" : "Iperf",
+        "LC20" : "Iperf",
+        "LC21" : "Iperf",
+        "LC22" : "Iperf",
+        "LC23" : "Iperf",
+        "LC24" : "Speedtest",
+        "PandaAir.local" : "Speedtest"
+
     }
 }
  

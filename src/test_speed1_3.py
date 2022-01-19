@@ -289,6 +289,7 @@ class test_speed1():
         print('Version 7.01.04', 'Revamped command line and arparse section')
         print('Version 7.01.05', 'added a call to ntp server, start of syncing the speedboxes')
         print('Version 7.01.06', 'add a line to txt file to write runmode')
+        print('Version 7.02.01', 'modfy code such that it now reads in a second file to determine what host is running what ')
          
         print('\n\n\n')
         
