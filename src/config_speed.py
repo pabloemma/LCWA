@@ -24,7 +24,7 @@ class MyConfig():
             self.ReadJson(config_file)
         else:
             print(" Config file does not exist, exiting     ", config_file)
-
+            sys.exit(0)
     def ReadJson(self,file_path):
 
         print("reading config file")
