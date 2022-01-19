@@ -6,6 +6,7 @@ import json
 import os
 import sys
 import platform
+import socket
 
 
 class MyConfig():
@@ -53,9 +54,11 @@ class MyConfig():
 
     # now we read in the variables which are crucial for running
     # first we determine if we are running iperf or speedtest
+    # this depends on the ClusterControl entry
 
-        if(jsondict["Control"]["runmode"] == 'Iperf'):
-            self.runmode = jsondict["Control"]["runmode"]
+        self.runmode = self.GetClusterVariables(jsondict)
+
+        if(self.runmode == 'Iperf'):
             self.serverip = jsondict["Iperf"]["serverip"]
             self.serverport = jsondict["Iperf"]["serverport"]
             self.iperf_numstreams = jsondict["Iperf"]["numstreams"]
@@ -71,8 +74,7 @@ class MyConfig():
 
             
             
-        elif (jsondict["Control"]['runmode'] == 'Speedtest'):
-            self.runmode = jsondict["Control"]["runmode"]
+        elif (self.runmode == 'Speedtest'):
             self.latency_ip =       jsondict["Speedtest"]["latency_ip"]
             self.serverip =         jsondict["Speedtest"]["serverip"]
             self.serverid =         jsondict["Speedtest"]["serverid"]
@@ -112,6 +114,17 @@ class MyConfig():
         print('***************************** end of configuration***************\n\n')
 
 
+    def GetClusterVariables(self,jsondict):
+        """determines the cluster run parameter for the different boxes"""
+
+        # get hostname
+        host = socket.gethostname()
+        if host in jsondict["ClusterControl"].keys():
+           return jsondict["ClusterControl"][host]
+
+        else:  
+           return 'Iperf'
+ 
 
 
 
