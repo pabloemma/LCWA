@@ -92,12 +92,16 @@ class test_speed1():
         # here we wait for the program to start until we rach the time
 
         MyT = st.MyTime()
-        MyT.GetTime()
+        err = MyT.GetTime()
         host = socket.gethostname()
-        if(host[0:2] == 'LC'):
-            MyT.SetStart(host)
+        if not err:
+            if(host[0:2] == 'LC'):
+                MyT.SetStart(host)
+            else:
+                MyT.SetStart('LC00')
         else:
-            MyT.SetStart('LC00')
+            self.Logging('Could not connect to ntp server')
+        
         
 
 
