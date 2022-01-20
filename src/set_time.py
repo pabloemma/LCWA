@@ -17,7 +17,9 @@ class MyTime():
 
         """get time from ntp server and then sync with it"""
         try:
-          response = self.cntp.request('us.pool.ntp.org',version = 3)
+          #response = self.cntp.request('us.pool.ntp.org',version = 3)
+          #take LCWA server 
+          response = self.cntp.request('172.16.2.3',version = 3)
         except:
           return False
         if(abs(response.offset) > 10):
