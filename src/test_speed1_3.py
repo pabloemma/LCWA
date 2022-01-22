@@ -92,9 +92,9 @@ class test_speed1():
         # here we wait for the program to start until we rach the time
 
         MyT = st.MyTime()
-        err = MyT.GetTime()
+        success = MyT.GetTime()
         host = socket.gethostname()
-        if not err:
+        if success:
             if(host[0:2] == 'LC'):
                 MyT.SetStart(host)
             else:
