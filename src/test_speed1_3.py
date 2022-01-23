@@ -10,13 +10,13 @@
 ### END INIT INFO
 #from builtins import True
 
-
+  
 
 '''
 Created on Feb 8, 2020
 
 @author: klein
-
+   
 
 This is based on the CLI program from speedtest
 It basically provides a python wrapper around the speedtest, so that we can fill
