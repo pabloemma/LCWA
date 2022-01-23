@@ -42,6 +42,7 @@ for espeak on raspi, might have to do pulseaudio -D
 '''
 
 import sys
+from tarfile import BLOCKSIZE
 import time
 import os
 import datetime
@@ -459,12 +460,28 @@ class test_speed1():
             if(args.iperf != None):
                 print('running iperf version, setting up iperf')
                 self.iperf_server = args.iperf
+                t=['-s',self.iperf_server]
+                temp2.extend(t)
 
             if(args.iperf_duration != None):
                 self.iperf_duration = int(args.iperf_duration)
+            else:
+                t=['-d',str(self.iperf_duration)]
+                temp2.extend(t)
    
+            # add option from config file
+            t = ['-n',str(self.iperf_numstreams)]
+            temp2.extend(t)
 
-                
+            #blocksize
+            t= ['-b',int(self.iperf_blksize)]
+
+            if(self.iperf_reverse):
+                t = ['r']
+                temp2.etxend(t)
+
+
+
             #if(args.pwfile != None ) and (args.dpfile != None):
 
             
