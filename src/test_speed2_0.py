@@ -821,7 +821,8 @@ class test_speed1():
         if(self.Debug):
             self.inc = inc
             self.DebugProgram(4)
-        self.output.append(inc[0])
+        #self.output.append(inc[0]) write out speedtest server name
+        self.output.append("Speed")
         self.output.append(int(inc[2]))
         for k in  [3,4,5]:
             try:
