@@ -12,9 +12,9 @@
     "Linux" : {
         "timeout" : "/usr/bin/timeout",
         "speedtest" : "/usr/bin/speedtest",
-        "srcdir" : "/home/pi/git/speedtest/src/",
+        "srcdir" : "/home/klein/git/speedtest/src/",
         "datadir" : "/home/git/speedfiles/",
-        "conf_dir" : "/home/pi/git/speedtest/src/config/"
+        "conf_dir" : "/home/klein/git/speedtest/src/config/"
 
     },
     "Control" : {
