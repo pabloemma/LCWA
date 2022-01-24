@@ -1,0 +1,5 @@
+cd /home/klein/git/speedtest/support_files
+tar -zxf ookla-speedtest-1.1.1-linux-armhf.tgz
+sudo cp speedtest /usr/bin
+/usr/bin/speedtest
+

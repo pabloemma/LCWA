@@ -52,7 +52,7 @@ class MyConfig():
         self.cryptofile = jsondict["Control"]["cryptofile"]
         # the next two vaiables are only used if we run in "both" mode
         self.click      = jsondict["Control"]["click"] # 1: start with iperf, 0 start with speedtest
-        self.random     = jsondict["Control"]["random"]
+        self.random_click     = jsondict["Control"]["random"]
 
 
         self.conf_dir = jsondict[mysystem]['conf_dir']
