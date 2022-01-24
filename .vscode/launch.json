@@ -6,7 +6,8 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "args":    ["-c","/home/klein/git/speedtest/config/test_speed_debug.json"]
         }
     ]
 }
