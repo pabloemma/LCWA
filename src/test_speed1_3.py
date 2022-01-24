@@ -9,6 +9,8 @@
 # Description:       Enable service provided by daemon.
 ### END INIT INFO
 #from builtins import True
+# this is temprary new version 2_0 which has a switch between iperf and speedtest every 
+# 10 minutes
 
   
 
@@ -56,6 +58,7 @@ import socket # needed for hostname id
 import PlotClass as PC
 import uuid
 import ntplib
+import random
 
 from tcp_latency import measure_latency
 
@@ -165,7 +168,8 @@ class test_speed1():
         self.cryptofile = MyConfig.cryptofile
         
 
-  
+        
+
         if (self.runmode == 'Iperf'):
         #iperf variables
             self.iperf_server =     MyConfig.iperf_serverip
@@ -174,9 +178,9 @@ class test_speed1():
             self.iperf_blksize =    MyConfig.iperf_blksize
             self.iperf_numstreams = MyConfig.iperf_numstreams
             self.iperf_reverse    = MyConfig.iperf_reverse
-            self.loop_time =        MyConfig.iperf_time_window*60
+            self.loop_time =        MyConfig.time_window*60
             
-        else:
+        elif(self.runmode == 'Speedtest'):
 
             self.latency_server =   MyConfig.latency_ip
             self.serverip =         MyConfig.serverip
@@ -185,8 +189,25 @@ class test_speed1():
             self.speedtest =        MyConfig.speedtest     # location of the Ookla speedtest
 
        
-
-
+        elif(self.runmode == 'Both'):
+            self.iperf_server =     MyConfig.iperf_serverip
+            self.iperf_port =       MyConfig.iperf_serverport
+            self.iperf_duration =   MyConfig.iperf_duration
+            self.iperf_blksize =    MyConfig.iperf_blksize
+            self.iperf_numstreams = MyConfig.iperf_numstreams
+            self.iperf_reverse    = MyConfig.iperf_reverse
+            self.loop_time =        MyConfig.time_window*60
+            self.latency_server =   MyConfig.latency_ip
+            self.serverip =         MyConfig.serverip
+            self.latency_server =   MyConfig.latency_ip
+            self.loop_time =        MyConfig.time_window*60
+            self.speedtest =        MyConfig.speedtest     # location of the Ookla speedtest
+            self.click      =       MyConfig.click # this is a flip flop of values
+            self.random_click =     MyConfig.random_click # if 1 the program determines randomly to to iperf or speedtest
+ 
+        else:
+            self.Logging('Unknown runmode')
+            sys.exit(0)
                 
 
     
@@ -251,7 +272,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '7.02.01'
+        self.vs = '8.01.01'
  
         
         print(' History')
@@ -292,6 +313,8 @@ class test_speed1():
         print('Version 7.01.05', 'added a call to ntp server, start of syncing the speedboxes')
         print('Version 7.01.06', 'add a line to txt file to write runmode')
         print('Version 7.02.01', 'modfy code such that it now reads in a second file to determine what host is running what ')
+        print('Version 8.01.01', 'Code which allow you to switch between speedtest and iperf either pretermined or random ')
+        print('Version 8.01.02', 'replace server name with speedtest in output csv file ')
          
         print('\n\n\n')
         
@@ -352,12 +375,10 @@ class test_speed1():
 
 
         #chekc if we run the ookla or iperf version, temp1 is speedtest, temp2 is iperf
-        if self.runmode == 'Speedtest':
+        if self.runmode == 'Speedtest' or self.runmode == 'Both':
             temp1=[self.timeout_command,"-k","300","200",self.speedtest,"--progress=no","-f","csv"] # we want csv output by default
-        elif self.runmode == 'Iperf':
+        if self.runmode == 'Iperf' or self.runmode == 'Both':
             temp2 =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py"]
-        else:
-            print('Unknown run mode' , self.runmode)
         
      
     
@@ -409,12 +430,12 @@ class test_speed1():
         if(args.time != None):
                 self.loop_time = int(args.time)*60 # time between speedtests
  
-        if self.runmode == 'Speedtest':
+        if self.runmode == 'Speedtest' or self.runmode == 'Both':
 
         # here is the block for speedtest    
             if(args.servers):
  
-                self.command = [self.timeout_command,"-k","300","200",self.speedtest, '-L'] #because argparse does not take single args
+                self.command_speed = [self.timeout_command,"-k","300","200",self.speedtest, '-L'] #because argparse does not take single args
                   
                 
                 self.RunShort()
@@ -422,7 +443,7 @@ class test_speed1():
             if(args.version):
                 
 
-                self.command = [self.timeout_command,"-k","300","200",self.speedtest, '-V'] #because argparse does not take single args
+                self.command_speed = [self.timeout_command,"-k","300","200",self.speedtest, '-V'] #because argparse does not take single args
                 
                 self.RunShort()
                 sys.exit(0)
@@ -456,7 +477,7 @@ class test_speed1():
                 t=['--host=',args.host]
                 temp1.extend(t)
  
-        elif self.runmode == 'Iperf':
+        if self.runmode == 'Iperf' or self.runmode == 'Both' :
             if(args.iperf != None):
                 print('running iperf version, setting up iperf')
                 self.iperf_server = args.iperf
@@ -490,17 +511,20 @@ class test_speed1():
 
 
         if self.runmode == 'Speedtest':
-            self.command = temp1 
+            self.command_speed = temp1 
         elif self.runmode == 'Iperf':
             temp2.extend(["-s",self.iperf_server])
 
 
-            self.command = temp2
+            self.command_iperf = temp2
 
-        else:
-            self.Logging(' Unknown runmode')
+        elif self.runmode == 'Both':
+            self.command_speed = temp1 
+            temp2.extend(["-s",self.iperf_server])
 
-
+            self.command_iperf = temp2
+      
+ 
 
 
 
@@ -655,17 +679,32 @@ class test_speed1():
         this is the heart of the wrapper, using the CLI command
         """
         
-         
+        # here we do split
+        if self.runmode == 'Both':
+            if self.random_click :  # we switch randomly between runmodes
+                if random.random() >.5 :
+                    self.click = 1
+                else:
+                    self.click = 0
+ 
+            if self.click == 1 :
+                temp_runmode = 'Iperf'
+                self.click = 0 # switch to opposite
+            else:
+                temp_runmode = 'Speedtest'
+                self.click = 1
+        else:
+            temp_runmode = self.runmode
+
+                
+        
 
         # split bewteen iperf and speedtest
-        if(self.runmode == 'Iperf'):
+        if(temp_runmode == 'Iperf'):
             #self.SetupIperf3()
 
-            #self.output = self.myiperf.RunTestTCP()
-            #self.command =[self.timeout_command,"-k","300","200",self.python_exec,self.speedtest_srcdir+"iperf_client.py","-s","63.229.162.245"]
-            #self.command =[self.timeout_command,"-k","300","200","/usr/local/bin/python3",self.speedtest_srcdir+"iperf_client.py","-s","63.229.162.245"]
-            print (self.command)
-            process = sp.Popen(self.command,
+            print (self.command_iperf)
+            process = sp.Popen(self.command_iperf,
                          #stdout=outfile,
                          stdout=sp.PIPE,
                          stderr=sp.PIPE,
@@ -683,8 +722,8 @@ class test_speed1():
             myline = myline+str(self.output[len(self.output)-1])+'\n'
             print(myline)
 
-        elif(self.runmode == 'Speedtest'):
-            process = sp.Popen(self.command,
+        elif(temp_runmode == 'Speedtest'):
+            process = sp.Popen(self.command_speed,
                          #stdout=outfile,
                          stdout=sp.PIPE,
                          stderr=sp.PIPE,
@@ -782,7 +821,8 @@ class test_speed1():
         if(self.Debug):
             self.inc = inc
             self.DebugProgram(4)
-        self.output.append(inc[0])
+        #self.output.append(inc[0]) write out speedtest server name
+        self.output.append("Speed")
         self.output.append(int(inc[2]))
         for k in  [3,4,5]:
             try:
