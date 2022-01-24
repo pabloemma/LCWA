@@ -655,7 +655,7 @@ class test_speed1():
         this is the heart of the wrapper, using the CLI command
         """
         
-        
+         
 
         # split bewteen iperf and speedtest
         if(self.runmode == 'Iperf'):
