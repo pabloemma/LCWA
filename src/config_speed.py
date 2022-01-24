@@ -50,6 +50,11 @@ class MyConfig():
 
         self.debug = jsondict["Control"]["debug"]
         self.cryptofile = jsondict["Control"]["cryptofile"]
+        # the next two vaiables are only used if we run in "both" mode
+        self.click      = jsondict["Control"]["click"] # 1: start with iperf, 0 start with speedtest
+        self.random     = jsondict["Control"]["random"]
+
+
         self.conf_dir = jsondict[mysystem]['conf_dir']
 
     # now we read in the variables which are crucial for running
@@ -59,13 +64,13 @@ class MyConfig():
         self.runmode = self.GetClusterVariables(jsondict)
 
         if(self.runmode == 'Iperf'):
-            self.serverip = jsondict["Iperf"]["serverip"]
-            self.serverport = jsondict["Iperf"]["serverport"]
+            self.iperf_serverip = jsondict["Iperf"]["serverip"]
+            self.iperf_serverport = jsondict["Iperf"]["serverport"]
             self.iperf_numstreams = jsondict["Iperf"]["numstreams"]
             self.iperf_blksize = jsondict["Iperf"]["blksize"]
             self.iperf_duration = jsondict["Iperf"]["duration"]
             self.latency_ip = jsondict["Iperf"]["latency_ip"]
-            self.time_window =      jsondict["Iperf"]["time_window"]
+            self.iperf_time_window =      jsondict["Iperf"]["time_window"]
 
             if(jsondict["Iperf"]["reverse"]== True):
                 self.iperf_reverse = True
@@ -79,7 +84,26 @@ class MyConfig():
             self.serverip =         jsondict["Speedtest"]["serverip"]
             self.serverid =         jsondict["Speedtest"]["serverid"]
             self.time_window =      jsondict["Speedtest"]["time_window"]
-            
+
+        elif (self.runmode ==   'Both'):
+            self.iperf_serverip = jsondict["Iperf"]["serverip"]
+            self.iperf_serverport = jsondict["Iperf"]["serverport"]
+            self.iperf_numstreams = jsondict["Iperf"]["numstreams"]
+            self.iperf_blksize = jsondict["Iperf"]["blksize"]
+            self.iperf_duration = jsondict["Iperf"]["duration"]
+            self.latency_ip = jsondict["Iperf"]["latency_ip"]
+            self.iperf_time_window =      jsondict["Iperf"]["time_window"]
+            if(jsondict["Iperf"]["reverse"]== True):
+                self.iperf_reverse = True
+            else:
+                self.iperf_reverse =  False
+            self.latency_ip =       jsondict["Speedtest"]["latency_ip"]
+            self.serverip =         jsondict["Speedtest"]["serverip"]
+            self.serverid =         jsondict["Speedtest"]["serverid"]
+            self.time_window =      jsondict["Speedtest"]["time_window"]
+
+
+
         else:
             print('that runmode is unknown',jsondict["Control"]['runmode'] )
             sys.exit()
@@ -95,22 +119,38 @@ class MyConfig():
         if(self.runmode == 'Iperf'):
             
             print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
-            print('IP of server       ',self.serverip)
-            print('Port               ',self.serverport)
+            print('IP of server       ',self.iperf_serverip)
+            print('Port               ',self.iperf_serverport)
             print('Duration           ',self.iperf_duration)
             print('Block size         ',self.iperf_blksize)
             print('Number of streams  ',self.iperf_numstreams)
             
             print('running reverse    ',self.iperf_reverse)
 
-        else:
+        elif(self.runmode == 'Speedtest'):
             print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
             print('Latency server       ',self.latency_ip)
             print('Server IP            ',self.serverip)
             print('Server ID            ',self.serverid)
             print('times intervals      ',self.time_window)
         
+        elif(self.runmode == 'Both'):
+            print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
+            print('IP of server       ',self.iperf_serverip)
+            print('Port               ',self.iperf_serverport)
+            print('Duration           ',self.iperf_duration)
+            print('Block size         ',self.iperf_blksize)
+            print('Number of streams  ',self.iperf_numstreams)
+            
+            print('running reverse    ',self.iperf_reverse)
+            #print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
+            print('Latency server       ',self.latency_ip)
+            print('Server IP            ',self.serverip)
+            print('Server ID            ',self.serverid)
+            print('times intervals      ',self.time_window)
 
+            
+ 
         print('***************************** end of configuration***************\n\n')
 
 
@@ -123,7 +163,7 @@ class MyConfig():
            return jsondict["ClusterControl"][host]
 
         else:  
-           return 'Iperf'
+           return 'Both'
  
 
 
@@ -133,6 +173,6 @@ class MyConfig():
 
 if __name__ == '__main__':
 
-    conf_dir = '/Users/klein/visual studio/LCWA/config/'
+    conf_dir = '/home/klein/git/speedtest/config/'
     config_file = conf_dir + 'test_speed_cfg.json'
     MyC = MyConfig(config_file)

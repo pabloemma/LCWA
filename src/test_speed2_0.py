@@ -171,8 +171,8 @@ class test_speed1():
 
         if (self.runmode == 'Iperf'):
         #iperf variables
-            self.iperf_server =     MyConfig.serverip
-            self.iperf_port =       MyConfig.serverport
+            self.iperf_server =     MyConfig.iperf_serverip
+            self.iperf_port =       MyConfig.iperf_serverport
             self.iperf_duration =   MyConfig.iperf_duration
             self.iperf_blksize =    MyConfig.iperf_blksize
             self.iperf_numstreams = MyConfig.iperf_numstreams

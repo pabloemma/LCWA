@@ -18,9 +18,11 @@
 
     },
     "Control" : {
-        "runmode" : "Iperf",
+        "runmode" : "Both",
         "debug"   : false,
-        "cryptofile" : "LCWA_d.txt"
+        "cryptofile" : "LCWA_d.txt",
+        "click"      : "1",
+        "random"     : false
     },
     "Iperf" : {
         "serverport"  : "5201",
