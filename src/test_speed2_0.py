@@ -314,6 +314,7 @@ class test_speed1():
         print('Version 7.01.06', 'add a line to txt file to write runmode')
         print('Version 7.02.01', 'modfy code such that it now reads in a second file to determine what host is running what ')
         print('Version 8.01.01', 'Code which allow you to switch between speedtest and iperf either pretermined or random ')
+        print('Version 8.01.02', 'replace server name with speedtest in output csv file ')
          
         print('\n\n\n')
         
