@@ -272,7 +272,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '7.02.01'
+        self.vs = '8.01.01'
  
         
         print(' History')
@@ -313,7 +313,7 @@ class test_speed1():
         print('Version 7.01.05', 'added a call to ntp server, start of syncing the speedboxes')
         print('Version 7.01.06', 'add a line to txt file to write runmode')
         print('Version 7.02.01', 'modfy code such that it now reads in a second file to determine what host is running what ')
-        print('Version 7.02.01', 'Code which allow you to switch between speedtest and iperf either pretermined or random ')
+        print('Version 8.01.01', 'Code which allow you to switch between speedtest and iperf either pretermined or random ')
          
         print('\n\n\n')
         
