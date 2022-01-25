@@ -69,8 +69,9 @@ class MyPlot(object):
             print(' we have python 3')
             vers = True
         else:
-            print(' you should switch to python 2')
+            print('python2 not supported anymore')
             vers = False
+            sys.exit(0)
         return vers
 
     
@@ -83,17 +84,19 @@ class MyPlot(object):
         
         self.temp_name = self.path+'/temp.txt'
         self.temp_file = open(self.temp_name,'w')
-        counter = 0
-        for line in open(self.InputFile, 'r'):
-            a = line.split(',')
-            if(len(a)< 9):
-                print ('problem',a)
-                print ('ignore data point at line ',counter+1)
-            else:
-                self.temp_file.write(line)
 
-            counter = counter+1
-            
+    # read csv file into panda data dataframe
+        temp_data = pd.read_csv(self.InputFile)
+     # now we drop some of the columns, pay attention to white space
+        drop_list =[' server id','jitter','package ',' latency measured']
+        
+        lcwa_data = temp_data.drop(columns = drop_list)
+
+    # Create an iper and a speedtest frame
+
+        iperf_opt = [' iperf3']
+        lcwa_iperf = lcwa_data[lcwa_data['server name'].isin(iperf_opt)]  #all the iperf values
+        lcwa_speed = lcwa_data[~lcwa_data['server name'].isin(iperf_opt)]  #all the not iperf values        
 
         self.temp_file.close()
         
@@ -250,11 +253,11 @@ class MyPlot(object):
 if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/home/klein/speedfiles'
-    file = 'misk_2022-01-25speedfile.csv'
+    file = 'misk_2022-01-24speedfile.csv'
     token ='/home/klein/git/speedtest/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag,runmode = 'Both')
-    MP.ReadTestData(legend)
+    MP.ReadFile()    #MP.ReadTestData(legend)
     #MP.ConnectDropbox()
     #MP.PushFileDropbox('/LCWA/ROTW/')
