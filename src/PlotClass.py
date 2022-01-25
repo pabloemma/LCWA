@@ -245,9 +245,10 @@ class MyPlot(object):
        
 if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
-    path = '/Users/klein/speedfiles'
-    file = 'LC04_2021-12-30speedfile.csv'
-    #file = 'test.csv'
+    path = '/home/klein/speedfiles'
+    file = 'misk_2022-01-24speedfile.csv'
+    token ='/home/klein/git/speedtest/src/LCWA_d.txt'
+     #file = 'test.csv'
     #file = 'LC01_2021-05-02speedfile.csv'
     #token ='/home/pi/git/speedtest/src/LCWA_d.txt'
     token ='/Users/klein/git/LCWA/src/LCWA_d.txt'
