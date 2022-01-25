@@ -6,3 +6,8 @@ doc/test_speed1_new.aux
 doc/test_speed1_new.log
 #doc/test_speed1_new.pdf
 doc/usepack.aux
+support_files/speedtest
+support_files/speedtest.5
+support_files/speedtest.md
+src/PlotClass.pdf
+src/PlotClass.ps
