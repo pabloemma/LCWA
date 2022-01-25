@@ -883,7 +883,9 @@ class test_speed1():
         Write the header for the output file
         """
         MyIP =self.DigIP()
-        Header = MyIP+',day,time,server name, server id,latency,jitter,package , download, upload , latency measured\n'
+        #Header = MyIP+',day,time,server name, server id,latency,jitter,package , download, upload , latency measured\n'
+        Header = 'day,time,server name, server id,latency,jitter,package , download, upload , latency measured ,'+MyIP+'\n'
+
         self.output_file.write(Header)
         
     def DebugProgram(self,err): 
