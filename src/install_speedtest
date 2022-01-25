@@ -40,3 +40,4 @@ pip3 install pydig
 pip3 install tcp_latency
 pip3 install iperf3
 pip3 install ntplib
+pip3 install pandas
