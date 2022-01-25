@@ -13,7 +13,7 @@
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
 \begin{document}
-\author{ Andi Klein}
+\author{ Andi Klein \\ pabloemma@gmail.com}
 \title{ test\_speed program1\_3 LCWA \\ 
 		\bf{version: 1.0}}
 %\date{12 Nov 2002}
@@ -27,11 +27,17 @@
 
 \newenvironment{andilist}{\begin{itemize} \em}{\end{itemize}}
 
+
+
 \section{Overview}
-test\_speed is a python program written by Andi Klein. It's main purpose is to collect data from different raspberry pi's distributed across the LCWA to check the bandwidth over 24 hours. The test gets executed every 10 minutes and the data are stored locally. Every hour the program connects to dropbox, and uploads the datafile and the plot file. At midnight every day, the program flushes all the data to dropbox and exits. The computer then does a git pull to a central repository, performs a pull and the restarts. This ensures that any program updates are caught by the clients.
+test\_speed is a python program written by Andi Klein. It's main purpose is to collect data from different raspberry pi's distributed across the LCWA to check the bandwidth over 24 hours. This is strictly a program for \textbf{La Canada Wireless Association}, which is a notforprofit volunteer organization , which provides internet access to mostly rural communities around Santa Fe.If you want to use this code for other places, feel free to modify it to suit your needs.
+
+The heart of the code are calls to the \textbf{Ookla} speedtest servers and/or the \textbf{iperf3} library. 
+
+The test gets executed every 10 minutes and the data are stored locally. Every hour the program connects to dropbox, and uploads the datafile and the plot file. At midnight every day, the program flushes all the data to dropbox and exits. The computer then does a git pull to a central repository, performs a pull and the restarts. This ensures that any program updates are caught by the clients.
 Until 2022, the program was using Ookla's speedtest and reporting those numbers. As is documented below, the user can choose the Ookla server, according to their preferences. Over time it has become clear that we would like to have a speedtest which is strictly within the LCWA network, and not a combination of this network and the internet. Several times we noticed strange test resulst, which were driven by an overloaded Ookla server and not a degradation of the LCWA network. This led to the development of a new addition to the code using iperf3. This iperf3 connection goes to a LCWA iperf3 server, therefore providing a more honest picture of what is going on in our network. This program runs on \textbf{Mac} and \textbf{Linux} but \textbf{NOT} on Windows. There are currently no plans to ever port it to Windows.
 
-\section{Installation}
+\section{Installation and upgrade}
 
 Before you can do anything, you have to clone the repo. Create a directory ~/git/speedtest with mkdir -p ~git/speedtest.
 
@@ -43,6 +49,9 @@ Before you can do anything, you have to clone the repo. Create a directory ~/git
 %item ./install\_speedtest  2$>$\&1 $|$ tee install.log
 
 \end{itemize}
+The program has many components, which rely on different python and system packages. I hope I have them all in the install script. If you run in difficulties, send me the output of the installation.
+
+Sometimes I will make changes which require an upgrade, and then the script upgrade\_speedtest will be run.
 
 \vspace{3cm}
 
@@ -147,11 +156,13 @@ Here is an example of a config file:
 
 \end{verbatim}
 
-As you can see , this is a json file (which personally I think is trash; who in their right mind develops a system, which does not allow comments) and we can look at it in some more details:
+As you can see , this is a json file (which personally I don't like; who in their right mind develops a system, which does not allow comments) and we can look at it in some more details:
 
 The first two block deal with the runtime environment. Since Apple and Linux have their stuff not in the same location (thank you apple) , we have to specify the locations of some critical files and directories. The next block \textbf{Control} deal;s with issues which are common to both runmodes and operating systems. \textbf{Iperf} selects the iperf test, while \textbf{Speedtest} controls space aliens (just kidding and making sure you haven't fallen asleep yet).
 
 The last two blocks contain control parameters used for the two different runmodes.
+
+If you choose Both for the running, you should also provide the variable random in the control block and set it to either true or false. If fasle, the program will switch back and forth between iperf and speedtest on a regular basis, indeed every time it should run . If you set random to true, it will decide randomly which way to go.
 
 \subsection{Running}
 

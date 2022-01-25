@@ -212,7 +212,8 @@ class MyPlot(object):
 if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/home/klein/speedfiles'
-    file = 'misk_2022-01-24speedfile.csv'
+    #file = 'misk_2022-01-24speedfile.csv'
+    file = 'LC04_2022-01-24speedfile.csv'
     token ='/home/klein/git/speedtest/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
