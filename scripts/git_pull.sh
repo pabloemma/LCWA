@@ -3,7 +3,7 @@
 cd /home/pi/git/speedtest
 echo $HOSTNAME
 
-if [ ''$HOSTNAME'' = ''LC04'' ]; then
+if [ ''$HOSTNAME'' = ''LC23'' ]; then
 	echo "we are updating"
 	cd ~/git/speedtest
     echo $PWD
