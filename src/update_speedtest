@@ -7,7 +7,7 @@ sudo apt-get -y install iperf3
 
 
 
-pip3 install -y iperf3
-pip3 install -y ntplib
-pip3 install -y pandas
+pip3 install  iperf3
+pip3 install  ntplib
+pip3 install  pandas
 
