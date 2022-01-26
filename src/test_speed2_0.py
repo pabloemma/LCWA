@@ -567,7 +567,7 @@ class test_speed1():
     
                         if(counter > 0):
                             print (' now saving plotfile')
-                            self.DoPlots()
+                            self.DoPlots(textflag = False)
                     except:
                         self.Logging(' Cannot connect to dropbox, will try in 10 minues again')
 
@@ -580,13 +580,13 @@ class test_speed1():
                         self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
                         self.WriteDescriptor()
                         self.docfile1 = self.docfile.replace('csv','txt')
-                        f1=open(self.textfile,"rb")
-                        self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
                         now=datetime.datetime.now()
                         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
                         print (dt_string,' now saving plotfile')
-                        self.DoPlots()
+                        self.DoPlots(textflag =True)
+                        f1=open(self.textfile,"rb")
+                        self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
                         print('midnight exiting')
                         sys.exit(0)
                     except:
@@ -968,7 +968,7 @@ class test_speed1():
     
     
     
-    def DoPlots(self):
+    def DoPlots(self , textflag = False):  # textflag is set tru at midnight so that we dump statistics in txt file 
         """ this creates the plot and ships it to dropbox"""
         a =PC.MyPlot(self.input_path,self.input_filename,self.cryptofile,False)
         print(self.input_path,'   ', self.input_filename)
@@ -992,7 +992,11 @@ class test_speed1():
             a.ReadTestData(self.output_dict)
             a.ConnectDropbox()
             a.PushFileDropbox(self.dropdir)
-            return
+            if textflag:
+                a.Analyze(filename = self.textfile)
+                return
+            else:
+                return
         
     def WriteDescriptor(self): 
         """ this writes a short descriptor file for the speedtest"""
