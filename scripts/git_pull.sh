@@ -10,6 +10,8 @@ if [ ''$HOSTNAME'' = ''LC04'' ]; then
 	git pull
 	git fetch
 	git checkout test5
+    cd src 
+    
 	cd /home/pi
 	
 	
