@@ -140,8 +140,85 @@ class MyPlot(object):
         
         
 
+    def Analyze(self, filename = None):
+        """analyze the data we collected"""
 
+        # determine a few statistical values
+        #first the min and max for either one
+        # ipewf
+        if not self.lcwa_iperf.empty:
+            iperf_min_dw    = self.lcwa_iperf['download'].min() # min
+            iperf_max_dw    = self.lcwa_iperf['download'].max() # max
 
+            iperf_min_up    = self.lcwa_iperf['upload'].min() # min
+            iperf_max_up    = self.lcwa_iperf['upload'].max() #max
+
+            iperf_mean_up   = self.lcwa_iperf['upload'].mean() # mean of distribution
+            iperf_std_up    = self.lcwa_iperf['upload'].std() # standard deviation of distribution
+
+            iperf_mean_dw   = self.lcwa_iperf['download'].mean() # mean of distribution
+            iperf_std_dw    = self.lcwa_iperf['download'].std() # standard deviation of distribution
+
+        if not self.lcwa_speed.empty:
+            speed_min_dw    = self.lcwa_speed['download'].min() # min
+            speed_max_dw    = self.lcwa_speed['download'].max() # max
+
+            speed_min_up    = self.lcwa_speed['upload'].min() # min
+            speed_max_up    = self.lcwa_speed['upload'].max() #max
+
+            speed_mean_up   = self.lcwa_speed['upload'].mean() # mean of distribution
+            speed_std_up    = self.lcwa_speed['upload'].std() # standard deviation of distribution
+
+            speed_mean_dw   = self.lcwa_speed['download'].mean() # mean of distribution
+            speed_std_dw    = self.lcwa_speed['download'].std() # standard deviation of distribution
+            bfb = '\033[1m'
+            bfe = '\033[0m'
+
+        # here we print out the statistics
+            if(filename == None):
+ 
+
+                print('\n\n ********************************total statistics********************** \n')
+                print(bfb,'Iperf:',bfe)
+                print('Min download                 = ',iperf_min_dw)
+                print('Max download                 = ',iperf_max_dw)
+                print('Mean download                = ',iperf_mean_dw)
+                print('std download                 = ',iperf_std_dw , '\n')
+   
+                print('Min upload                   = ',iperf_min_up)
+                print('Max upload                   = ',iperf_max_up)
+                print('Mean upload                  = ',iperf_mean_up)
+                print('std upload                   = ',iperf_std_up , '\n\n')
+   
+                print(bfb,'Ookla Speedtest:',bfe)
+                print('Min download                 = ',speed_min_dw)
+                print('Max download                 = ',speed_max_dw)
+                print('Mean download                = ',speed_mean_dw)
+                print('std download                 = ',speed_std_dw , '\n')
+   
+                print('Min upload                   = ',speed_min_up)
+                print('Max upload                   = ',speed_max_up)
+                print('Mean upload                  = ',speed_mean_up)
+                print('std upload                   = ',speed_std_up , '\n\n')
+     
+                print('\n\n ********************************end statistics********************** \n')
+ 
+            else:
+                #check if file exists
+                f = open(filename,"a")
+                f.write('\n\n ********************************total statistics********************** \n')
+                line = 'Iperf'
+                f.write(line)
+                f.write(str(self.lcwa_iperf['download'].describe()))
+                f.write(str(self.lcwa_iperf['upload'].describe()))
+                f.write('\n\n')
+                line ='Ookla Speedtest'
+ 
+                f.write(line)
+                f.write(str(self.lcwa_speed['download'].describe()))
+                f.write(str(self.lcwa_speed['upload'].describe()))
+                f.write('\n\n ********************************end statistics********************** \n')
+                
 
 
 
@@ -222,6 +299,4 @@ if __name__ == '__main__':
     PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag)
     MP.ReadTestData()    #MP.ReadTestData(legend)
-    #MP.PlotData()
-    #MP.ConnectDropbox()
-    #MP.PushFileDropbox('/LCWA/ROTW/')
+    MP.Analyze('/home/klein/scratch/text.txt')
