@@ -219,7 +219,7 @@ class MyPlot(object):
                 f.write(str(self.lcwa_speed['upload'].describe()))
                 f.write('\n\n ********************************end statistics********************** \n')
                 
-
+                f.close()
 
 
     
