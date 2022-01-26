@@ -217,7 +217,7 @@ if __name__ == '__main__':
     token ='/home/klein/git/speedtest/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
-    MP = MyPlot(path,file,token,PlotFlag,runmode = 'Both')
+    MP = MyPlot(path,file,token,PlotFlag)
     MP.ReadFile()    #MP.ReadTestData(legend)
     MP.PlotData()
     #MP.ConnectDropbox()
