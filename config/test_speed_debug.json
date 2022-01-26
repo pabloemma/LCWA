@@ -22,7 +22,7 @@
         "debug"   : false,
         "cryptofile" : "LCWA_d.txt",
         "click"      : "1",
-        "random"     : true
+        "random"     : false
     },
     "Iperf" : {
         "serverport"  : "5201",
@@ -31,14 +31,14 @@
         "numstreams" : 2,
         "blksize"   : 1024,
         "latency_ip" : "65.19.14.51",
-        "time_window" : 2,
+        "time_window" : 1,
 
         "reverse"   : false
     },
     "Speedtest" : {
         "serverip" : "63.229.162.245",
         "serverid" : 18002,
-        "time_window" : 2,
+        "time_window" : 1,
         "latency_ip" : "65.19.14.51" 
     },
     "ClusterControl" : {
