@@ -11,7 +11,7 @@ if [ ''$HOSTNAME'' = ''LC04'' ]; then
 	git fetch
 	git checkout test5
     cd src 
-    
+    ./update_speedtest
 	cd /home/pi
 	
 	
