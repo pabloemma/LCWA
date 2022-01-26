@@ -55,7 +55,7 @@ import platform # need to determine the OS
 import subprocess as sp
 import dropbox
 import socket # needed for hostname id
-import PlotClass as PC
+import PlotClass1 as PC # new plot version
 import uuid
 import ntplib
 import random
@@ -196,7 +196,6 @@ class test_speed1():
             self.iperf_blksize =    MyConfig.iperf_blksize
             self.iperf_numstreams = MyConfig.iperf_numstreams
             self.iperf_reverse    = MyConfig.iperf_reverse
-            self.loop_time =        MyConfig.time_window*60
             self.latency_server =   MyConfig.latency_ip
             self.serverip =         MyConfig.serverip
             self.latency_server =   MyConfig.latency_ip
