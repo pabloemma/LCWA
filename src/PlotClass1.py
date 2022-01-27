@@ -284,6 +284,7 @@ class MyPlot(object):
     
     def PushFileDropbox(self,dropdir):  
         f =open(self.output,"rb")
+        print(self.dropdir,self.output,self.dropbox_name)
 
         self.dbx.files_upload(f.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
 
