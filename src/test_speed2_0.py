@@ -650,6 +650,8 @@ class test_speed1():
             return True # this way we write whenever we did a speedtest
         # then we should just continue to write always at x:30
         # now comes the test
+
+        #return True # part of debugging remove !!!!!!
         if( a.tm_min > 30 - temp) and ( a.tm_min < 30 + temp):
             return True
         else:
@@ -989,7 +991,7 @@ class test_speed1():
         else:
             f.close()
             
-            a.ReadTestData(self.output_dict)
+            a.ReadTestData()
             a.ConnectDropbox()
             print(self.dropdir)
             a.PushFileDropbox(self.dropdir)
