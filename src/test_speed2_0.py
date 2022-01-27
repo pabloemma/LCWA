@@ -650,7 +650,7 @@ class test_speed1():
             return True # this way we write whenever we did a speedtest
         # then we should just continue to write always at x:30
         # now comes the test
-
+        return True
         #return True # part of debugging remove !!!!!!
         if( a.tm_min > 30 - temp) and ( a.tm_min < 30 + temp):
             return True
@@ -884,7 +884,9 @@ class test_speed1():
         Write the header for the output file
         """
         MyIP =self.DigIP()
-        Header = MyIP+',day,time,server name, server id,latency,jitter,package , download, upload , latency measured\n'
+        #Header = MyIP+',day,time,server name, server id,latency,jitter,package , download, upload , latency measured\n'
+        Header = 'day,time,server name,server id,latency,jitter,package,download,upload,latency measured,'+MyIP+'\n'
+
         self.output_file.write(Header)
         
     def DebugProgram(self,err): 
@@ -989,7 +991,7 @@ class test_speed1():
             f.close()
             return 
         else:
-            f.close()
+            #f.close()
             
             a.ReadTestData()
             a.ConnectDropbox()
@@ -997,8 +999,10 @@ class test_speed1():
             a.PushFileDropbox(self.dropdir)
             if textflag:
                 a.Analyze(filename = self.textfile)
+                f.close()
                 return
             else:
+                f.close()
                 return
         
     def WriteDescriptor(self): 
