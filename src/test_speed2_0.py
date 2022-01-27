@@ -650,7 +650,7 @@ class test_speed1():
             return True # this way we write whenever we did a speedtest
         # then we should just continue to write always at x:30
         # now comes the test
-        return True
+        #return True
         #return True # part of debugging remove !!!!!!
         if( a.tm_min > 30 - temp) and ( a.tm_min < 30 + temp):
             return True
