@@ -86,8 +86,9 @@ class MyPlot(object):
 
     # read csv file into panda data dataframe
         temp_data = pd.read_csv(self.InputFile)
-     # now we drop some of the columns, pay attention to white space
+      # now we drop some of the columns, pay attention to white space
         drop_list =['server id','jitter','package','latency measured']
+        print(temp_data)
         
         lcwa_data = temp_data.drop(columns = drop_list)
         # convert date and time back to datetime
@@ -293,7 +294,7 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/home/klein/speedfiles'
     #file = 'misk_2022-01-24speedfile.csv'
-    file = 'LC04_2022-01-24speedfile.csv'
+    file = 'LC04_2022-01-26speedfile.csv'
     token ='/home/klein/git/speedtest/src/LCWA_d.txt'
     token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
