@@ -271,7 +271,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '8.01.01'
+        self.vs = '8.01.02'
  
         
         print(' History')
