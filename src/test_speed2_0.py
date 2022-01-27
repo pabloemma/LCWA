@@ -991,6 +991,7 @@ class test_speed1():
             
             a.ReadTestData(self.output_dict)
             a.ConnectDropbox()
+            print(self.dropdir)
             a.PushFileDropbox(self.dropdir)
             if textflag:
                 a.Analyze(filename = self.textfile)
