@@ -55,7 +55,7 @@ import platform # need to determine the OS
 import subprocess as sp
 import dropbox
 import socket # needed for hostname id
-import PlotClass as PC
+import PlotClass1 as PC # new plot version
 import uuid
 import ntplib
 import random
@@ -271,7 +271,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '8.01.01'
+        self.vs = '8.01.02'
  
         
         print(' History')
@@ -567,7 +567,7 @@ class test_speed1():
     
                         if(counter > 0):
                             print (' now saving plotfile')
-                            self.DoPlots()
+                            self.DoPlots(textflag = False)
                     except:
                         self.Logging(' Cannot connect to dropbox, will try in 10 minues again')
 
@@ -580,13 +580,13 @@ class test_speed1():
                         self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
                         self.WriteDescriptor()
                         self.docfile1 = self.docfile.replace('csv','txt')
-                        f1=open(self.textfile,"rb")
-                        self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
                         now=datetime.datetime.now()
                         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
                         print (dt_string,' now saving plotfile')
-                        self.DoPlots()
+                        self.DoPlots(textflag =True)
+                        f1=open(self.textfile,"rb")
+                        self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
                         print('midnight exiting')
                         sys.exit(0)
                     except:
@@ -650,6 +650,8 @@ class test_speed1():
             return True # this way we write whenever we did a speedtest
         # then we should just continue to write always at x:30
         # now comes the test
+        #return True
+        #return True # part of debugging remove !!!!!!
         if( a.tm_min > 30 - temp) and ( a.tm_min < 30 + temp):
             return True
         else:
@@ -970,7 +972,7 @@ class test_speed1():
     
     
     
-    def DoPlots(self):
+    def DoPlots(self , textflag = False):  # textflag is set tru at midnight so that we dump statistics in txt file 
         """ this creates the plot and ships it to dropbox"""
         a =PC.MyPlot(self.input_path,self.input_filename,self.cryptofile,False)
         print(self.input_path,'   ', self.input_filename)
@@ -989,12 +991,19 @@ class test_speed1():
             f.close()
             return 
         else:
-            f.close()
+            #f.close()
             
-            a.ReadTestData(self.output_dict)
+            a.ReadTestData()
             a.ConnectDropbox()
+            print(self.dropdir)
             a.PushFileDropbox(self.dropdir)
-            return
+            if textflag:
+                a.Analyze(filename = self.textfile)
+                f.close()
+                return
+            else:
+                f.close()
+                return
         
     def WriteDescriptor(self): 
         """ this writes a short descriptor file for the speedtest"""
