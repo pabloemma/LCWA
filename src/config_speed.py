@@ -85,6 +85,14 @@ class MyConfig():
             self.serverid =         jsondict["Speedtest"]["serverid"]
             self.time_window =      jsondict["Speedtest"]["time_window"]
 
+        elif (self.runmode == 'Speedtest'):
+            self.latency_ip =       jsondict["Speedtest"]["latency_ip"]
+            self.serverip =         jsondict["Speedtest"]["serverip"]
+            self.serverid =         jsondict["Speedtest"]["serverid"]
+            self.time_window =      jsondict["Speedtest"]["time_window"]
+
+
+
         elif (self.runmode ==   'Both'):
             self.iperf_serverip = jsondict["Iperf"]["serverip"]
             self.iperf_serverport = jsondict["Iperf"]["serverport"]
