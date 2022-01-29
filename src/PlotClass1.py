@@ -201,24 +201,86 @@ class MyPlot(object):
                 print('Max upload                   = ',speed_max_up)
                 print('Mean upload                  = ',speed_mean_up)
                 print('std upload                   = ',speed_std_up , '\n\n')
+                
+                
+                
      
                 print('\n\n ********************************end statistics********************** \n')
  
             else:
+			    
+                str_iperf_min_d = 'Min download                 = '+str(iperf_min_dw)+'\n'
+ 				
+                str_iperf_max_d = 'Max download                 = '+str(iperf_max_dw)+'\n'
+                str_iperf_mean_d = 'Min download                 = '+str(iperf_mean_dw)+'\n'
+
+ 			    
+                str_iperf_std_d = 'Std download                 = '+str(iperf_std_dw)+'\n'
+  
+			    
+                str_iperf_min_u = 'Min upload                 = '+str(iperf_min_up)+'\n'
+ 			    
+                str_iperf_max_u = 'Max upload                 = '+str(iperf_max_up)+'\n'
+ 				
+                str_iperf_mean_u = 'Min upload                 = '+str(iperf_mean_up)+'\n'
+ 				
+                str_iperf_std_u = 'Std upload                 = '+str(iperf_std_up)+'\n'
+ 			
+				
+                str_speed_min_d = 'Min download                 = '+str(speed_min_dw)+'\n'
+ 			
+                str_speed_max_d = 'Max download                 = '+str(speed_max_dw)+'\n'
+ 				
+                str_speed_mean_d = 'Min download                 = '+str(speed_mean_dw)+'\n'
+ 				
+                str_speed_std_d = 'Std download                 = '+str(speed_std_dw)+'\n'
+  
+                str_speed_min_u = 'Min upload                 = '+str(speed_min_up)+'\n'
+ 				
+                str_speed_max_u = 'Max upload                 = '+str(speed_max_up)+'\n'
+ 				
+                str_speed_mean_u = 'Min upload                 = '+str(speed_mean_up)+'\n'
+ 				
+                str_speed_std_u = 'Std upload                 = '+str(speed_std_up)+'\n'
+ 				
+				
                 #check if file exists
                 f = open(filename,"a")
                 f.write('\n\n ********************************total statistics********************** \n')
-                line = 'Iperf'
+                line = 'Iperf \n'
                 f.write(line)
-                f.write(str(self.lcwa_iperf['download'].describe()))
-                f.write(str(self.lcwa_iperf['upload'].describe()))
+                #f.write(str(self.lcwa_iperf['download'].describe()))
+                #f.write(str(self.lcwa_iperf['upload'].describe()))
+                
+                f.write(str_iperf_min_d)
+                f.write(str_iperf_max_d)
+                f.write(str_iperf_mean_d)
+                f.write(str_iperf_std_d)
+                
+                f.write(str_iperf_min_u)
+                f.write(str_iperf_max_u)
+                f.write(str_iperf_mean_u)
+                f.write(str_iperf_std_u)
+                
+                
                 f.write('\n\n')
-                line ='Ookla Speedtest'
+                line ='Ookla Speedtest \n'
  
                 f.write(line)
-                f.write(str(self.lcwa_speed['download'].describe()))
-                f.write(str(self.lcwa_speed['upload'].describe()))
+                #f.write(str(self.lcwa_speed['download'].describe()))
+                #f.write(str(self.lcwa_speed['upload'].describe()))
+                
+                f.write(str_speed_min_d)
+                f.write(str_speed_max_d)
+                f.write(str_speed_mean_d)
+                f.write(str_speed_std_d)
+                
+                f.write(str_speed_min_u)
+                f.write(str_speed_max_u)
+                f.write(str_speed_mean_u)
+                f.write(str_speed_std_u)
                 f.write('\n\n ********************************end statistics********************** \n')
+   
                 
                 f.close()
 
@@ -294,7 +356,7 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/home/klein/speedfiles'
     #file = 'misk_2022-01-24speedfile.csv'
-    file = 'LC04_2022-01-26speedfile.csv'
+    file = 'LC23_2022-01-28speedfile.csv'
     token ='/home/klein/git/speedtest/src/LCWA_d.txt'
     token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
@@ -302,3 +364,4 @@ if __name__ == '__main__':
     MP = MyPlot(path,file,token,PlotFlag)
     MP.ReadTestData()    #MP.ReadTestData(legend)
     MP.Analyze('/home/klein/scratch/text.txt')
+    MP.Analyze()
