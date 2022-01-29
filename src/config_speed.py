@@ -70,7 +70,7 @@ class MyConfig():
             self.iperf_blksize = jsondict["Iperf"]["blksize"]
             self.iperf_duration = jsondict["Iperf"]["duration"]
             self.latency_ip = jsondict["Iperf"]["latency_ip"]
-            self.iperf_time_window =      jsondict["Iperf"]["time_window"]
+            self.time_window =      jsondict["Iperf"]["time_window"]
 
             if(jsondict["Iperf"]["reverse"]== True):
                 self.iperf_reverse = True
@@ -78,13 +78,6 @@ class MyConfig():
                 self.iperf_reverse =  False
 
             
-            
-        elif (self.runmode == 'Speedtest'):
-            self.latency_ip =       jsondict["Speedtest"]["latency_ip"]
-            self.serverip =         jsondict["Speedtest"]["serverip"]
-            self.serverid =         jsondict["Speedtest"]["serverid"]
-            self.time_window =      jsondict["Speedtest"]["time_window"]
-
         elif (self.runmode == 'Speedtest'):
             self.latency_ip =       jsondict["Speedtest"]["latency_ip"]
             self.serverip =         jsondict["Speedtest"]["serverip"]
@@ -100,7 +93,7 @@ class MyConfig():
             self.iperf_blksize = jsondict["Iperf"]["blksize"]
             self.iperf_duration = jsondict["Iperf"]["duration"]
             self.latency_ip = jsondict["Iperf"]["latency_ip"]
-            self.iperf_time_window =      jsondict["Iperf"]["time_window"]
+            self.time_window =      jsondict["Iperf"]["time_window"]
             if(jsondict["Iperf"]["reverse"]== True):
                 self.iperf_reverse = True
             else:
