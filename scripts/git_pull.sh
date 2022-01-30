@@ -3,7 +3,7 @@
 cd /home/pi/git/speedtest
 echo $HOSTNAME
 
-if [ ''$HOSTNAME'' = ''LC02'' ]; then
+if [ ''$HOSTNAME'' = ''LC99'' ]; then
 	echo "we are updating"
 	cd ~/git/speedtest
     echo $PWD
@@ -17,6 +17,8 @@ if [ ''$HOSTNAME'' = ''LC02'' ]; then
 	
 else
 	git pull
+	cd src
+	./update_speedtest
     cd /home/pi
 fi
 
