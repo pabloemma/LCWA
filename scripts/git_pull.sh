@@ -17,8 +17,6 @@ if [ ''$HOSTNAME'' = ''LC99'' ]; then
 	
 else
 	git pull
-	cd src
-	./update_speedtest
     cd /home/pi
 fi
 
