@@ -212,17 +212,17 @@ class MyPlot(object):
                 str_iperf_min_d = 'Min download                 = '+str(iperf_min_dw)+'\n'
  				
                 str_iperf_max_d = 'Max download                 = '+str(iperf_max_dw)+'\n'
-                str_iperf_mean_d = 'Min download                 = '+str(iperf_mean_dw)+'\n'
+                str_iperf_mean_d = 'Mean download                 = '+str(iperf_mean_dw)+'\n'
 
  			    
                 str_iperf_std_d = 'Std download                 = '+str(iperf_std_dw)+'\n'
   
-			    
+			     
                 str_iperf_min_u = 'Min upload                 = '+str(iperf_min_up)+'\n'
  			    
                 str_iperf_max_u = 'Max upload                 = '+str(iperf_max_up)+'\n'
  				
-                str_iperf_mean_u = 'Min upload                 = '+str(iperf_mean_up)+'\n'
+                str_iperf_mean_u = 'Mean upload                 = '+str(iperf_mean_up)+'\n'
  				
                 str_iperf_std_u = 'Std upload                 = '+str(iperf_std_up)+'\n'
  			
@@ -231,7 +231,7 @@ class MyPlot(object):
  			
                 str_speed_max_d = 'Max download                 = '+str(speed_max_dw)+'\n'
  				
-                str_speed_mean_d = 'Min download                 = '+str(speed_mean_dw)+'\n'
+                str_speed_mean_d = 'Mean download                 = '+str(speed_mean_dw)+'\n'
  				
                 str_speed_std_d = 'Std download                 = '+str(speed_std_dw)+'\n'
   
@@ -239,7 +239,7 @@ class MyPlot(object):
  				
                 str_speed_max_u = 'Max upload                 = '+str(speed_max_up)+'\n'
  				
-                str_speed_mean_u = 'Min upload                 = '+str(speed_mean_up)+'\n'
+                str_speed_mean_u = 'Mean upload                 = '+str(speed_mean_up)+'\n'
  				
                 str_speed_std_u = 'Std upload                 = '+str(speed_std_up)+'\n'
  				
