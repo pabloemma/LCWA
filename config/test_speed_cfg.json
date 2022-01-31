@@ -63,9 +63,9 @@
         "LC19" : "Both",
         "LC20" : "Iperf",
         "LC21" : "Iperf",
-        "LC22" : "Iperf",
+        "LC22" : "Both",
         "LC23" : "Both",
-        "LC24" : "Speedtest",
+        "LC24" : "Both",
         "PandaAir.local" : "Iperf"
 
     }
