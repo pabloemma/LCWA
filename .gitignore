@@ -15,4 +15,5 @@ src/PlotClass.ps
 support_files/speedtest
 support_files/speedtest.5
 support_files/speedtest.md
+.vscode/*
 .vscode/launch.json
