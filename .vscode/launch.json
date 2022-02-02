@@ -1,13 +1,14 @@
 {
        "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["-c","/home/klein/git/speedtest/config/test_speed_debug.json"]
+            "args": ["-c","/Users/klein/visual studio/LCWA/config/test_speed_debug.json"]
 
         }
     ]
