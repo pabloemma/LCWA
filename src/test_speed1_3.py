@@ -782,7 +782,8 @@ class test_speed1():
 
         for k in [2,3,4]:
             self.output.append(e[k])
-        for k in [5,6,7,8,9,10]:
+        for k in [5,6,11,8,9,10]:  # this funny e[11] ->e[7] has to do with the iperf3 system and what repesents download and what upload.
+                                    # see link:https://github.com/esnet/iperf/issues/480##interpreting-the-results
             try:
                 float(e[k])
                 self.output.append(float(e[k]))
@@ -790,7 +791,7 @@ class test_speed1():
 
                 print('bad float conversion')
                 self.output.append(-10000.)
-
+        return
             
 
     def CreateOutput(self,inc1):

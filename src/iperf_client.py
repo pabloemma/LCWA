@@ -52,6 +52,7 @@ class myclient():
         iperf_parser.add_argument("-v","--verbose",action='store_true',help = "verbose mode")
         #iperf_parser.add_argument("-h","--help",action='store_true',help = "print out menu")
         iperf_parser.add_argument("-j","--json",action='store_true',help = "json output")
+        iperf_parser.add_argument("-c","--config",help = "is ignored")
 
         iperf_parser.add_argument("-gp","--getport",action='store_true',help = "get port according to host name")
 
@@ -145,7 +146,10 @@ class myclient():
 
 
         output = self.output
+       
         result = self.mycl.run()
+        
+           
         output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%d/%m/%Y'))
         output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%H:%M:%S'))
         output.append('iperf3')
@@ -161,7 +165,7 @@ class myclient():
 
         if(self.debug):
             self.PrintResults(result)
-        
+        del self.mycl
         time.sleep(self.time_sleep)
         return 
 
@@ -187,7 +191,8 @@ class myclient():
         self.output.append(resultudp.packets)
         self.output.append(resultudp.lost_percent)
         time.sleep(self.time_sleep)
- 
+
+        del self.mycl1
         return 
 
     def GetPort(self):
@@ -235,8 +240,8 @@ class myclient():
         # temporary
         temp1.append(0)
         temp1.append(0)
-        #for k in range (20,26):
-        #    temp1.append(self.output[k])
+        for k in range (17,19):
+            temp1.append(self.output[k])
         print(temp1)
         if self.debug:
             print(' full output from tcp and udp both regular and reverse \n\n')
@@ -252,8 +257,8 @@ if __name__ == '__main__':
     mycli.GetArguments()
     mycli.RunTestTCP()
     #mycli.RunTestUDP()
-    #mycli.SetReverse()
-    #mycli.RunTestTCP()
+    mycli.SetReverse()
+    mycli.RunTestTCP()
     #mycli.RunTestUDP()
     mycli.CreateOutput()
  
