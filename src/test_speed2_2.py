@@ -1029,7 +1029,7 @@ class test_speed1():
                           'iperf reverse' : self.iperf_port,
                           'time window' : self.loop_time,
                           'ookla server id' : self.serverid,
-                          'latency ip' : self.latency_ip}
+                          'latency ip' : self.latency_server}
 
 
         # Now print it
