@@ -87,14 +87,14 @@ class MyConfig():
 
 
         elif (self.runmode ==   'Both'):
-            self.iperf_serverip = jsondict["Iperf"]["serverip"]
-            self.iperf_serverport = jsondict["Iperf"]["serverport"]
-            self.iperf_numstreams = jsondict["Iperf"]["numstreams"]
-            self.iperf_blksize = jsondict["Iperf"]["blksize"]
-            self.iperf_duration = jsondict["Iperf"]["duration"]
-            self.latency_ip = jsondict["Iperf"]["latency_ip"]
-            self.time_window =      jsondict["Iperf"]["time_window"]
-            if(jsondict["Iperf"]["reverse"]== True):
+            self.iperf_serverip = jsondict["Iperf"]["iperf_serverip"]
+            self.iperf_serverport = jsondict["Iperf"]["iperf_serverport"]
+            self.iperf_numstreams = jsondict["Iperf"]["iperf_numstreams"]
+            self.iperf_blksize = jsondict["Iperf"]["iperf_blksize"]
+            self.iperf_duration = jsondict["Iperf"]["iperf_duration"]
+            self.latency_ip = jsondict["Iperf"]["iperf_latency_ip"]
+            self.time_window =      jsondict["Iperf"]["iperf_time_window"]
+            if(jsondict["Iperf"]["iperf_reverse"]== True):
                 self.iperf_reverse = True
             else:
                 self.iperf_reverse =  False
@@ -109,6 +109,48 @@ class MyConfig():
             print('that runmode is unknown',jsondict["Control"]['runmode'] )
             sys.exit()
 
+        # here we check if we have nondefault variables for that host:
+        # if we have nondefault, we replace the values
+
+        if(self.nondefault):
+            if "serverip" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.serverip = jsondict["ClusterControl"][self.host]["nondefault"]["serverip"] 
+
+            if "serverid" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.serverid = jsondict["ClusterControl"][self.host]["nondefault"]["serverid"] 
+
+            if "latency_ip" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.latency_ip = jsondict["ClusterControl"][self.host]["nondefault"]["latency_ip"] 
+
+            if "time_window" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.time_indow = jsondict["ClusterControl"][self.host]["nondefault"]["time_window"] 
+
+ 
+            if "random" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.random_click = jsondict["ClusterControl"][self.host]["nondefault"]["random"] 
+
+ 
+ 
+            if "iperf_serverip" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.iperf_serverip = jsondict["ClusterControl"][self.host]["nondefault"]["iperf_serverip"] 
+
+            if "iperf_serverport" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.iperf_serverport = jsondict["ClusterControl"][self.host]["nondefault"]["iperf_serverport"] 
+
+            if "iperf_duration" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.iperf_duration = jsondict["ClusterControl"][self.host]["nondefault"]["iperf_duration"] 
+
+            if "iperf_blksize" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.iperf_blksize = jsondict["ClusterControl"][self.host]["nondefault"]["iperf_blksize"] 
+
+            if "iperf_numstreams" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.iperf_numstreams = jsondict["ClusterControl"][self.host]["nondefault"]["iperf_numstreams"] 
+
+            if "iperf_reverse" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
+                self.iperf_reverse = jsondict["ClusterControl"][self.host]["nondefault"]["iperf_reverse"] 
+
+
+
         print('\n\n ***************** configuration**************\n')
         print(' We are running on platform ' , mysystem, '\n')
 
@@ -120,13 +162,13 @@ class MyConfig():
         if(self.runmode == 'Iperf'):
             
             print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
-            print('IP of server       ',self.iperf_serverip)
-            print('Port               ',self.iperf_serverport)
-            print('Duration           ',self.iperf_duration)
-            print('Block size         ',self.iperf_blksize)
-            print('Number of streams  ',self.iperf_numstreams)
+            print('Iperf server             ',self.iperf_serverip)
+            print('Iperf Port               ',self.iperf_serverport)
+            print('Iperf Duration           ',self.iperf_duration)
+            print('Iperf Block size         ',self.iperf_blksize)
+            print('Iperf Number of streams  ',self.iperf_numstreams)
             
-            print('running reverse    ',self.iperf_reverse)
+            print('Iperf running reverse    ',self.iperf_reverse)
 
         elif(self.runmode == 'Speedtest'):
             print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
@@ -137,13 +179,13 @@ class MyConfig():
         
         elif(self.runmode == 'Both'):
             print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
-            print('IP of server       ',self.iperf_serverip)
-            print('Port               ',self.iperf_serverport)
-            print('Duration           ',self.iperf_duration)
-            print('Block size         ',self.iperf_blksize)
-            print('Number of streams  ',self.iperf_numstreams)
+            print('Iperf server             ',self.iperf_serverip)
+            print('Iperf Port               ',self.iperf_serverport)
+            print('Iperf Duration           ',self.iperf_duration)
+            print('Iperf Block size         ',self.iperf_blksize)
+            print('Iperf Number of streams  ',self.iperf_numstreams)
             
-            print('running reverse    ',self.iperf_reverse)
+            print('Iperf running reverse    ',self.iperf_reverse ,'\n\n')
             #print(' Running ',bfb,self.runmode,bfe,'  mode  \n')
             print('Latency server       ',self.latency_ip)
             print('Server IP            ',self.serverip)
@@ -159,9 +201,14 @@ class MyConfig():
         """determines the cluster run parameter for the different boxes"""
 
         # get hostname
-        host = socket.gethostname()
+        test_key ='nondefault'
+        self.host = host = socket.gethostname()
         if host in jsondict["ClusterControl"].keys():
-           return jsondict["ClusterControl"][host]
+            print(jsondict["ClusterControl"][host]["nondefault"]["server_ip"])
+            #check if we have nondefault values:
+            if test_key in jsondict["ClusterControl"][host].keys() :
+                self.nondefault = True
+            return jsondict["ClusterControl"][host]["runmode"]
 
         else:  
            return 'Both'
@@ -175,5 +222,5 @@ class MyConfig():
 if __name__ == '__main__':
 
     conf_dir = '/home/klein/git/speedtest/config/'
-    config_file = conf_dir + 'test_speed_cfg.json'
+    config_file = conf_dir + 'test_speed_cfg_new.json'
     MyC = MyConfig(config_file)

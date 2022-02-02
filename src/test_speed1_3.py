@@ -63,7 +63,7 @@ import random
 from tcp_latency import measure_latency
 
 import iperf_client as ipe
-import config_speed as cs
+import config_speed1 as cs
 import set_time as st
 
 #from __builtin__ import True
@@ -183,6 +183,7 @@ class test_speed1():
         elif(self.runmode == 'Speedtest'):
 
             self.latency_server =   MyConfig.latency_ip
+            self.serverid =         MyConfig.serverid
             self.serverip =         MyConfig.serverip
             self.latency_server =   MyConfig.latency_ip
             self.loop_time =        MyConfig.time_window*60
@@ -197,6 +198,7 @@ class test_speed1():
             self.iperf_numstreams = MyConfig.iperf_numstreams
             self.iperf_reverse    = MyConfig.iperf_reverse
             self.latency_server =   MyConfig.latency_ip
+            self.serverid =         MyConfig.serverid
             self.serverip =         MyConfig.serverip
             self.latency_server =   MyConfig.latency_ip
             self.loop_time =        MyConfig.time_window*60
@@ -271,7 +273,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '8.01.02'
+        self.vs = '8.02.01'
  
         
         print(' History')
@@ -314,6 +316,8 @@ class test_speed1():
         print('Version 7.02.01', 'modfy code such that it now reads in a second file to determine what host is running what ')
         print('Version 8.01.01', 'Code which allow you to switch between speedtest and iperf either pretermined or random ')
         print('Version 8.01.02', 'replace server name with speedtest in output csv file ')
+         
+        print('Version 8.02.01', 'now better reflection on what is going on with iperf, and new more granular config file treatment ')
          
         print('\n\n\n')
         
@@ -449,14 +453,16 @@ class test_speed1():
                 
             if(args.serverid != None):
             #if(socket.gethostname() == 'LC12'):
-             #   t=['-s','9686']    # go to NMSURF                
+             #   t=['-s','9686']    # go to NMSURF  
+             # 
+                          
             #else:
                 t=['-s',args.serverid]
-                
+            
                 temp1.extend(t)
             else: # make cybermesa the default
  
-                t=['-s','18002']
+                t=['-s',self.serverid]
                 temp1.extend(t)
               
             
@@ -1014,7 +1020,18 @@ class test_speed1():
                           'MacAddress':self.Mac,
                           'File':self.docfile,
                           'version':self.vs,
-                          'runmode': self.runmode}
+                          'runmode': self.runmode,
+                          'iperf server': self.iperf_server,
+                          'iperf port': self.iperf_port,
+                          'iperf numstreams': self.iperf_numstreams,
+                          'iperf blocksize': self.iperf_blksize,
+                          'iperf duration': self.iperf_duration,
+                          'iperf reverse' : self.iperf_port,
+                          'time window' : self.loop_time,
+                          'ookla server id' : self.serverid,
+                          'latency ip' : self.latency_server}
+
+
         # Now print it
         self.textfile = self.lcwa_filename.replace('csv','txt')
         with open(self.textfile, 'w') as f:
