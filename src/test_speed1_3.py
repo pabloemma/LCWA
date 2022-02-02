@@ -498,7 +498,7 @@ class test_speed1():
 
             if(self.iperf_reverse):
                 t = ['-r']
-                temp2.etxend(t)
+                temp2.extend(t)
 
 
 
