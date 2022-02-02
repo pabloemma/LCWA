@@ -52,6 +52,7 @@ class myclient():
         iperf_parser.add_argument("-v","--verbose",action='store_true',help = "verbose mode")
         #iperf_parser.add_argument("-h","--help",action='store_true',help = "print out menu")
         iperf_parser.add_argument("-j","--json",action='store_true',help = "json output")
+        iperf_parser.add_argument("-c","--config",help = "is ignored")
 
         iperf_parser.add_argument("-gp","--getport",action='store_true',help = "get port according to host name")
 
