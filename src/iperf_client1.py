@@ -60,8 +60,8 @@ class myclient():
         args = iperf_parser.parse_args()
 
        # we need to give it default values
-        #self.server_ip = '63.229.162.245'
-        self.server_ip = '192.168.2.125'
+        self.server_ip = '63.229.162.245'
+        #self.server_ip = '192.168.2.125'
         self.server_port = 5201
         self.duration = 10
         self.numstream = 1
@@ -239,7 +239,7 @@ class myclient():
         # temporary
         temp1.append(0)
         temp1.append(0)
-        for k in range (20,26):
+        for k in range (17,19):
             temp1.append(self.output[k])
         print(temp1)
         if self.debug:

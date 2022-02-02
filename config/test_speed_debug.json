@@ -18,7 +18,7 @@
 
     },
     "Control" : {
-        "runmode" : "Both",
+        "runmode" : "Iperf",
         "debug"   : false,
         "cryptofile" : "LCWA_d.txt",
         "click"      : "1",
