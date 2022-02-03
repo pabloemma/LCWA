@@ -1026,10 +1026,11 @@ class test_speed1():
                           'iperf numstreams': self.iperf_numstreams,
                           'iperf blocksize': self.iperf_blksize,
                           'iperf duration': self.iperf_duration,
-                          'iperf reverse' : self.iperf_port,
+                          'iperf reverse' : self.iperf_reverse,
                           'time window' : self.loop_time,
                           'ookla server id' : self.serverid,
-                          'latency ip' : self.latency_server}
+                          'latency ip' : self.latency_server,
+                          'random' : self.random_click}
 
 
         # Now print it
