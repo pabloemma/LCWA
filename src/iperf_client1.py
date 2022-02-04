@@ -162,7 +162,7 @@ class myclient():
         output.append('0')
         
 
-        
+
         if(self.debug):
             self.PrintResults(result)
         del self.mycl
@@ -252,15 +252,16 @@ class myclient():
         quit()
 if __name__ == '__main__':
     import time
- 
-    mycli = myclient()
-    mycli.GetArguments()
-    mycli.RunTestTCP()
+    while True:
+        mycli = myclient()
+        mycli.GetArguments()
+        mycli.RunTestTCP()
     #mycli.RunTestUDP()
-    mycli.SetReverse()
-    mycli.RunTestTCP()
+        mycli.SetReverse()
+        mycli.RunTestTCP()
     #mycli.RunTestUDP()
-    mycli.CreateOutput()
+        mycli.CreateOutput()
+        time.sleep(10)
  
  
         
