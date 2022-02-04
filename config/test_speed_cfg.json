@@ -60,7 +60,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -82,7 +82,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -104,7 +104,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -126,7 +126,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     }
@@ -151,7 +151,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -173,7 +173,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -195,7 +195,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -217,7 +217,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -239,7 +239,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -261,7 +261,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -283,7 +283,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -305,7 +305,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -327,7 +327,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -349,7 +349,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -371,7 +371,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -393,7 +393,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -415,7 +415,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -437,7 +437,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -459,7 +459,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -481,7 +481,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -503,7 +503,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -525,7 +525,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -547,7 +547,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -591,7 +591,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     },
@@ -605,7 +605,7 @@
 
                     "server_ip" :"63.229.162.245" ,
                     "serverid" : 18002,
-                    "time_window" : 10,
+                    "time_window" : 1,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
                     "iperf_serverip" : "63.229.162.245",
@@ -616,7 +616,7 @@
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
+                    "random" : false
                      }
 
                     }
