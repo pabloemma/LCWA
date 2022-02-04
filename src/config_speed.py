@@ -64,15 +64,15 @@ class MyConfig():
         self.runmode = self.GetClusterVariables(jsondict)
 
         if(self.runmode == 'Iperf'):
-            self.iperf_serverip = jsondict["Iperf"]["serverip"]
-            self.iperf_serverport = jsondict["Iperf"]["serverport"]
-            self.iperf_numstreams = jsondict["Iperf"]["numstreams"]
-            self.iperf_blksize = jsondict["Iperf"]["blksize"]
-            self.iperf_duration = jsondict["Iperf"]["duration"]
-            self.latency_ip = jsondict["Iperf"]["latency_ip"]
-            self.time_window =      jsondict["Iperf"]["time_window"]
+            self.iperf_serverip = jsondict["Iperf"]["iperf_serverip"]
+            self.iperf_serverport = jsondict["Iperf"]["iperf_serverport"]
+            self.iperf_numstreams = jsondict["Iperf"]["iperf_numstreams"]
+            self.iperf_blksize = jsondict["Iperf"]["iperf_blksize"]
+            self.iperf_duration = jsondict["Iperf"]["iperf_duration"]
+            self.latency_ip = jsondict["Iperf"]["iperf_latency_ip"]
+            self.time_window =      jsondict["Iperf"]["iperf_time_window"]
 
-            if(jsondict["Iperf"]["reverse"]== True):
+            if(jsondict["Iperf"]["iperf_reverse"]== True):
                 self.iperf_reverse = True
             else:
                 self.iperf_reverse =  False
@@ -204,8 +204,9 @@ class MyConfig():
         test_key ='nondefault'
         self.host = host = socket.gethostname()
         if host in jsondict["ClusterControl"].keys():
-            print(jsondict["ClusterControl"][host]["nondefault"]["server_ip"])
+            print(jsondict["ClusterControl"][host])
             #check if we have nondefault values:
+            print("end of prog",jsondict["ClusterControl"][host]["runmode"])
             if test_key in jsondict["ClusterControl"][host].keys() :
                 self.nondefault = True
             return jsondict["ClusterControl"][host]["runmode"]
@@ -222,5 +223,6 @@ class MyConfig():
 if __name__ == '__main__':
 
     conf_dir = '/home/klein/git/speedtest/config/'
-    config_file = conf_dir + 'test_speed_cfg_new.json'
+    conf_dir = '/Users/klein/visual studio/LCWA/config/'
+    config_file = conf_dir + 'test_speed_cfg.json'
     MyC = MyConfig(config_file)

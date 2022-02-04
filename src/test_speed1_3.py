@@ -457,12 +457,12 @@ class test_speed1():
              # 
                           
             #else:
-                t=['-s',args.serverid]
+                t=['-s',str(args.serverid)]
             
                 temp1.extend(t)
             else: # make cybermesa the default
  
-                t=['-s',self.serverid]
+                t=['-s',str(self.serverid)]
                 temp1.extend(t)
               
             
@@ -1020,17 +1020,24 @@ class test_speed1():
                           'MacAddress':self.Mac,
                           'File':self.docfile,
                           'version':self.vs,
-                          'runmode': self.runmode,
-                          'iperf server': self.iperf_server,
+                          'runmode': self.runmode}
+
+        if self.runmode == "Iperf" or self.runmode == 'Both':
+            self.output_dict.update({'iperf server': self.iperf_server,
                           'iperf port': self.iperf_port,
                           'iperf numstreams': self.iperf_numstreams,
                           'iperf blocksize': self.iperf_blksize,
                           'iperf duration': self.iperf_duration,
                           'iperf reverse' : self.iperf_reverse,
-                          'time window' : self.loop_time,
-                          'ookla server id' : self.serverid,
-                          'latency ip' : self.latency_server,
-                          'random' : self.random_click}
+                          'time window' : self.loop_time})
+
+        if self.runmode == "Speedtest" or self.runmode == 'Both':
+            self.output_dict.update({
+                         'ookla server id' : self.serverid,
+                          'latency ip' : self.latency_server})
+
+        if self.runmode  == "Both":
+            self.output_dict.update({'random' : self.random_click})
 
 
         # Now print it
@@ -1039,7 +1046,8 @@ class test_speed1():
         
         
             for key,value in self.output_dict.items():
-                print(key , '  ',value, file = f)
+                if key in self.output_dict.keys():
+                    print(key , '  ',value, file = f)
             #print (self.output_dict['IP'])
         f.close()
            

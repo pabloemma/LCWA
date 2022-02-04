@@ -572,6 +572,32 @@
                      }
 
                     },
+
+       "PandaAir.local" : {
+            "runmode" : "Speedtest",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : true
+                     }
+
+                    },
+
+
+
         "miska" : {
             "runmode" : "Both",
 
@@ -593,8 +619,9 @@
                     "random" : true
                      }
 
-                    },
-        "PandaAir.local" : "Iperf"
+                    }
+  
+
 
     }
 }

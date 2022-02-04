@@ -18,7 +18,7 @@
 
     },
     "Control" : {
-        "runmode" : "Iperf",
+        "runmode" : "Speed",
         "debug"   : false,
         "cryptofile" : "LCWA_d.txt",
         "click"      : "1",
@@ -65,8 +65,8 @@
         "LC21" : "Iperf",
         "LC22" : "Iperf",
         "LC23" : "Iperf",
-        "LC24" : "Speedtest",
-        "PandaAir.local" : "Both"
+        "LC24" : "Speed",
+        "PandaAir.local" : "Speed"
 
     }
 }
