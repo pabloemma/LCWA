@@ -149,17 +149,33 @@ class myclient():
        
         result = self.mycl.run()
         
+        try:
            
-        output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%d/%m/%Y'))
-        output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%H:%M:%S'))
-        output.append('iperf3')
-        output.append(dummy)
-        output.append(dummy)
-        output.append('0') # jitter
-        output.append('0') #package loss
-        output.append(result.received_Mbps)
-        output.append(result.sent_Mbps)
-        output.append('0')
+            output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%d/%m/%Y'))
+            output.append(dt.datetime.fromtimestamp(result.timesecs).strftime('%H:%M:%S'))
+            output.append('iperf3')
+            output.append(dummy)
+            output.append(dummy)
+            output.append('0') # jitter
+            output.append('0') #package loss
+            output.append(result.received_Mbps)
+            output.append(result.sent_Mbps)
+            output.append('0')
+        
+        except AttributeError: # we get this when the connection is bad in iperf client
+            temp_time = dt.datetime.now() # get time opf now
+            ts = temp_time.ts() #convert it to timestamp
+            output.append(dt.datetime.fromtimestamp(ts).strftime('%d/%m/%Y'))
+            output.append(dt.datetime.fromtimestamp(ts).strftime('%H:%M:%S'))
+            output.append('iperf3')
+            output.append(dummy)
+            output.append(dummy)
+            output.append('0') # jitter
+            output.append('0') #package loss
+            output.append(0.)
+            output.append(0.)
+            output.append('0')
+
         
 
 
