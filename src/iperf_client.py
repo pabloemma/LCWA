@@ -172,8 +172,8 @@ class myclient():
             output.append(dummy)
             output.append('0') # jitter
             output.append('0') #package loss
-            output.append(0.)
-            output.append(0.)
+            output.append(-1.)
+            output.append(-1.)
             output.append('0')
 
         
