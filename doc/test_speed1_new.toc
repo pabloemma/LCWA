@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Overview}{1}% 
+\contentsline {section}{\numberline {2}Installation and upgrade}{2}% 
+\contentsline {subsection}{\numberline {2.1}Installing on a Linux raspberry pi system}{3}% 
+\contentsline {subsection}{\numberline {2.2}general instructions for running the system on your own}{3}% 
+\contentsline {section}{\numberline {3}Running and controlling the program}{4}% 
+\contentsline {subsection}{\numberline {3.1}Required directory settings}{4}% 
+\contentsline {subsection}{\numberline {3.2}config file}{5}% 
+\contentsline {subsection}{\numberline {3.3}Running}{7}% 
+\contentsline {section}{\numberline {4}Results}{8}% 

@@ -1,8 +1,9 @@
 
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 %\Large
 \include{usepack}
-\usepackage{times}
+%\usepackage{times}
+\usepackage{palatino}
 %\include{my_environ}
 %for version counter
 
@@ -23,7 +24,7 @@
 \setcounter{secnumdepth}{10}
 \setcounter{tocdepth}{10}
 
-
+\tableofcontents
 
 \newenvironment{andilist}{\begin{itemize} \em}{\end{itemize}}
 
@@ -55,7 +56,7 @@ Sometimes I will make changes which require an upgrade, and then the script upgr
 
 \vspace{3cm}
 
-\subsubsection{Installing on a Linux raspberry pi system}
+\subsection{Installing on a Linux raspberry pi system}
 In this case you should be able to use the provided install script : install|\_speedtest. There is also a mac installation script, but this is currently outdated.
 \begin{verbatim}
 
@@ -65,7 +66,7 @@ In this case you should be able to use the provided install script : install|\_s
 
 If the installation crashes, please send me the install.log file.
 
-\subsubsection{general instructions for running the system on your own}
+\subsection{general instructions for running the system on your own}
 In the following a discussion on what you need to install the project:
 \begin{enumerate}
 \item	Install the speedtest CLI from  https://www.speedtest.net/apps/cli
@@ -245,6 +246,66 @@ where I only show the last few lines
 
 \section{Results}
 
+Below is the typical output of one of the speedboxes for a 24 hr period. During this time, Lumen had huge problems with delivering our bandwidth and this is reflected in the black squares, which measure the download speed to a speedtest server. The red triangles are the uploadspeed to the same server. In contrast the blue and green are our iperf results, which test the bandwidth within our network.
+
+
+\begin{figure}[H]%                 use [hb] only if necceccary!
+  \centering
+  \includegraphics[width=8cm]{LC04_2022-02-04speedfile.jpg}
+  \caption{LC04 on Feb 04 2022}
+  \label{fig:LC04}
+\end{figure}
+
+There are three files produced with extensions pdf, csv and txt. The csv file contains the raw data , the pdf is a plot of the data and the txt file has a list of parameters the program run under, plus at midnight a statistics output.
+In the following the midnight output from the plotted run. The important info are the run conditions at the beginning, which in this case is \textbf{Both} , and then the different parameters for iperf and speedtest.
+
+\begin{verbatim}
+IP    63.233.221.150
+Date    2022-02-04 23:50:47.244401
+Dropbox    /LCWA/LC04_/
+MacAddress    b8:27:eb:41:62:97
+File    LC04_2022-02-04speedfile.csv
+version    8.02.01
+runmode    Both
+iperf server    63.229.162.245
+iperf port    5201
+iperf numstreams    2
+iperf blocksize    1024
+iperf duration    30
+iperf reverse    False
+time window    600
+ookla server id    18002
+latency ip    65.19.14.51
+random    False
+
+
+ ********************************total statistics********************** 
+Iperf 
+Min download                 = 14.903761103996434
+Max download                 = 24.66901502375453
+Mean download                 = 23.558043052947266
+Std download                 = 2.128372106266123
+Min upload                 = 17.440534244451296
+Max upload                 = 24.34935391081165
+Mean upload                 = 23.83621240450195
+Std upload                 = 1.015410482611458
+
+
+Ookla Speedtest 
+Min download                 = 1.598744
+Max download                 = 23.282152
+Mean download                 = 13.355808000000001
+Std download                 = 6.769985371569937
+Min upload                 = 14.74664
+Max upload                 = 24.351616
+Mean upload                 = 23.40635557894737
+Std upload                 = 2.067538460635904
+
+
+ ********************************end statistics********************** 
+
+
+\end{verbatim}
 
 
 \end{document}
