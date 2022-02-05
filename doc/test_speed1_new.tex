@@ -152,6 +152,30 @@ Here is an example of a config file:
         "time_window" : 10,
         "latency_ip" : "65.19.14.51" 
     }
+        "ClusterControl" : {
+        "LC01" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : true
+                     }
+
+                    },
+
 }
 
 \end{verbatim}
@@ -162,7 +186,9 @@ The first two block deal with the runtime environment. Since Apple and Linux hav
 
 The last two blocks contain control parameters used for the two different runmodes.
 
-If you choose Both for the running, you should also provide the variable random in the control block and set it to either true or false. If fasle, the program will switch back and forth between iperf and speedtest on a regular basis, indeed every time it should run . If you set random to true, it will decide randomly which way to go.
+If you choose Both for the running, you should also provide the variable random in the control block and set it to either true or false. If false, the program will switch back and forth between iperf and speedtest on a regular basis, indeed every time it should run . If you set random to true, it will decide randomly which way to go.
+
+I added a clustercontrol block, where you can fine tune the parameters for every speedbox. If you don't change anything in the clustercontrol, it takes the default values.
 
 \subsection{Running}
 
@@ -216,4 +242,9 @@ The second one is just crontab -e and looks like this:
 where I only show the last few lines
 
 % end of definitions
+
+\section{Results}
+
+
+
 \end{document}
