@@ -123,7 +123,7 @@ class MyConfig():
                 self.latency_ip = jsondict["ClusterControl"][self.host]["nondefault"]["latency_ip"] 
 
             if "time_window" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
-                self.time_indow = jsondict["ClusterControl"][self.host]["nondefault"]["time_window"] 
+                self.time_window = jsondict["ClusterControl"][self.host]["nondefault"]["time_window"] 
 
  
             if "random" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
