@@ -334,6 +334,7 @@ class PlotAll(object):
         
         yhigh2=yhigh3=24.
         yveryhigh = 70.
+        ystarlink = 200.
         
         bbox=(0.03,.03,1.,0.25)
         print('number',k)
@@ -365,7 +366,10 @@ class PlotAll(object):
             self.axarr[i][k].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             print(np.around(np.mean(y1),2))
-            if(np.around(np.mean(y1),2) >25.): 
+            if((np.around(np.mean(y1),2) >70.):
+                self.axarr[i][k].set_ylim(ylow,ystarlink) # set yaxis limit
+
+            elif(np.around(np.mean(y1),2) >25. and np.around(np.mean(y1),2) < 70.): 
                  # set yaxis limit
                 self.axarr[i][k].set_ylim(ylow,yveryhigh) # set yaxis limit
                         
