@@ -450,9 +450,9 @@ class test_speed1():
             self.nowait = False
 
         if(args.testdb):
-            args.testdb = True
+            self.testdb = True
         else:
-            self.nowait = False
+            self.testdb = False
 
  
         if self.runmode == 'Speedtest' or self.runmode == 'Both':
