@@ -63,7 +63,7 @@ import random
 from tcp_latency import measure_latency
 
 import iperf_client as ipe
-import config_speed1 as cs
+import config_speed as cs
 import set_time as st
 
 #from __builtin__ import True
