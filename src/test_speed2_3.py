@@ -55,7 +55,7 @@ import platform # need to determine the OS
 import subprocess as sp
 import dropbox
 import socket # needed for hostname id
-import PlotClass1 as PC # new plot version
+import PlotClass as PC # new plot version
 import uuid
 import ntplib
 import random

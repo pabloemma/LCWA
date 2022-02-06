@@ -125,7 +125,9 @@ class MyPlot(object):
         plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["upload"],'g^',label='\n iperf green UP ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["download"],'ks',label='\n speedtest black DOWN ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["upload"],'r^',label='\n speedtest red UP ')
-        plt.ylim(0,40.)
+
+        # remove limit
+        # plt.ylim(0,40.)
         plt.grid(True)
 
         plt.xticks(rotation='vertical')
