@@ -366,10 +366,10 @@ class PlotAll(object):
             self.axarr[i][k].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
             print(np.around(np.mean(y1),2))
-            if((np.around(np.mean(y1),2) >70.):
+            if(np.around(np.mean(y1),2) >50.):
                 self.axarr[i][k].set_ylim(ylow,ystarlink) # set yaxis limit
 
-            elif(np.around(np.mean(y1),2) >25. and np.around(np.mean(y1),2) < 70.): 
+            elif(np.around(np.mean(y1),2) >25. and np.around(np.mean(y1),2) < 50.): 
                  # set yaxis limit
                 self.axarr[i][k].set_ylim(ylow,yveryhigh) # set yaxis limit
                         
@@ -876,7 +876,7 @@ if __name__ == '__main__':
             temp1 = temp+str(k)+'_'
             
         dirlist.append(temp1)
-    token_file = '/git/LCWA/src/LCWA_d.txt'
+    token_file = '/git/speedtest/src/LCWA_d.txt'
     tempdir = 'scratch'
     datefile = '2022-01-18' 
      # " default is none"
