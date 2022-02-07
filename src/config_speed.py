@@ -28,7 +28,7 @@ class MyConfig():
             sys.exit(0)
     def ReadJson(self,file_path):
 
-        print("reading config file")
+        print("reading config file ", file_path)    # WGH mod: clarify which conf json we're actually reading
         with open(file_path, "r") as f:
             myconf = json.load(f)
 
@@ -53,7 +53,7 @@ class MyConfig():
         # the next two vaiables are only used if we run in "both" mode
         self.click      = jsondict["Control"]["click"] # 1: start with iperf, 0 start with speedtest
         self.random_click     = jsondict["Control"]["random"]
-
+        self.runmode = jsondict["Control"]["runmode"]   # WGH mod: Do we need this if the host isn't found in the ClusterControl block?
 
         self.conf_dir = jsondict[mysystem]['conf_dir']
 
@@ -123,7 +123,7 @@ class MyConfig():
                 self.latency_ip = jsondict["ClusterControl"][self.host]["nondefault"]["latency_ip"] 
 
             if "time_window" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
-                self.time_indow = jsondict["ClusterControl"][self.host]["nondefault"]["time_window"] 
+                self.time_window = jsondict["ClusterControl"][self.host]["nondefault"]["time_window"] 
 
  
             if "random" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :

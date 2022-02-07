@@ -1,0 +1,3260 @@
+%!PS-Adobe-3.0
+%%Title: PlotAll1.py
+%%For: klein
+%%Creator: a2ps version 4.14
+%%CreationDate: Sat Feb  5 15:40:26 2022
+%%BoundingBox: 24 24 588 768
+%%DocumentData: Clean7Bit
+%%Orientation: Landscape
+%%Pages: 16
+%%PageOrder: Ascend
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-BoldOblique
+%%+ font Courier-Oblique
+%%+ font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Symbol
+%%+ font Times-Bold
+%%+ font Times-Roman
+%%DocumentProcessColors: Black 
+%%DocumentSuppliedResources: procset a2ps-a2ps-hdr
+%%+ procset a2ps-black+white-Prolog
+%%+ encoding ISO-8859-1Encoding
+%%EndComments
+/a2psdict 200 dict def
+a2psdict begin
+%%BeginProlog
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+
+% EPSF import as in the Red Book
+/BeginInclude {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+    0 setgray 0 setlinecap
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    gs_languagelevel 1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+} bind def
+
+/EndInclude {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+/BeginEPSF {
+  BeginInclude
+  /showpage { } def
+} bind def
+
+/EndEPSF {
+  EndInclude
+} bind def
+
+% Page prefeed
+/page_prefeed {         % bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} bind def
+
+/deffont {
+  findfont exch scalefont def
+} bind def
+
+/reencode_font {
+  findfont reencode 2 copy definefont pop def
+} bind def
+
+% Function c-show (str => -)
+% centers text only according to x axis.
+/c-show { 
+  dup stringwidth pop
+  2 div neg 0 rmoveto
+  show
+} bind def
+
+% Function l-show (str => -)
+% prints texts so that it ends at currentpoint
+/l-show {
+  dup stringwidth pop neg 
+  0 
+  rmoveto show
+} bind def
+
+% center-fit show (str w => -)
+% show centered, and scale currentfont so that the width is less than w
+/cfshow {
+  exch dup stringwidth pop
+  % If the title is too big, try to make it smaller
+  3 2 roll 2 copy
+  gt
+  { % if, i.e. too big
+    exch div
+    currentfont exch scalefont setfont
+  } { % ifelse
+    pop pop 
+  }
+  ifelse
+  c-show			% center title
+} bind def
+
+% Return the y size of the current font
+% - => fontsize
+/currentfontsize {
+  currentfont /FontType get 0 eq {
+    currentfont /FontMatrix get 3 get
+  }{
+    currentfont /FontMatrix get 3 get 1000 mul
+  } ifelse
+} bind def
+
+% reencode the font
+% <encoding-vector> <fontdict> -> <newfontdict>
+/reencode { %def
+  dup length 5 add dict begin
+    { %forall
+      % <vector> <key> <val>
+      1 index /FID ne 
+      { def }{ pop pop } ifelse
+    } forall
+    /Encoding exch def % -
+
+    % Use the font's bounding box to determine the ascent, descent,
+    % and overall height; don't forget that these values have to be
+    % transformed using the font's matrix.
+    % We use `load' because sometimes BBox is executable, sometimes not.
+    % Since we need 4 numbers an not an array avoid BBox from being executed
+    /FontBBox load aload pop
+    FontMatrix transform /Ascent exch def pop
+    FontMatrix transform /Descent exch def pop
+    /FontHeight Ascent Descent sub def
+
+    % Get the underline position and thickness if they're defined.
+    % Use 1 if they are not defined.
+    currentdict /FontInfo 2 copy known
+    { get
+      /UnderlinePosition 2 copy % <FontInfo> /UP <FontInfo> /UP
+      2 copy known
+      { get }{ pop pop 1 } ifelse
+      0 exch FontMatrix transform exch pop
+      def % <FontInfo>
+
+      /UnderlineThickness 2 copy % <FontInfo> /UT <FontInfo> /UT
+      2 copy known
+      { get }{ pop pop 1 } ifelse
+      0 exch FontMatrix transform exch pop
+      def % <FontInfo>
+      pop % -
+    }{ pop pop
+    } ifelse
+
+    currentdict
+  end 
+} bind def
+
+% composite fonts for ASCII-EUC mixed strings
+% Version 1.2 1/31/1990
+% Original Ken'ichi HANDA (handa@etl.go.jp)
+% Modified Norio Katayama (katayama@rd.nacsis.ac.jp),1998
+% Extend & Fix Koji Nakamaru (maru@on.cs.keio.ac.jp), 1999
+% Anyone can freely copy, modify, distribute this program.
+
+/copyfont {	% font-dic extra-entry-count  copyfont  font-dic
+	1 index maxlength add dict begin
+	{	1 index /FID ne 2 index /UniqueID ne and
+		{def} {pop pop} ifelse
+	} forall
+	currentdict
+	end
+} bind def
+
+/compositefont { % ASCIIFontName EUCFontName RomanScale RomanOffset Rot(T/F) compositefont font
+    /RomanRotation exch def
+    /RomanOffset exch def
+    /RomanScale exch def
+    userdict /fixeucfont_dict known not {
+	userdict begin
+	    /fixeucfont_dict 2 dict begin
+		/UpperByteEncoding [
+		    16#00 1 16#20 { pop 0 } for
+		    16#21 1 16#28 { 16#20 sub } for
+		    16#29 1 16#2F { pop 0 } for
+		    16#30 1 16#74 { 16#27 sub } for
+		    16#75 1 16#FF { pop 0 } for
+		] def
+	        /LowerByteEncoding [
+		    16#00 1 16#A0 { pop /.notdef } for
+		    16#A1 1 16#FE { 16#80 sub 16 2 string cvrs
+				    (cXX) dup 1 4 -1 roll
+				    putinterval cvn } for
+		    /.notdef
+		] def
+		currentdict
+	    end def
+	end
+    } if
+    findfont dup /FontType get 0 eq {
+	14 dict begin
+	    %
+	    % 7+8 bit EUC font
+	    %
+	    12 dict begin
+		/EUCFont exch def
+		/FontInfo (7+8 bit EUC font) readonly def
+		/PaintType 0 def
+		/FontType 0 def
+		/FontMatrix matrix def
+		% /FontName
+		/Encoding fixeucfont_dict /UpperByteEncoding get def
+		/FMapType 2 def
+		EUCFont /WMode known
+		{ EUCFont /WMode get /WMode exch def }
+		{ /WMode 0 def } ifelse
+		/FDepVector [
+		    EUCFont /FDepVector get 0 get
+		    [ 16#21 1 16#28 {} for 16#30 1 16#74 {} for ]
+		    {
+			13 dict begin
+			    /EUCFont EUCFont def
+			    /UpperByte exch 16#80 add def	
+			    % /FontName
+			    /FontInfo (EUC lower byte font) readonly def
+			    /PaintType 0 def
+			    /FontType 3 def
+			    /FontMatrix matrix def
+			    /FontBBox {0 0 0 0} def
+			    /Encoding
+				fixeucfont_dict /LowerByteEncoding get def
+			    % /UniqueID
+			    % /WMode
+			    /BuildChar {
+				gsave
+				exch dup /EUCFont get setfont
+				/UpperByte get
+				2 string
+				dup 0 4 -1 roll put
+				dup 1 4 -1 roll put
+				dup stringwidth setcharwidth
+				0 0 moveto show
+				grestore
+			    } bind def
+			    currentdict
+			end
+			/lowerbytefont exch definefont
+		    } forall
+		] def
+		currentdict
+	    end
+	    /eucfont exch definefont
+	    exch
+	    findfont 1 copyfont dup begin
+		RomanRotation {
+			/FontMatrix FontMatrix
+			[ 0 RomanScale neg RomanScale 0 RomanOffset neg 0 ]
+			matrix concatmatrix def
+		}{
+			/FontMatrix FontMatrix
+			[ RomanScale 0 0 RomanScale 0 RomanOffset ] matrix concatmatrix
+			def
+			/CDevProc
+			    {pop pop pop pop 0 exch -1000 exch 2 div 880} def
+		} ifelse
+	    end
+	    /asciifont exch definefont
+	    exch
+	    /FDepVector [ 4 2 roll ] def
+	    /FontType 0 def
+	    /WMode 0 def
+	    /FMapType 4 def
+	    /FontMatrix matrix def
+	    /Encoding [0 1] def
+	    /FontBBox {0 0 0 0} def
+%	    /FontHeight 1.0 def % XXXX
+	    /FontHeight RomanScale 1.0 ge { RomanScale }{ 1.0 } ifelse def
+	    /Descent -0.3 def   % XXXX
+	    currentdict
+	end
+	/tmpfont exch definefont
+	pop
+	/tmpfont findfont
+    }{
+	pop findfont 0 copyfont
+    } ifelse
+} def	
+
+/slantfont {	% FontName slant-degree  slantfont  font'
+    exch findfont 1 copyfont begin
+    [ 1 0 4 -1 roll 1 0 0 ] FontMatrix exch matrix concatmatrix
+    /FontMatrix exch def
+    currentdict
+    end
+} def
+
+% Function print line number (<string> # -)
+/# {
+  gsave
+    sx cw mul neg 2 div 0 rmoveto
+    f# setfont
+    c-show
+  grestore
+} bind def
+
+% -------- Some routines to enlight plain b/w printings ---------
+
+% Underline
+% width --
+/dounderline {
+  currentpoint
+  gsave
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    0 rlineto
+    stroke
+  grestore
+} bind def
+
+% Underline a string
+% string --
+/dounderlinestring {
+  stringwidth pop
+  dounderline
+} bind def
+
+/UL {
+  /ul exch store
+} bind def
+
+% Draw a box of WIDTH wrt current font
+% width --
+/dobox {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    stroke
+  grestore
+} bind def
+
+/BX {
+  /bx exch store
+} bind def
+
+% Box a string
+% string --
+/doboxstring {
+  stringwidth pop
+  dobox
+} bind def
+
+%
+% ------------- Color routines ---------------
+%
+/FG /setrgbcolor load def
+
+% Draw the background
+% width --
+/dobackground {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    bgcolor aload pop setrgbcolor
+    fill
+  grestore
+} bind def
+
+% Draw bg for a string
+% string --
+/dobackgroundstring {
+  stringwidth pop
+  dobackground
+} bind def
+
+
+/BG {
+  dup /bg exch store
+  { mark 4 1 roll ] /bgcolor exch store } if
+} bind def
+
+
+/Show {
+  bg { dup dobackgroundstring } if
+  ul { dup dounderlinestring } if
+  bx { dup doboxstring } if
+  show
+} bind def
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T {
+  cw mul x0 add
+  bg { dup currentpoint pop sub dobackground } if
+  ul { dup currentpoint pop sub dounderline } if
+  bx { dup currentpoint pop sub dobox } if
+  y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n {
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+/S {
+  Show
+} bind def
+
+%%BeginResource: procset a2ps-a2ps-hdr 2.0 2
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Function title: prints page header.
+% <ct> <rt> <lt> are passed as argument
+/title { 
+  % 1. Draw the background
+  x v get y v get moveto
+  gsave
+    0 th 2 div neg rmoveto 
+    th setlinewidth
+    0.95 setgray
+    pw 0 rlineto stroke
+  grestore
+  % 2. Border it
+  gsave
+    0.7 setlinewidth
+    pw 0 rlineto
+    0 th neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+  % stk: ct rt lt
+  x v get y v get th sub 1 add moveto
+%%IncludeResource: font Helvetica
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  % 3. The left title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    fnfs 0.8 mul hm rmoveto
+    show			% left title
+  grestore
+  exch
+  % stk: ct ltw rt
+  % 4. the right title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    dup
+    pw exch stringwidth pop fnfs 0.8 mul add sub
+    hm
+    rmoveto
+    show			% right title
+  grestore
+  % stk: ct ltw rtw
+  % 5. the center title
+  gsave
+    pw 3 1 roll
+    % stk: ct pw ltw rtw
+    3 copy 
+    % Move to the center of the left room
+    sub add 2 div hm rmoveto
+    % What is the available space in here?
+    add sub fnfs 0.8 mul sub fnfs 0.8 mul sub
+    % stk: ct space_left
+%%IncludeResource: font Helvetica-Bold
+  fHelvetica-Bold fnfs scalefont setfont
+    cfshow
+  grestore
+} bind def
+
+% Function border: prints virtual page border
+/border { %def
+  gsave				% print four sides
+    0 setgray
+    x v get y v get moveto
+    0.7 setlinewidth		% of the square
+    pw 0 rlineto
+    0 ph neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+} bind def
+
+% Function water: prints a water mark in background
+/water { %def
+  gsave
+    scx scy moveto rotate
+%%IncludeResource: font Times-Bold
+  fTimes-Bold 100 scalefont setfont
+    .97 setgray
+    dup stringwidth pop 2 div neg -50 rmoveto
+    show
+  grestore
+} bind def
+
+% Function rhead: prints the right header
+/rhead {  %def
+  lx ly moveto
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  l-show
+} bind def
+
+% Function footer (cf rf lf -> -)
+/footer {
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  dx dy moveto
+  show
+
+  snx sny moveto
+  l-show
+  
+  fnx fny moveto
+  c-show
+} bind def
+%%EndResource
+%%BeginResource: procset a2ps-black+white-Prolog 2.0 1
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T { 
+  cw mul x0 add y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n { %def
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+}  bind def
+
+/S {
+  Show
+} bind def
+
+/p {
+  false UL
+  false BX
+  fCourier bfs scalefont setfont
+  Show
+} bind def
+
+/sy {
+  false UL
+  false BX
+  fSymbol bfs scalefont setfont
+  Show
+} bind def
+
+/k {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/K {
+  false UL
+  false BX
+  fCourier-Bold bfs scalefont setfont
+  Show
+} bind def
+
+/c {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/C {
+  false UL
+  false BX
+  fCourier-BoldOblique bfs scalefont setfont
+  Show 
+} bind def
+
+/l {
+  false UL
+  false BX
+  fHelvetica bfs scalefont setfont
+  Show
+} bind def
+
+/L {
+  false UL
+  false BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show 
+} bind def
+
+/str{
+  false UL
+  false BX
+  fTimes-Roman bfs scalefont setfont
+  Show
+} bind def
+
+/e{
+  false UL
+  true BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show
+} bind def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier
+%%IncludeResource: font Courier-Oblique
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Times-Roman
+%%IncludeResource: font Symbol
+%%IncludeResource: font Courier-BoldOblique
+%%BeginResource: encoding ISO-8859-1Encoding
+/ISO-8859-1Encoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright 
+/parenleft /parenright /asterisk /plus /comma /minus /period /slash 
+/zero /one /two /three /four /five /six /seven 
+/eight /nine /colon /semicolon /less /equal /greater /question 
+/at /A /B /C /D /E /F /G 
+/H /I /J /K /L /M /N /O 
+/P /Q /R /S /T /U /V /W 
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore 
+/quoteleft /a /b /c /d /e /f /g 
+/h /i /j /k /l /m /n /o 
+/p /q /r /s /t /u /v /w 
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section 
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron 
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /bullet 
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown 
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla 
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis 
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply 
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls 
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla 
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis 
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide 
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis 
+] def
+%%EndResource
+% Initialize page description variables.
+/sh 612 def
+/sw 792 def
+/llx 24 def
+/urx 768 def
+/ury 588 def
+/lly 24 def
+/#copies 1 def
+/th 20.000000 def
+/fnfs 15 def
+/bfs 9.000000 def
+/cw 5.400000 def
+
+% Dictionary for ISO-8859-1 support
+/iso1dict 8 dict begin
+  /fCourier ISO-8859-1Encoding /Courier reencode_font
+  /fCourier-Bold ISO-8859-1Encoding /Courier-Bold reencode_font
+  /fCourier-BoldOblique ISO-8859-1Encoding /Courier-BoldOblique reencode_font
+  /fCourier-Oblique ISO-8859-1Encoding /Courier-Oblique reencode_font
+  /fHelvetica ISO-8859-1Encoding /Helvetica reencode_font
+  /fHelvetica-Bold ISO-8859-1Encoding /Helvetica-Bold reencode_font
+  /fTimes-Bold ISO-8859-1Encoding /Times-Bold reencode_font
+  /fTimes-Roman ISO-8859-1Encoding /Times-Roman reencode_font
+currentdict end def
+/bgcolor [ 0 0 0 ] def
+/bg false def
+/ul false def
+/bx false def
+% The font for line numbering
+/f# /Helvetica findfont bfs .6 mul scalefont def
+/fSymbol /Symbol findfont def
+/hm fnfs 0.25 mul def
+/pw
+   cw 137.400000 mul
+def
+/ph
+   519.300000 th add
+def
+/pmw 0 def
+/pmh 0 def
+/v 0 def
+/x [
+  0
+] def
+/y [
+  pmh ph add 0 mul ph add
+] def
+/scx sw 2 div def
+/scy sh 2 div def
+/snx urx def
+/sny lly 2 add def
+/dx llx def
+/dy sny def
+/fnx scx def
+/fny dy def
+/lx snx def
+/ly ury fnfs 0.8 mul sub def
+/sx 5 def
+/tab 8 def
+/x0 0 def
+/y0 0 def
+%%EndSetup
+
+%%Page: (1) 1
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(1) # (''') p n
+(2) # () S
+(Created on Apr 21, 2020) str n
+(3) # () N
+(4) # (@author: klein) N
+(5) # () N
+(6) # (Gets all the csv files from the different directories and plots them) N
+(7) # () S
+(''') p n
+(8) # () N
+(9) # () N
+(10) # () N
+(11) # () S
+(import) K
+( dropbox) p n
+(12) # () S
+(import) K
+( datetime) p n
+(13) # () S
+(import) K
+( numpy as np) p n
+(14) # () S
+(from) K
+( pathlib ) p
+(import) K
+( Path ) p
+(# this is python 3) c n
+(15) # () S
+(import) K
+( matplotlib.pyplot as plt) p n
+(16) # () S
+(import) K
+( matplotlib.dates as md) p n
+(17) # () S
+(from) K
+( matplotlib.backends.backend_pdf ) p
+(import) K
+( PdfPages) p n
+(18) # () S
+(from) K
+( mpl_toolkits.axes_grid1.inset_locator ) p
+(import) K
+( inset_axes) p n
+(19) # () S
+(import) K
+( ast) p n
+(20) # () S
+(from) K
+( os.path ) p
+(import) K
+( expanduser) p n
+(21) # () N
+(22) # () N
+(23) # () N
+(24) # () S
+(class) K
+( PlotAll\(object\):) p n
+(25) # (    ''') N
+(26) # () S
+(    classdocs) str n
+(27) # (    ) S
+(''') p n
+(28) # () N
+(29) # () N
+(30) # (    ) S
+(def) K
+( __init__\(self, token_file , dir_list,filedate = None\):) p n
+(31) # (        ''') N
+(32) # () S
+(        Constructor) str n
+(33) # (        ) S
+(''') p n
+(34) # (        ) S
+(#File for dropbox key) c n
+(35) # () S
+(        home = expanduser\(") p
+(~) str
+("\)) p n
+(36) # () N
+(37) # (        self.TokenFile = home+token_file) N
+(38) # (        ) N
+(39) # (        ) S
+(# List of directories to check) c n
+(40) # () S
+(        self.DirList = dir_list) p n
+(41) # (        ) N
+(42) # (        self.filedate = filedate) N
+(43) # (        ) N
+(44) # (        ) N
+(45) # ( ) N
+(46) # (    ) S
+(def) K
+( ConnectDropbox\(self\):) p n
+(47) # (        """) N
+(48) # () S
+(        here we establish connection to the dropbox account) str n
+(49) # (        ) S
+(""") p n
+(50) # (        ) S
+(#f=open\(self.keyfile,"r"\)) c n
+(51) # () S
+(        ) p
+(#self.key =f.readline\(\) #key for encryption) c n
+(52) # () S
+(        ) p
+(#self.key = pad\(self.key,16\)) c n
+(53) # () S
+(        ) p
+(#f.close\(\)) c n
+(54) # () N
+(55) # () S
+(        f=open\(self.TokenFile,") p
+(r) str
+("\)) p n
+(56) # (        self.data =f.readline\(\) ) S
+(#key for encryption) c n
+(57) # () S
+(        ) p n
+(PlotAll1.py) (Page 1/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (1/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (2) 2
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(58) # () p n
+(59) # (         ) N
+(60) # (         ) N
+(61) # (         ) N
+(62) # (         ) S
+(#connect to dropbox ) c n
+(63) # () S
+(        self.dbx=dropbox.Dropbox\(self.data.strip\(') p
+(\\n) str
+('\)\)) p n
+(64) # () N
+(65) # (        self.myaccount = self.dbx.users_get_current_account\(\)) N
+(66) # (        ) S
+(print) K
+(\(') p
+(***************************dropbox*******************\\n\\n\\n) str
+('\)) p n
+(67) # (        ) S
+(print) K
+(\( self.myaccount.name.surname , self.myaccount.name.given_name\)) p n
+(68) # (        ) S
+(print) K
+( \(self.myaccount.email\)) p n
+(69) # (        ) S
+(print) K
+(\(') p
+(\\n\\n ***************************dropbox*******************\\n) str
+('\)) p n
+(70) # () N
+(71) # () N
+(72) # (    ) S
+(def) K
+( GetFiles\(self\):) p n
+(73) # (        """) N
+(74) # () S
+(        This loops over the list of dropbox directories and gets the files for the current day if available) str n
+(75) # (        ) S
+(""") p n
+(76) # (        ) N
+(77) # (        ) S
+(#First make the part of the file which is depending on the date) c n
+(78) # () S
+(        self.MyFileName=MyFileName = self.GetCurrentFileName\(\)) p n
+(79) # (        ) N
+(80) # (        ) S
+(#next block determines how many graphs we will do) c n
+(81) # () S
+(        graph_count = 0) p n
+(82) # () N
+(83) # (        ) S
+(for) K
+( k ) p
+(in) K
+( range\(len\(self.DirList\)\):) p n
+(84) # (            temp = ') S
+(/LCWA/) str
+('+self.DirList[k]+') p
+(/) str
+('+self.DirList[k]+MyFileName ) p
+(# file on dropbox) c n
+(85) # () S
+(            ) p
+(print) K
+(\(temp\)) p n
+(86) # (            ) S
+(if) K
+( self.DropFileExists\(temp\):) p n
+(87) # (                graph_count = graph_count+1) N
+(88) # (        ) N
+(89) # (        self.graph_count=graph_count) N
+(90) # (        ) S
+(print) K
+( \(') p
+(we have ) str
+(',graph_count,') p
+(  plots) str
+('\)) p n
+(91) # (        ) N
+(92) # (        ) S
+(# setup the canvas) c n
+(93) # () S
+(        ) p n
+(94) # (        self.PlotSetup\(graph_count\)) N
+(95) # (        ) N
+(96) # (        ) S
+(#Here starts the loop) c n
+(97) # () S
+(        ) p
+(for) K
+( k ) p
+(in) K
+( range\(len\(self.DirList\)\):) p n
+(98) # (            temp = ') S
+(/LCWA/) str
+('+self.DirList[k]+') p
+(/) str
+('+self.DirList[k]+MyFileName ) p
+(# file on dropbox) c n
+(99) # () S
+(            temp_text = ') p
+(/LCWA/) str
+('+self.DirList[k]+') p
+(/) str
+('+self.DirList[k]+MyFileName.replace\(') p
+(csv) str
+(',') p
+(txt) str
+('\)) p n
+(100) # (            temp_local = self.SetTempDirectory\(\)+') S
+(/) str
+('+self.DirList[k]+MyFileName) p n
+(101) # (            temp_local_text = self.SetTempDirectory\(\)+') S
+(/) str
+('+self.DirList[k]+MyFileName.replace\(') p
+(csv) str
+(',') p
+(txt) str
+('\)) p n
+(102) # (            ) S
+(if) K
+( self.DropFileExists\(temp\):) p n
+(103) # (                ) S
+(print) K
+( \(") p
+(getting file ) str
+(" ,temp, ') p
+(   and storing it at : ) str
+(',temp_local\)) p n
+(104) # (                ) N
+(105) # (                self.dbx.files_download_to_file\(temp_local,temp\)) N
+(106) # (                self.MyIP ='' ) S
+(#will be overwritten by readtextfile                               ) c n
+(107) # () S
+(                ) p
+(if) K
+( self.DropFileExists\(temp_text\):) p n
+(108) # (                    self.dbx.files_download_to_file\(temp_local_text,temp_text\)) N
+(109) # (                ) S
+(# Read the local file) c n
+(110) # () S
+(                    self.ReadTextFile\(temp_local_text\)) p n
+(111) # (                ) N
+(112) # (                self.ReadFile\(temp_local\)) N
+(113) # () N
+(114) # (                self.ReadTestData\(\)) N
+(PlotAll1.py) (Page 2/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (2/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (3) 3
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(115) # (                ) p n
+(116) # (                self.PlotTestData\(k\)) N
+(117) # (        ) S
+(#plt.show\(\)        ) c n
+(118) # () S
+(        ) p
+(#self.fig.savefig\(self.pdffilepath, bbox_inches='tight'\)) c n
+(119) # () N
+(120) # () S
+(        ) p
+(#plt.show\(\)) c n
+(121) # () S
+(        with PdfPages\(self.pdffilepath\) as pdf:) p n
+(122) # (            pdf.savefig\(self.fig\)) N
+(123) # (            pdf.savefig\(self.fig1\)) N
+(124) # (            pdf.savefig\(self.fig2\)        ) N
+(125) # (            pdf.savefig\(self.fig3\)        ) N
+(126) # (            pdf.savefig\(self.fig4\)        ) N
+(127) # (            pdf.savefig\(self.fig5\)        ) N
+(128) # (        ) N
+(129) # (        ) N
+(130) # (        ) S
+(#self.pdf.savefig\(self.fig\) ) c n
+(131) # () S
+(        ) p
+(#self.fig.show\(\)) c n
+(132) # () S
+(        plt.close\(\)) p n
+(133) # () N
+(134) # (    ) S
+(def) K
+( DropFileExists\(self,path\):) p n
+(135) # (        ) S
+(try) K
+(:) p n
+(136) # (            self.dbx.files_get_metadata\(path\)) N
+(137) # (            ) S
+(return) K
+( True) p n
+(138) # (        ) S
+(except) K
+(:) p n
+(139) # (            ) S
+(return) K
+( False        ) p n
+(140) # (        ) N
+(141) # (        ) N
+(142) # (    ) S
+(def) K
+( GetCurrentFileName\(self\):) p n
+(143) # (        """) N
+(144) # () S
+(        this creates the part of the current filename which depends on the date) str n
+(145) # (        ) S
+(""") p n
+(146) # (        ) N
+(147) # (        ) S
+(if) K
+(\(self.filedate == None\):) p n
+(148) # (            self.current_day = datetime.date.today\(\)) N
+(149) # (            a = datetime.datetime.today\(\).strftime\(') S
+(%Y-%m-%d) str
+('\)) p n
+(150) # (            ) S
+(return) K
+( a+') p
+(speedfile.csv) str
+(' ) p n
+(151) # (        ) S
+(else) K
+(:) p n
+(152) # (            ) S
+(return) K
+( self.filedate+') p
+(speedfile.csv) str
+(') p n
+(153) # (             ) N
+(154) # () N
+(155) # (    ) S
+(def) K
+( ReadFile\(self, InputFile\):) p n
+(156) # (        """) S
+( reads the csv file from the speedfile directory) str
+(""") p n
+(157) # (        ) N
+(158) # (        ) N
+(159) # (        ) N
+(160) # (        self.temp_name = self.SetTempDirectory\(\)+') S
+(/temp.txt) str
+(') p n
+(161) # (        self.temp_file = open\(self.temp_name,') S
+(w) str
+('\)) p n
+(162) # (        counter = 0) N
+(163) # (        ) S
+(for) K
+( line ) p
+(in) K
+( open\(InputFile, ') p
+(r) str
+('\):) p n
+(164) # (            a = line.split\(') S
+(,) str
+('\)) p n
+(165) # (            ) S
+(if) K
+(\(len\(a\)< 9\):) p n
+(166) # (                ) S
+(print) K
+( \(') p
+(problem) str
+(',a\)) p n
+(167) # (                ) S
+(print) K
+( \(') p
+(ignore data point at line ) str
+(',counter+1\)) p n
+(168) # (            ) S
+(else) K
+(:) p n
+(169) # (                self.temp_file.write\(line\)) N
+(170) # () N
+(171) # (            counter = counter+1) N
+(PlotAll1.py) (Page 3/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (3/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (4) 4
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(172) # (            ) p n
+(173) # () N
+(174) # (        self.temp_file.close\(\)) N
+(175) # (        ) N
+(176) # (    ) S
+(def) K
+( ReadTestData\(self\):) p n
+(177) # (        """) N
+(178) # () S
+(        Reads the results with Matplotlib) str n
+(179) # (        ) S
+(""") p n
+(180) # (        ) N
+(181) # (        ) N
+(182) # (        ) S
+(#self.legend = legend #legend is a dictionary') c n
+(183) # () S
+(        ) p n
+(184) # (           ) N
+(185) # (        x1,y1,y2 , y0 = np.loadtxt\(self.temp_name, delimiter=') S
+(,) str
+(',) p n
+(186) # (                   unpack=True,usecols=\(1,7,8,9\),) N
+(187) # (                   converters={ 1: self.MyTime},skiprows = 1\)) N
+(188) # (            ) N
+(189) # (        self.x1 = x1 ) S
+(#time) c n
+(190) # () S
+(        self.y1 = y1 ) p
+(#download) c n
+(191) # () S
+(        self.y2 = y2 ) p
+(#uplooad) c n
+(192) # () S
+(        self.y0 = y0 ) p
+(# before vs 6: packet loss, with vs 6: latency measured in ms \(averaged over 10\)) c n
+(193) # () N
+(194) # () S
+(    ) p n
+(195) # (    ) S
+(def) K
+( SetTempDirectory\(self\):) p n
+(196) # (        """) S
+( ) str n
+(197) # (        this sets the directory for storing temporary files) N
+(198) # (        if the directory dos not exist it gets created. It is the scratch directory) N
+(199) # (        below the home directory) N
+(200) # (        ) S
+(""") p n
+(201) # (        home = str\(Path.home\(\)\) ) S
+(# get the home directory) c n
+(202) # () S
+(        MyTempDir = home+') p
+(/scratch) str
+(') p n
+(203) # (        ) S
+(# Now check if it exists, if no create it) c n
+(204) # () S
+(        ) p
+(if) K
+(\(Path\(MyTempDir\)\).exists\(\):) p n
+(205) # (            ) S
+(return) K
+( MyTempDir) p n
+(206) # (        ) S
+(else) K
+(:) p n
+(207) # (            Path\(MyTempDir\).mkdir\(\)) N
+(208) # (            ) S
+(print) K
+(\(") p
+( Creating  ) str
+(",MyTempDir\)) p n
+(209) # (            ) S
+(return) K
+( MyTempDir) p n
+(210) # (            ) N
+(211) # (    ) S
+(def) K
+( MyTime\(self,b\):) p n
+(212) # (        """) S
+( conversion routine for time to be used in Matplotlib) str
+(""") p n
+(213) # () N
+(214) # (        ) N
+(215) # (        s=b.decode\(') S
+(ascii) str
+('\)) p n
+(216) # (        ) N
+(217) # (        a =md.date2num\(datetime.datetime.strptime\(s,') S
+(%H:%M:%S) str
+('\)\)    ) p n
+(218) # (        ) N
+(219) # (        ) S
+(return) K
+( a) p n
+(220) # (    ) N
+(221) # (    ) N
+(222) # (    ) S
+(def) K
+( PlotSetup\(self,graph_count\):) p n
+(223) # (        """) N
+(224) # () S
+(        Creates the plotting environment) str n
+(225) # (        ) S
+(""") p n
+(226) # (        ) S
+(# we will have a max of 5 plots/ canvas) c n
+(227) # () S
+(        ) p
+(#graph_count gives us the number we have) c n
+(228) # () S
+(        ) p
+(#In a first tage we just get 4 plots on a canvas) c n
+(PlotAll1.py) (Page 4/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (4/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (5) 5
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(229) # (        ) p
+(#create plotarrays) c n
+(230) # () S
+(        row,column = 2,2) p n
+(231) # (        self.fig, self.axarr = plt.subplots\(row,column\)  ) S
+(# this plot will have x rows and y columns  ) c n
+(232) # () S
+(        ) p
+(#if graph_count > 4:      ) c n
+(233) # () S
+(        self.fig1, self.axarr1 = plt.subplots\(row,column\)  ) p
+(# this plot will have x rows and y columns        ) c n
+(234) # () S
+(        ) p
+(#if graph_count > 8:      ) c n
+(235) # () S
+(        self.fig2, self.axarr2 = plt.subplots\(row,column\)  ) p
+(# this plot will have x rows and y columns        ) c n
+(236) # () S
+(        self.fig3, self.axarr3 = plt.subplots\(row,column\)  ) p
+(# this plot will have x rows and y columns        ) c n
+(237) # () S
+(        self.fig4, self.axarr4 = plt.subplots\(row,column\)  ) p
+(# this plot will have x rows and y columns        ) c n
+(238) # () S
+(        self.fig5, self.axarr5 = plt.subplots\(row,column\)  ) p
+(# this plot will have x rows and y columns        ) c n
+(239) # () S
+(        ) p n
+(240) # (        ) N
+(241) # (        ) N
+(242) # ( ) S
+(# the nex section is for pyhhtonizing the plotting) c n
+(243) # () S
+(        ) p n
+(244) # ( ) N
+(245) # ( ) N
+(246) # (        ) N
+(247) # (            ) S
+(#create output file) c n
+(248) # () S
+(        self.pdffile=pdffile=self.MyFileName.replace\(') p
+(csv) str
+(',') p
+(pdf) str
+('\)) p n
+(249) # (        self.pdffilepath = self.SetTempDirectory\(\)+') S
+(/LCWA_TOTAL_) str
+('+pdffile) p n
+(250) # () N
+(251) # (    ) S
+(def) K
+( NotCall\(self\):) p n
+(252) # (        counter = 0) N
+(253) # (        ) S
+(# we will create a large array of figures and axarr) c n
+(254) # () S
+(        self.figarray = []*6) p n
+(255) # (        ) S
+(for) K
+( h ) p
+(in) K
+( range\(1,graph_count+1,4\):) p n
+(256) # (            ) S
+(print) K
+( \(counter\)) p n
+(257) # (            self.figarray[counter],self.axarray=plt.subplots\(row,column\)) N
+(258) # (            counter = counter +1) N
+(259) # (            ) N
+(260) # () N
+(261) # (    ) S
+(def) K
+( PlotTestData1\(self,k\):) p n
+(262) # (        """) N
+(263) # () S
+(        Plots the tests) str n
+(264) # (        x1: date) N
+(265) # (        y1: download) N
+(266) # (        y2:upload) N
+(267) # (        k_spectrum # number of graph we have done) N
+(268) # (        ) S
+(""") p n
+(269) # (        ) N
+(270) # (        np.set_printoptions\(precision=2\)) N
+(271) # (        ) N
+(272) # (        ) S
+(#Add Ip address) c n
+(273) # () S
+(        ) p n
+(274) # (        ) N
+(275) # (        ) S
+(#ax.text\(.1,.36,'Average $\\mu$ and Standard deviation $\\sigma$',weight='bold',transform=ax.transAxes,fontsize=13\)) c n
+(276) # () S
+(        ) p
+(#ax.text\(.1,.23,r'$\\mu_{up}     = $'+str\(np.around\(np.mean\(y2\),2\)\)+' '+'[Mb/s]'+r'   $\\sigma_{up} =     $'+str\(np.around\(np) c n
+0 T (.std\(y2\),2\)\),transform=ax.transAxes,fontsize=12\)) N
+(277) # () S
+(        ) p
+(#ax.text\(.1,.3,r'$\\mu_{down} = $'+str\(np.around\(np.mean\(y1\),2\)\)+' '+'[Mb/s]'+r'   $\\sigma_{down} = $'+str\(np.around\(np.std\() c n
+0 T (y1\),2\)\),transform=ax.transAxes,fontsize=12\)) N
+(278) # () N
+(279) # () S
+(        ) p
+(#add legend) c n
+(280) # () S
+(        ) p
+(#print\(self.legend\)) c n
+(281) # () S
+(        x1,y0,y1,y2 = self.x1,self.y0,self.y1,self.y2) p n
+(282) # (        ) N
+(283) # (        ) N
+(PlotAll1.py) (Page 5/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (5/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (6) 6
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(284) # (        ms1=3. ) p
+(#markersize) c n
+(285) # () S
+(        xpos = .05 ) p
+(#text position) c n
+(286) # () S
+(        ypos = 1.02) p n
+(287) # (        ylow = 0. ) S
+(#regular y axis limits) c n
+(288) # () S
+(        yhigh = 30.) p n
+(289) # (        ylow1=0. ) S
+(# limits for packet loss) c n
+(290) # () S
+(        yhigh1=30.) p n
+(291) # (        ) N
+(292) # (        yhigh2 = 12.) N
+(293) # (        yhigh3 = 7.) N
+(294) # (        ) N
+(295) # (        bbox=\(0.03,.03,1.,0.25\)) N
+(296) # (        ) S
+(print) K
+(\(') p
+(number) str
+(',k\)) p n
+(297) # () N
+(298) # (            ) N
+(299) # (    ) S
+(def) K
+( PlotTestData\(self,k\):) p n
+(300) # (        """) N
+(301) # () S
+(        Plots the tests) str n
+(302) # (        x1: date) N
+(303) # (        y1: download) N
+(304) # (        y2:upload) N
+(305) # (        k_spectrum # number of graph we have done) N
+(306) # (        ) S
+(""") p n
+(307) # (        np.set_printoptions\(precision=2\)) N
+(308) # (        ) N
+(309) # (        ) S
+(#Add Ip address) c n
+(310) # () S
+(        ) p n
+(311) # (        ) N
+(312) # (        ) S
+(#ax.text\(.1,.36,'Average $\\mu$ and Standard deviation $\\sigma$',weight='bold',transform=ax.transAxes,fontsize=13\)) c n
+(313) # () S
+(        ) p
+(#ax.text\(.1,.23,r'$\\mu_{up}     = $'+str\(np.around\(np.mean\(y2\),2\)\)+' '+'[Mb/s]'+r'   $\\sigma_{up} =     $'+str\(np.around\(np) c n
+0 T (.std\(y2\),2\)\),transform=ax.transAxes,fontsize=12\)) N
+(314) # () S
+(        ) p
+(#ax.text\(.1,.3,r'$\\mu_{down} = $'+str\(np.around\(np.mean\(y1\),2\)\)+' '+'[Mb/s]'+r'   $\\sigma_{down} = $'+str\(np.around\(np.std\() c n
+0 T (y1\),2\)\),transform=ax.transAxes,fontsize=12\)) N
+(315) # () N
+(316) # () S
+(        ) p
+(#add legend) c n
+(317) # () S
+(        ) p
+(#print\(self.legend\)) c n
+(318) # () S
+(        x1,y0,y1,y2 = self.x1,self.y0,self.y1,self.y2) p n
+(319) # (        ) N
+(320) # (        ) N
+(321) # (        ms1=3. ) S
+(#markersize) c n
+(322) # () S
+(        xpos = .05 ) p
+(#text position) c n
+(323) # () S
+(        ypos = 1.02) p n
+(324) # (        ylow = 0. ) S
+(#regular y axis limits) c n
+(325) # () S
+(        yhigh = 30.) p n
+(326) # (        ylow1=0. ) S
+(# limits for packet loss, now for latency) c n
+(327) # () S
+(        yhigh1=100.) p n
+(328) # (        ) N
+(329) # (        yhigh2 = 12. ) S
+(#limits for 10 Mbs) c n
+(330) # () S
+(        yhigh3 = 7. ) p
+(#limits for 5 Mbs) c n
+(331) # () S
+(        yhigh4 = 80. ) p
+(#limits for LC19, double pppoe accounts) c n
+(332) # () S
+(        ) p n
+(333) # (        ) S
+(#overwrite default max axis) c n
+(334) # () S
+(        ) p n
+(335) # (        yhigh2=yhigh3=24.) N
+(336) # (        yveryhigh = 70.) N
+(337) # (        ) N
+(338) # (        bbox=\(0.03,.03,1.,0.25\)) N
+(PlotAll1.py) (Page 6/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (6/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (7) 7
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(339) # (        ) p
+(print) K
+(\(') p
+(number) str
+(',k\)) p n
+(340) # (        ) S
+(if) K
+( k < 2:) p n
+(341) # (            i=0) N
+(342) # (            self.axarr[i][k].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(343) # (            self.axarr[i][k].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(344) # (            ) N
+(345) # (            axins2 = inset_axes\(self.axarr[i][k],width=") S
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(346) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(347) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][k].transAxes \)) p n
+(348) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(349) # (            ) N
+(350) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(351) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(352) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(353) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(354) # () N
+(355) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(356) # (            ) N
+(357) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(358) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(359) # (            axins2.yaxis.tick_right\(\)) N
+(360) # (            ) N
+(361) # (            ) N
+(362) # (            ) S
+(#self.axarr[i][k].plot_date\(x1,y0,'r+',label='\\n red packet loss ',ms=ms1\)) c n
+(363) # () S
+(            axins2.plot_date\(x1,y0,') p
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(364) # (            self.axarr[i][k].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr[i][k].transAx) p n
+0 T (es,fontsize=8\)) N
+(365) # (            self.axarr[i][k].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(366) # (            self.axarr[i][k].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(367) # (            ) S
+(print) K
+(\(np.around\(np.mean\(y1\),2\)\)) p n
+(368) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >25.\): ) p n
+(369) # (                 ) S
+(# set yaxis limit) c n
+(370) # () S
+(                self.axarr[i][k].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(371) # () S
+(                        ) p n
+(372) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 25. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(373) # (                self.axarr[i][k].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(374) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(375) # (                self.axarr[i][k].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(376) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(377) # (                self.axarr[i][k].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(378) # () S
+(            ) p
+(#if\(k==0\): self.axarr[i][k].set_ylim\(ylow,200.\) # for mike ault) c n
+(379) # () S
+(            ) p n
+(380) # (        ) S
+(elif) K
+( k >1  ) p
+(and) K
+( k < 4:) p n
+(381) # (            ) N
+(382) # (            i=1) N
+(383) # (            self.axarr[i][k-2].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(384) # (            self.axarr[i][k-2].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(385) # (            axins2 = inset_axes\(self.axarr[i][k-2],width=") S
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(386) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(387) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr[i][k-2].transAxes \)) p n
+(388) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(389) # (            ) N
+(390) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(391) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(392) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(393) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(394) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(PlotAll1.py) (Page 7/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (7/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (8) 8
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(395) # (            axins2.yaxis.set_label_position\(") p
+(right) str
+("\)) p n
+(396) # (            axins2.yaxis.tick_right\(\)) N
+(397) # () N
+(398) # (            ) N
+(399) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(400) # (            self.axarr[i][k-2].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr[i][k-2].tra) p n
+0 T (nsAxes,fontsize=8\)) N
+(401) # (            self.axarr[i][k-2].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(402) # (            self.axarr[i][k-2].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(403) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >25.\): ) p n
+(404) # (                 ) S
+(# set yaxis limit) c n
+(405) # () S
+(                self.axarr[i][k-2].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(406) # () S
+(                        ) p n
+(407) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 25. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(408) # (                self.axarr[i][k-2].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(409) # () N
+(410) # () N
+(411) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(412) # (                self.axarr[i][k-2].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(413) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(414) # (                self.axarr[i][k-2].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(415) # () N
+(416) # () S
+(        ) p
+(if) K
+( k > 3 ) p
+(and) K
+( k <6:) p n
+(417) # (            i=0) N
+(418) # (            l=k-4) N
+(419) # (            self.axarr1[i][l].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(420) # (            self.axarr1[i][l].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(421) # (            axins2 = inset_axes\(self.axarr1[i][l],width=") S
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(422) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(423) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr1[i][l].transAxes \)) p n
+(424) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(425) # (            ) N
+(426) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(427) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(428) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(429) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(430) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(431) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(432) # (            axins2.yaxis.tick_right\(\)) N
+(433) # () N
+(434) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(435) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(436) # () N
+(437) # (            ) N
+(438) # (            self.axarr1[i][l].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr1[i][l].trans) p n
+0 T (Axes,fontsize=8\)) N
+(439) # (            self.axarr1[i][l].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(440) # (            self.axarr1[i][l].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(441) # ( ) N
+(442) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >25.\): ) p n
+(443) # (                 ) S
+(# set yaxis limit) c n
+(444) # () S
+(                self.axarr1[i][l].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(445) # () S
+(                        ) p n
+(446) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 25. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(447) # (                self.axarr1[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(448) # () N
+(449) # () S
+( ) p n
+(PlotAll1.py) (Page 8/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (8/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (9) 9
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(450) # ( ) p n
+(451) # ( ) N
+(452) # ( ) N
+(453) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(454) # (                self.axarr1[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(455) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(456) # (                self.axarr1[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(457) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(458) # (                self.axarr1[i][l].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(459) # () S
+(            ) p n
+(460) # (        ) S
+(elif) K
+( k >5  ) p
+(and) K
+( k < 8:) p n
+(461) # (            ) N
+(462) # (            i=1) N
+(463) # (            l=k-6) N
+(464) # (            self.axarr1[i][l].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(465) # (            self.axarr1[i][l].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(466) # (            axins2 = inset_axes\(self.axarr1[i][l],width=") S
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(467) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(468) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr1[i][l].transAxes \)) p n
+(469) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(470) # (            ) N
+(471) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(472) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(473) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(474) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(475) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(476) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(477) # (            axins2.yaxis.tick_right\(\)) N
+(478) # () N
+(479) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(480) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(481) # () N
+(482) # (            self.axarr1[i][l].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr1[i][l].trans) p n
+0 T (Axes,fontsize=8\)) N
+(483) # (            self.axarr1[i][l].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(484) # (            self.axarr1[i][l].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(485) # () N
+(486) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >25.\): ) p n
+(487) # (                 ) S
+(# set yaxis limit) c n
+(488) # () S
+(                self.axarr1[i][l].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(489) # () S
+(                        ) p n
+(490) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 25. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(491) # (                self.axarr1[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(492) # () N
+(493) # () N
+(494) # () N
+(495) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(496) # (                self.axarr1[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(497) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(498) # (                self.axarr1[i][l].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(499) # () N
+(500) # () S
+(        ) p
+(if) K
+( k > 7 ) p
+(and) K
+( k <10:) p n
+(501) # (            i=0) N
+(502) # (            l=k-8) N
+(503) # (            self.axarr2[i][l].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(504) # (            self.axarr2[i][l].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(505) # (            axins2 = inset_axes\(self.axarr2[i][l],width=") S
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(PlotAll1.py) (Page 9/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (9/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (10) 10
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(506) # (              ) p
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(507) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr2[i][l].transAxes \)) p n
+(508) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(509) # (            ) N
+(510) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(511) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(512) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(513) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(514) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(515) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(516) # (            axins2.yaxis.tick_right\(\)) N
+(517) # () N
+(518) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(519) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(520) # () N
+(521) # (            self.axarr2[i][l].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr2[i][l].trans) p n
+0 T (Axes,fontsize=8\)) N
+(522) # (            self.axarr2[i][l].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(523) # (            self.axarr2[i][l].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(524) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >25.\): ) p n
+(525) # (                 ) S
+(# set yaxis limit) c n
+(526) # () S
+(                self.axarr2[i][l].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(527) # () S
+(                        ) p n
+(528) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 25. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(529) # (                self.axarr2[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(530) # () N
+(531) # () N
+(532) # () N
+(533) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(534) # (                self.axarr2[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(535) # () S
+( ) p n
+(536) # ( ) N
+(537) # ( ) N
+(538) # ( ) N
+(539) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(540) # (                self.axarr2[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(541) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(542) # (                self.axarr2[i][l].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(543) # () S
+(            ) p n
+(544) # (        ) S
+(elif) K
+( k > 9  ) p
+(and) K
+( k < 12:) p n
+(545) # (            ) N
+(546) # (            i=1) N
+(547) # (            l=k-10) N
+(548) # (            self.axarr2[i][l].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(549) # (            self.axarr2[i][l].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(550) # (            axins2 = inset_axes\(self.axarr2[i][l],width=") S
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(551) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(552) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr2[i][l].transAxes \)) p n
+(553) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(554) # (            ) N
+(555) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(556) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(557) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(558) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(559) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(560) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(561) # (            axins2.yaxis.tick_right\(\)) N
+(PlotAll1.py) (Page 10/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (10/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (11) 11
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(562) # () p n
+(563) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(564) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(565) # () N
+(566) # (            self.axarr2[i][l].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr2[i][l].trans) p n
+0 T (Axes,fontsize=8\)) N
+(567) # (            self.axarr2[i][l].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(568) # (            self.axarr2[i][l].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(569) # ( ) N
+(570) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >25.\): ) p n
+(571) # (                 ) S
+(# set yaxis limit) c n
+(572) # () S
+(                self.axarr2[i][l].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(573) # () S
+(                        ) p n
+(574) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 25. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(575) # (                self.axarr2[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(576) # () N
+(577) # () N
+(578) # () S
+( ) p n
+(579) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(580) # (                self.axarr2[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(581) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(582) # (                self.axarr2[i][l].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(583) # () N
+(584) # () N
+(585) # () S
+(        ) p
+(if) K
+( k > 11 ) p
+(and) K
+( k <14:) p n
+(586) # (            i=0) N
+(587) # (            l=k-12) N
+(588) # (            self.axarr3[i][l].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(589) # (            self.axarr3[i][l].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(590) # (            axins2 = inset_axes\(self.axarr3[i][l],width=") S
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(591) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(592) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr3[i][l].transAxes \)) p n
+(593) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(594) # (            ) N
+(595) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(596) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(597) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(598) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(599) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(600) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(601) # (            axins2.yaxis.tick_right\(\)) N
+(602) # () N
+(603) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(604) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(605) # () N
+(606) # (            self.axarr3[i][l].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr3[i][l].trans) p n
+0 T (Axes,fontsize=8\)) N
+(607) # (            self.axarr3[i][l].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(608) # (            self.axarr3[i][l].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(609) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >25.\): ) p n
+(610) # (                 ) S
+(# set yaxis limit) c n
+(611) # () S
+(                self.axarr3[i][l].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(612) # () S
+(                        ) p n
+(613) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 25. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(614) # (                self.axarr3[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(615) # () N
+(616) # () S
+(  ) p n
+(PlotAll1.py) (Page 11/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (11/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (12) 12
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(617) # (  ) p n
+(618) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(619) # (                self.axarr3[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(620) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(621) # (                self.axarr3[i][l].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(622) # () S
+(            ) p n
+(623) # (        ) S
+(elif) K
+( k > 13  ) p
+(and) K
+( k < 16:) p n
+(624) # (            ) N
+(625) # (            i=1) N
+(626) # (            l=k-14) N
+(627) # (            self.axarr3[i][l].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(628) # (            self.axarr3[i][l].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(629) # (            axins2 = inset_axes\(self.axarr3[i][l],width=") S
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(630) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(631) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr3[i][l].transAxes \)) p n
+(632) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(633) # (            ) N
+(634) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(635) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(636) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(637) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(638) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(639) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(640) # (            axins2.yaxis.tick_right\(\)) N
+(641) # () N
+(642) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(643) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(644) # () N
+(645) # (            self.axarr3[i][l].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr3[i][l].trans) p n
+0 T (Axes,fontsize=8\)) N
+(646) # (            self.axarr3[i][l].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(647) # (            self.axarr3[i][l].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(648) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >25.\): ) p n
+(649) # (                 ) S
+(# set yaxis limit) c n
+(650) # () S
+(                self.axarr3[i][l].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(651) # () S
+(                        ) p n
+(652) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 25. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(653) # (                self.axarr3[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(654) # () N
+(655) # () N
+(656) # () N
+(657) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(658) # (                self.axarr3[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(659) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(660) # (                self.axarr3[i][l].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(661) # () N
+(662) # (##############################) N
+(663) # () S
+(        ) p
+(if) K
+( k > 15 ) p
+(and) K
+( k <18:) p n
+(664) # (            i=0) N
+(665) # (            l=k-16) N
+(666) # (            ) S
+(#self.axarr4[i][l].plot_date\(x1,y1,'bs',label='\\n blue DOWN ',ms=ms1\)) c n
+(667) # () S
+(            ) p
+(#self.axarr4[i][l].plot_date\(x1,y2,'g^',label='\\n green UP ',ms=ms1\)) c n
+(668) # () S
+(            axins2 = inset_axes\(self.axarr4[i][l],width=") p
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(669) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(670) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr4[i][l].transAxes \)) p n
+(671) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(672) # (            ) N
+(PlotAll1.py) (Page 12/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (12/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (13) 13
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(673) # (            axins2.spines[') p
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(674) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(675) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(676) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(677) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(678) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(679) # (            axins2.yaxis.tick_right\(\)) N
+(680) # () N
+(681) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(682) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(683) # () N
+(684) # (            self.axarr4[i][l].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(685) # (            self.axarr4[i][l].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(686) # () N
+(687) # () N
+(688) # () N
+(689) # (            self.axarr4[i][l].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr4[i][l].trans) p n
+0 T (Axes,fontsize=8\)) N
+(690) # (            self.axarr4[i][l].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(691) # (            self.axarr4[i][l].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(692) # () N
+(693) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >25.\): ) p n
+(694) # (                 ) S
+(# set yaxis limit) c n
+(695) # () S
+(                self.axarr4[i][l].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(696) # () S
+(                        ) p n
+(697) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 25. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(698) # (                self.axarr4[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(699) # () N
+(700) # () N
+(701) # () N
+(702) # () N
+(703) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(704) # (                self.axarr4[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(705) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(706) # (                self.axarr4[i][l].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(707) # () S
+(            ) p n
+(708) # (        ) S
+(elif) K
+( k > 17  ) p
+(and) K
+( k < 20:) p n
+(709) # (            ) N
+(710) # (            i=1) N
+(711) # (            l=k-18) N
+(712) # (            self.axarr4[i][l].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(713) # (            self.axarr4[i][l].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(714) # (            axins2 = inset_axes\(self.axarr4[i][l],width=") S
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(715) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(716) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr4[i][l].transAxes \)) p n
+(717) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(718) # (            ) N
+(719) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(720) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(721) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(722) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(723) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(724) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(725) # (            axins2.yaxis.tick_right\(\)) N
+(726) # () N
+(727) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(728) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(PlotAll1.py) (Page 13/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (13/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (14) 14
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(729) # () p n
+(730) # (            self.axarr4[i][l].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr4[i][l].trans) p n
+0 T (Axes,fontsize=8\)) N
+(731) # (            self.axarr4[i][l].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(732) # (            self.axarr4[i][l].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(733) # () N
+(734) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >25.\): ) p n
+(735) # (                 ) S
+(# set yaxis limit) c n
+(736) # () S
+(                self.axarr4[i][l].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(737) # () S
+(                        ) p n
+(738) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 25. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(739) # (                self.axarr4[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(740) # () N
+(741) # () N
+(742) # () N
+(743) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(744) # (                self.axarr4[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(745) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(746) # (                self.axarr4[i][l].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(747) # () S
+(            ) p
+(if) K
+(\(k ==19\):) p n
+(748) # (                self.axarr4[i][l].set_ylim\(ylow,yhigh4\)    ) N
+(749) # (                ) S
+(#self.axarr5[i][l].set_ylim\(0.,1000.\)    ) c n
+(750) # () N
+(751) # (##########) N
+(752) # () S
+(        ) p
+(if) K
+( k > 19 ) p
+(and) K
+( k <22:) p n
+(753) # (            i=0) N
+(754) # (            l=k-20) N
+(755) # (            ) S
+(#self.axarr5[i][l].plot_date\(x1,y1,'bs',label='\\n blue DOWN ',ms=ms1\)) c n
+(756) # () S
+(            ) p
+(#self.axarr5[i][l].plot_date\(x1,y2,'g^',label='\\n green UP ',ms=ms1\)) c n
+(757) # () S
+(            axins2 = inset_axes\(self.axarr5[i][l],width=") p
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(758) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(759) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr5[i][l].transAxes \)) p n
+(760) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(761) # (            ) N
+(762) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(763) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(764) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(765) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(766) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(767) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(768) # (            axins2.yaxis.tick_right\(\)) N
+(769) # () N
+(770) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(771) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(772) # () N
+(773) # (            self.axarr5[i][l].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(774) # (            self.axarr5[i][l].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(775) # () N
+(776) # () N
+(777) # () N
+(778) # (            self.axarr5[i][l].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr5[i][l].trans) p n
+0 T (Axes,fontsize=8\)) N
+(779) # (            self.axarr5[i][l].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(780) # (            self.axarr5[i][l].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(781) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >30.\): ) p n
+(782) # (                 ) S
+(# set yaxis limit) c n
+(783) # () S
+(                self.axarr5[i][l].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(PlotAll1.py) (Page 14/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (14/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (15) 15
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(784) # (                        ) p n
+(785) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 30. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(786) # (                self.axarr5[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(787) # () N
+(788) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(789) # (                self.axarr5[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(790) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(791) # (                self.axarr5[i][l].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(792) # () S
+(            ) p n
+(793) # (        ) S
+(elif) K
+( k > 21  ) p
+(and) K
+( k < 24:) p n
+(794) # (            ) N
+(795) # (            i=1) N
+(796) # (            l=k-22) N
+(797) # (            self.axarr5[i][l].plot_date\(x1,y1,') S
+(bs) str
+(',label=') p
+(\\n blue DOWN ) str
+(',ms=ms1\)) p n
+(798) # (            self.axarr5[i][l].plot_date\(x1,y2,') S
+(g^) str
+(',label=') p
+(\\n green UP ) str
+(',ms=ms1\)) p n
+(799) # (            axins2 = inset_axes\(self.axarr5[i][l],width=") S
+(100%) str
+(", height=") p
+(100%) str
+(",) p n
+(800) # (              ) S
+(#bbox_to_anchor=\(0,0,1.,.4\)  \)) c n
+(801) # () S
+(              bbox_to_anchor=bbox   , bbox_transform=self.axarr5[i][l].transAxes \)) p n
+(802) # (            axins2.get_xaxis\(\).set_visible\(False\)) N
+(803) # (            ) N
+(804) # (            axins2.spines[') S
+(bottom) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(805) # (            axins2.spines[') S
+(top) str
+('].set_color\(') p
+(red) str
+('\)) p n
+(806) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(807) # (            axins2.tick_params\(axis=') S
+(y) str
+(', colors=') p
+(red) str
+('\)) p n
+(808) # (            axins2.set_ylim\(ylow1,yhigh1\)) N
+(809) # (            axins2.yaxis.set_label_position\(") S
+(right) str
+("\)) p n
+(810) # (            axins2.yaxis.tick_right\(\)) N
+(811) # () N
+(812) # (            axins2.yaxis.label.set_color\(') S
+(red) str
+('\)) p n
+(813) # (            axins2.plot_date\(x1,y0,') S
+(r+) str
+(',label=') p
+(\\n red packet loss ) str
+(',ms=ms1\)) p n
+(814) # () N
+(815) # (            self.axarr5[i][l].text\(xpos,ypos,') S
+(MyIP = ) str
+('+self.MyIP+') p
+(    ) str
+('+self.DirList[k],weight=') p
+(bold) str
+(',transform=self.axarr5[i][l].trans) p n
+0 T (Axes,fontsize=8\)) N
+(816) # (            self.axarr5[i][l].xaxis.set_major_locator\(md.MinuteLocator\(interval=360\)\)) N
+(817) # (            self.axarr5[i][l].xaxis.set_major_formatter\(md.DateFormatter\(') S
+(%H:%M) str
+('\)\)) p n
+(818) # (            ) S
+(if) K
+(\(np.around\(np.mean\(y1\),2\) >30.\): ) p n
+(819) # (                 ) S
+(# set yaxis limit) c n
+(820) # () S
+(                self.axarr5[i][l].set_ylim\(ylow,yveryhigh\) ) p
+(# set yaxis limit) c n
+(821) # () S
+(                        ) p n
+(822) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 30. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 12.\):) p n
+(823) # (                self.axarr5[i][l].set_ylim\(ylow,yhigh\) ) S
+(# set yaxis limit) c n
+(824) # () N
+(825) # () S
+(            ) p n
+(826) # (    ) N
+(827) # (            ) S
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 12. ) p
+(and) K
+( np.around\(np.mean\(y1\),2\) > 7.\):) p n
+(828) # (                self.axarr5[i][l].set_ylim\(ylow,yhigh2\) ) S
+(# set yaxis limit) c n
+(829) # () S
+(            ) p
+(elif) K
+(\(np.around\(np.mean\(y1\),2\) <= 7. \):) p n
+(830) # (                self.axarr5[i][l].set_ylim\(ylow,yhigh3\) ) S
+(# set yaxis limit) c n
+(831) # () N
+(832) # () N
+(833) # () N
+(834) # () S
+(        ) p
+(#plt.show\(\)  #Uncomment for seeing the plot) c n
+(835) # () S
+(    ) p
+(def) K
+( PushFileDropbox\(self\):  ) p n
+(836) # (        self.pdf = self.SetTempDirectory\(\)+') S
+(/LCWA_TOTAL_) str
+('+self.pdffile) p n
+(837) # (        f =open\(self.pdf,") S
+(rb) str
+("\)) p n
+(838) # (        dropdir =') S
+(/LCWA/ALL_LCWA/) str
+(') p n
+(839) # (        self.dbx.files_upload\(f.read\(\),dropdir+') S
+(LCWA_TOTAL_) str
+('+self.pdffile,mode=dropbox.files.WriteMode\(') p
+(overwrite) str
+(', None\)\)) p n
+(PlotAll1.py) (Page 15/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (15/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (16) 16
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.780000 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(840) # (        ) p n
+(841) # (    ) S
+(def) K
+( ReadTextFile\(self,file\):) p n
+(842) # (        """) S
+( reads text information file) str
+(""") p n
+(843) # () N
+(844) # ( ) N
+(845) # () N
+(846) # (        with open\(file, ') S
+(r) str
+('\) as f1:) p n
+(847) # (            s = f1.readlines\(\)) N
+(848) # (            IP = s[0].split\(\)) N
+(849) # (            ) S
+(try) K
+(:) p n
+(850) # (                self.MyIP = IP[1]) N
+(851) # (            ) S
+(except) K
+(:) p n
+(852) # (                self.MyIP = ') S
+(999.99.99.1) str
+(') p n
+(853) # () N
+(854) # () N
+(855) # (        ) N
+(856) # (                 ) N
+(857) # () N
+(858) # (        ) N
+(859) # (        ) N
+(860) # (        ) N
+(861) # ( ) N
+(862) # () S
+(if) K
+( __name__ == ') p
+(__main__) str
+(':) p n
+(863) # (    ) N
+(864) # (    ) N
+(865) # (    ) S
+(#create the list) c n
+(866) # () S
+(    temp = ') p
+(LC) str
+(') p n
+(867) # (    dirlist = []) N
+(868) # (    ) S
+(for) K
+( k ) p
+(in) K
+( range\(1,21+1\):) p n
+(869) # (        ) S
+(if) K
+( \(k<10\):) p n
+(870) # (            temp1 = temp+') S
+(0) str
+('+str\(k\)+') p
+(_) str
+(') p n
+(871) # (        ) S
+(else) K
+(:) p n
+(872) # (            temp1 = temp+str\(k\)+') S
+(_) str
+(') p n
+(873) # (            ) N
+(874) # (        dirlist.append\(temp1\)) N
+(875) # (    token_file = ') S
+(/git/LCWA/src/LCWA_d.txt) str
+(') p n
+(876) # (    tempdir = ') S
+(scratch) str
+(') p n
+(877) # (    datefile = ') S
+(2022-01-18) str
+(' ) p n
+(878) # (     ) S
+(# " default is none") c n
+(879) # () S
+(    PA=PlotAll\(token_file,dirlist,datefile\)) p n
+(880) # (    PA.ConnectDropbox\(\)) N
+(881) # (    PA.GetFiles\(\)) N
+(882) # (    PA.PushFileDropbox\(\)) N
+(PlotAll1.py) (Page 16/16) (Feb 05, 22 15:17) title
+border
+grestore
+(Printed by klein) rhead
+(PlotAll1.py) (16/16) (Saturday February 05, 2022) footer
+end % of iso1dict
+pagesave restore
+showpage
+
+%%Trailer
+end
+%%EOF

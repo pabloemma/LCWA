@@ -5,6 +5,7 @@ Created on Apr 16, 2020
 
 class to plot the speedtest results
 is called by test_speed3
+version which takes two different runs
 '''
 
 import matplotlib.pyplot as plt
@@ -17,6 +18,7 @@ import time
 import sys
 import os.path
 import dropbox
+import pandas as pd
 
 
 
@@ -26,11 +28,13 @@ class MyPlot(object):
     '''
 
 
-    def __init__(self, path , filename , token , PlotFlag):
+    def __init__(self, path , filename , token , PlotFlag, runmode = 'Iperf'):
         '''
         Constructor
         file: is the speedtest filename
         token: is the dropbox file
+        runmode is default iperf, however if it is both it will
+        plot both resulst on same plot
         '''
         
         
@@ -65,87 +69,47 @@ class MyPlot(object):
             print(' we have python 3')
             vers = True
         else:
-            print(' you should switch to python 2')
+            print('python2 not supported anymore')
             vers = False
+            sys.exit(0)
         return vers
 
     
     
     
-    def ReadFile(self):
+    #def ReadFile(self):
+    def ReadTestData(self):
         """ reads the csv file from the speedfile directory"""
         
         
         
-        self.temp_name = self.path+'/temp.txt'
-        self.temp_file = open(self.temp_name,'w')
-        counter = 0
-        for line in open(self.InputFile, 'r'):
-            a = line.split(',')
-            if(len(a)< 9):
-                print ('problem',a)
-                print ('ignore data point at line ',counter+1)
-            else:
-                self.temp_file.write(line)
 
-            counter = counter+1
-            
+    # read csv file into panda data dataframe
+        temp_data = pd.read_csv(self.InputFile)
+      # now we drop some of the columns, pay attention to white space
+        drop_list =['server id','jitter','package','latency measured']
+        print(temp_data)
+        
+        lcwa_data = temp_data.drop(columns = drop_list)
+        # convert date and time back to datetime
+        lcwa_data["Time"] = pd.to_datetime(lcwa_data['time']) 
 
-        self.temp_file.close()
-        
-    def ReadTestData(self,legend):
-        """
-        Reads the results with Matplotlib
-        """
-        
-        self.ReadFile()
-#        self.temp_file.seek(0)
-        #f=open(self.temp_name,'rb')
-        #f=open('/Users/klein/speedfiles/nuke_2020-04-17speedfile.csv') 
-        
-        self.legend = legend #legend is a dictionary'
-        
-        if(self.MyPythonVersion):
-           
-            x1,y1,y2 = np.loadtxt(self.temp_name, delimiter=',',
-                   unpack=True,usecols=(1,7,8),
-                   converters={ 1: self.MyTime},skiprows = 1)
-            
-        else:
-          
-                  
-            x1,y1,y2 = np.loadtxt(self.temp_name, delimiter=',',
-                   unpack=True,usecols=(1,7,8),
-                   converters={ 1: md.strpdate2num('%H:%M:%S')},skiprows=1)
-        self.x1 = x1
-        self.y1 = y1
-        self.y2 = y2
-        self.PlotTestData(x1, y1, y2)
-         
-    
-    def PlotTestData(self,x1,y1,y2):
-        """
-        Plots the tests
-        """
-        np.set_printoptions(precision=2)
-        fig=plt.figure() 
+    # Create an iper and a speedtest frame
+
+        iperf_opt = [' iperf3']
+        self.lcwa_iperf = lcwa_data[lcwa_data['server name'].isin(iperf_opt)]  #all the iperf values
+        self.lcwa_speed = lcwa_data[~lcwa_data['server name'].isin(iperf_opt)]  #all the not iperf values        
+
+        self.PlotData()    
+
+
+    def PlotData(self):
+        """plots the data structure using pandas and matplotlib"""
+
+
+        fig = plt.figure()
         ax=fig.add_subplot(1,1,1)
-        
-        #Add Ip address
-        
-        
-        #ax.text(.1,.36,'Average $\mu$ and Standard deviation $\sigma$',weight='bold',transform=ax.transAxes,fontsize=13)
-        #ax.text(.1,.23,r'$\mu_{up}     = $'+str(np.around(np.mean(y2),2))+' '+'[Mb/s]'+r'   $\sigma_{up} =     $'+str(np.around(np.std(y2),2)),transform=ax.transAxes,fontsize=12)
-        #ax.text(.1,.3,r'$\mu_{down} = $'+str(np.around(np.mean(y1),2))+' '+'[Mb/s]'+r'   $\sigma_{down} = $'+str(np.around(np.std(y1),2)),transform=ax.transAxes,fontsize=12)
-
-        #add legend
-        print(self.legend)
-        ax.text(.05,.95,'MyIP = '+self.DigIP(),weight='bold',transform=ax.transAxes,fontsize=11)
-
-        plt.plot_date(x1,y1,'bs',label='\n blue DOWN ')
-        plt.plot_date(x1,y2,'g^',label=' green UP')
-        #plt.text(1.,1.,r' $\sigma = .1$')
-        plt.grid(True)
+        ax.text(.05,.95,'iperf and ookla on'+' '+self.DigIP(),weight='bold',transform=ax.transAxes,fontsize=11)
 
         ax.xaxis.set_major_locator(md.MinuteLocator(interval=60))
         ax.xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
@@ -153,34 +117,180 @@ class MyPlot(object):
         plt.ylabel('Speed in Mbs')
 
         plt.title('Speedtest LCWA '+self.InputFile)
-    
-        plt.legend(facecolor='ivory',loc="center left",shadow=True, fancybox=True)
-        if(np.around(np.mean(y1),2) > 40.): #starlink
-            plt.ylim(0.,60.) # set yaxis limit
-        elif(np.around(np.mean(y1),2) <= 40. and np.around(np.mean(y1),2) > 21.):
-            plt.ylim(0.,41.) # set yaxis limit
-        elif(np.around(np.mean(y1),2) <= 21. and np.around(np.mean(y1),2) > 12.):
-            plt.ylim(0.,24.) # set yaxis limit
-        elif(np.around(np.mean(y1),2) <= 12. and np.around(np.mean(y1),2) > 7.):
-            plt.ylim(0.,12.) # set yaxis limit
-             # set yaxis limit
-        elif(np.around(np.mean(y1),2) <= 7. ):
-            plt.ylim(0.,7.) # set yaxis limit
 
-        
+
+
+    
+        plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["download"],'bs',label='\n iperf blue DOWN ')
+        plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["upload"],'g^',label='\n iperf green UP ')
+        plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["download"],'ks',label='\n speedtest black DOWN ')
+        plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["upload"],'r^',label='\n speedtest red UP ')
+
+        # remove limit
+        # plt.ylim(0,40.)
+        plt.grid(True)
+
         plt.xticks(rotation='vertical')
         plt.tight_layout()
-        print('input file',self.InputFile)
-
+        plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 6)
+ 
         print (self.output)
         fig.savefig(self.output, bbox_inches='tight')
-        if(self.PlotFlag):
-            plt.show()  #Uncomment for seeing the plot
 
+    
+        plt.show()
+
+        
+        
+
+    def Analyze(self, filename = None):
+        """analyze the data we collected"""
+
+        # determine a few statistical values
+        #first the min and max for either one
+        # ipewf
+        if not self.lcwa_iperf.empty:
+            iperf_min_dw    = self.lcwa_iperf['download'].min() # min
+            iperf_max_dw    = self.lcwa_iperf['download'].max() # max
+
+            iperf_min_up    = self.lcwa_iperf['upload'].min() # min
+            iperf_max_up    = self.lcwa_iperf['upload'].max() #max
+
+            iperf_mean_up   = self.lcwa_iperf['upload'].mean() # mean of distribution
+            iperf_std_up    = self.lcwa_iperf['upload'].std() # standard deviation of distribution
+
+            iperf_mean_dw   = self.lcwa_iperf['download'].mean() # mean of distribution
+            iperf_std_dw    = self.lcwa_iperf['download'].std() # standard deviation of distribution
+
+        if not self.lcwa_speed.empty:
+            speed_min_dw    = self.lcwa_speed['download'].min() # min
+            speed_max_dw    = self.lcwa_speed['download'].max() # max
+
+            speed_min_up    = self.lcwa_speed['upload'].min() # min
+            speed_max_up    = self.lcwa_speed['upload'].max() #max
+
+            speed_mean_up   = self.lcwa_speed['upload'].mean() # mean of distribution
+            speed_std_up    = self.lcwa_speed['upload'].std() # standard deviation of distribution
+
+            speed_mean_dw   = self.lcwa_speed['download'].mean() # mean of distribution
+            speed_std_dw    = self.lcwa_speed['download'].std() # standard deviation of distribution
+            bfb = '\033[1m'
+            bfe = '\033[0m'
+
+        # here we print out the statistics
+            if(filename == None):
+ 
+
+                print('\n\n ********************************total statistics********************** \n')
+                print(bfb,'Iperf:',bfe)
+                print('Min download                 = ',iperf_min_dw)
+                print('Max download                 = ',iperf_max_dw)
+                print('Mean download                = ',iperf_mean_dw)
+                print('std download                 = ',iperf_std_dw , '\n')
+   
+                print('Min upload                   = ',iperf_min_up)
+                print('Max upload                   = ',iperf_max_up)
+                print('Mean upload                  = ',iperf_mean_up)
+                print('std upload                   = ',iperf_std_up , '\n\n')
+   
+                print(bfb,'Ookla Speedtest:',bfe)
+                print('Min download                 = ',speed_min_dw)
+                print('Max download                 = ',speed_max_dw)
+                print('Mean download                = ',speed_mean_dw)
+                print('std download                 = ',speed_std_dw , '\n')
+   
+                print('Min upload                   = ',speed_min_up)
+                print('Max upload                   = ',speed_max_up)
+                print('Mean upload                  = ',speed_mean_up)
+                print('std upload                   = ',speed_std_up , '\n\n')
+                
+                
+                
+     
+                print('\n\n ********************************end statistics********************** \n')
+ 
+            else:
+			    
+                str_iperf_min_d = 'Min download                 = '+str(iperf_min_dw)+'\n'
+ 				
+                str_iperf_max_d = 'Max download                 = '+str(iperf_max_dw)+'\n'
+                str_iperf_mean_d = 'Mean download                 = '+str(iperf_mean_dw)+'\n'
+
+ 			    
+                str_iperf_std_d = 'Std download                 = '+str(iperf_std_dw)+'\n'
+  
+			     
+                str_iperf_min_u = 'Min upload                 = '+str(iperf_min_up)+'\n'
+ 			    
+                str_iperf_max_u = 'Max upload                 = '+str(iperf_max_up)+'\n'
+ 				
+                str_iperf_mean_u = 'Mean upload                 = '+str(iperf_mean_up)+'\n'
+ 				
+                str_iperf_std_u = 'Std upload                 = '+str(iperf_std_up)+'\n'
+ 			
+				
+                str_speed_min_d = 'Min download                 = '+str(speed_min_dw)+'\n'
+ 			
+                str_speed_max_d = 'Max download                 = '+str(speed_max_dw)+'\n'
+ 				
+                str_speed_mean_d = 'Mean download                 = '+str(speed_mean_dw)+'\n'
+ 				
+                str_speed_std_d = 'Std download                 = '+str(speed_std_dw)+'\n'
+  
+                str_speed_min_u = 'Min upload                 = '+str(speed_min_up)+'\n'
+ 				
+                str_speed_max_u = 'Max upload                 = '+str(speed_max_up)+'\n'
+ 				
+                str_speed_mean_u = 'Mean upload                 = '+str(speed_mean_up)+'\n'
+ 				
+                str_speed_std_u = 'Std upload                 = '+str(speed_std_up)+'\n'
+ 				
+				
+                #check if file exists
+                f = open(filename,"a")
+                f.write('\n\n ********************************total statistics********************** \n')
+                line = 'Iperf \n'
+                f.write(line)
+                #f.write(str(self.lcwa_iperf['download'].describe()))
+                #f.write(str(self.lcwa_iperf['upload'].describe()))
+                
+                f.write(str_iperf_min_d)
+                f.write(str_iperf_max_d)
+                f.write(str_iperf_mean_d)
+                f.write(str_iperf_std_d)
+                
+                f.write(str_iperf_min_u)
+                f.write(str_iperf_max_u)
+                f.write(str_iperf_mean_u)
+                f.write(str_iperf_std_u)
+                
+                
+                f.write('\n\n')
+                line ='Ookla Speedtest \n'
+ 
+                f.write(line)
+                #f.write(str(self.lcwa_speed['download'].describe()))
+                #f.write(str(self.lcwa_speed['upload'].describe()))
+                
+                f.write(str_speed_min_d)
+                f.write(str_speed_max_d)
+                f.write(str_speed_mean_d)
+                f.write(str_speed_std_d)
+                
+                f.write(str_speed_min_u)
+                f.write(str_speed_max_u)
+                f.write(str_speed_mean_u)
+                f.write(str_speed_std_u)
+                f.write('\n\n ********************************end statistics********************** \n')
+   
+                
+                f.close()
 
 
     
+
     
+
     def MyTime(self,b):
         """ conversion routine for time to be used in Matplotlib"""
 
@@ -239,21 +349,21 @@ class MyPlot(object):
     
     def PushFileDropbox(self,dropdir):  
         f =open(self.output,"rb")
+        #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
+
         self.dbx.files_upload(f.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
 
        
 if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/home/klein/speedfiles'
-    file = 'misk_2022-01-24speedfile.csv'
+    #file = 'misk_2022-01-24speedfile.csv'
+    file = 'LC23_2022-01-28speedfile.csv'
     token ='/home/klein/git/speedtest/src/LCWA_d.txt'
-     #file = 'test.csv'
-    #file = 'LC01_2021-05-02speedfile.csv'
-    #token ='/home/pi/git/speedtest/src/LCWA_d.txt'
-    token ='/Users/klein/git/LCWA/src/LCWA_d.txt'
+    token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag)
-    MP.ReadTestData(legend)
-    MP.ConnectDropbox()
-    MP.PushFileDropbox('/LCWA/ROTW/')
+    MP.ReadTestData()    #MP.ReadTestData(legend)
+    MP.Analyze('/home/klein/scratch/text.txt')
+    MP.Analyze()

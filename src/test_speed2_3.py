@@ -55,7 +55,7 @@ import platform # need to determine the OS
 import subprocess as sp
 import dropbox
 import socket # needed for hostname id
-import PlotClass1 as PC # new plot version
+import PlotClass as PC # new plot version
 import uuid
 import ntplib
 import random
@@ -64,7 +64,7 @@ from tcp_latency import measure_latency
 
 import iperf_client as ipe
 import config_speed as cs
-import set_time as st
+import set_time_gh as st
 
 #from __builtin__ import True
 
@@ -95,16 +95,25 @@ class test_speed1():
         #self.Setup() # now done ir agrparse
         # here we wait for the program to start until we rach the time
 
+    def QueueRuntime(self):                                             # WGH Mod: Allows for skipping the wait queue via cmdline arg
+        
+        # here we wait for the program to start until we reach the time
         MyT = st.MyTime()
         success = MyT.GetTime()
-        host = socket.gethostname()
-        if success:
-            if(host[0:2] == 'LC'):
-                MyT.SetStart(host)
+        
+        # Only initiate the wait queue if our loop_time is 10 minutes or greater..
+        if self.loop_time > 599 and not self.nowait:
+            print("Queueing test wait time..")
+            host = socket.gethostname()
+            if success:
+                if(host[0:2] == 'LC'):
+                    MyT.SetStart(host)
+                else:
+                    MyT.SetStart('LC00')
             else:
-                MyT.SetStart('LC00')
+                self.Logging('Could not connect to ntp server')
         else:
-            self.Logging('Could not connect to ntp server')
+            print("Jumping test wait queue..")
         
         
 
@@ -318,6 +327,7 @@ class test_speed1():
         print('Version 8.01.02', 'replace server name with speedtest in output csv file ')
          
         print('Version 8.02.01', 'now better reflection on what is going on with iperf, and new more granular config file treatment ')
+        print('Version 8.02.02', 'with Gordon time mods ')
          
         print('\n\n\n')
         
@@ -356,7 +366,8 @@ class test_speed1():
         parser.add_argument("-ipf","--iperf",help = "the ip addresss of the iperf  server , format =xx.xx.xx.xx" )
         parser.add_argument("-ipfd","--iperf_duration",help = "the duration of the iperf" )
         parser.add_argument("-c","--conf",help = "the full path of the configuration file" )
-
+        parser.add_argument("-n","--nowait",action='store_true',help = "Disables startup test time wait queueing" )        # WGH mod: skip wait queue for debugging purposes
+        parser.add_argument("-w","--testdb",action='store_true',help = "Posts to dropbox immediately" )                    # WGH mod: test dropbox posting immediatly for debugging purposes
         #parser.add_argument("-ip","--ip=ARG",help = "Attempt to bind to the specified IP address when connecting to servers" )
         
 
@@ -432,6 +443,17 @@ class test_speed1():
  
         if(args.time != None):
                 self.loop_time = int(args.time)*60 # time between speedtests
+
+        if(args.nowait):
+            self.nowait = True
+        else:
+            self.nowait = False
+
+        if(args.testdb):
+            self.testdb = True
+        else:
+            self.testdb = False
+
  
         if self.runmode == 'Speedtest' or self.runmode == 'Both':
 
@@ -551,7 +573,7 @@ class test_speed1():
                 counter = counter + 1
             
                 #if (counter==50):
-                if( self.WriteTimer()):
+                if self.WriteTimer() or self.testdb:                   # WGH mod: test dropbox posting immediatly for debugging purposes
                     # we write always around xx:30 
  
                     
