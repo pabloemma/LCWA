@@ -282,7 +282,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '8.02.01'
+        self.vs = '8.02.02'
  
         
         print(' History')
