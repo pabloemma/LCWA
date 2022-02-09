@@ -135,7 +135,7 @@ class MyControl(object):
         self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2022-02-07')
         #self.PA =PA =PL.PlotAll(token_file,dirlist)
         PA.ConnectDropbox()
-        PA.GetFiles()
+        PA.GetFiles() 
         PA.PushFileDropbox()
         
        
