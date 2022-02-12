@@ -127,7 +127,7 @@ class MyPlot(object):
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["upload"],'r^',label='\n speedtest red UP ')
 
         # remove limit
-        # plt.ylim(0,40.)
+        plt.ylim(bottom = 0.)
         plt.grid(True)
 
         plt.xticks(rotation='vertical')
@@ -152,6 +152,8 @@ class MyPlot(object):
         if not self.lcwa_iperf.empty:
             iperf_min_dw    = self.lcwa_iperf['download'].min() # min
             iperf_max_dw    = self.lcwa_iperf['download'].max() # max
+            iperf_corrected = self.CorrectedStd(self.lcwa_iperf['download']) # recalculate std with min removed
+            
 
             iperf_min_up    = self.lcwa_iperf['upload'].min() # min
             iperf_max_up    = self.lcwa_iperf['upload'].max() #max
@@ -165,6 +167,7 @@ class MyPlot(object):
         if not self.lcwa_speed.empty:
             speed_min_dw    = self.lcwa_speed['download'].min() # min
             speed_max_dw    = self.lcwa_speed['download'].max() # max
+            speed_corrected = self.CorrectedStd(self.lcwa_speed['download'])
 
             speed_min_up    = self.lcwa_speed['upload'].min() # min
             speed_max_up    = self.lcwa_speed['upload'].max() #max
@@ -183,26 +186,26 @@ class MyPlot(object):
 
                 print('\n\n ********************************total statistics********************** \n')
                 print(bfb,'Iperf:',bfe)
-                print('Min download                 = ',iperf_min_dw)
+                print('Min download                 = ',iperf_min_dw,'    Min corrected             =',iperf_corrected[1])
                 print('Max download                 = ',iperf_max_dw)
                 print('Mean download                = ',iperf_mean_dw)
-                print('std download                 = ',iperf_std_dw , '\n')
+                print('Std download                 = ',iperf_std_dw ,'   Std corrected             =',iperf_corrected[0],'\n')
    
                 print('Min upload                   = ',iperf_min_up)
                 print('Max upload                   = ',iperf_max_up)
                 print('Mean upload                  = ',iperf_mean_up)
-                print('std upload                   = ',iperf_std_up , '\n\n')
+                print('Std upload                   = ',iperf_std_up , '\n\n')
    
                 print(bfb,'Ookla Speedtest:',bfe)
-                print('Min download                 = ',speed_min_dw)
+                print('Min download                 = ',speed_min_dw,'    Min corrected             =',speed_corrected[1])
                 print('Max download                 = ',speed_max_dw)
                 print('Mean download                = ',speed_mean_dw)
-                print('std download                 = ',speed_std_dw , '\n')
+                print('Std download                 = ',speed_std_dw ,'   Std corrected             =',speed_corrected[0],'\n')
    
                 print('Min upload                   = ',speed_min_up)
                 print('Max upload                   = ',speed_max_up)
                 print('Mean upload                  = ',speed_mean_up)
-                print('std upload                   = ',speed_std_up , '\n\n')
+                print('Std upload                   = ',speed_std_up , '\n\n')
                 
                 
                 
@@ -287,8 +290,16 @@ class MyPlot(object):
                 f.close()
 
 
-    
+    def CorrectedStd(self,data):
+        """calculates the std of the distribution with removin smallest point"""
+        # first find the index of min
+        temp = data.idxmin()
 
+        # remove the min number and create new structure
+        new_data = data.drop(temp)
+        #print(new_data.std(),new_data.min())
+        temp_list = [new_data.std(),new_data.min()]
+        return temp_list
     
 
     def MyTime(self,b):
@@ -360,7 +371,7 @@ if __name__ == '__main__':
     #file = 'misk_2022-01-24speedfile.csv'
     file = 'LC23_2022-01-28speedfile.csv'
     token ='/home/klein/git/speedtest/src/LCWA_d.txt'
-    token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
+    #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag)
