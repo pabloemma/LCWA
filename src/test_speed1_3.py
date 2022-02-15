@@ -573,7 +573,7 @@ class test_speed1():
                 counter = counter + 1
             
                 #if (counter==50):
-                if self.WriteTimer() or self.testdb:                   # WGH mod: test dropbox posting immediatly for debugging purposes
+                if self.WriteTimer() or self.testdb and not self.FlushTime():                   # WGH mod: test dropbox posting immediatly for debugging purposes
                     # we write always around xx:30 
  
                     
