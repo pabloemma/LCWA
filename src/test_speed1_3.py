@@ -623,7 +623,7 @@ class test_speed1():
                         
                     #counter = 0 
                     
-
+ 
             time.sleep(self.loop_time)
 
     def FlushTime(self):
@@ -632,7 +632,7 @@ class test_speed1():
         checks time and if its close tp midnight returns True
         """
         timelimit = 23*60.+ 45  # this is how many minutes are to 23:45
-        timelimit = 7*60.+ 40  # this is how many minutes are to 23:45
+        #timelimit = 7*60.+ 40  # this is how many minutes are to 23:45
         
         b=  datetime.datetime.now()
         #fill in tuple
