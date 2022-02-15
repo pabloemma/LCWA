@@ -12,61 +12,616 @@
     "Linux" : {
         "timeout" : "/usr/bin/timeout",
         "speedtest" : "/usr/bin/speedtest",
-        "srcdir" : "/home/klein/git/speedtest/src/",
-        "datadir" : "/home/klein/speedfiles/",
-        "conf_dir" : "/home/klein/git/speedtest/src/config/"
+        "srcdir" : "/home/pi/git/speedtest/src/",
+        "datadir" : "/home/pi/speedfiles/",
+        "conf_dir" : "/home/pi/git/speedtest/src/config/"
 
     },
     "Control" : {
-        "runmode" : "Speed",
+        "runmode" : "Both",
         "debug"   : false,
         "cryptofile" : "LCWA_d.txt",
         "click"      : "1",
         "random"     : false
     },
     "Iperf" : {
-        "serverport"  : "5201",
-        "serverip" : "63.229.162.245",
-        "duration"  : 10,
-        "numstreams" : 2,
-        "blksize"   : 1024,
-        "latency_ip" : "65.19.14.51",
-        "time_window" : 1,
+        "iperf_serverport"  : "5201",
+        "iperf_serverip" : "63.229.162.245",
+        "iperf_duration"  : 10,
+        "iperf_numstreams" : 2,
+        "iperf_blksize"   : 1024,
+        "iperf_latency_ip" : "65.19.14.51",
+        "iperf_time_window" : 10,
 
-        "reverse"   : false
+        "iperf_reverse"   : false
     },
     "Speedtest" : {
         "serverip" : "63.229.162.245",
         "serverid" : 18002,
-        "time_window" : 1,
+        "time_window" : 10,
         "latency_ip" : "65.19.14.51" 
     },
     "ClusterControl" : {
-        "LC01" : "Iperf",
-        "LC02" : "Iperf",
-        "LC03" : "Iperf",
-        "LC04" : "Iperf",
-        "LC05" : "Iperf",
-        "LC06" : "Iperf",
-        "LC07" : "Iperf",
-        "LC08" : "Iperf",
-        "LC09" : "Iperf",
-        "LC10" : "Iperf",
-        "LC11" : "Iperf",
-        "LC12" : "Iperf",
-        "LC13" : "Iperf",
-        "LC14" : "Iperf",
-        "LC15" : "Iperf",
-        "LC16" : "Iperf",
-        "LC17" : "Iperf",
-        "LC18" : "Iperf",
-        "LC19" : "Iperf",
-        "LC20" : "Iperf",
-        "LC21" : "Iperf",
-        "LC22" : "Iperf",
-        "LC23" : "Iperf",
-        "LC24" : "Speed",
-        "PandaAir.local" : "Speed"
+        "LC01" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC02" : {
+            "runmode" : "Speedtest",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC03" : {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC04" : {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    }
+
+
+        ,
+        "LC05" :  {
+            "runmode" : "Iperf",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC06" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC07" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC08" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC09" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC10" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC11" :   {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC12" :  {
+            "runmode" : "Iperf",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC13" :  {
+            "runmode" : "Iperf",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC14" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC15" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC16" :  {
+            "runmode" : "Iperf",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC17" :  {
+            "runmode" : "Iperf",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC18" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC19" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC20" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC21" :  {
+            "runmode" : "Iperf",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC22" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC23" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+        "LC24" :  {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_duration"  : 30,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : true
+                     }
+
+                    },
+
+       "PandaAir.local" : {
+            "runmode" : "Speedtest",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 10,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    },
+
+
+
+        "miska" : {
+            "runmode" : "Both",
+
+            "nondefault" : {
+
+                    "server_ip" :"63.229.162.245" ,
+                    "serverid" : 18002,
+                    "time_window" : 1,
+                    "latency_ip" : "65.19.14.51" ,
+                    "iperf_serverport"  : "5201",
+                    "iperf_serverip" : "63.229.162.245",
+
+                    "iperf_numstreams" : 2,
+                    "iperf_blksize"   : 1024,
+                    "iperf_latency_ip" : "65.19.14.51",
+                    "iperf_time_window" : 10,
+            
+                    "iperf_reverse"   : false,
+                    "random" : false
+                     }
+
+                    }
+  
+
 
     }
 }
