@@ -1106,6 +1106,7 @@ if __name__ == '__main__':
    # server1 = 'albuquerque.speedtest.centurylink.net:8080'
     ts = test_speed1(server=server1,chosentime=60)
     ts.GetArguments()  #commandline args
+    ts.QueueRuntime()
     ts.OpenFile()  #output file
     
 #    ts.GetArguments()
