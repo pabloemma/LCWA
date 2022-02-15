@@ -632,6 +632,7 @@ class test_speed1():
         checks time and if its close tp midnight returns True
         """
         timelimit = 23*60.+ 45  # this is how many minutes are to 23:45
+        #timelimit = 19*60.+ 45  # this is how many minutes are to 23:45
         
         b=  datetime.datetime.now()
         #fill in tuple
