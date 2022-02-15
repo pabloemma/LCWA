@@ -188,27 +188,30 @@ class MyPlot(object):
  
 
                 print('\n\n ********************************total statistics********************** \n')
-                print(bfb,'Iperf:',bfe)
-                print('Min download                 = ',iperf_min_dw,'    Min corrected             =',iperf_corrected[1])
-                print('Max download                 = ',iperf_max_dw)
-                print('Mean download                = ',iperf_mean_dw)
-                print('Std download                 = ',iperf_std_dw ,'   Std corrected             =',iperf_corrected[0],'\n')
+                if not self.lcwa_iperf.empty:
+    
+                    print(bfb,'Iperf:',bfe)
+                    print('Min download                 = ',iperf_min_dw,'    Min corrected             =',iperf_corrected[1])
+                    print('Max download                 = ',iperf_max_dw)
+                    print('Mean download                = ',iperf_mean_dw)
+                    print('Std download                 = ',iperf_std_dw ,'   Std corrected             =',iperf_corrected[0],'\n')
    
-                print('Min upload                   = ',iperf_min_up)
-                print('Max upload                   = ',iperf_max_up)
-                print('Mean upload                  = ',iperf_mean_up)
-                print('Std upload                   = ',iperf_std_up , '\n\n')
+                    print('Min upload                   = ',iperf_min_up)
+                    print('Max upload                   = ',iperf_max_up)
+                    print('Mean upload                  = ',iperf_mean_up)
+                    print('Std upload                   = ',iperf_std_up , '\n\n')
+                if not self.lcwa_speed.empty:
+    
+                    print(bfb,'Ookla Speedtest:',bfe)
+                    print('Min download                 = ',speed_min_dw,'    Min corrected             =',speed_corrected[1])
+                    print('Max download                 = ',speed_max_dw)
+                    print('Mean download                = ',speed_mean_dw)
+                    print('Std download                 = ',speed_std_dw ,'   Std corrected             =',speed_corrected[0],'\n')
    
-                print(bfb,'Ookla Speedtest:',bfe)
-                print('Min download                 = ',speed_min_dw,'    Min corrected             =',speed_corrected[1])
-                print('Max download                 = ',speed_max_dw)
-                print('Mean download                = ',speed_mean_dw)
-                print('Std download                 = ',speed_std_dw ,'   Std corrected             =',speed_corrected[0],'\n')
-   
-                print('Min upload                   = ',speed_min_up)
-                print('Max upload                   = ',speed_max_up)
-                print('Mean upload                  = ',speed_mean_up)
-                print('Std upload                   = ',speed_std_up , '\n\n')
+                    print('Min upload                   = ',speed_min_up)
+                    print('Max upload                   = ',speed_max_up)
+                    print('Mean upload                  = ',speed_mean_up)
+                    print('Std upload                   = ',speed_std_up , '\n\n')
                 
                 
                 
@@ -216,40 +219,43 @@ class MyPlot(object):
                 print('\n\n ********************************end statistics********************** \n')
  
             else:
-			    
-                str_iperf_min_d = 'Min download                 = '+str(iperf_min_dw)+'    Min corrected             ='+str(iperf_corrected[1]) +'\n'
+                if not self.lcwa_iperf.empty:
+
+
+                    
+                    str_iperf_min_d = 'Min download                 = '+str(iperf_min_dw)+'    Min corrected             ='+str(iperf_corrected[1]) +'\n'
  				
-                str_iperf_max_d = 'Max download                 = '+str(iperf_max_dw)+'\n'
-                str_iperf_mean_d = 'Mean download                 = '+str(iperf_mean_dw)+'\n'
+                    str_iperf_max_d = 'Max download                 = '+str(iperf_max_dw)+'\n'
+                    str_iperf_mean_d = 'Mean download                 = '+str(iperf_mean_dw)+'\n'
 
  			    
-                str_iperf_std_d = 'Std download                 = '+str(iperf_std_dw)+'    Std corrected             ='+str(iperf_corrected[0]) +'\n'
+                    str_iperf_std_d = 'Std download                 = '+str(iperf_std_dw)+'    Std corrected             ='+str(iperf_corrected[0]) +'\n'
   
 			     
-                str_iperf_min_u = 'Min upload                 = '+str(iperf_min_up) +'\n'
+                    str_iperf_min_u = 'Min upload                 = '+str(iperf_min_up) +'\n'
  			    
-                str_iperf_max_u = 'Max upload                 = '+str(iperf_max_up)+'\n'
+                    str_iperf_max_u = 'Max upload                 = '+str(iperf_max_up)+'\n'
  				
-                str_iperf_mean_u = 'Mean upload                 = '+str(iperf_mean_up)+'\n'
+                    str_iperf_mean_u = 'Mean upload                 = '+str(iperf_mean_up)+'\n'
  				
-                str_iperf_std_u = 'Std upload                 = '+str(iperf_std_up)+'\n'
+                    str_iperf_std_u = 'Std upload                 = '+str(iperf_std_up)+'\n'
  			
-				
-                str_speed_min_d = 'Min download                 = '+str(speed_min_dw)+'    Min corrected             ='+str(speed_corrected[1])+'\n'
+                if not self.lcwa_speed.empty:
+                    str_speed_min_d = 'Min download                 = '+str(speed_min_dw)+'    Min corrected             ='+str(speed_corrected[1])+'\n'
  			
-                str_speed_max_d = 'Max download                 = '+str(speed_max_dw)+'\n'
+                    str_speed_max_d = 'Max download                 = '+str(speed_max_dw)+'\n'
  				
-                str_speed_mean_d = 'Mean download                 = '+str(speed_mean_dw)+'\n'
+                    str_speed_mean_d = 'Mean download                 = '+str(speed_mean_dw)+'\n'
  				
-                str_speed_std_d = 'Std download                 = '+str(speed_std_dw)+'    Std corrected             ='+str(speed_corrected[0])+'\n'
+                    str_speed_std_d = 'Std download                 = '+str(speed_std_dw)+'    Std corrected             ='+str(speed_corrected[0])+'\n'
   
-                str_speed_min_u = 'Min upload                 = '+str(speed_min_up)+'\n'
+                    str_speed_min_u = 'Min upload                 = '+str(speed_min_up)+'\n'
  				
-                str_speed_max_u = 'Max upload                 = '+str(speed_max_up)+'\n'
+                    str_speed_max_u = 'Max upload                 = '+str(speed_max_up)+'\n'
  				
-                str_speed_mean_u = 'Mean upload                 = '+str(speed_mean_up)+'\n'
+                    str_speed_mean_u = 'Mean upload                 = '+str(speed_mean_up)+'\n'
  				
-                str_speed_std_u = 'Std upload                 = '+str(speed_std_up)+'\n'
+                    str_speed_std_u = 'Std upload                 = '+str(speed_std_up)+'\n'
  				
 				
                 #check if file exists
@@ -259,34 +265,37 @@ class MyPlot(object):
                 f.write(line)
                 #f.write(str(self.lcwa_iperf['download'].describe()))
                 #f.write(str(self.lcwa_iperf['upload'].describe()))
+                if not self.lcwa_iperf.empty:
                 
-                f.write(str_iperf_min_d)
-                f.write(str_iperf_max_d)
-                f.write(str_iperf_mean_d)
-                f.write(str_iperf_std_d)
+                    f.write(str_iperf_min_d)
+                    f.write(str_iperf_max_d)
+                    f.write(str_iperf_mean_d)
+                    f.write(str_iperf_std_d)
                 
-                f.write(str_iperf_min_u)
-                f.write(str_iperf_max_u)
-                f.write(str_iperf_mean_u)
-                f.write(str_iperf_std_u)
+                    f.write(str_iperf_min_u)
+                    f.write(str_iperf_max_u)
+                    f.write(str_iperf_mean_u)
+                    f.write(str_iperf_std_u)
                 
-                
-                f.write('\n\n')
-                line ='Ookla Speedtest \n'
+                if not self.lcwa_speed.empty:
+               
+                    f.write('\n\n')
+                    line ='Ookla Speedtest \n'
  
-                f.write(line)
+                    f.write(line)
                 #f.write(str(self.lcwa_speed['download'].describe()))
                 #f.write(str(self.lcwa_speed['upload'].describe()))
                 
-                f.write(str_speed_min_d)
-                f.write(str_speed_max_d)
-                f.write(str_speed_mean_d)
-                f.write(str_speed_std_d)
+                    f.write(str_speed_min_d)
+                    f.write(str_speed_max_d)
+                    f.write(str_speed_mean_d)
+                    f.write(str_speed_std_d)
                 
-                f.write(str_speed_min_u)
-                f.write(str_speed_max_u)
-                f.write(str_speed_mean_u)
-                f.write(str_speed_std_u)
+                    f.write(str_speed_min_u)
+                    f.write(str_speed_max_u)
+                    f.write(str_speed_mean_u)
+                    f.write(str_speed_std_u)
+                
                 f.write('\n\n ********************************end statistics********************** \n')
    
                 
@@ -370,15 +379,15 @@ class MyPlot(object):
        
 if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
-    #path = '/home/klein/speedfiles'
-    path='/Users/klein/scratch/'
-    #file = 'misk_2022-01-24speedfile.csv'
-    file = 'LC04_2022-02-14speedfile.csv'
-    token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
+    path = '/home/klein/speedfiles'
+    #path='/Users/klein/scratch/'
+    file = 'misk_2022-01-24speedfile.csv'
+    #file = 'LC04_2022-02-14speedfile.csv'
+    token ='/home/klein/git/speedtest/src/LCWA_d.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag)
     MP.ReadTestData()    #MP.ReadTestData(legend)
-    MP.Analyze('/Users/klein/scratch/text.txt')
+    MP.Analyze('/home/klein/scratch/text.txt')
     MP.Analyze()
