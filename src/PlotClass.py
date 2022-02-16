@@ -381,7 +381,7 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/home/klein/speedfiles'
     #path='/Users/klein/scratch/'
-    file = 'misk_2022-01-24speedfile.csv'
+    file = 'LC14_2022-02-14speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/home/klein/git/speedtest/src/LCWA_d.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
