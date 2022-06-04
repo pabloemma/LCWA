@@ -573,7 +573,7 @@ class test_speed1():
                 counter = counter + 1
             
                 #if (counter==50):
-                if self.WriteTimer() or self.testdb:                   # WGH mod: test dropbox posting immediatly for debugging purposes
+                if self.WriteTimer() or self.testdb and not self.FlushTime():                   # WGH mod: test dropbox posting immediatly for debugging purposes
                     # we write always around xx:30 
  
                     
@@ -623,7 +623,7 @@ class test_speed1():
                         
                     #counter = 0 
                     
-
+ 
             time.sleep(self.loop_time)
 
     def FlushTime(self):
@@ -632,6 +632,7 @@ class test_speed1():
         checks time and if its close tp midnight returns True
         """
         timelimit = 23*60.+ 45  # this is how many minutes are to 23:45
+        #timelimit = 7*60.+ 40  # this is how many minutes are to 23:45
         
         b=  datetime.datetime.now()
         #fill in tuple
@@ -1105,6 +1106,7 @@ if __name__ == '__main__':
    # server1 = 'albuquerque.speedtest.centurylink.net:8080'
     ts = test_speed1(server=server1,chosentime=60)
     ts.GetArguments()  #commandline args
+    ts.QueueRuntime()
     ts.OpenFile()  #output file
     
 #    ts.GetArguments()
