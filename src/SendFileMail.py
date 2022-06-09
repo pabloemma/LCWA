@@ -48,7 +48,9 @@ class MyMail(object):
             
            
         server = smtplib.SMTP('smtp.gmail.com', 587)
+        #server = smtplib.SMTP('casitadongaspar.com', 25)
         server.starttls()
+        print(a[0],a[1])
         server.login(a[0], a[1])
         # Craft message (obj)
         msg = MIMEMultipart()
@@ -70,11 +72,11 @@ class MyMail(object):
             
 if __name__ == '__main__':
     
-    file='/Users/klein/scratch/LCWA_TOTAL_2020-04-26speedfile.pdf'
+    file='/home/klein/scratch/tempfile.txt'
     recipients='pabloemma@casitadongaspar.com, pabloemma@gmail.com'
     message =' this is the LCWA file '
     subject = 'pdf file'
-    impo_file = '/Users/klein/private/LCWA/andifile'
+    impo_file = '/home/klein/private/LCWA/andifile'
     MM=MyMail(file,recipients,subject,message)
     MM.send_email_pdf_figs(impo_file)
     

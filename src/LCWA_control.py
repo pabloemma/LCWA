@@ -119,6 +119,36 @@ class MyControl(object):
         home = str(Path.home())   
          
         sa.send_email_pdf_figs(home+'/private/LCWA/andifile')
+
+    def MailPlotNew(self,recipient_list):
+        """new version, using nash script"""
+        with open(recipient_list)  as f:
+            Lines = f.readlines()
+        b=''
+        for line in Lines: 
+            a=line.strip()
+            if(b != ''):
+                b = b +','+a
+            else:
+                b = a
+
+        subject = ' LCWA_speedtest_'+ datetime.datetime.today().strftime('%Y-%m-%d')
+
+        
+        
+        message = ' this_is_the_daily_Raspberry_PI_report'
+
+        file = self.PA.pdf  
+
+        # create mail command
+        mail_command = '/home/klein/git/speedtest/src/mail_test.sh '+file+' '+subject+' ' + '/home/klein/git/speedtest/src/message.txt'
+        print(mail_command)
+        os.system(mail_command)  
+        return      
+
+
+
+
     def DoPlotting(self):
         
         temp = 'LC'
@@ -132,7 +162,7 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_d.txt'
         #tempdir = 'scratch'
-        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2022-06-05')
+        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2022-06-08')
         self.PA =PA =PL.PlotAll(token_file,dirlist)
         PA.ConnectDropbox()
         PA.GetFiles() 
@@ -236,12 +266,13 @@ if __name__ == '__main__':
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
     # for a different date use the line 132
-    #start = datetime.time(15,10)
-    #end = datetime.time(15,30)
+    #start = datetime.time(14,20)
+    #end = datetime.time(16,40)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
-        MC.MailPlot(recipient_list)
+        #MC.MailPlot(recipient_list)
+        MC.MailPlotNew(recipient_list)
     MC.CreateHistory()
     MC.PlotHistory()
     #MC.PlotHistory()
