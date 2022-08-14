@@ -162,8 +162,8 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_d.txt'
         #tempdir = 'scratch'
-        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2022-08-06')
-        self.PA =PA =PL.PlotAll(token_file,dirlist)
+        self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2022-08-13')
+        #self.PA =PA =PL.PlotAll(token_file,dirlist)
         PA.ConnectDropbox()
         PA.GetFiles() 
         PA.PushFileDropbox()
@@ -208,7 +208,7 @@ class MyControl(object):
                         #make sure that it is a csv file
                         if "csv" in item.path_display:
                             self.ReadFile(dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.csv', item.path_display)
-                        
+        return           
        
     def ReadFile(self,file,path_display):    
         
