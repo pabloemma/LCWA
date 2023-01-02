@@ -334,7 +334,7 @@ class PlotAll(object):
         
         yhigh2=yhigh3=24.
         yveryhigh = 70.
-        ystarlink = 200.
+        ystarlink = 100.
         
         bbox=(0.03,.03,1.,0.25)
         print('number',k)
