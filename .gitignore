@@ -19,3 +19,5 @@ support_files/speedtest.md
 .vscode/launch.json
 config/test_speed_cfg_miska.json
 .vscode/launch.json
+temp.txt
+src/temp.txt
