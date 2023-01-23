@@ -112,7 +112,8 @@ class MyTime():
 
         self.checktime = datetime.fromtimestamp(self.checktime)
         self.runtime = datetime.fromtimestamp(self.runtime)
-        self.waitsecs = (self.runtime - self.checktime).total_seconds()
+#        self.waitsecs = (self.runtime - self.checktime).total_seconds()
+        self.waitsecs = 1
 
         print('        Current NTP time: ', self.checktime)
         print('     Current System time: ', datetime.now())
