@@ -814,7 +814,7 @@ class test_speed1():
             try:
                 self.output.append(e[k])
             except:
-                print('no iperf'):
+                print('no iperf')
                 return
         for k in [5,6,11,8,9,10]:  # this funny e[11] ->e[7] has to do with the iperf3 system and what repesents download and what upload.
                                     # see link:https://github.com/esnet/iperf/issues/480##interpreting-the-results
