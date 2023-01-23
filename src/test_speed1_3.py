@@ -328,6 +328,7 @@ class test_speed1():
          
         print('Version 8.02.01', 'now better reflection on what is going on with iperf, and new more granular config file treatment ')
         print('Version 8.02.02', 'with Gordon time mods ')
+        print('Version 8.02.03', 'added an try clause in create iperf output to catch connection problems')
          
         print('\n\n\n')
         
@@ -810,7 +811,11 @@ class test_speed1():
         self.output = [now.strftime("%d/%m/%Y"),now.strftime("%H:%M:%S")]
 
         for k in [2,3,4]:
-            self.output.append(e[k])
+            try:
+                self.output.append(e[k])
+            except:
+                print('no iperf'):
+                return
         for k in [5,6,11,8,9,10]:  # this funny e[11] ->e[7] has to do with the iperf3 system and what repesents download and what upload.
                                     # see link:https://github.com/esnet/iperf/issues/480##interpreting-the-results
             try:
