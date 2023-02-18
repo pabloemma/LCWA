@@ -3,8 +3,9 @@
     "Input" :{
         "begin_time"        : "2022-09-08" ,
         "end_time"          : "2023-02-01",
-        "input_dir"         : "/Users/klein/scratch/",
-        "fmt"               : "%Y-%m-%d"
+        "input_dir"         : "/Users/klein/scratch/lc17/",
+        "fmt"               : "%Y-%m-%d",
+        "speed_box"         : "LC17"
         
     },
     "Output" : {

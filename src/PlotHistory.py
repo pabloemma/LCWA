@@ -33,8 +33,9 @@ class PlotHistory(object):
         # read configuration
         self.read_config_file(config_file)
     
-        self.file_name_beg = self.speed_box+'_'
+        self.file_name_beg = self.input_dir+'/'+self.speed_box+'_'
         self.file_name_end = 'speedfile.csv' 
+        self.get_beginning_and_end()  # get the dates as date time
 
 
     def read_config_file(self,config_file):
@@ -53,7 +54,7 @@ class PlotHistory(object):
                 self.end_time = myconf['Input']['end_time']
 
             if(self.input_dir == None):
-                self.input_dir = myconf['Input']['end_time']
+                self.input_dir = myconf['Input']['input_dir']
 
             if(self.speed_box == None):
                 self.speed_box = myconf['Input']['speed_box']
@@ -70,19 +71,23 @@ class PlotHistory(object):
 
         # open first file and read into a panda structure
         temp_time = self.begin_time
+        
         while True:
-            inputfile = self.file_name_beg + temp_time + self.end_time
+            inputfile = self.file_name_beg + temp_time + self.file_name_end
 
             #check if it , loop until we find it
-            if (Path(inputfile)is_file):
+            if (Path(inputfile).is_file):
                 break
             else:
                 temp_time = self.get_next_day(temp_time)
             
+            if(dt.datetime.strptime(temp_time,self.fmt) > self.end_datetime):
+                print("reached end of file list")
+                return
 
         # now create first data frame
+        data = pd.read_csv(inputfile,index_col=0,infer_datetime_format=True,parse_dates=True)
 
-        
 
 
 
@@ -105,3 +110,10 @@ class PlotHistory(object):
         return new_day.strftime(self.fmt)
 
 
+
+
+if __name__ == "__main__":  
+    config_file =  '/Users/klein/git/speedtest/config/PlotHistory.json'
+    PH = PlotHistory(config_file = config_file , begin_time="2022-10-22",end_time = "2022-10-22")
+    PH.loop_over_data_file()
+   
