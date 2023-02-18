@@ -29,6 +29,7 @@ class PlotHistory(object):
         self.input_dir = input_dir
         self.speed_box = speed_box
 
+        self.DEBUG = False
  
         # read configuration
         self.read_config_file(config_file)
@@ -88,6 +89,32 @@ class PlotHistory(object):
         # now create first data frame
         data = pd.read_csv(inputfile,index_col=0,infer_datetime_format=True,parse_dates=True)
 
+        # next we will be looping over all the other files in the time window
+        # and adding them to the main data frame
+
+       # get next day:
+        next_day =  self.get_next_day(temp_time)
+        
+        while(dt.datetime.strptime(next_day,self.fmt) < self.end_datetime):
+            try:
+                inputfile = self.file_name_beg + next_day + self.file_name_end
+                temp = pd.read_csv(inputfile,index_col=0,infer_datetime_format=True,parse_dates=True)
+                if(self.DEBUG):
+                    data.info()
+                    temp.info()
+                temp1=[data,temp]
+                data = pd.concat(temp1)
+                
+                next_day =  self.get_next_day(next_day)
+                
+            except:
+                next_day =  self.get_next_day(next_day)
+                pass
+
+        if(self.DEBUG):
+            data.info()
+        
+        self.master_frame = data # we now deal with only one data frame
 
 
 
@@ -114,6 +141,6 @@ class PlotHistory(object):
 
 if __name__ == "__main__":  
     config_file =  '/Users/klein/git/speedtest/config/PlotHistory.json'
-    PH = PlotHistory(config_file = config_file , begin_time="2022-10-22",end_time = "2022-10-22")
+    PH = PlotHistory(config_file = config_file , begin_time="2022-10-22",end_time = "2022-10-29")
     PH.loop_over_data_file()
    
