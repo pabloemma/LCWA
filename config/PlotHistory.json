@@ -1,0 +1,18 @@
+{
+    
+    "Input" :{
+        "begin_time"        : "2022-09-08" ,
+        "end_time"          : "2023-02-01",
+        "input_dir"         : "/Users/klein/scratch/",
+        "fmt"               : "%Y-%m-%d"
+        
+    },
+    "Output" : {
+        "temp_dir"          : "scratch/"
+
+    },
+    "Math"  : {
+        "rolling_time_window" : "20"
+    }
+
+}
