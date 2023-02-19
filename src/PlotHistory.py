@@ -103,7 +103,7 @@ class PlotHistory(object):
         if(self.DEBUG):
             print(data.head())
         #now drop the columns we don't need:
-        #data.drop(self.drop_columms, axis=1, inplace=True)
+        data.drop(self.drop_columms, axis=1, inplace=True)
 
         # next we will be looping over all the other files in the time window
         # and adding them to the main data frame
@@ -115,7 +115,7 @@ class PlotHistory(object):
             try:
                 inputfile = self.file_name_beg + next_day + self.file_name_end
                 temp = pd.read_csv(inputfile)
-                #temp.drop(self.drop_columms, axis=1, inplace=True)
+                temp.drop(self.drop_columms, axis=1, inplace=True)
 
                 if(self.DEBUG):
                     data.info()
