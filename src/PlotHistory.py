@@ -13,6 +13,8 @@ import pandas as pd
 import json 
 import datetime as dt
 from pathlib import Path
+import matplotlib.pyplot as plt
+import matplotlib.dates as md
 
 
 
@@ -29,7 +31,7 @@ class PlotHistory(object):
         self.input_dir = input_dir
         self.speed_box = speed_box
 
-        self.DEBUG = False
+        self.DEBUG = True
  
         # read configuration
         self.read_config_file(config_file)
@@ -61,9 +63,16 @@ class PlotHistory(object):
                 self.speed_box = myconf['Input']['speed_box']
 
             self.fmt                = myconf['Input']['fmt']
+            
             #Math values
             # the rolling time window to average over
             self.rolling_time_window = int(myconf['Math']['rolling_time_window']) 
+            
+            
+            # properties of the database
+            self.drop_columms = myconf['DB']['drop_columns'] # columns to be dropped from the database
+            self.plot_columns = myconf['DB']['plot_columns']
+
         return
     
 
@@ -87,7 +96,13 @@ class PlotHistory(object):
                 return
 
         # now create first data frame
-        data = pd.read_csv(inputfile,index_col=0,infer_datetime_format=True,parse_dates=True)
+        #data = pd.read_csv(inputfile,infer_datetime_format=True,parse_dates=True)
+        #data = pd.read_csv(inputfile,infer_datetime_format=True,parse_dates=['day','time'])
+        data = pd.read_csv(inputfile)
+        if(self.DEBUG):
+            print(data.head())
+        #now drop the columns we don't need:
+        data.drop(self.drop_columms, axis=1, inplace=True)
 
         # next we will be looping over all the other files in the time window
         # and adding them to the main data frame
@@ -98,7 +113,11 @@ class PlotHistory(object):
         while(dt.datetime.strptime(next_day,self.fmt) < self.end_datetime):
             try:
                 inputfile = self.file_name_beg + next_day + self.file_name_end
-                temp = pd.read_csv(inputfile,index_col=0,infer_datetime_format=True,parse_dates=True)
+                #temp = pd.read_csv(inputfile,infer_datetime_format=True,parse_dates=True)
+                #temp = pd.read_csv(inputfile,infer_datetime_format=True,parse_dates=['day','time'])
+                temp = pd.read_csv(inputfile)
+                temp.drop(self.drop_columms, axis=1, inplace=True)
+
                 if(self.DEBUG):
                     data.info()
                     temp.info()
@@ -116,7 +135,23 @@ class PlotHistory(object):
         
         self.master_frame = data # we now deal with only one data frame
 
+       #convert time to datetime
+        #self.master_frame["Time"] = pd.to_datetime(self.master_frame['day']+' '+self.master_frame['time'])
+        self.master_frame["Time"] = pd.to_datetime(self.master_frame['day']+self.master_frame['time'],format='%d/%m/%Y%H:%M:%S')
+        #self.master_frame["Time"] = pd.to_datetime(self.master_frame['time'])
+        if(self.DEBUG):
+            print(self.master_frame.head())
 
+
+
+
+        #save master frame 
+        self.master_frame.to_csv('/Users/klein/scratch/testplot.csv')
+        if(self.DEBUG):
+            print(self.master_frame.head())
+
+ 
+    
 
 
     def get_beginning_and_end(self):
@@ -138,9 +173,53 @@ class PlotHistory(object):
 
 
 
+    def plot_speed(self):
+        """plots the up and download"""
+
+        fig = plt.figure()
+        ax=fig.add_subplot(1,1,1)
+        #ax.text(.05,.95,'iperf and ookla on'+' '+self.DigIP(),weight='bold',transform=ax.transAxes,fontsize=11)
+
+        #ax.xaxis.set_major_locator(md.MinuteLocator(interval=6000))
+        ax.xaxis.set_major_formatter(md.DateFormatter('%m-%d'))
+        plt.xlabel('Time')
+        plt.ylabel('Speed in Mbs')
+
+        #plt.title('Speedtest LCWA '+self.InputFile)
+
+
+
+    
+        #plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["download"],'bs',label='\n iperf blue DOWN ')
+        #plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["upload"],'g^',label='\n iperf green UP ')
+        plt.plot(self.master_frame["Time"],self.master_frame["download"],'ks',label='\n speedtest black DOWN ')
+        plt.plot(self.master_frame["Time"],self.master_frame["upload"],'r^',label='\n speedtest red UP ')
+
+        # remove limit
+        plt.ylim(bottom = 0.)
+        plt.grid(True)
+
+        plt.xticks(rotation='vertical')
+        plt.tight_layout()
+        plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 6)
+ 
+        #print (self.output)
+        #fig.savefig(self.output, bbox_inches='tight')
+
+    
+        plt.show()
+
+
+
+
+
+    
+
+
 
 if __name__ == "__main__":  
     config_file =  '/Users/klein/git/speedtest/config/PlotHistory.json'
-    PH = PlotHistory(config_file = config_file , begin_time="2022-10-22",end_time = "2022-10-29")
+    PH = PlotHistory(config_file = config_file , begin_time="2022-12-03",end_time = "2023-01-12")
     PH.loop_over_data_file()
+    PH.plot_speed()
    

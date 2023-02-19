@@ -3,9 +3,9 @@
     "Input" :{
         "begin_time"        : "2022-09-08" ,
         "end_time"          : "2023-02-01",
-        "input_dir"         : "/Users/klein/scratch/lc17/",
+        "input_dir"         : "/Users/klein/scratch/LC04/",
         "fmt"               : "%Y-%m-%d",
-        "speed_box"         : "LC17"
+        "speed_box"         : "LC04"
         
     },
     "Output" : {
@@ -14,6 +14,11 @@
     },
     "Math"  : {
         "rolling_time_window" : "20"
+    },
+
+    "DB"    : {
+        "drop_columns"      : ["server name","server id", "latency","jitter","package","latency measured"],
+        "plot_columns"         : ["download","upload"]
     }
 
 }
