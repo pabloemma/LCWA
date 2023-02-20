@@ -6,7 +6,7 @@ Author: Andi Klein
 
 Copyright (c) 2023 panda woodworking
 
-version 0.1
+version 1.0
 '''
 
 import pandas as pd
@@ -26,6 +26,10 @@ class PlotHistory(object):
             dir         : backup directory
             
             '''
+        self.print_header()
+
+
+        
         self.begin_time = begin_time # format has to be of the form yyyy-mm-dd
         self.end_time = end_time
         self.input_dir = input_dir
@@ -40,6 +44,13 @@ class PlotHistory(object):
         self.file_name_end = 'speedfile.csv' 
         self.get_beginning_and_end()  # get the dates as date time
 
+    def print_header(self)
+        """keeps track ov version"""
+        version = '1.0'
+
+        print('\n \nversion ', version,' \n\n\n')
+
+        print('version 1.0 with four plots and rolling window')
 
     def read_config_file(self,config_file):
         '''reads in the json control file'''
