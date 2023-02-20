@@ -21,6 +21,10 @@
         "drop_columns"      : ["server name","server id", "latency","jitter","package","latency measured"],
         "plot_columns"         : ["download","upload"],
         "rolling_points"        : "100"
+    },
+    "Plot" : {
+        "y_bottom_limit"      : "0.",
+        "y_top_limit"         : "60."
     }
 
 }

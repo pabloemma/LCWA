@@ -76,6 +76,10 @@ class PlotHistory(object):
             self.plot_columns = myconf['DB']['plot_columns']
             self.rolling_points = int(myconf['DB']['rolling_points'])
 
+            #plot control
+            self.y_bottom_limit = float(myconf['Plot']['y_bottom_limit'])
+            self.y_top_limit = float(myconf['Plot']['y_top_limit'])
+
         return
     
 
@@ -172,7 +176,7 @@ class PlotHistory(object):
 
 
 
-    def plot_speed(self):
+    def plot_speed_old(self):
         """plots the up and download"""
 
         fig = plt.figure()
@@ -205,6 +209,68 @@ class PlotHistory(object):
         plt.xticks(rotation='vertical')
         plt.tight_layout()
         plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 6)
+ 
+        #print (self.output)
+        
+        fig.savefig(self.outfile, bbox_inches='tight')
+
+    
+        plt.show()
+
+
+    def plot_speed(self):
+        """plots the up and download"""
+
+        fig = plt.figure()
+        axe = []
+        axe.append(fig.add_subplot(2,2,4))
+        axe.append(fig.add_subplot(2,2,3))
+        axe.append(fig.add_subplot(2,2,2))
+        axe.append(fig.add_subplot(2,2,1))
+        #ax.text(.05,.95,'iperf and ookla on'+' '+self.DigIP(),weight='bold',transform=ax.transAxes,fontsize=11)
+
+       
+            #axe[k].set_xticks(rotation='vertical')
+            #axe[k].tight_layout()
+            #axe[k].legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 6)
+
+        #plt.title('Speedtest LCWA '+self.InputFile)
+
+
+
+    
+        #plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["download"],'bs',label='\n iperf blue DOWN ')
+        #plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["upload"],'g^',label='\n iperf green UP ')
+        #plt.plot(self.master_frame["Time"],self.master_frame["download"],'ks',label='\n speedtest black DOWN ')
+        #plt.plot(self.master_frame["Time"],self.master_frame["upload"],'r^',label='\n speedtest red UP ')
+        axe[2].plot(self.master_frame["Time"],self.master_frame["Rolling_up"],color='green',linestyle='-',label='\n speedtest green DOWN ')
+        axe[3].plot(self.master_frame["Time"],self.master_frame["Rolling_down"],color='red',linestyle='-',label='\n speedtest red UP ')
+        axe[0].plot(self.master_frame["Time"],self.master_frame["upload"],color='green',linestyle='-',label='\n speedtest red UP ')
+        axe[1].plot(self.master_frame["Time"],self.master_frame["download"],color='red',linestyle='-',label='\n speedtest red UP ')
+        
+        # remove limit
+         #ax.xaxis.set_major_locator(md.MinuteLocator(interval=6000))
+
+        #for xticks
+        #first determine how many x tenries we have
+        x_spread = self.master_frame.shape[0]
+        # now we just want 6 ticks
+        interval = int(x_spread/6)
+        x_ticks = self.master_frame["Time"][::interval]
+        for k in range(0,4):
+            axe[k].tick_params('x',labelrotation = 45.)
+            axe[k].set_xticks(x_ticks)
+            axe[k].xaxis.set_major_formatter(md.DateFormatter('%m-%d'))
+            axe[k].set_xlabel('Time')
+            axe[k].set_ylabel('Speed in Mbs')
+            axe[k].set_ylim(bottom = self.y_bottom_limit,top = self.y_top_limit)
+            axe[k].grid(True)
+
+
+        plt.tight_layout()
+
+
+        #plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 6)
  
         #print (self.output)
         
