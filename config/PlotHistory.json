@@ -3,10 +3,10 @@
     "Input" :{
         "begin_time"        : "2022-09-17" ,
         "end_time"          : "2023-02-01",
-        "input_dir"         : "/Users/klein/scratch/LC12/",
+        "input_dir"         : "/Users/klein/scratch/LC04/",
         "fmt"               : "%Y-%m-%d",
         "outfile"           :"/Users/klein/scratch/LC12_rolling.pdf",
-        "speed_box"         : "LC12"
+        "speed_box"         : "LC04"
         
     },
     "Output" : {
@@ -18,10 +18,10 @@
     },
 
     "DB"    : {
-        "drop_columns"      : ["server id", "latency","jitter","package","latency measured"],
+        "drop_columns"      : ["server id","jitter","package"],
         "plot_columns"         : ["download","upload"],
         "select_test"           : "Speed",
-        "rolling_points"        : "101"
+        "rolling_points"        : "10"
     },
     "Plot" : {
         "y_bottom_limit"      : "0.",

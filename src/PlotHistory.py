@@ -168,6 +168,7 @@ class PlotHistory(object):
         #create rolling mean
         self.master_frame["Rolling_up"] = self.master_frame.upload.rolling(self.rolling_points).mean()
         self.master_frame["Rolling_down"] = self.master_frame.download.rolling(self.rolling_points).mean()
+        self.master_frame["Rolling_latency"] = (self.master_frame["latency measured"].rolling(self.rolling_points).mean())*.5
 
 
         #save master frame 
@@ -198,47 +199,7 @@ class PlotHistory(object):
 
 
 
-    def plot_speed_old(self):
-        """plots the up and download"""
-
-        fig = plt.figure()
-        ax=fig.add_subplot(1,1,1)
-        #ax.text(.05,.95,'iperf and ookla on'+' '+self.DigIP(),weight='bold',transform=ax.transAxes,fontsize=11)
-
-        #ax.xaxis.set_major_locator(md.MinuteLocator(interval=6000))
-        ax.xaxis.set_major_formatter(md.DateFormatter('%m-%d'))
-        plt.xlabel('Time')
-        plt.ylabel('Speed in Mbs')
-
-        #plt.title('Speedtest LCWA '+self.InputFile)
-
-
-
     
-        #plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["download"],'bs',label='\n iperf blue DOWN ')
-        #plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["upload"],'g^',label='\n iperf green UP ')
-        #plt.plot(self.master_frame["Time"],self.master_frame["download"],'ks',label='\n speedtest black DOWN ')
-        #plt.plot(self.master_frame["Time"],self.master_frame["upload"],'r^',label='\n speedtest red UP ')
-        #plt.plot(self.master_frame["Time"],self.master_frame["upload"],color='green',linestyle='-',label='\n speedtest red UP ')
-        #plt.plot(self.master_frame["Time"],self.master_frame["download"],color='red',linestyle='-',label='\n speedtest red UP ')
-        plt.plot(self.master_frame["Time"],self.master_frame["Rolling_up"],color='green',linestyle='-',label='\n speedtest green DOWN ')
-        plt.plot(self.master_frame["Time"],self.master_frame["Rolling_down"],color='red',linestyle='-',label='\n speedtest red UP ')
-        
-        # remove limit
-        plt.ylim(bottom = 0.)
-        plt.grid(True)
-
-        plt.xticks(rotation='vertical')
-        plt.tight_layout()
-        plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 6)
- 
-        #print (self.output)
-        
-        fig.savefig(self.outfile, bbox_inches='tight')
-
-    
-        plt.show()
-
 
     def plot_speed(self):
         """plots the up and download"""
@@ -267,8 +228,10 @@ class PlotHistory(object):
         #plt.plot(self.master_frame["Time"],self.master_frame["upload"],'r^',label='\n speedtest red UP ')
         axe[2].plot(self.master_frame["Time"],self.master_frame["Rolling_up"],color='green',linestyle='-',label='\n speedtest green UP rolling ')
         axe[3].plot(self.master_frame["Time"],self.master_frame["Rolling_down"],color='red',linestyle='-',label='\n speedtest red DOWN rolling ')
+        axe[3].plot(self.master_frame["Time"],self.master_frame["Rolling_latency"],color='black',linestyle='-',label='rolling latency scaled by .5 black ')
         axe[0].plot(self.master_frame["Time"],self.master_frame["upload"],color='green',linestyle='-',label='\n speedtest green UP ')
         axe[1].plot(self.master_frame["Time"],self.master_frame["download"],color='red',linestyle='-',label='\n speedtest red DOWN ')
+        axe[1].plot(self.master_frame["Time"],self.master_frame["latency measured"]*.1,color='black',linestyle='-',label='latency rescaled .1 ')
         
         # remove limit
          #ax.xaxis.set_major_locator(md.MinuteLocator(interval=6000))
@@ -317,7 +280,7 @@ class PlotHistory(object):
 
 if __name__ == "__main__":  
     config_file =  '/Users/klein/git/speedtest/config/PlotHistory.json'
-    PH = PlotHistory(config_file = config_file , begin_time="2022-11-10",end_time = "2023-02-19")
+    PH = PlotHistory(config_file = config_file , begin_time="2023-01-19",end_time = "2023-02-19")
     PH.loop_over_data_file()
     PH.plot_speed()
    
