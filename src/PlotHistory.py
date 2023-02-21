@@ -29,7 +29,7 @@ class PlotHistory(object):
         self.print_header()
 
 
-        
+
         self.begin_time = begin_time # format has to be of the form yyyy-mm-dd
         self.end_time = end_time
         self.input_dir = input_dir
@@ -44,7 +44,7 @@ class PlotHistory(object):
         self.file_name_end = 'speedfile.csv' 
         self.get_beginning_and_end()  # get the dates as date time
 
-    def print_header(self)
+    def print_header(self):
         """keeps track ov version"""
         version = '1.0'
 
@@ -86,16 +86,20 @@ class PlotHistory(object):
             #self.drop_columns = []
             self.plot_columns = myconf['DB']['plot_columns']
             self.rolling_points = int(myconf['DB']['rolling_points'])
+            self.select_test = myconf['DB']['select_test']
 
             #plot control
             self.y_bottom_limit = float(myconf['Plot']['y_bottom_limit'])
             self.y_top_limit = float(myconf['Plot']['y_top_limit'])
-
+            self.figure_width = int(myconf['Plot']['figure_width'])
+            self.figure_height = int(myconf['Plot']['figure_height'])
         return
     
 
     def loop_over_data_file(self):
-        '''This is the main loop, over all the data files, we read in one file after the other'''
+        """This is the main loop, over all the data files, we read in one file after the other
+        if the datafile has already server name it requires that you either choose
+        iperf3 or Speed for the selection. Please note that iperf3 has a space in its first position."""
 
         # open first file and read into a panda structure
         temp_time = self.begin_time
@@ -115,6 +119,11 @@ class PlotHistory(object):
 
         # now create first data frame
         data = pd.read_csv(inputfile)
+
+        #check if we have server name
+
+        data = self.select_data_test(data)
+        
         if(self.DEBUG):
             print(data.head())
         #now drop the columns we don't need:
@@ -130,6 +139,8 @@ class PlotHistory(object):
             try:
                 inputfile = self.file_name_beg + next_day + self.file_name_end
                 temp = pd.read_csv(inputfile)
+                temp = self.select_data_test(temp)
+
                 temp.drop(self.drop_columms, axis=1, inplace=True)
 
                 if(self.DEBUG):
@@ -232,7 +243,7 @@ class PlotHistory(object):
     def plot_speed(self):
         """plots the up and download"""
 
-        fig = plt.figure()
+        fig = plt.figure(figsize=(self.figure_width,self.figure_height))
         axe = []
         axe.append(fig.add_subplot(2,2,4))
         axe.append(fig.add_subplot(2,2,3))
@@ -254,10 +265,10 @@ class PlotHistory(object):
         #plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["upload"],'g^',label='\n iperf green UP ')
         #plt.plot(self.master_frame["Time"],self.master_frame["download"],'ks',label='\n speedtest black DOWN ')
         #plt.plot(self.master_frame["Time"],self.master_frame["upload"],'r^',label='\n speedtest red UP ')
-        axe[2].plot(self.master_frame["Time"],self.master_frame["Rolling_up"],color='green',linestyle='-',label='\n speedtest green DOWN ')
-        axe[3].plot(self.master_frame["Time"],self.master_frame["Rolling_down"],color='red',linestyle='-',label='\n speedtest red UP ')
-        axe[0].plot(self.master_frame["Time"],self.master_frame["upload"],color='green',linestyle='-',label='\n speedtest red UP ')
-        axe[1].plot(self.master_frame["Time"],self.master_frame["download"],color='red',linestyle='-',label='\n speedtest red UP ')
+        axe[2].plot(self.master_frame["Time"],self.master_frame["Rolling_up"],color='green',linestyle='-',label='\n speedtest green UP rolling ')
+        axe[3].plot(self.master_frame["Time"],self.master_frame["Rolling_down"],color='red',linestyle='-',label='\n speedtest red DOWN rolling ')
+        axe[0].plot(self.master_frame["Time"],self.master_frame["upload"],color='green',linestyle='-',label='\n speedtest green UP ')
+        axe[1].plot(self.master_frame["Time"],self.master_frame["download"],color='red',linestyle='-',label='\n speedtest red DOWN ')
         
         # remove limit
          #ax.xaxis.set_major_locator(md.MinuteLocator(interval=6000))
@@ -276,22 +287,28 @@ class PlotHistory(object):
             axe[k].set_ylabel('Speed in Mbs')
             axe[k].set_ylim(bottom = self.y_bottom_limit,top = self.y_top_limit)
             axe[k].grid(True)
+            axe[k].legend(facecolor='ivory',loc="lower center",shadow=False, fancybox=False,fontsize = 6)
 
+
+ 
+
+        
+        #print (self.output)
+        make_title = "Speedbox "+self.speed_box+" "+self.select_test +'\n'+self.begin_time+' to '+self.end_time
+        fig.suptitle(make_title, fontsize = 14)
+        fig.savefig(self.outfile, bbox_inches='tight')
 
         plt.tight_layout()
 
-
-        #plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 6)
- 
-        #print (self.output)
-        
-        fig.savefig(self.outfile, bbox_inches='tight')
-
-    
         plt.show()
 
+    def select_data_test(self,data):
+        """" this routine drops rows which do not have iperf3 or Speed on it"""
 
-
+        data = data.loc[data['server name'] == self.select_test]
+        if(self.DEBUG):
+            print(data.head())
+        return data
 
 
     
@@ -300,7 +317,7 @@ class PlotHistory(object):
 
 if __name__ == "__main__":  
     config_file =  '/Users/klein/git/speedtest/config/PlotHistory.json'
-    PH = PlotHistory(config_file = config_file , begin_time="2022-11-22",end_time = "2023-01-12")
+    PH = PlotHistory(config_file = config_file , begin_time="2022-11-10",end_time = "2023-02-19")
     PH.loop_over_data_file()
     PH.plot_speed()
    

@@ -18,13 +18,16 @@
     },
 
     "DB"    : {
-        "drop_columns"      : ["server name","server id", "latency","jitter","package","latency measured"],
+        "drop_columns"      : ["server id", "latency","jitter","package","latency measured"],
         "plot_columns"         : ["download","upload"],
-        "rolling_points"        : "100"
+        "select_test"           : "Speed",
+        "rolling_points"        : "101"
     },
     "Plot" : {
         "y_bottom_limit"      : "0.",
-        "y_top_limit"         : "60."
+        "y_top_limit"         : "60.",
+        "figure_width"         : "10",
+        "figure_height"        : "6"
     }
 
 }
