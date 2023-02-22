@@ -79,7 +79,7 @@ class MyControl(object):
                     #print(temp,'  ',item.name, '  ',item.server_modified)
                     diff = now - item.server_modified #take the difference
                     #print('difference in days',diff.days)
-                    if(diff.days > 4 ):
+                    if(diff.days > -1 ):  # changed to -1 so that we backup every day
                         print ('name = ' , item.name)
                         print ('path  = ', item.path_display )
                         print ('fileID = ' , item.id)
@@ -88,9 +88,10 @@ class MyControl(object):
                         backupfile = self.backupdir+item.name
                         print("backing up file ",item.path_display, ' to',backupfile)
                         self.PA.dbx.files_download_to_file(backupfile,item.path_display)
-                       
-                        print("deleting file ",item.path_display )
-                        self.PA.dbx.files_delete(item.path_display)
+                        if(diff.days > 4 ):  # changed to -1 so that we backup every day
+ 
+                            print("deleting file ",item.path_display )
+                            self.PA.dbx.files_delete(item.path_display)
                     
     def MailPlot(self,recipient_list): 
         """will send the plots to people in the email list""" 
@@ -162,8 +163,8 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_d.txt'
         #tempdir = 'scratch'
-        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-02-14')
-        self.PA =PA =PL.PlotAll(token_file,dirlist)
+        self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-02-22')
+        #self.PA =PA =PL.PlotAll(token_file,dirlist)
         PA.ConnectDropbox()
         PA.GetFiles() 
         PA.PushFileDropbox()
