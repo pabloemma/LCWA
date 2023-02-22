@@ -3,10 +3,10 @@
     "Input" :{
         "begin_time"        : "2022-09-17" ,
         "end_time"          : "2023-02-01",
-        "input_dir"         : "/Users/klein/scratch/LC04/",
+        "input_dir"         : "/Users/klein/scratch/LCWA_backup/",
         "fmt"               : "%Y-%m-%d",
-        "outfile"           :"/Users/klein/scratch/LC12_rolling.pdf",
-        "speed_box"         : "LC04"
+        "outfile"           :"/Users/klein/scratch/LC23_rolling.pdf",
+        "speed_box"         : "LC23"
         
     },
     "Output" : {
