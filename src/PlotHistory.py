@@ -287,7 +287,7 @@ class PlotHistory(object):
 
 if __name__ == "__main__":  
     config_file =  '/Users/klein/git/speedtest/config/PlotHistory.json'
-    PH = PlotHistory(config_file = config_file , begin_time="2023-02-10",end_time = "2023-02-21")
+    PH = PlotHistory(config_file = config_file , begin_time="2023-02-21",end_time = "2023-02-23")
     PH.loop_over_data_file()
     PH.plot_speed()
    

@@ -79,7 +79,7 @@ class MyControl(object):
                     #print(temp,'  ',item.name, '  ',item.server_modified)
                     diff = now - item.server_modified #take the difference
                     #print('difference in days',diff.days)
-                    if(diff.days == 0 ):  # changed to -1 so that we backup every day
+                    if(diff.days == 1 ):  # changed to -1 so that we backup every day
                         print ('name = ' , item.name)
                         print ('path  = ', item.path_display )
                         print ('fileID = ' , item.id)
@@ -270,8 +270,8 @@ if __name__ == '__main__':
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
     # for a different date use the line 132
-    start = datetime.time(7,25)
-    end = datetime.time(8,50)
+    #start = datetime.time(7,25)
+    #end = datetime.time(8,50)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     

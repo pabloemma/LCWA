@@ -6,7 +6,7 @@
         "input_dir"         : "/Users/klein/LCWA_backup/LCWA_backup/",
         "fmt"               : "%Y-%m-%d",
         "outfile"           :"/Users/klein/LCWA_backup/plots/",
-        "speed_box"         : "LC18"
+        "speed_box"         : "LC12"
         
     },
     "Output" : {
