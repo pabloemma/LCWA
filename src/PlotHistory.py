@@ -308,7 +308,7 @@ class PlotHistory(object):
 
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
-    PH = PlotHistory(config_file = config_file , begin_time="2023-02-21",end_time = "2023-02-23")
+    PH = PlotHistory(config_file = config_file , begin_time="2022-09-20",end_time = "2023-02-23",speed_box = 'LC04')
     PH.loop_over_data_file()
     PH.plot_speed()
    
