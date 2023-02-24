@@ -3,10 +3,10 @@
     "Input" :{
         "begin_time"        : "2022-09-17" ,
         "end_time"          : "2023-02-01",
-        "input_dir"         : "/Users/klein/scratch/LCWA_backup/",
+        "input_dir"         : "/Users/klein/LCWA_backup/LCWA_backup/",
         "fmt"               : "%Y-%m-%d",
-        "outfile"           :"/Users/klein/scratch/LC23_rolling.pdf",
-        "speed_box"         : "LC23"
+        "outfile"           :"/Users/klein/LCWA_backup/plots/",
+        "speed_box"         : "LC18"
         
     },
     "Output" : {
@@ -21,7 +21,7 @@
         "drop_columns"      : ["server id","jitter","package"],
         "plot_columns"         : ["download","upload"],
         "select_test"           : "Speed",
-        "rolling_points"        : "10"
+        "rolling_points"        : "0"
     },
     "Plot" : {
         "y_bottom_limit"      : "0.",

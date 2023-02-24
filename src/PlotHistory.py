@@ -74,7 +74,7 @@ class PlotHistory(object):
                 self.speed_box = myconf['Input']['speed_box']
 
             self.fmt                = myconf['Input']['fmt']
-            self.outfile                = myconf['Input']['outfile']
+            self.outfile                = myconf['Input']['outfile'] #Really only the output file directory
             
             #Math values
             # the rolling time window to average over
@@ -85,7 +85,7 @@ class PlotHistory(object):
             self.drop_columms = myconf['DB']['drop_columns'] # columns to be dropped from the database
             #self.drop_columns = []
             self.plot_columns = myconf['DB']['plot_columns']
-            self.rolling_points = int(myconf['DB']['rolling_points'])
+            self.rolling_points = int(myconf['DB']['rolling_points']) #if 0 we cacluate it
             self.select_test = myconf['DB']['select_test']
 
             #plot control
@@ -164,8 +164,14 @@ class PlotHistory(object):
         self.master_frame["Time"] = pd.to_datetime(self.master_frame['day']+self.master_frame['time'],format='%d/%m/%Y%H:%M:%S')
         if(self.DEBUG):
             print(self.master_frame.head())
-
-        #create rolling mean
+        #
+        #determine the rolling point numbers
+        if self.rolling_points == 0:
+            #check length of data frame
+            nevent = self.master_frame.shape[0]
+            # assume we can plot 200 points then we need nevent/200 rolling points
+            self.rolling_points = int(nevent/100)
+        #crfeate rolling mean
         self.master_frame["Rolling_up"] = self.master_frame.upload.rolling(self.rolling_points).mean()
         self.master_frame["Rolling_down"] = self.master_frame.download.rolling(self.rolling_points).mean()
         self.master_frame["Rolling_latency"] = (self.master_frame["latency measured"].rolling(self.rolling_points).mean())*.5
@@ -259,6 +265,7 @@ class PlotHistory(object):
         #print (self.output)
         make_title = "Speedbox "+self.speed_box+" "+self.select_test +'\n'+self.begin_time+' to '+self.end_time
         fig.suptitle(make_title, fontsize = 14)
+        self.outfile = self.outfile+self.speed_box+'_rolling.pdf'
         fig.savefig(self.outfile, bbox_inches='tight')
 
         plt.tight_layout()
@@ -280,7 +287,7 @@ class PlotHistory(object):
 
 if __name__ == "__main__":  
     config_file =  '/Users/klein/git/speedtest/config/PlotHistory.json'
-    PH = PlotHistory(config_file = config_file , begin_time="2023-01-19",end_time = "2023-02-19")
+    PH = PlotHistory(config_file = config_file , begin_time="2023-02-10",end_time = "2023-02-21")
     PH.loop_over_data_file()
     PH.plot_speed()
    

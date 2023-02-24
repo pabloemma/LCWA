@@ -87,7 +87,10 @@ class MyControl(object):
                     # here we backup and delete the files
                         backupfile = self.backupdir+item.name
                         print("backing up file ",item.path_display, ' to',backupfile)
-                        self.PA.dbx.files_download_to_file(backupfile,item.path_display)
+                        try:
+                            self.PA.dbx.files_download_to_file(backupfile,item.path_display)
+                        except:
+                            print("problems with backing up ",item.path_display )
                         if(diff.days > 4 ):  # changed to -1 so that we backup every day
  
                             print("deleting file ",item.path_display )
@@ -163,7 +166,7 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_d.txt'
         #tempdir = 'scratch'
-        self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-02-22')
+        self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-02-23')
         #self.PA =PA =PL.PlotAll(token_file,dirlist)
         PA.ConnectDropbox()
         PA.GetFiles() 
