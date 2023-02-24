@@ -29,11 +29,19 @@ class PlotHistory(object):
             '''
         # deal with mac vs linux config file
         temp = config_file.split('.')
+        # get home directory
+        homedir = str(Path.home())
+
+        # create location of tree
+        config_dir = homedir+'/git/speedtest/config/'
+
         # determine os
         if (pf.system() == 'Linux'):
-            config_file = temp[0]+'_linux.' +temp[1]
+            config_file = config_dir+temp[0]+'_linux.' +temp[1]
         elif(pf.system() == 'Windowes'):
-            config_file = temp[0]+'_windows.' +temp[1]
+            config_file = config_dir+temp[0]+'_windows.' +temp[1]
+        else:
+            config_file = config_dir+config_file
 
         #Mac is default
 
@@ -299,7 +307,7 @@ class PlotHistory(object):
 
 
 if __name__ == "__main__":  
-    config_file =  '/Users/klein/git/speedtest/config/PlotHistory.json'
+    config_file =  'PlotHistory.json'
     PH = PlotHistory(config_file = config_file , begin_time="2023-02-21",end_time = "2023-02-23")
     PH.loop_over_data_file()
     PH.plot_speed()
