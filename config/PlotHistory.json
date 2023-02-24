@@ -3,7 +3,7 @@
     "Input" :{
         "begin_time"        : "2022-09-17" ,
         "end_time"          : "2023-02-01",
-        "input_dir"         : "/Users/klein/LCWA_backup/LCWA_backup/",
+        "input_dir"         : "/Users/klein/LCWA_backup/",
         "fmt"               : "%Y-%m-%d",
         "outfile"           :"/Users/klein/LCWA_backup/plots/",
         "speed_box"         : "LC12"
