@@ -15,6 +15,7 @@ import datetime as dt
 from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.dates as md
+import platform as pf
 
 
 
@@ -26,6 +27,18 @@ class PlotHistory(object):
             dir         : backup directory
             
             '''
+        # deal with mac vs linux config file
+        temp = config_file.split('.')
+        # determine os
+        if (pf.system() == 'Linux'):
+            config_file = temp[0]+'_linux.' +temp[1]
+        elif(pf.system() == 'Windowes'):
+            config_file = temp[0]+'_windows.' +temp[1]
+
+        #Mac is default
+
+        
+        
         self.print_header()
 
 
