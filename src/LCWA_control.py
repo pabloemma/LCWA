@@ -79,7 +79,7 @@ class MyControl(object):
                     #print(temp,'  ',item.name, '  ',item.server_modified)
                     diff = now - item.server_modified #take the difference
                     #print('difference in days',diff.days)
-                    if(diff.days > -1 ):  # changed to -1 so that we backup every day
+                    if(diff.days == 0 ):  # changed to -1 so that we backup every day
                         print ('name = ' , item.name)
                         print ('path  = ', item.path_display )
                         print ('fileID = ' , item.id)
