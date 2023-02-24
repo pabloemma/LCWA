@@ -199,7 +199,7 @@ class PlotHistory(object):
 
 
         #save master frame 
-        self.master_frame.to_csv('/Users/klein/scratch/testplot.csv')
+        #self.master_frame.to_csv('/Users/klein/scratch/testplot.csv')
         if(self.DEBUG):
             print(self.master_frame.head())
 
