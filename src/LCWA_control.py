@@ -76,10 +76,10 @@ class MyControl(object):
             for item in MyDir.entries:
                 if isinstance(item, dropbox.files.FileMetadata):
                     now = datetime.datetime.now() #determine how old a file is
-                    #print(temp,'  ',item.name, '  ',item.server_modified)
+                    print('hallelujah',temp,'  ',item.name, '  ',item.server_modified)
                     diff = now - item.server_modified #take the difference
                     #print('difference in days',diff.days)
-                    if diff.days == 1 or  diff.days == 2:  # changed to or so that we backup the last 2 days
+                    if diff.days == 1 or  diff.days == 2 or  diff.days == 3:  # changed to or so that we backup the last 2 days
                         print ('name = ' , item.name)
                         print ('path  = ', item.path_display )
                         print ('fileID = ' , item.id)
