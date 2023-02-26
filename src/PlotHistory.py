@@ -93,7 +93,7 @@ class PlotHistory(object):
 
             if(self.speed_box == None):
                 self.speed_box = myconf['Input']['speed_box']
-
+            
             self.fmt                = myconf['Input']['fmt']
             self.outfile                = myconf['Input']['outfile'] #Really only the output file directory
             
@@ -308,7 +308,7 @@ class PlotHistory(object):
 
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
-    PH = PlotHistory(config_file = config_file , begin_time="2023-02-23",end_time = "2023-02-25",speed_box = 'LC04')
+    PH = PlotHistory(config_file = config_file , begin_time="2023-02-23",end_time = "2023-02-26",speed_box = 'LC04')
     PH.loop_over_data_file()
     PH.plot_speed()
    

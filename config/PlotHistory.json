@@ -6,7 +6,11 @@
         "input_dir"         : "/Users/klein/LCWA_backup/",
         "fmt"               : "%Y-%m-%d",
         "outfile"           :"/Users/klein/LCWA_backup/plots/",
-        "speed_box"         : "LC12"
+        "speed_box"         : "LC12",
+        "speed_box_list"    : ["LC01","LC02","LC03","LC04","LC05",
+                                "LC08","LC12","LC15","LC16","LC18",
+                            "LC19","LC20","LC21","LC22","LC23","LC24"]
+        
         
     },
     "Output" : {
