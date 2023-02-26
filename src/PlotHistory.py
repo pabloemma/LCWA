@@ -94,6 +94,8 @@ class PlotHistory(object):
             if(self.speed_box == None):
                 self.speed_box = myconf['Input']['speed_box']
             
+            self.speed_box_list = myconf['Input']['speed_box_list']
+            
             self.fmt                = myconf['Input']['fmt']
             self.outfile                = myconf['Input']['outfile'] #Really only the output file directory
             
@@ -116,6 +118,15 @@ class PlotHistory(object):
             self.figure_height = int(myconf['Plot']['figure_height'])
         return
     
+    def loop_over_speedboxes(self):
+        """ loops over all the speedboxes in speed_box_list"""
+        for box in self.speed_box_list:
+            self.speed_box = box
+            self.file_name_beg = self.input_dir+'/'+box+'_'
+            self.loop_over_data_file()
+            self.plot_speed()
+        
+        return
 
     def loop_over_data_file(self):
         """This is the main loop, over all the data files, we read in one file after the other
@@ -286,8 +297,8 @@ class PlotHistory(object):
         #print (self.output)
         make_title = "Speedbox "+self.speed_box+" "+self.select_test +'\n'+self.begin_time+' to '+self.end_time
         fig.suptitle(make_title, fontsize = 14)
-        self.outfile = self.outfile+self.speed_box+'_rolling.pdf'
-        fig.savefig(self.outfile, bbox_inches='tight')
+        outfile1 = self.outfile+self.speed_box+'_rolling.pdf'
+        fig.savefig(outfile1, bbox_inches='tight')
 
         plt.tight_layout()
 
@@ -309,6 +320,7 @@ class PlotHistory(object):
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
     PH = PlotHistory(config_file = config_file , begin_time="2023-02-23",end_time = "2023-02-26",speed_box = 'LC04')
-    PH.loop_over_data_file()
-    PH.plot_speed()
+    #PH.loop_over_data_file()
+    #PH.plot_speed()
+    PH.loop_over_speedboxes()
    
