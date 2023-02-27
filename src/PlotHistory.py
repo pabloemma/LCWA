@@ -67,11 +67,12 @@ class PlotHistory(object):
 
     def print_header(self):
         """keeps track ov version"""
-        version = '1.0'
+        version = '1.1'
 
         print('\n \nversion ', version,' \n\n\n')
 
         print('version 1.0 with four plots and rolling window')
+        print('version 1.1 with using list of speedboxes')
 
     def read_config_file(self,config_file):
         '''reads in the json control file'''
@@ -208,6 +209,11 @@ class PlotHistory(object):
         self.master_frame["Rolling_down"] = self.master_frame.download.rolling(self.rolling_points).mean()
         self.master_frame["Rolling_latency"] = (self.master_frame["latency measured"].rolling(self.rolling_points).mean())*.5
 
+        y_max = self.master_frame["download"].max()
+        if y_max > self.y_top_limit:
+            self.y_top_limit_plot = 1.05*y_max
+        else:
+            self.y_top_limit_plot = self.y_top_limit
 
         #save master frame 
         #self.master_frame.to_csv('/Users/klein/scratch/testplot.csv')
@@ -286,7 +292,7 @@ class PlotHistory(object):
             axe[k].xaxis.set_major_formatter(md.DateFormatter('%m-%d'))
             axe[k].set_xlabel('Time')
             axe[k].set_ylabel('Speed in Mbs')
-            axe[k].set_ylim(bottom = self.y_bottom_limit,top = self.y_top_limit)
+            axe[k].set_ylim(bottom = self.y_bottom_limit,top = self.y_top_limit_plot)
             axe[k].grid(True)
             axe[k].legend(facecolor='ivory',loc="lower center",shadow=False, fancybox=False,fontsize = 6)
 
@@ -319,7 +325,7 @@ class PlotHistory(object):
 
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
-    PH = PlotHistory(config_file = config_file , begin_time="2023-02-23",end_time = "2023-02-26",speed_box = 'LC04')
+    PH = PlotHistory(config_file = config_file , begin_time="2023-01-01",end_time = "2023-02-27",speed_box = 'LC18')
     #PH.loop_over_data_file()
     #PH.plot_speed()
     PH.loop_over_speedboxes()
