@@ -64,6 +64,7 @@ class PlotHistory(object):
 
 
         self.begin_time = begin_time # format has to be of the form yyyy-mm-dd
+
         self.end_time = end_time
         self.input_dir = input_dir
         self.speed_box = speed_box
@@ -75,6 +76,11 @@ class PlotHistory(object):
         if(not self.loop):
             self.file_name_beg = self.input_dir+'/'+self.speed_box+'_'
         self.file_name_end = 'speedfile.csv' 
+        if(self.end_time == 'Today'):
+            a = dt.datetime.now() # needed for loop up to today
+            b=a++dt.timedelta(1)
+            self.end_time=dt.datetime.strftime(b,self.fmt)
+            self.end_time_plot = dt.datetime.strftime(a,self.fmt)
         self.get_beginning_and_end()  # get the dates as date time
 
     def print_header(self):
@@ -326,7 +332,7 @@ class PlotHistory(object):
 
         
         #print (self.output)
-        make_title = "Speedbox "+self.speed_box+" "+self.select_test +'\n'+self.begin_time+' to '+self.end_time
+        make_title = "Speedbox "+self.speed_box+" "+self.select_test +'\n'+self.begin_time+' to '+self.end_time_plot
         fig.suptitle(make_title, fontsize = 14)
         outfile1 = self.outfile+self.speed_box+'_rolling.pdf'
         fig.savefig(outfile1, bbox_inches='tight')
@@ -350,11 +356,11 @@ class PlotHistory(object):
 
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
-    #speed_box = None
-    speed_box = 'LC18'
-    PH = PlotHistory(config_file = config_file , begin_time="2023-01-01",end_time = "2023-02-27",speed_box = speed_box)
-    #PH.loop_over_data_file()
-    #PH.plot_speed()
-    #PH.loop_over_speedboxes()
+    speed_box = None #creates loop
+    #speed_box = 'LC18' # sngle speedbox
+    begin_time="2023-01-01"
+    end_time = 'Today'
+    #end_time = "2023-02-27"
+    PH = PlotHistory(config_file = config_file , begin_time=begin_time,end_time = end_time,speed_box = speed_box)
     PH.run_program()
    
