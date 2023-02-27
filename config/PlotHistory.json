@@ -29,8 +29,8 @@
     "Plot" : {
         "y_bottom_limit"      : "0.",
         "y_top_limit"         : "60.",
-        "figure_width"         : "10",
-        "figure_height"        : "6"
+        "figure_width"         : "12",
+        "figure_height"        : "8"
     }
 
 }

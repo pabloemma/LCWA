@@ -18,6 +18,42 @@ if there is a speedbox listed it will do a single run, otherwise it will do the 
 There is one iodsyncrasy still left. If a dropbox directory is empty for a speedbox in the list, it
 will plot again the previous speedbox. So cave ceasar.
 
+config file:
+    
+    "Input" :{
+        "begin_time"        : "2022-09-17" ,
+        "end_time"          : "2023-02-01",
+        "input_dir"         : "/Users/klein/LCWA_backup/",
+        "fmt"               : "%Y-%m-%d", # datetime format
+        "outfile"           :"/Users/klein/LCWA_backup/plots/", #output directory
+        "speed_box_list"    : ["LC01","LC02","LC03","LC04","LC05",
+                                "LC08","LC12","LC15","LC16","LC18",
+                            "LC20","LC21","LC22","LC23","LC24"] #list of speedboxes
+        
+        
+    },
+    "Output" : {
+        "temp_dir"          : "scratch/"
+
+    },
+    "Math"  : {
+        "rolling_time_window" : "20" 
+    },
+
+    "DB"    : {
+        "drop_columns"      : ["server id","jitter","package"], # list of columns to be dropped from file
+        "plot_columns"         : ["download","upload"], 
+        "select_test"           : "Speed", #either "Speed" or " iperf3" (note the space)
+        "rolling_points"        : "0" #how many rolling points: 0 the program determines the points
+    },
+    "Plot" : {
+        "y_bottom_limit"      : "0.",
+        "y_top_limit"         : "60.", #max y, however if max in distribution is higher than limit, it creates new limit by using 1.05* max
+        "figure_width"         : "12", # display size
+        "figure_height"        : "8"
+    }
+
+
 
 '''
 
