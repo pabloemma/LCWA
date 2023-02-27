@@ -7,6 +7,18 @@ Author: Andi Klein
 Copyright (c) 2023 panda woodworking
 
 version 1.0
+
+
+Usage:
+Eveything can be controlled through the PlotHistory.json file. There are two modes,
+single speedbox and loop ver a list of speedboxes. The dates are either slected through the config file
+or the call of the main routine:
+   PH = PlotHistory(config_file = config_file , begin_time="2023-01-01",end_time = "2023-02-27",speed_box = 'LC18').
+if there is a speedbox listed it will do a single run, otherwise it will do the list of speedboxes.
+There is one iodsyncrasy still left. If a dropbox directory is empty for a speedbox in the list, it
+will plot again the previous speedbox. So cave ceasar.
+
+
 '''
 
 import pandas as pd
@@ -60,19 +72,20 @@ class PlotHistory(object):
  
         # read configuration
         self.read_config_file(config_file)
-    
-        self.file_name_beg = self.input_dir+'/'+self.speed_box+'_'
+        if(not self.loop):
+            self.file_name_beg = self.input_dir+'/'+self.speed_box+'_'
         self.file_name_end = 'speedfile.csv' 
         self.get_beginning_and_end()  # get the dates as date time
 
     def print_header(self):
         """keeps track ov version"""
-        version = '1.1'
+        version = '1.2'
 
         print('\n \nversion ', version,' \n\n\n')
 
         print('version 1.0 with four plots and rolling window')
         print('version 1.1 with using list of speedboxes')
+        print('version 1.2 selects loop over single run depending on choosing a speedbox')
 
     def read_config_file(self,config_file):
         '''reads in the json control file'''
@@ -93,8 +106,10 @@ class PlotHistory(object):
                 self.input_dir = myconf['Input']['input_dir']
 
             if(self.speed_box == None):
-                self.speed_box = myconf['Input']['speed_box']
-            
+                #self.speed_box = myconf['Input']['speed_box']
+                self.loop=True
+            else:
+                self.loop = False
             self.speed_box_list = myconf['Input']['speed_box_list']
             
             self.fmt                = myconf['Input']['fmt']
@@ -128,6 +143,16 @@ class PlotHistory(object):
             self.plot_speed()
         
         return
+    def run_program(self):
+        """Main routine, selects single box or loop depending on
+        self.loop =True or False"""
+        if( not self.loop):
+            self.loop_over_data_file()
+            self.plot_speed()
+            return
+        else:
+            self.loop_over_speedboxes()
+            return
 
     def loop_over_data_file(self):
         """This is the main loop, over all the data files, we read in one file after the other
@@ -325,8 +350,11 @@ class PlotHistory(object):
 
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
-    PH = PlotHistory(config_file = config_file , begin_time="2023-01-01",end_time = "2023-02-27",speed_box = 'LC18')
+    #speed_box = None
+    speed_box = 'LC18'
+    PH = PlotHistory(config_file = config_file , begin_time="2023-01-01",end_time = "2023-02-27",speed_box = speed_box)
     #PH.loop_over_data_file()
     #PH.plot_speed()
-    PH.loop_over_speedboxes()
+    #PH.loop_over_speedboxes()
+    PH.run_program()
    
