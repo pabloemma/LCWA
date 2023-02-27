@@ -1,0 +1,36 @@
+{
+    
+    "Input" :{
+        "begin_time"        : "2022-09-17" ,
+        "end_time"          : "2023-02-01",
+        "input_dir"         : "/home/klein/LCWA_backup/",
+        "fmt"               : "%Y-%m-%d",
+        "outfile"           :"/home/klein/LCWA_backup/plots/",
+        "speed_box_list"    : ["LC01","LC02","LC03","LC04","LC05",
+                                "LC08","LC12","LC15","LC16","LC18",
+                            "LC20","LC21","LC22","LC23","LC24"]
+ 
+        
+    },
+    "Output" : {
+        "temp_dir"          : "scratch/"
+
+    },
+    "Math"  : {
+        "rolling_time_window" : "20"
+    },
+
+    "DB"    : {
+        "drop_columns"      : ["server id","jitter","package"],
+        "plot_columns"         : ["download","upload"],
+        "select_test"           : "Speed",
+        "rolling_points"        : "10"
+    },
+    "Plot" : {
+        "y_bottom_limit"      : "0.",
+        "y_top_limit"         : "60.",
+        "figure_width"         : "10",
+        "figure_height"        : "6"
+    }
+
+}
