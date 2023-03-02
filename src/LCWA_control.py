@@ -68,15 +68,16 @@ class MyControl(object):
             
         for k in range(len(dirlist)):
             temp = '/LCWA/'+dirlist[k] # file on dropbox
-            print('now checking ',temp)
+            #print('now checking ',temp)
 
         
             MyDir = self.PA.dbx.files_list_folder(temp) #do NOT use recursive, since that does not work for shared folders
         
             for item in MyDir.entries:
+                #print("item",item,' ',MyDir.entries)
                 if isinstance(item, dropbox.files.FileMetadata):
                     now = datetime.datetime.now() #determine how old a file is
-                    print('hallelujah',temp,'  ',item.name, '  ',item.server_modified)
+                    #print('hallelujah',temp,'  ',item.name, '  ',item.server_modified)
                     diff = now - item.server_modified #take the difference
                     #print('difference in days',diff.days)
                     #if diff.days == 1 or  diff.days == 2 or  diff.days == 3:  # changed to or so that we backup the last 2 days
@@ -89,7 +90,8 @@ class MyControl(object):
                         backupfile = self.backupdir+item.name
                         print("backing up file ",item.path_display, ' to',backupfile)
                         try:
-                            self.PA.dbx.files_download_to_file(backupfile,item.path_display)
+                            a = self.PA.dbx.files_download_to_file(backupfile,item.path_display)
+                            #print("return type ",a)
                         except:
                             print("problems with backing up ",item.path_display )
                         if(diff.days > 4 ):  # changed to -1 so that we backup every day
@@ -167,8 +169,8 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_d.txt'
         #tempdir = 'scratch'
-        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-02-23')
-        self.PA =PA =PL.PlotAll(token_file,dirlist)
+        self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-03-01')
+        #self.PA =PA =PL.PlotAll(token_file,dirlist)
         PA.ConnectDropbox()
         PA.GetFiles() 
         PA.PushFileDropbox()

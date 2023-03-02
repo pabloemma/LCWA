@@ -16,7 +16,8 @@ or the call of the main routine:
    PH = PlotHistory(config_file = config_file , begin_time="2023-01-01",end_time = "2023-02-27",speed_box = 'LC18').
 if there is a speedbox listed it will do a single run, otherwise it will do the list of speedboxes.
 There is one iodsyncrasy still left. If a dropbox directory is empty for a speedbox in the list, it
-will plot again the previous speedbox. So cave ceasar.
+will plot again the previous speedbox. So cave ceasar. There is still a problem: if the data file does not exists
+it won't show zeros but a straight line connecting the points of the next day where it exists again.
 
 config file:
     
@@ -356,7 +357,7 @@ class PlotHistory(object):
         for k in range(0,4):
             axe[k].tick_params('x',labelrotation = 45.)
             axe[k].set_xticks(x_ticks)
-            axe[k].xaxis.set_major_formatter(md.DateFormatter('%m-%d'))
+            axe[k].xaxis.set_major_formatter(md.DateFormatter('%m-%d-%H-%M'))
             axe[k].set_xlabel('Time')
             axe[k].set_ylabel('Speed in Mbs')
             axe[k].set_ylim(bottom = self.y_bottom_limit,top = self.y_top_limit_plot)
@@ -393,8 +394,8 @@ class PlotHistory(object):
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
     speed_box = None #creates loop
-    #speed_box = 'LC18' # sngle speedbox
-    begin_time="2023-01-01"
+    #speed_box = 'LC19' # sngle speedbox
+    begin_time="2023-02-01"
     end_time = 'Today'
     #end_time = "2023-02-27"
     PH = PlotHistory(config_file = config_file , begin_time=begin_time,end_time = end_time,speed_box = speed_box)
