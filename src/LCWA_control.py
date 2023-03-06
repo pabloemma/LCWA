@@ -88,7 +88,7 @@ class MyControl(object):
                         print ('date = ', item.server_modified)
                     # here we backup and delete the files
                         backupfile = self.backupdir+item.name
-                        print("backing up file ",item.path_display, ' to',backupfile)
+                        #print("backing up file ",item.path_display, ' to',backupfile)
                         try:
                             a = self.PA.dbx.files_download_to_file(backupfile,item.path_display)
                             #print("return type ",a)
@@ -96,7 +96,7 @@ class MyControl(object):
                             print("problems with backing up ",item.path_display )
                         if(diff.days > 4 ):  # changed to -1 so that we backup every day
  
-                            print("deleting file ",item.path_display )
+                            #print("deleting file ",item.path_display )
                             self.PA.dbx.files_delete(item.path_display)
                     
     def MailPlot(self,recipient_list): 
