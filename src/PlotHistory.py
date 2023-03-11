@@ -333,13 +333,14 @@ class PlotHistory(object):
 
 
 
-    
+        rolling_label_r =  '\n speedtest red DOWN rolling '  'with '+str(self.rolling_points) + ' window'
+        rolling_label_g =  '\n speedtest green UP rolling '  'with '+str(self.rolling_points) + ' window'
         #plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["download"],'bs',label='\n iperf blue DOWN ')
         #plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["upload"],'g^',label='\n iperf green UP ')
         #plt.plot(self.master_frame["Time"],self.master_frame["download"],'ks',label='\n speedtest black DOWN ')
         #plt.plot(self.master_frame["Time"],self.master_frame["upload"],'r^',label='\n speedtest red UP ')
-        axe[2].plot(self.master_frame["Time"],self.master_frame["Rolling_up"],color='green',linestyle='-',label='\n speedtest green UP rolling ')
-        axe[3].plot(self.master_frame["Time"],self.master_frame["Rolling_down"],color='red',linestyle='-',label='\n speedtest red DOWN rolling ')
+        axe[2].plot(self.master_frame["Time"],self.master_frame["Rolling_up"],color='green',linestyle='-',label=rolling_label_g)
+        axe[3].plot(self.master_frame["Time"],self.master_frame["Rolling_down"],color='red',linestyle='-',label= rolling_label_r)
         axe[3].plot(self.master_frame["Time"],self.master_frame["Rolling_latency"],color='black',linestyle='-',label='rolling latency scaled by .5 black ')
         axe[0].plot(self.master_frame["Time"],self.master_frame["upload"],color='green',linestyle='-',label='\n speedtest green UP ')
         axe[1].plot(self.master_frame["Time"],self.master_frame["download"],color='red',linestyle='-',label='\n speedtest red DOWN ')
@@ -394,8 +395,8 @@ class PlotHistory(object):
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
     speed_box = None #creates loop
-    speed_box = 'LC08' # sngle speedbox
-    begin_time="2023-02-04"
+    #speed_box = 'LC08' # sngle speedbox
+    begin_time="2022-09-28"
     end_time = 'Today'
     #end_time = "2023-02-27"
     PH = PlotHistory(config_file = config_file , begin_time=begin_time,end_time = end_time,speed_box = speed_box)
