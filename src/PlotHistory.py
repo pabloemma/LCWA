@@ -115,7 +115,7 @@ class PlotHistory(object):
         self.file_name_end = 'speedfile.csv' 
         if(self.end_time == 'Today'):
             a = dt.datetime.now() # needed for loop up to today
-            b=a++dt.timedelta(1)
+            b=a+dt.timedelta(1)
             self.end_time=dt.datetime.strftime(b,self.fmt)
             self.end_time_plot = dt.datetime.strftime(a,self.fmt)
         self.get_beginning_and_end()  # get the dates as date time
@@ -395,8 +395,8 @@ class PlotHistory(object):
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
     speed_box = None #creates loop
-    #speed_box = 'LC08' # sngle speedbox
-    begin_time="2022-09-28"
+    #speed_box = 'LC06' # sngle speedbox
+    begin_time="2023-03-01"
     end_time = 'Today'
     #end_time = "2023-02-27"
     PH = PlotHistory(config_file = config_file , begin_time=begin_time,end_time = end_time,speed_box = speed_box)
