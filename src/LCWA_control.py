@@ -262,6 +262,8 @@ class MyControl(object):
 if __name__ == '__main__':
     #create the list
     from pathlib import Path
+    # next we get current time so that we can calculate how long the program took
+    prog_start_time = datetime.datetime.now()
     home = str(Path.home())   
     recipient_list = home+'/private/LCWA/recipient_list.txt'
     backupdir = home+'/LCWA_backup/'
@@ -282,4 +284,7 @@ if __name__ == '__main__':
         MC.MailPlotNew(recipient_list)
     MC.CreateHistory()
     MC.PlotHistory()
+    prog_end_time = datetime.datetime.now()
+    time_used = prog_end_time - prog_start_time 
+    print('/n/n It took the program ',time_used.total_seconds(),' to completeazÍ⁄!!!!!V                                                                                                                                                                                 ')
     #MC.PlotHistory()

@@ -15,6 +15,7 @@ single speedbox and loop ver a list of speedboxes. The dates are either slected 
 or the call of the main routine:
    PH = PlotHistory(config_file = config_file , begin_time="2023-01-01",end_time = "2023-02-27",speed_box = 'LC18').
 if there is a speedbox listed it will do a single run, otherwise it will do the list of speedboxes.
+the end_time can also be "today". The begin time is either a date or can be "month" and then it will take a whole
 There is one iodsyncrasy still left. If a dropbox directory is empty for a speedbox in the list, it
 will plot again the previous speedbox. So cave ceasar. There is still a problem: if the data file does not exists
 it won't show zeros but a straight line connecting the points of the next day where it exists again.
@@ -118,6 +119,8 @@ class PlotHistory(object):
             b=a+dt.timedelta(1)
             self.end_time=dt.datetime.strftime(b,self.fmt)
             self.end_time_plot = dt.datetime.strftime(a,self.fmt)
+        #if self.begin_time == 'month':
+        #    self.end_time = dt.datetime.strptime(self.end_time,self.fmt)-dt.timedelta(30)
         self.get_beginning_and_end()  # get the dates as date time
 
     def print_header(self):
@@ -396,7 +399,8 @@ if __name__ == "__main__":
     config_file =  'PlotHistory.json'
     speed_box = None #creates loop
     #speed_box = 'LC06' # sngle speedbox
-    begin_time="2023-03-01"
+    begin_time="2023-01-01"
+    #begin_time="month"
     end_time = 'Today'
     #end_time = "2023-02-27"
     PH = PlotHistory(config_file = config_file , begin_time=begin_time,end_time = end_time,speed_box = speed_box)
