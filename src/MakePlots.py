@@ -81,7 +81,7 @@ class MakePlots(object):
                     date_str = row[0]+' '+row[1]
                     try:
                         temp = time.mktime(datetime.datetime.strptime(date_str, "%d/%m/%Y %H:%M:%S").timetuple())
-                        print(temp)
+                        #print(temp)
                     except: 
                         print("problems with file",self.filename)
                         continue
@@ -115,7 +115,7 @@ class MakePlots(object):
         plt.plot_date(self.x0,self.y2,'g^',label=' green UP',markersize =2)
 #plt.text(1.,1.,r' $\sigma = .1$')
         plt.grid(True)
-        print(self.x0)
+        #print(self.x0)
         ax.xaxis.set_major_locator(md.MinuteLocator(interval=1440))
         ax.xaxis.set_major_formatter(md.DateFormatter('%d/%m/%y %H:%M'))
         plt.xlabel('Time')
