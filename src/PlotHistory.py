@@ -188,8 +188,8 @@ class PlotHistory(object):
             self.figure_height = int(myconf['Plot']['figure_height'])
 
             #logging
-            self.logfile = myconf['logging']['logfile']
-            self.loglevel = myconf['logging']['loglevel']
+            self.logfile = myconf['Logging']['logfile']
+            self.loglevel = myconf['Logging']['loglevel']
             
         return
     
