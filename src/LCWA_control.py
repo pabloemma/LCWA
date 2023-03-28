@@ -42,7 +42,7 @@ class MyControl(object):
         self.CleanupDropbox()
 
 
-
+ 
         
         #initialize the Makeplots class
         
