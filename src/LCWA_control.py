@@ -169,8 +169,13 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_d.txt'
         #tempdir = 'scratch'
+<<<<<<< HEAD
         #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-03-22')
         self.PA =PA =PL.PlotAll(token_file,dirlist)
+=======
+        self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-03-27')
+        #self.PA =PA =PL.PlotAll(token_file,dirlist)
+>>>>>>> 6c5e963f8c1ae9611aa8003692fd3dad1e788084
         PA.ConnectDropbox()
         PA.GetFiles() 
         PA.PushFileDropbox()
@@ -275,8 +280,8 @@ if __name__ == '__main__':
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
     # for a different date use the line 132
-    #start = datetime.time(6,25)
-    #end = datetime.time(8,50)
+    start = datetime.time(6,25)
+    end = datetime.time(11,50)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
@@ -286,5 +291,5 @@ if __name__ == '__main__':
     MC.PlotHistory()
     prog_end_time = datetime.datetime.now()
     time_used = prog_end_time - prog_start_time 
-    print('/n/n It took the program ',time_used.total_seconds(),' to completeazÍ⁄!!!!!V                                                                                                                                                                                 ')
+    print('\n \n It took the program ',time_used.total_seconds(),' to complete')                                                                                                                                      
     #MC.PlotHistory()
