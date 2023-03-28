@@ -56,6 +56,8 @@ config file:
     }
 
 
+    
+    loglevels are : DEBUG,INFO,WARNING,ERROR,CRITICAL
 
 '''
 
@@ -66,6 +68,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.dates as md
 import platform as pf
+import logging as lg
 
 
 
@@ -96,7 +99,6 @@ class PlotHistory(object):
         #Mac is default
 
         
-        
         self.print_header()
 
 
@@ -121,17 +123,23 @@ class PlotHistory(object):
             self.end_time_plot = dt.datetime.strftime(a,self.fmt)
         #if self.begin_time == 'month':
         #    self.end_time = dt.datetime.strptime(self.end_time,self.fmt)-dt.timedelta(30)
+
+ 
+
         self.get_beginning_and_end()  # get the dates as date time
 
     def print_header(self):
         """keeps track ov version"""
-        version = '1.2'
+        version = '1.3'
 
         print('\n \nversion ', version,' \n\n\n')
 
         print('version 1.0 with four plots and rolling window')
         print('version 1.1 with using list of speedboxes')
         print('version 1.2 selects loop over single run depending on choosing a speedbox')
+
+        print('version 1.3 using logger')
+
 
     def read_config_file(self,config_file):
         '''reads in the json control file'''
@@ -178,6 +186,11 @@ class PlotHistory(object):
             self.y_top_limit = float(myconf['Plot']['y_top_limit'])
             self.figure_width = int(myconf['Plot']['figure_width'])
             self.figure_height = int(myconf['Plot']['figure_height'])
+
+            #logging
+            self.logfile = myconf['logging']['logfile']
+            self.loglevel = myconf['logging']['loglevel']
+            
         return
     
     def loop_over_speedboxes(self):
@@ -391,8 +404,28 @@ class PlotHistory(object):
         return data
 
 
-    
+    def mylogger(self):
+        '''sets up logging'''
 
+
+        if self.loglevel == 'DEBUG':
+            self.loglevel = lg.DEBUG
+        elif self.loglevel == 'INFO':
+            self.loglevel = lg.INFO
+        elif self.loglevel == 'WARNING':
+            self.loglevel = lg.WARNING
+        elif self.loglevel == 'ERROR':
+            self.loglevel = lg.ERROR
+        elif self.loglevel == 'CRITICAL':
+            self.loglevel = lg.CRITICAL
+
+
+
+
+        
+
+        lg.basicConfig(filename=self.logfile, encoding='utf-8', level=self.loglevel,format='%(levelname)s:%(message)s',)
+ 
 
 
 if __name__ == "__main__":  

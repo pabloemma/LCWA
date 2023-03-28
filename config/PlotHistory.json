@@ -12,6 +12,10 @@
         
         
     },
+    "Logging"   : {
+        "logfile"  : "PlotHistory.log",
+        "loglevel"  : "INFO"
+    },
     "Output" : {
         "temp_dir"          : "scratch/"
 
