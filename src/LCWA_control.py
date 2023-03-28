@@ -14,7 +14,7 @@ import SendFileMail as SFM
 import os
 import datetime
 
-
+ 
 class MyControl(object):
     '''
     this class runs plotall and does some housekeeping at dropbox
@@ -174,7 +174,7 @@ class MyControl(object):
         PA.ConnectDropbox()
         PA.GetFiles() 
         PA.PushFileDropbox()
-        
+
         
        
         
