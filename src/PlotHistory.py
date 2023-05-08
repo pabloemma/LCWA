@@ -370,7 +370,10 @@ class PlotHistory(object):
         x_spread = self.master_frame.shape[0]
         # now we just want 6 ticks
         interval = int(x_spread/6)
-        x_ticks = self.master_frame["Time"][::interval]
+        try:
+            x_ticks = self.master_frame["Time"][::interval]
+        except:
+            return
         for k in range(0,4):
             axe[k].tick_params('x',labelrotation = 45.)
             axe[k].set_xticks(x_ticks)
@@ -431,8 +434,8 @@ class PlotHistory(object):
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
     speed_box = None #creates loop
-    #speed_box = 'LC06' # sngle speedbox
-    begin_time="2023-01-01"
+    speed_box = 'LC14' # sngle speedbox
+    begin_time="2023-04-28"
     #begin_time="month"
     end_time = 'Today'
     #end_time = "2023-02-27"
