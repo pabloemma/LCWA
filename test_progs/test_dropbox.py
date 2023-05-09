@@ -28,14 +28,25 @@ class TestDropBox(object):
         here we establish connection to the dropbox account
         """
         f=open(self.TokenFile,"r")
-        self.data =f.readline() #key for encryption
+        temp =f.readlines() #key for encryption
+        temp_buf = []
+  
+        for k in range(len(temp)):
+            temp1 = temp[k].strip('\n')
+            start   = temp1.find('\'') # find beginning quote
+            end     = temp1.rfind('\'') # find trailing  quote
+            temp_buf.append(temp1[start+1:end])
+        
+        
+
+
         
     
              #connect to dropbox 
         #self.dbx=dropbox.Dropbox(self.data.strip('\n'))
-        APP_KEY = 
-        APP_SECRET = 
-        REFRESH_TOKEN = 
+        APP_KEY = temp_buf[0]
+        APP_SECRET = temp_buf[1]
+        REFRESH_TOKEN = temp_buf[2]
         self.dbx = dropbox.Dropbox(
             app_key = APP_KEY,
             app_secret = APP_SECRET,
@@ -98,7 +109,7 @@ if __name__ == '__main__':
     loop_time       = 600 # every loop_time we will read a file and copy it locally, the time is in seconds
     homedir         = os.path.expanduser('~')
     #tokenfile       = homedir+'/git/LCWA/src/LCWA_d.txt' # the name and path of the dropbox creds
-    tokenfile       = homedir+'/git/LCWA/src/LCWA_new.txt' # the name and path of the dropbox creds
+    tokenfile       = homedir+'/git/LCWA/src/LCWA_a.txt' # the name and path of the dropbox creds
     #dropbox_dir     = '/LCWA/ALL_LCWA/' # dir on dropbox
     dropbox_dir     = '/LCWA/LC99_/'
     #dropbox_file    = 'LCWA_TOTAL_2023-05-07speedfile.pdf' # name of file
