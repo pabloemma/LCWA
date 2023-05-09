@@ -27,7 +27,9 @@ class MyCrypt(object):
             with open(keyfile, 'wb') as filekey:
                 filekey.write(key)
         else:
-            print('this keyfile already exists, either delete it of give different name')
+            print('********************************************************************\n')
+            print('this keyfile already exists, either delete it o rgive different name')
+            print('********************************************************************\n')
             sys.exit(0)
 
         return
