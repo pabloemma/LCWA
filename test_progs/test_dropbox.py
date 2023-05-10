@@ -29,14 +29,7 @@ class TestDropBox(object):
         """
         f=open(self.TokenFile,"r")
 
-        # now we branch out depending on which keyfile we are using:
-        if  'LCWA_d.txt' in self.TokenFile:
-            print("old system")
-        elif 'LCWA_a.txt'  in self.TokenFile:
-            print('new system')
-        else:
-            print("wrong keyfile")
-
+    
         temp =f.readlines() #key for encryption
         temp_buf = []
   
@@ -61,6 +54,68 @@ class TestDropBox(object):
             app_secret = APP_SECRET,
             oauth2_refresh_token = REFRESH_TOKEN
         )
+        
+
+        self.myaccount = self.dbx.users_get_current_account()
+        print('***************************dropbox*******************\n\n\n')
+        print( self.myaccount.name.surname , self.myaccount.name.given_name)
+        print (self.myaccount.email)
+        print('\n\n ***************************dropbox*******************\n')
+
+        return
+
+    def ConnectDropboxNew(self):
+        """
+        here we establish connection to the dropbox account
+        """
+        f=open(self.TokenFile,"r")
+
+        # now we branch out depending on which keyfile we are using:
+        if  'LCWA_d.txt' in self.TokenFile:
+            print("old system")
+            f=open(self.TokenFile,"r")
+            self.data =f.readline() #key for encryption
+        
+
+         
+         
+         
+         #connect to dropbox 
+            self.dbx=dropbox.Dropbox(self.data.strip('\n'))
+
+ 
+        elif 'LCWA_a.txt'  in self.TokenFile:
+            print('new system')
+
+            temp =f.readlines() #key for encryption
+            temp_buf = []
+  
+            for k in range(len(temp)):
+                temp1 = temp[k].strip('\n')
+                start   = temp1.find('\'') # find beginning quote
+                end     = temp1.rfind('\'') # find trailing  quote
+                temp_buf.append(temp1[start+1:end])
+        
+        
+
+
+        
+    
+             #connect to dropbox 
+            #self.dbx=dropbox.Dropbox(self.data.strip('\n'))
+            APP_KEY = temp_buf[0]
+            APP_SECRET = temp_buf[1]
+            REFRESH_TOKEN = temp_buf[2]
+            self.dbx = dropbox.Dropbox(
+                app_key = APP_KEY,
+                app_secret = APP_SECRET,
+                oauth2_refresh_token = REFRESH_TOKEN
+                )
+        
+        else:
+            print("wrong keyfile")
+
+
         
 
         self.myaccount = self.dbx.users_get_current_account()
@@ -127,5 +182,5 @@ if __name__ == '__main__':
 
 
     TDB = TestDropBox(local_dir = local_dir ,dropbox_dir = dropbox_dir , dropbox_file = dropbox_file,  tokenfile = tokenfile ,loop_time = loop_time)
-    TDB.ConnectDropbox()
+    TDB.ConnectDropboxNew()
     TDB.MainLoop()
