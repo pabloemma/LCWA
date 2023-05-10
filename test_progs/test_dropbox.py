@@ -28,6 +28,15 @@ class TestDropBox(object):
         here we establish connection to the dropbox account
         """
         f=open(self.TokenFile,"r")
+
+        # now we branch out depending on which keyfile we are using:
+        if  'LCWA_d.txt' in self.TokenFile:
+            print("old system")
+        elif 'LCWA_a.txt'  in self.TokenFile:
+            print('new system')
+        else:
+            print("wrong keyfile")
+
         temp =f.readlines() #key for encryption
         temp_buf = []
   
