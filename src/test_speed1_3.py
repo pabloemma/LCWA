@@ -95,7 +95,7 @@ class test_speed1():
         #self.Setup() # now done ir agrparse
         # here we wait for the program to start until we rach the time
 
-    def QueueRuntime(self):                                             # WGH Mod: Allows for skipping the wait queue via cmdline arg
+    def QueueRuntime(self):                                              # WGH Mod: Allows for skipping the wait queue via cmdline arg
         
         # here we wait for the program to start until we reach the time
         MyT = st.MyTime()
