@@ -82,12 +82,13 @@ if __name__ == '__main__':
     homedir         = os.path.expanduser('~')
 
     keyfile = homedir +'/git/LCWA/src/LCWAkey.txt'
+    keyfile = homedir +'/git/LCWA/src/cryptofile.txt'
     inputfile = homedir +'/git/LCWA/src/LCWA_a.txt'
     decrypted_file = homedir +'/git/LCWA/src/LCWA_ad.txt'
     encrypted_file = homedir +'/git/LCWA/src/LCWA_ae.txt'
 
 
     MCY = MyCrypt(keyfile,inputfile,decrypted_file=decrypted_file,encrypted_file=encrypted_file)
-    MCY.CreateKey(keyfile)
+    #MCY.CreateKey(keyfile)
     MCY.EncryptFile(keyfile,inputfile,encrypted_file)
     MCY.DecryptFile(keyfile,encrypted_file,decrypted_file)

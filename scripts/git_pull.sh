@@ -17,7 +17,6 @@ if [ ''$HOSTNAME'' = ''LC99'' ]; then
 	
 else
 	git pull
-	pip3 install -U dropbox
     cd /home/pi
 fi
 
