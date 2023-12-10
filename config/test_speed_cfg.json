@@ -20,7 +20,7 @@
     "Control" : {
         "runmode" : "Both",
         "debug"   : false,
-        "cryptofile" : "LCWA_d.txt",
+        "cryptofile" : "LCWA_a.txt",
         "click"      : "1",
         "random"     : false
     },
@@ -573,7 +573,7 @@
 
                     },
 
-       "PandaAir.local" : {
+       "solveig.local" : {
             "runmode" : "Speedtest",
 
             "nondefault" : {
