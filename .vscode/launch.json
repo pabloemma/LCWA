@@ -10,6 +10,6 @@
             "console": "integratedTerminal",
             "args": ["-c","/Users/klein/git/speedtest/config/test_speed_cfg.json" ,"-d","/Users/klein/git/speedtest/src/LCWA_a.txt", "-w"]
 
-        }
+        } 
     ]
 }
