@@ -312,7 +312,7 @@ class test_speed1():
         print( self.myaccount.name.surname , self.myaccount.name.given_name)
         print (self.myaccount.email)
         print('\n\n ***************************dropbox*******************\n')
-
+        self.ConnectDropBox_ok = True
         return self.dbx
 
          
@@ -643,7 +643,7 @@ class test_speed1():
         
         while(1):
             self.Run()
-            if(self.ConnectDropBox):
+            if(self.ConnectDropBox_ok):
                 counter = counter + 1
             
                 #if (counter==50):
@@ -1102,9 +1102,17 @@ class test_speed1():
             #f.close()
             
             a.ReadTestData()
-            a.ConnectDropbox()
-            print(self.dropdir)
-            a.PushFileDropbox(self.dropdir)
+            ##a.ConnectDropbox()
+            ##a.PushFileDropbox(self.dropdir)
+
+            print('dropbox dir for plot ',self.dropdir)
+            temp = a.ReturnNames(self.dropdir)
+ 
+            f=open(temp[1],"rb")
+            temp1 = self.dbx.files_upload(f.read(),temp[0]+temp[2],mode=dropbox.files.WriteMode('overwrite', None))
+
+
+
             if textflag:
                 a.Analyze(filename = self.textfile)
                 f.close()

@@ -167,9 +167,9 @@ class MyControl(object):
                 temp1 = temp+str(k)+'_'
             
             dirlist.append(temp1)
-        token_file = '/git/speedtest/src/LCWA_d.txt'
+        token_file = '/git/speedtest/src/LCWA_a.txt'
         #tempdir = 'scratch'
-        self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-04-07')
+        self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-12-10')
         #self.PA =PA =PL.PlotAll(token_file,dirlist)
 
         PA.ConnectDropBox()

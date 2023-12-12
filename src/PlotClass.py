@@ -445,14 +445,20 @@ class MyPlot(object):
         stream = os.popen('dig +short myip.opendns.com @resolver1.opendns.com')
         return stream.read().strip('\n')
    
+    def ReturnNames(self,dropdir):
+        """ Kludge since pushfile from test_speed does not work
+        I suspect a problem with the pointer"""
+        temp = [dropdir,self.output,self.dropbox_name]
+        return temp
     
     
-    def PushFileDropbox(self,dropdir):  
+    def PushFileDropbox(self,dropdir): 
+         
         f =open(self.output,"rb")
         #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
 
-        self.dbx.files_upload(f.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
-
+        a = self.dbx.files_upload(f.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
+        print('this is a',a)
        
 if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
@@ -465,6 +471,8 @@ if __name__ == '__main__':
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag)
+    MP.ConnectDropBox()
     MP.ReadTestData()    #MP.ReadTestData(legend)
-    MP.Analyze('/home/klein/scratch/text.txt')
+    #MP.Analyze('/home/klein/scratch/text.txt')
     MP.Analyze()
+    MP.PushFileDropbox('/LCWA/LC04/')
