@@ -17,6 +17,11 @@ if [ ''$HOSTNAME'' = ''LC99'' ]; then
 	
 else
 	git pull
+	# temporary fix
+	cd scripts
+
+	lcwa_dec.sh LCWA_translate
+	
     cd /home/pi
 fi
 
