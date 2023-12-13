@@ -25,7 +25,7 @@ else
 	
 	cd scripts
 	echo $(pwd)
-	/pi/git/speedtest/scripts/lcwa_dec.sh LCWA_translate
+	/home/pi/git/speedtest/scripts/lcwa_dec.sh LCWA_translate
 
     cd /home/pi
 fi
