@@ -23,7 +23,7 @@ else
 	# temporary fix
 	cd scripts
 
-	lcwa_dec.sh LCWA_translate
+	/pi/git/speedtest/scripts/lcwa_dec.sh LCWA_translate
 
     cd /home/pi
 fi
