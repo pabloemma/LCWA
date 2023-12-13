@@ -1,7 +1,4 @@
 #!
-# firts remove old log files
-cd /home/pi
-rm -v *.log
 
 cd /home/pi/git/speedtest
 echo $HOSTNAME
@@ -28,6 +25,11 @@ else
 	echo $(pwd)
 	/home/pi/git/speedtest/scripts/lcwa_dec.sh LCWA_translate
 
+
+
+
+	lcwa_dec.sh LCWA_translate
+	
 
     cd /home/pi
 fi
