@@ -29,7 +29,8 @@ else
 
 
 	lcwa_dec.sh LCWA_translate
-	
+
+
 
     cd /home/pi
 fi
