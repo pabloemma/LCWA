@@ -19,10 +19,12 @@ if [ ''$HOSTNAME'' = ''LC99'' ]; then
 	
 	
 else
+	pwd
 	git pull
 	# temporary fix
+	
 	cd scripts
-
+	pwd
 	/pi/git/speedtest/scripts/lcwa_dec.sh LCWA_translate
 
     cd /home/pi
