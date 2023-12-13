@@ -32,6 +32,8 @@ else
 
 
 
+
+
     cd /home/pi
 fi
 
