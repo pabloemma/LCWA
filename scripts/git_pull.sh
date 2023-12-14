@@ -21,13 +21,16 @@ if [ ''$HOSTNAME'' = ''LC99'' ]; then
 else
 	echo $(pwd)
 	git pull
-	# temporary fix
-	
-	cd scripts
-	echo $(pwd)
-	/home/pi/git/speedtest/scripts/lcwa_dec.sh LCWA_translate
+		
 
     cd /home/pi
+	echo " taking a nap for things to settle
+	sleep 10
+	echo "end nap"
+	
+	/home/pi/git/speedtest/scripts/maintenance.sh
+
+
 fi
 
 
