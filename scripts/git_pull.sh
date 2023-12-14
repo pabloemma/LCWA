@@ -24,10 +24,10 @@ else
 		
 
     cd /home/pi
-	echo " taking a nap for things to settle
+	echo " taking a nap for things to settle"
 	sleep 10
 	echo "end nap"
-	
+
 	/home/pi/git/speedtest/scripts/maintenance.sh
 
 
