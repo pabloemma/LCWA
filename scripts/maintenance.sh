@@ -13,6 +13,6 @@ echo "******************** this is the maintenance script ********************"
     # translating file
 
 	#/Users/klein/git/speedtest/scripts/lcwa_dec.sh LCWA_translate
-	/home/pi/git/speedtest/scripts/lcwa_dec.sh LCWA_translate
+	/home/pi/git/speedtest/scripts/lcwa_dec.sh /home/pi/git/speedtest/scripts/LCWA_translate
     echo "finished translating"
 
