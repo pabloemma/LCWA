@@ -337,7 +337,7 @@ class MyPlot(object):
             print('no file:   ' , filename)
             sys.exit(0)
 
-    def ConnectDropbox(self):
+    def ConnectDropboxOld(self):
         """
         here we establish connection to the dropbox account
         """
@@ -362,32 +362,117 @@ class MyPlot(object):
         print (self.myaccount.email)
         print('\n\n ***************************dropbox*******************\n')
 
+    def ConnectDropBox(self):
+        """
+        here we establish connection to the dropbox account
+        """
+        print("at connect dropbox")
+        #self.TokenFile=self.cryptofile.strip('\n')
+        #f=open(self.TokenFile,"r")
+
+        # now we branch out depending on which keyfile we are using:
+        if  'LCWA_d.txt' in self.TokenFile:
+            print("old system")
+            f=open(self.TokenFile,"r")
+            self.data =f.readline() #key for encryption
+        
+
+         
+         
+         
+         #connect to dropbox 
+            self.dbx=dropbox.Dropbox(self.data.strip('\n'))
+            print("self.dbx",self.dbx)
+
+ 
+        elif 'LCWA_a.txt'  in self.TokenFile:
+            print('new system')
+            f=open(self.TokenFile,"r")
+  
+            temp =f.readlines() #key for encryption
+            temp_buf = []
+  
+            for k in range(len(temp)):
+                temp1 = temp[k].strip('\n')
+                start   = temp1.find('\'') # find beginning quote
+                end     = temp1.rfind('\'') # find trailing  quote
+                temp_buf.append(temp1[start+1:end])
+        
+        
+
+
+        
+    
+             #connect to dropbox 
+            #self.dbx=dropbox.Dropbox(self.data.strip('\n'))
+            APP_KEY = temp_buf[0]
+            APP_SECRET = temp_buf[1]
+            REFRESH_TOKEN = temp_buf[2]
+
+            
+
+
+
+            self.dbx = dropbox.Dropbox(
+                app_key = APP_KEY,
+                app_secret = APP_SECRET,
+                oauth2_refresh_token = REFRESH_TOKEN
+                )
+            print("self.dbx",self.dbx)
+
+        
+        else:
+            print("wrong keyfile")
+
+
+        
+
+        self.myaccount = self.dbx.users_get_current_account()
+        print('***************************dropbox*******************\n\n\n')
+        print( self.myaccount.name.surname , self.myaccount.name.given_name)
+        print (self.myaccount.email)
+        print('\n\n ***************************dropbox*******************\n')
+
+        return self.dbx
+
+
+
+
+
     def DigIP(self):
         """ gets the ipaddress of the location"""
         
         stream = os.popen('dig +short myip.opendns.com @resolver1.opendns.com')
         return stream.read().strip('\n')
    
+    def ReturnNames(self,dropdir):
+        """ Kludge since pushfile from test_speed does not work
+        I suspect a problem with the pointer"""
+        temp = [dropdir,self.output,self.dropbox_name]
+        return temp
     
     
-    def PushFileDropbox(self,dropdir):  
+    def PushFileDropbox(self,dropdir): 
+         
         f =open(self.output,"rb")
         #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
 
-        self.dbx.files_upload(f.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
-
+        a = self.dbx.files_upload(f.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
+        print('this is a',a)
        
 if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
-    path = '/home/klein/speedfiles'
+    path = '/Users/klein/speedfiles'
     #path='/Users/klein/scratch/'
-    file = 'LC14_2022-02-14speedfile.csv'
+    file = 'solv_2023-12-10speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
-    token ='/home/klein/git/speedtest/src/LCWA_d.txt'
+    token ='/Users/klein/git/speedtest/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag)
+    MP.ConnectDropBox()
     MP.ReadTestData()    #MP.ReadTestData(legend)
-    MP.Analyze('/home/klein/scratch/text.txt')
+    #MP.Analyze('/home/klein/scratch/text.txt')
     MP.Analyze()
+    MP.PushFileDropbox('/LCWA/LC04/')

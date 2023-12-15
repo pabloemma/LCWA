@@ -221,7 +221,7 @@ class test_speed1():
                 
 
     
-    def ConnectDropBox(self):
+    def ConnectDropBoxOld(self):
         """
         here we establish connection to the dropbox account
         """
@@ -232,11 +232,6 @@ class test_speed1():
 
         f=open(self.cryptofile,"r")
         self.data =f.readline() #key for encryption
-        
-
-         
-         
-         
          #connect to dropbox
         #self.dbx=dropbox.Dropbox(unpad(cipher.decrypt( enc[16:] ),16))
         self.dbx=dropbox.Dropbox(self.data.strip('\n'))
@@ -246,7 +241,84 @@ class test_speed1():
         print( self.myaccount.name.surname , self.myaccount.name.given_name)
         print (self.myaccount.email)
         print('\n\n ***************************dropbox*******************\n')
+       
+    def ConnectDropBox(self):
+        """
+        here we establish connection to the dropbox account
+        """
+        print("at connect dropbox")
+        self.TokenFile=self.cryptofile.strip('\n')
+        #f=open(self.TokenFile,"r")
+
+        # now we branch out depending on which keyfile we are using:
+        if  'LCWA_d.txt' in self.TokenFile:
+            print("old system")
+            f=open(self.TokenFile,"r")
+            self.data =f.readline() #key for encryption
         
+
+         
+         
+         
+         #connect to dropbox 
+            self.dbx=dropbox.Dropbox(self.data.strip('\n'))
+            print("self.dbx",self.dbx)
+
+ 
+        elif 'LCWA_a.txt'  in self.TokenFile:
+            print('new system')
+            f=open(self.TokenFile,"r")
+  
+            temp =f.readlines() #key for encryption
+            temp_buf = []
+  
+            for k in range(len(temp)):
+                temp1 = temp[k].strip('\n')
+                start   = temp1.find('\'') # find beginning quote
+                end     = temp1.rfind('\'') # find trailing  quote
+                temp_buf.append(temp1[start+1:end])
+        
+        
+
+
+        
+    
+             #connect to dropbox 
+            #self.dbx=dropbox.Dropbox(self.data.strip('\n'))
+            APP_KEY = temp_buf[0]
+            APP_SECRET = temp_buf[1]
+            REFRESH_TOKEN = temp_buf[2]
+
+            
+
+
+
+            self.dbx = dropbox.Dropbox(
+                app_key = APP_KEY,
+                app_secret = APP_SECRET,
+                oauth2_refresh_token = REFRESH_TOKEN
+                )
+            print("self.dbx",self.dbx)
+
+        
+        else:
+            print("wrong keyfile")
+
+
+        
+
+        self.myaccount = self.dbx.users_get_current_account()
+        print('***************************dropbox*******************\n\n\n')
+        print( self.myaccount.name.surname , self.myaccount.name.given_name)
+        print (self.myaccount.email)
+        print('\n\n ***************************dropbox*******************\n')
+        self.ConnectDropBox_ok = True
+        return self.dbx
+
+         
+         
+         
+         
         
     def WriteHeader(self):   
         '''
@@ -329,7 +401,8 @@ class test_speed1():
         print('Version 8.02.01', 'now better reflection on what is going on with iperf, and new more granular config file treatment ')
         print('Version 8.02.02', 'with Gordon time mods ')
         print('Version 8.02.03', 'added an try clause in create iperf output to catch connection problems')
-         
+        print('Version 9.00.01', 'new dropbox')
+        
         print('\n\n\n')
         
          
@@ -570,7 +643,7 @@ class test_speed1():
         
         while(1):
             self.Run()
-            if(self.ConnectDropBox):
+            if(self.ConnectDropBox_ok):
                 counter = counter + 1
             
                 #if (counter==50):
@@ -1029,9 +1102,17 @@ class test_speed1():
             #f.close()
             
             a.ReadTestData()
-            a.ConnectDropbox()
-            print(self.dropdir)
-            a.PushFileDropbox(self.dropdir)
+            ##a.ConnectDropbox()
+            ##a.PushFileDropbox(self.dropdir)
+
+            print('dropbox dir for plot ',self.dropdir)
+            temp = a.ReturnNames(self.dropdir)
+ 
+            f=open(temp[1],"rb")
+            temp1 = self.dbx.files_upload(f.read(),temp[0]+temp[2],mode=dropbox.files.WriteMode('overwrite', None))
+
+
+
             if textflag:
                 a.Analyze(filename = self.textfile)
                 f.close()
