@@ -96,7 +96,7 @@
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
-                    "iperf_serverip" : "63.229.162.245",
+                    "iperf_serverip" : "54.151.106.33",
                     "iperf_duration"  : 30,
                     "iperf_numstreams" : 2,
                     "iperf_blksize"   : 1024,
