@@ -134,7 +134,7 @@
 
         ,
         "LC05" :  {
-            "runmode" : "Iperf",
+            "runmode" : "Both",
 
             "nondefault" : {
 
@@ -310,7 +310,7 @@
 
                     },
         "LC13" :  {
-            "runmode" : "Iperf",
+            "runmode" : " Iperf",
 
             "nondefault" : {
 
@@ -376,7 +376,7 @@
 
                     },
         "LC16" :  {
-            "runmode" : "Iperf",
+            "runmode" : " Iperf",
 
             "nondefault" : {
 
@@ -398,7 +398,7 @@
 
                     },
         "LC17" :  {
-            "runmode" : "Iperf",
+            "runmode" : " Iperf",
 
             "nondefault" : {
 
@@ -486,7 +486,7 @@
 
                     },
         "LC21" :  {
-            "runmode" : "Iperf",
+            "runmode" : " Iperf",
 
             "nondefault" : {
 
