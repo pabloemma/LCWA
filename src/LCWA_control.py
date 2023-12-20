@@ -14,7 +14,6 @@ import SendFileMail as SFM
 import os
 import datetime
 
-
  
 class MyControl(object):
     '''
@@ -22,7 +21,7 @@ class MyControl(object):
     '''
 
 
-    def __init__(self, backupdir,debug=False, report_date = None):
+    def __init__(self, backupdir):
         '''
         Constructor
         '''
@@ -30,11 +29,6 @@ class MyControl(object):
         
         #first get everything setup with dropbox by excuting DoPlotting
         
-        #introduce new variable debug and report_date
-        #this allows to select a specific date ro report on and only send the email to
-        #me , so I don't bombard everyboddy with emails, while I am trying to figure ourt where I fucked up.
-        self.debug = debug
-        self.report_date = report_date
  
         self.low_range = 1
         self.hi_range = 25  # number of boxes we have out +1
@@ -154,11 +148,7 @@ class MyControl(object):
         file = self.PA.pdf  
 
         # create mail command
-        if(self.debug):
-            mail_command = '/Users/klein/git/speedtest/src/mail_test_debug.sh '+file+' '+subject+' ' + '/Users/klein/git/speedtest/src/message.txt'
-        else:   
-            #mail_command = '/home/klein/git/speedtest/src/mail_test.sh '+file+' '+subject+' ' + '/home/klein/git/speedtest/src/message.txt'
-            mail_command = '/Users/klein/git/speedtest/src/mail_test.sh '+file+' '+subject+' ' + '/Users/klein/git/speedtest/src/message.txt'
+        mail_command = '/home/klein/git/speedtest/src/mail_test.sh '+file+' '+subject+' ' + '/home/klein/git/speedtest/src/message.txt'
         print(mail_command)
         os.system(mail_command)  
         return      
@@ -179,12 +169,8 @@ class MyControl(object):
             dirlist.append(temp1)
         token_file = '/git/speedtest/src/LCWA_a.txt'
         #tempdir = 'scratch'
-        if(self.debug):
-
-            self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = self.report_date)
-            #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-12-10')
-        else:
-            self.PA =PA =PL.PlotAll(token_file,dirlist)
+        #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-12-10')
+        self.PA =PA =PL.PlotAll(token_file,dirlist)
 
         PA.ConnectDropBox()
         PA.GetFiles() 
@@ -277,36 +263,27 @@ class MyControl(object):
         
 if __name__ == '__main__':
     #create the list
-    debug = True
-    report_date = '2023-12-17'
     from pathlib import Path
     # next we get current time so that we can calculate how long the program took
     prog_start_time = datetime.datetime.now()
     home = str(Path.home())   
     recipient_list = home+'/private/LCWA/recipient_list.txt'
-    recipient_list_short = home+'/private/LCWA/recipient_list_short.txt'
     backupdir = home+'/LCWA_backup/'
-    if(debug):
-        MC = MyControl(backupdir,debug=debug,report_date=report_date)
-    else:
-        MC = MyControl(backupdir)
+    
+    MC = MyControl(backupdir)
     
     #Here we check if we are close to a time window
     timestamp = datetime.datetime.now().time() # Throw away the date information
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
     # for a different date use the line 132
-    start = datetime.time(1,25)
-    end = datetime.time(23,59)
+    #start = datetime.time(5,25)
+    #end = datetime.time(7,50)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
         #MC.MailPlot(recipient_list)
-        if(debug):
-            MC.MailPlotNew(recipient_list_short)
-        else:
-             MC.MailPlotNew(recipient_list_short)
-           
+        MC.MailPlotNew(recipient_list)
     MC.CreateHistory()
     MC.PlotHistory()
     prog_end_time = datetime.datetime.now()
