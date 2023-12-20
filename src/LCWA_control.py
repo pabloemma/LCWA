@@ -13,6 +13,7 @@ import datetime
 import SendFileMail as SFM
 import os
 import datetime
+from pathlib import Path
 
 
  
@@ -39,7 +40,8 @@ class MyControl(object):
         self.low_range = 1
         self.hi_range = 25  # number of boxes we have out +1
 
-        
+        # determine the home path and set accordingly
+        self.myhome_path = Path.home()
         
         self.backupdir = backupdir
         
@@ -128,8 +130,8 @@ class MyControl(object):
         file = self.PA.pdf   
         
         sa = SFM.MyMail(file,b,subject, message)
-        from pathlib import Path
-        home = str(Path.home())   
+        
+        home = str(self.myhome_path)   
          
         sa.send_email_pdf_figs(home+'/private/LCWA/andifile')
 
@@ -155,10 +157,10 @@ class MyControl(object):
 
         # create mail command
         if(self.debug):
-            mail_command = '/Users/klein/git/speedtest/src/mail_test_debug.sh '+file+' '+subject+' ' + '/Users/klein/git/speedtest/src/message.txt'
+            mail_command = str(self.myhome_path)+'/git/speedtest/src/mail_test_debug.sh '+file+' '+subject+' ' + str(self.myhome_path)+'/git/speedtest/src/message.txt'
         else:   
             #mail_command = '/home/klein/git/speedtest/src/mail_test.sh '+file+' '+subject+' ' + '/home/klein/git/speedtest/src/message.txt'
-            mail_command = '/Users/klein/git/speedtest/src/mail_test.sh '+file+' '+subject+' ' + '/Users/klein/git/speedtest/src/message.txt'
+            mail_command = str(self.myhome_path)+'/git/speedtest/src/mail_test.sh '+file+' '+subject+' ' + str(self.myhome_path)+'/git/speedtest/src/message.txt'
         print(mail_command)
         os.system(mail_command)  
         return      
@@ -198,7 +200,7 @@ class MyControl(object):
         """
         #Again we loop over the different directories
         #first delete all old history files
-        delete_cmd ='rm '+str(Path.home()) +'/scratch/*history.csv'  
+        delete_cmd ='rm '+str(self.myhome_path) +'/scratch/*history.csv'  
 
         os.system(delete_cmd)
         
@@ -235,7 +237,7 @@ class MyControl(object):
        
     def ReadFile(self,file,path_display):    
         
-        home = str(Path.home())   
+        home = str(self.myhome_path)   
         temp = home+'/scratch/tempfile.txt'
         self.PA.dbx.files_download_to_file(temp,path_display)
         # now read the file , strip firts line and add to summary file
@@ -258,7 +260,7 @@ class MyControl(object):
         for k in range(len(self.dirlist)):
        
        
-            file = str(Path.home())+'/scratch/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.csv'   
+            file = str(self.myhome_path)+'/scratch/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.csv'   
             print('plotting history file  ' ,file)
 
             if os.path.isfile(file):
@@ -270,7 +272,7 @@ class MyControl(object):
                 pass
     def PushFileDropbox(self,k):  
         
-        f = open(str(Path.home())+'/scratch/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.pdf',"rb") 
+        f = open(str(self.myhome_path)+'/scratch/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.pdf',"rb") 
         dropdirfile = '/LCWA/'+self.dirlist[k]+'/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.pdf'
         self.PA.dbx.files_upload(f.read(),dropdirfile,mode=dropbox.files.WriteMode('overwrite', None))
  
@@ -278,7 +280,7 @@ class MyControl(object):
 if __name__ == '__main__':
     #create the list
     debug = True
-    report_date = '2023-12-17'
+    report_date = '2023-12-18'
     from pathlib import Path
     # next we get current time so that we can calculate how long the program took
     prog_start_time = datetime.datetime.now()
