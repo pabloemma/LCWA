@@ -435,7 +435,7 @@ if __name__ == "__main__":
     config_file =  'PlotHistory.json'
     speed_box = None #creates loop
     #speed_box = 'LC17' # sngle speedbox
-    begin_time="2023-05-28"
+    begin_time="2023-11-28"
     #begin_time="month"
     end_time = 'Today'
     #end_time = "2023-02-27"
