@@ -1,7 +1,7 @@
 #!
 # firts remove old log files
 cd /home/pi
-rm -v *.log
+#rm -v *.log
 
 cd /home/pi/git/speedtest
 echo $HOSTNAME
