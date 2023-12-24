@@ -148,7 +148,7 @@ class MyControl(object):
                 b = a
 
         subject = ' LCWA_speedtest_'+ datetime.datetime.today().strftime('%Y-%m-%d')
-        subject = ' Ignore previous data set, this is the set for 12-23-2023'
+        subject = " \"Ignore previous data set, this is the set for 12-23-2023 \" "
 
         
         
