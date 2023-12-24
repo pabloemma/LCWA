@@ -281,9 +281,9 @@ class MyControl(object):
         
 if __name__ == '__main__':
     #create the list
-    debug = True
-    report_date = '2023-12-23'
-    #report_date = None  # use this for norma run
+    debug = False
+    #report_date = '2023-12-23'
+    report_date = None  # use this for norma run
     from pathlib import Path
     # next we get current time so that we can calculate how long the program took
     prog_start_time = datetime.datetime.now()
@@ -301,14 +301,14 @@ if __name__ == '__main__':
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
     # for a different date use the line 132
-    start = datetime.time(1,25)
-    end = datetime.time(23,59)
+    #start = datetime.time(1,25)
+    #end = datetime.time(23,59)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
         #MC.MailPlot(recipient_list)
         if(debug):
-            MC.MailPlotNew(recipient_list)
+            MC.MailPlotNew(recipient_list_short)
         else:
             MC.MailPlotNew(recipient_list)
            
