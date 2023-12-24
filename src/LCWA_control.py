@@ -279,8 +279,8 @@ class MyControl(object):
         
 if __name__ == '__main__':
     #create the list
-    debug = False
-    report_date = '2023-12-18'
+    debug = True
+    report_date = '2023-12-23'
     from pathlib import Path
     # next we get current time so that we can calculate how long the program took
     prog_start_time = datetime.datetime.now()
