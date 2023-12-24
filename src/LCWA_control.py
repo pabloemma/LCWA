@@ -279,7 +279,7 @@ class MyControl(object):
         
 if __name__ == '__main__':
     #create the list
-    debug = True
+    debug = False
     report_date = '2023-12-23'
     from pathlib import Path
     # next we get current time so that we can calculate how long the program took
@@ -291,7 +291,7 @@ if __name__ == '__main__':
     if(debug):
         MC = MyControl(backupdir,debug=debug,report_date=report_date)
     else:
-        MC = MyControl(backupdir)
+        MC = MyControl(backupdir,report_date = report_date)
     
     #Here we check if we are close to a time window
     timestamp = datetime.datetime.now().time() # Throw away the date information
