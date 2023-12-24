@@ -151,8 +151,9 @@ class MyControl(object):
         #subject = " \"Ignore previous data set, this is the set for 12-23-2023 \" "
 
         
+        message = ' this_is_the_daily_Raspberry_PI_report '
         
-        message = ' this_is_the_daily_Raspberry_PI_report'
+        message = ' this_is_the_daily_Raspberry_PI_report for 12-23-2023, ignore previous one'
 
         file = self.PA.pdf  
 
