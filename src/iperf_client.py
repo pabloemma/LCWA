@@ -164,7 +164,7 @@ class myclient():
         
         except AttributeError: # we get this when the connection is bad in iperf client
             temp_time = dt.datetime.now() # get time opf now
-            ts = temp_time.ts() #convert it to timestamp
+            ts = dt.datetime.timestamp(temp_time) #convert it to timestamp
             output.append(dt.datetime.fromtimestamp(ts).strftime('%d/%m/%Y'))
             output.append(dt.datetime.fromtimestamp(ts).strftime('%H:%M:%S'))
             output.append('iperf3')
