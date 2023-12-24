@@ -232,7 +232,7 @@ class PlotAll(object):
         """ reads the csv file from the speedfile directory"""
         
         
-        
+        self.InputFile = InputFile
         self.temp_name = self.SetTempDirectory()+'/temp.txt'
         self.temp_file = open(self.temp_name,'w')
         counter = 0
@@ -257,15 +257,22 @@ class PlotAll(object):
         
         #self.legend = legend #legend is a dictionary'
         
-           
-        x1,y1,y2 , y0 = np.loadtxt(self.temp_name, delimiter=',',
+        try:   
+            x1,y1,y2 , y0 = np.loadtxt(self.temp_name, delimiter=',',
                    unpack=True,usecols=(1,7,8,9),
                    converters={ 1: self.MyTime},skiprows = 1)
+            self.x1 = x1 #time
+            self.y1 = y1 #download
+            self.y2 = y2 #uplooad
+            self.y0 = y0 # before vs 6: packet loss, with vs 6: latency measured in ms (averaged over 10)
+
+        except:
+            print("************warning from Plotall:**** cannot unpack ",self.InputFile )
             
-        self.x1 = x1 #time
-        self.y1 = y1 #download
-        self.y2 = y2 #uplooad
-        self.y0 = y0 # before vs 6: packet loss, with vs 6: latency measured in ms (averaged over 10)
+            self.x1 = -999 #time
+            self.y1 = 0. #download
+            self.y2 = 0. #uplooad
+            self.y0 = 0. # before vs 6: packet loss, with vs 6: latency measured in ms (averaged over 10)
 
     
     def SetTempDirectory(self):
