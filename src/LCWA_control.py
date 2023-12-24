@@ -308,7 +308,7 @@ if __name__ == '__main__':
     
         #MC.MailPlot(recipient_list)
         if(debug):
-            MC.MailPlotNew(recipient_list_short)
+            MC.MailPlotNew(recipient_list)
         else:
             MC.MailPlotNew(recipient_list)
            
