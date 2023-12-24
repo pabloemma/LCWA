@@ -283,7 +283,7 @@ if __name__ == '__main__':
     #create the list
     debug = True
     report_date = '2023-12-23'
-    #report_date = None
+    #report_date = None  # use this for norma run
     from pathlib import Path
     # next we get current time so that we can calculate how long the program took
     prog_start_time = datetime.datetime.now()
@@ -294,7 +294,7 @@ if __name__ == '__main__':
     if(debug):
         MC = MyControl(backupdir,debug=debug,report_date=report_date)
     else:
-        MC = MyControl(backupdir,report_date = report_date)
+        MC = MyControl(backupdir)
     
     #Here we check if we are close to a time window
     timestamp = datetime.datetime.now().time() # Throw away the date information
@@ -310,7 +310,7 @@ if __name__ == '__main__':
         if(debug):
             MC.MailPlotNew(recipient_list_short)
         else:
-            MC.MailPlotNew(recipient_list_short)
+            MC.MailPlotNew(recipient_list)
            
     MC.CreateHistory()
     MC.PlotHistory()
