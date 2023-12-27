@@ -21,4 +21,5 @@ config/test_speed_cfg_miska.json
 .vscode/launch.json
 temp.txt
 src/temp.txt
+src/LCWA_a.txt
 .vscode/launch.json
