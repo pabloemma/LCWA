@@ -1,0 +1,3 @@
+APP_KEY = 'l1t93oy5j7vek1i'
+APP_SECRET = 'kduaayz90jeyu4j'
+REFRESH_TOKEN = 'sl.Brdmpcxn8PqBP-CsYU9-5-U-FpSZv-smKHZfkPWwYMnfTd44nnR-BWL99yJG00D3O4zsvruf4drtxU-Lor3Iv-AM2mIVrtWA_gVGGvQYEbE6gOveYfUZhAsEuOz42qj1V-3Zzu_JAsDW'

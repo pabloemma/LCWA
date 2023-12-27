@@ -282,7 +282,7 @@ class MyControl(object):
 if __name__ == '__main__':
     #create the list
     debug = False
-    #report_date = '2023-12-23'
+    #report_date = '2023-12-26'
     report_date = None  # use this for norma run
     from pathlib import Path
     # next we get current time so that we can calculate how long the program took

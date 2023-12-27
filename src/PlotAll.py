@@ -269,10 +269,10 @@ class PlotAll(object):
         except:
             print("************warning from Plotall:**** cannot unpack ",self.InputFile )
             
-            self.x1 = -999 #time
-            self.y1 = 0. #download
-            self.y2 = 0. #uplooad
-            self.y0 = 0. # before vs 6: packet loss, with vs 6: latency measured in ms (averaged over 10)
+            #self.x1 = -999 #time
+            #self.y1 = 0. #download
+            #self.y2 = 0. #uplooad
+            #self.y0 = 0. # before vs 6: packet loss, with vs 6: latency measured in ms (averaged over 10)
 
     
     def SetTempDirectory(self):
@@ -405,7 +405,7 @@ class PlotAll(object):
         xpos = .05 #text position
         ypos = 1.02
         ylow = 0. #regular y axis limits
-        yhigh = 30.
+        yhigh = 35.
         ylow1=0. # limits for packet loss, now for latency
         yhigh1=100.
         
@@ -487,6 +487,7 @@ class PlotAll(object):
             self.axarr[i][k-2].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr[i][k-2].transAxes,fontsize=8)
             self.axarr[i][k-2].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k-2].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
+            print('mean',np.around(np.mean(y1),2))
             if(np.around(np.mean(y1),2) >25.): 
                  # set yaxis limit
                 self.axarr[i][k-2].set_ylim(ylow,yveryhigh) # set yaxis limit
@@ -961,7 +962,7 @@ if __name__ == '__main__':
         dirlist.append(temp1)
     token_file = '/git/speedtest/src/LCWA_a.txt'
     tempdir = 'scratch'
-    datefile = '2023-04-18' 
+    datefile = '2023-12-25' 
      # " default is none"
     PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropBox()

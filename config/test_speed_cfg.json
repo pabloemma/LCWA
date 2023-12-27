@@ -18,7 +18,7 @@
 
     },
     "Control" : {
-        "runmode" : "Both",
+        "runmode" : "Speedtest",
         "debug"   : false,
         "cryptofile" : "LCWA_a.txt",
         "click"      : "1",
@@ -43,7 +43,7 @@
     },
     "ClusterControl" : {
         "LC01" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -109,7 +109,7 @@
 
                     },
         "LC04" : {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -134,7 +134,7 @@
 
         ,
         "LC05" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -156,7 +156,7 @@
 
                     },
         "LC06" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -178,7 +178,7 @@
 
                     },
         "LC07" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -200,7 +200,7 @@
 
                     },
         "LC08" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -222,7 +222,7 @@
 
                     },
         "LC09" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -244,7 +244,7 @@
 
                     },
         "LC10" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -266,7 +266,7 @@
 
                     },
         "LC11" :   {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -288,7 +288,7 @@
 
                     },
         "LC12" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -332,7 +332,7 @@
 
                     },
         "LC14" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -354,7 +354,7 @@
 
                     },
         "LC15" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -420,7 +420,7 @@
 
                     },
         "LC18" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -442,7 +442,7 @@
 
                     },
         "LC19" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -464,7 +464,7 @@
 
                     },
         "LC20" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -508,7 +508,7 @@
 
                     },
         "LC22" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -530,7 +530,7 @@
 
                     },
         "LC23" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -552,7 +552,7 @@
 
                     },
         "LC24" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
@@ -599,7 +599,7 @@
 
 
         "miska" : {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
