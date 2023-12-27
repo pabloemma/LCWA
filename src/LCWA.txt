@@ -1,3 +1,0 @@
-APP_KEY = '70yem8c9kt0r29f'
-APP_SECRET = 'sbm9401ugpfasgp'
-REFRESH_TOKEN = '4l8-Dlo0fo0AAAAAAAAAAUupzvrj_YjBH_vw1koRqSlKUZyRb3Gl2XD7Mvo8YNpv'
