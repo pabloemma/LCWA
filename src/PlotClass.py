@@ -95,7 +95,7 @@ class MyPlot(object):
             print('error in pandas')
             return
         # convert date and time back to datetime
-        lcwa_data["Time"] = pd.to_datetime(lcwa_data['time']) 
+        lcwa_data["Time"] = pd.to_datetime(lcwa_data['time'], format='%H:%M:%S') 
 
     # Create an iper and a speedtest frame
 
