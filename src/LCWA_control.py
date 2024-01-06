@@ -282,8 +282,8 @@ class MyControl(object):
 if __name__ == '__main__':
     #create the list
     debug = False
-    report_date = '2024-01-05'
-    #report_date = None  # use this for norma run
+    #report_date = '2024-01-05'
+    report_date = None  # use this for norma run
     from pathlib import Path
     # next we get current time so that we can calculate how long the program took
     prog_start_time = datetime.datetime.now()
@@ -298,8 +298,8 @@ if __name__ == '__main__':
     
     #Here we check if we are close to a time window
     timestamp = datetime.datetime.now().time() # Throw away the date information
-    start = datetime.time(23, 49)
-    end = datetime.time(23,59)
+    #start = datetime.time(23, 49)
+    #end = datetime.time(23,59)
     # for a different date use the line 132
     start = datetime.time(1,25)
     end = datetime.time(23,59)
