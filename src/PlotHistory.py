@@ -400,8 +400,11 @@ class PlotHistory(object):
 
     def select_data_test(self,data):
         """" this routine drops rows which do not have iperf3 or Speed on it"""
-
-        data = data.loc[data['server name'] == self.select_test]
+        try:
+            data = data.loc[data['server name'] == self.select_test]
+        except:
+            return
+        
         if(self.DEBUG):
             print(data.head())
         return data
@@ -434,11 +437,14 @@ class PlotHistory(object):
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
     speed_box = None #creates loop
-    speed_box = 'LC15' # sngle speedbox
+    #speed_box = 'LC15' # sngle speedbox
     begin_time="2023-12-15"
     #begin_time="month"
     end_time = 'Today'
     #end_time = "2023-02-27"
     PH = PlotHistory(config_file = config_file , begin_time=begin_time,end_time = end_time,speed_box = speed_box)
-    PH.run_program()
-   
+    try:
+        PH.run_program()
+    except:
+        print('problem with a file')
+
