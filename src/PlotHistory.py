@@ -198,8 +198,10 @@ class PlotHistory(object):
         for box in self.speed_box_list:
             self.speed_box = box
             self.file_name_beg = self.input_dir+'/'+box+'_'
+            self.empty = False  # hopefully this helps with empty files, so that loop does bnot crash
             self.loop_over_data_file()
-            self.plot_speed()
+            if not self.empty:
+                self.plot_speed()
         
         return
     def run_program(self):
@@ -232,6 +234,7 @@ class PlotHistory(object):
             
             if(dt.datetime.strptime(temp_time,self.fmt) > self.end_datetime):
                 print("reached end of file list")
+                self.empty = True
                 return
 
         # now create first data frame
@@ -437,8 +440,8 @@ class PlotHistory(object):
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
     speed_box = None #creates loop
-    #speed_box = 'LC15' # sngle speedbox
-    begin_time="2023-12-15"
+    #speed_box = 'LC04' # sngle speedbox
+    begin_time="2024-02-07"
     #begin_time="month"
     end_time = 'Today'
     #end_time = "2023-02-27"
