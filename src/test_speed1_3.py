@@ -59,6 +59,7 @@ import PlotClass as PC # new plot version
 import uuid
 import ntplib
 import random
+import inspect
 
 from tcp_latency import measure_latency
 
@@ -320,10 +321,17 @@ class test_speed1():
          
          
         
+
+    def WhereAmI(self):
+        """Determines the function I am in, used for the logger to report"""
+ 
     def WriteHeader(self):   
         '''
         gives out all the info at startup
         '''
+        frame = inspect.currentframe()
+        print('**********************',frame.f_code.co_name,'***********************')
+
         print(sys.version_info[0])
         if (sys.version_info[0] == 3):
             print(' we have python 3')
