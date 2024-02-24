@@ -440,8 +440,8 @@ class PlotHistory(object):
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
     speed_box = None #creates loop
-    #speed_box = 'LC04' # sngle speedbox
-    begin_time="2024-02-07"
+    speed_box = 'LC16' # sngle speedbox
+    begin_time="2024-02-14"
     #begin_time="month"
     end_time = 'Today'
     #end_time = "2023-02-27"
