@@ -298,11 +298,11 @@ if __name__ == '__main__':
     
     #Here we check if we are close to a time window
     timestamp = datetime.datetime.now().time() # Throw away the date information
-    start = datetime.time(23, 49)
-    end = datetime.time(23,59)
-    # for a different date use the line 132
-    #start = datetime.time(1,25)
+    #start = datetime.time(23, 49)
     #end = datetime.time(23,59)
+    # for a different date use the line 132
+    start = datetime.time(1,25)
+    end = datetime.time(23,59)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
