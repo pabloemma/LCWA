@@ -7,6 +7,8 @@ This is a work in progress :)
 
 '''
 import inspect
+import datetime as dt
+
 
 class TestLogger():
 
@@ -27,7 +29,9 @@ class TestLogger():
 
         TX = color
         
-        
+        self.Output = Output
+
+
         if(Output == 'logfile' or Output == 'both'):
             self.Openfile()
         else:
@@ -42,7 +46,13 @@ class TestLogger():
 
     #def OpenFile(self,LogFile)
 
+    def CreateBuffer(self,frame_name = None, LogLevel = None , Message):
+        """ Creates the statement for print"""
+       
+        # get current date and time
+        myDate = dt.datetime.now()
 
+        
 
 class color:
    PURPLE = '\033[95m'

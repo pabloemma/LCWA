@@ -61,9 +61,14 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
 
-                    },
+                    
+            "logging" : {
+                    "loglevel" : "info",
+                    "output"   : "screen"
+                }
+            },
         "LC02" : {
             "runmode" : "Speedtest",
 
@@ -592,11 +597,15 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
 
-                    },
+                   
 
-
+            "logging" : {
+                    "loglevel" : "info",
+                    "output"   : "screen"
+                    }   
+            },
 
         "miska" : {
             "runmode" : "Speedtest",

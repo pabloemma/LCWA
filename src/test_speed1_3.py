@@ -60,6 +60,7 @@ import uuid
 import ntplib
 import random
 import inspect
+import logging as LG    # get the logging facility
 
 from tcp_latency import measure_latency
 
@@ -85,16 +86,20 @@ class test_speed1():
         
           
             
-        self.WriteHeader()
+        #self.WriteHeader()
         
         #self.DropFlag = False # default no dropbox connection
         
         #self.Debug = False
         
        
-        self.GetMacAddress()
+        #self.GetMacAddress()
         #self.Setup() # now done ir agrparse
         # here we wait for the program to start until we rach the time
+
+    def SetupLogger(self,Output = None):
+        """ this sets up the logger system, needs to be called after the json read"""
+
 
     def QueueRuntime(self):                                              # WGH Mod: Allows for skipping the wait queue via cmdline arg
         
@@ -219,29 +224,19 @@ class test_speed1():
         else:
             self.Logging('Unknown runmode')
             sys.exit(0)
+
+    # here are calls fro the original init
+        self.WriteHeader()
+        
+        #self.DropFlag = False # default no dropbox connection
+        
+        #self.Debug = False
+        
+       
+        self.GetMacAddress()
                 
-
+        return
     
-    def ConnectDropBoxOld(self):
-        """
-        here we establish connection to the dropbox account
-        """
-        #f=open(self.keyfile,"r")
-        #self.key =f.readline() #key for encryption
-        #self.key = pad(self.key,16)
-        #f.close()
-
-        f=open(self.cryptofile,"r")
-        self.data =f.readline() #key for encryption
-         #connect to dropbox
-        #self.dbx=dropbox.Dropbox(unpad(cipher.decrypt( enc[16:] ),16))
-        self.dbx=dropbox.Dropbox(self.data.strip('\n'))
-
-        self.myaccount = self.dbx.users_get_current_account()
-        print('***************************dropbox*******************\n\n\n')
-        print( self.myaccount.name.surname , self.myaccount.name.given_name)
-        print (self.myaccount.email)
-        print('\n\n ***************************dropbox*******************\n')
        
     def ConnectDropBox(self):
         """
@@ -410,6 +405,7 @@ class test_speed1():
         print('Version 8.02.02', 'with Gordon time mods ')
         print('Version 8.02.03', 'added an try clause in create iperf output to catch connection problems')
         print('Version 9.00.01', 'new dropbox')
+        print('Version 9.01.00' 'Version with logger')
         
         print('\n\n\n')
         

@@ -149,7 +149,31 @@ class MyConfig():
             if "iperf_reverse" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
                 self.iperf_reverse = jsondict["ClusterControl"][self.host]["nondefault"]["iperf_reverse"] 
 
+    
+        #Possible loglevels
+        # DEBUG
+        # INFO
+        # WARNING
+        # ERROR
+        # CRITICAL
+        
+        #Output choices
+        # screen
+        # outfile
+        # both
 
+        if "loglevel" in jsondict["ClusterControl"][self.host]["logging"].keys() :
+            self.log_level = jsondict["ClusterControl"][self.host]["logging"]["loglevel"] 
+        else:
+            self.log_level = "info"
+
+        if "output" in jsondict["ClusterControl"][self.host]["logging"].keys() :
+            self.log_level = jsondict["ClusterControl"][self.host]["logging"]["output"] 
+        else:
+            self.log_level = "screen"
+              
+        #here we get the logging varaibles:
+                
 
         print('\n\n ***************** configuration**************\n')
         print(' We are running on platform ' , mysystem, '\n')
