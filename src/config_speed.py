@@ -168,9 +168,9 @@ class MyConfig():
             self.log_level = "info"
 
         if "output" in jsondict["ClusterControl"][self.host]["logging"].keys() :
-            self.log_level = jsondict["ClusterControl"][self.host]["logging"]["output"] 
+            self.log_ouput = jsondict["ClusterControl"][self.host]["logging"]["output"] 
         else:
-            self.log_level = "screen"
+            self.log_output = "screen"
               
         #here we get the logging varaibles:
                 

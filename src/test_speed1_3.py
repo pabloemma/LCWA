@@ -98,8 +98,11 @@ class test_speed1():
         # here we wait for the program to start until we rach the time
 
     def SetupLogger(self,Output = None):
-        """ this sets up the logger system, needs to be called after the json read"""
-
+        """ this sets up the logger system, needs to be called after the json read
+        we have to use a temporayr filename, since the real filename is only created later from
+        """
+        
+        pass
 
     def QueueRuntime(self):                                              # WGH Mod: Allows for skipping the wait queue via cmdline arg
         
@@ -220,10 +223,17 @@ class test_speed1():
             self.speedtest =        MyConfig.speedtest     # location of the Ookla speedtest
             self.click      =       MyConfig.click # this is a flip flop of values
             self.random_click =     MyConfig.random_click # if 1 the program determines randomly to to iperf or speedtest
- 
+            
         else:
             self.Logging('Unknown runmode')
             sys.exit(0)
+        
+        #logger variables
+        self.log_level  = MyConfig.log_level
+        self.log_output = MyConfig.log_output
+
+    # now initialize the logger
+        logger_ok = self.SetupLogger()
 
     # here are calls fro the original init
         self.WriteHeader()
