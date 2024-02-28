@@ -23,14 +23,18 @@ def setup_logging(
         logging.config.dictConfig(config)
     else:
         logging.basicConfig(level=default_level)
-
-    print(config)
-    
+        
 def main(Mypath):
     
     setup_logging(default_path=MyPath)    
     logger = logging.getLogger(__name__)
     logger.info('Startlogging:')
+    
+    for k,v in  logging.Logger.manager.loggerDict.items()  :
+        print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )
+        if not isinstance(v, logging.PlaceHolder):
+            for h in v.handlers:
+                print('     +++',str(h.__class__)[8:-2] )
                 
     #my_module.foo()    
     #b = my_module.Bar()

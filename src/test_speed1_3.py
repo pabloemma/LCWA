@@ -129,8 +129,8 @@ class test_speed1():
         
                 
         # test: change filename of output logger file, they will be changed to the LCWA convention later
-        shutil.move('info.log','/Users/klein/git/LCWA/log/info.log')
-        shutil.move('errors.log','/Users/klein/git/LCWA/log/errors.log') # putting the filename there ensures an overwrite
+        #shutil.move('info.log','/Users/klein/git/LCWA/log/info.log')
+        #shutil.move('errors.log','/Users/klein/git/LCWA/log/errors.log') # putting the filename there ensures an overwrite
 
        # print(logger.handlers)
 
@@ -217,6 +217,7 @@ class test_speed1():
         self.runmode = MyConfig.runmode         #ookla or iperf
         self.Debug = MyConfig.debug
         self.cryptofile = MyConfig.cryptofile
+        self.logdir = MyConfig.logdir
         
 
         
@@ -370,8 +371,7 @@ class test_speed1():
          
         
 
-    def WhereAmI(self):
-        """Determines the function I am in, used for the logger to report"""
+    
  
     def WriteHeader(self):   
         '''
@@ -721,6 +721,14 @@ class test_speed1():
                         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
                         temp_txt = str(dt_string)+'   wrote dropbox file'
                         logging.info(temp_txt)
+                    # write logfile
+                        
+                        f2=open(self.logfile_info,"rb")
+                        f3=open(self.logfile_errors,"rb")
+                        #logf_i and logf_e are defined in openfile and just the bare filename
+                        self.dbx.files_upload(f2.read(),self.dropdir+self.logf_i,mode=dropbox.files.WriteMode('overwrite', None))
+                        self.dbx.files_upload(f3.read(),self.dropdir+self.logf_e,mode=dropbox.files.WriteMode('overwrite', None))
+
                     # write textfile
                         self.WriteDescriptor()
                         self.docfile1 = self.docfile.replace('csv','txt')
@@ -751,6 +759,17 @@ class test_speed1():
                         self.DoPlots(textflag =True)
                         f1=open(self.textfile,"rb")
                         self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
+                    
+                    # write logfile
+                        
+                        f2=open(self.logfile_info,"rb")
+                        f3=open(self.logfile_errors,"rb")
+                        #logf_i and logf_e are defined in openfile and just the bare filename
+                        self.dbx.files_upload(f2.read(),self.dropdir+self.logf_i,mode=dropbox.files.WriteMode('overwrite', None))
+                        self.dbx.files_upload(f3.read(),self.dropdir+self.logf_e,mode=dropbox.files.WriteMode('overwrite', None))
+
+
+
                         logging.info('midnight exiting')
                         sys.exit(0)
                     except:
@@ -1029,6 +1048,8 @@ class test_speed1():
         self.current_day = date.today()
         a = datetime.datetime.today().strftime('%Y-%m-%d')
         self.GetIPinfo()
+        self.logf_e = self.hostname + a+'errors.log'
+        self.logf_i = self.hostname + a+'info.log'
         filename =self.hostname + a+'speedfile.csv'  #add hostname
         # if filename exists we open in append mode
         #otherwise we will create it
@@ -1050,6 +1071,22 @@ class test_speed1():
             
         #Finally do the descriptor file
         self.WriteDescriptor()
+
+        #deal with the logger files
+        # there is an errors.log and an info.log
+        
+        self.logfile_info = self.logdir+self.logf_i
+        self.logfile_error = self.logdir+self.logf_e
+        # now move the temporary files created by logger to the log directory
+        #first get filenames of the handlers
+
+
+
+
+        shutil.move('info.log',self.logfile_info)
+        shutil.move('errors.log',self.logfile_error) # putting the filename there ensures an overwrite
+
+
             
             
     def WriteOutputHeader(self):       

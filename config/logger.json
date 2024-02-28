@@ -20,22 +20,18 @@
       },
   
       "info_file_handler": {
-        "class": "logging.handlers.RotatingFileHandler",
+        "class": "logging.FileHandler",
         "level": "INFO",
         "formatter": "extra",
         "filename": "info.log",
-        "maxBytes": 10485760,
-        "backupCount": 40,
         "encoding": "utf8"
       },
   
       "error_file_handler": {
-        "class": "logging.handlers.RotatingFileHandler",
+        "class": "logging.FileHandler",
         "level": "ERROR",
         "formatter": "extra",
         "filename": "errors.log",
-        "maxBytes": 10485760,
-        "backupCount": 40,
         "encoding": "utf8"
       }
     },

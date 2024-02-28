@@ -58,6 +58,7 @@ class MyConfig():
         mysystem = platform.system()
         self.srcdir = jsondict[mysystem]['srcdir']
         self.datadir = jsondict[mysystem]['datadir']
+        self.logdir = jsondict[mysystem]['logdir']
 
         self.timeout = jsondict[mysystem]['timeout']
         self.speedtest = jsondict[mysystem]['speedtest']

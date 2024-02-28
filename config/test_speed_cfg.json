@@ -6,6 +6,7 @@
         "speedtest" : "/usr/local/bin/speedtest",
         "srcdir" : "/Users/klein/git/LCWA/src/",
         "datadir" : "/Users/klein/speedfiles/",
+        "logdir" : "/Users/klein/git/speedtest/log/",
         "conf_dir" : "/Users/klein/git/LCWA/config/"
 
     },
@@ -14,6 +15,7 @@
         "speedtest" : "/usr/bin/speedtest",
         "srcdir" : "/home/pi/git/speedtest/src/",
         "datadir" : "/home/pi/speedfiles/",
+        "logdir" : "/home/pi/git/speedtest/log/",
         "conf_dir" : "/home/pi/git/speedtest/src/config/"
 
     },
