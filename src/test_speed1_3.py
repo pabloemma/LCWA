@@ -1186,7 +1186,7 @@ class test_speed1():
         """ this creates the plot and ships it to dropbox"""
         a =PC.MyPlot(self.input_path,self.input_filename,self.cryptofile,False)
         inputfile = self.input_path+'   '+self.input_filename
-        logging.info(input_file)
+        logging.info(inputfile)
         temp_file = self.input_path+self.input_filename
 
         
