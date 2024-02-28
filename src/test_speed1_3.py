@@ -106,13 +106,13 @@ class test_speed1():
         we have to use a temporayr filename, since the real filename is only created later from
         """
         
-        env_key='LOG_CFG'
+        #env_key='LOG_CFG'
 
 
         path = default_path
-        value = os.getenv(env_key, None)
-        if value:
-            path = value
+        #value = os.getenv(env_key, None)
+        #if value:
+        #    path = value
         if os.path.exists(path):
             
             with open(path, 'rt') as f:
