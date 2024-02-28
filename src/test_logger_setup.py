@@ -3,10 +3,10 @@ import os
 import json
 import logging.config
 
-import my_module
+#import my_module
 
 def setup_logging(
-    default_path='logging.json',
+    default_path=None,
     default_level=logging.INFO,
     env_key='LOG_CFG'
 ):
@@ -24,18 +24,22 @@ def setup_logging(
     else:
         logging.basicConfig(level=default_level)
 
-
-def main():
+    print(config)
     
-    setup_logging()    
+def main(Mypath):
+    
+    setup_logging(default_path=MyPath)    
     logger = logging.getLogger(__name__)
     logger.info('Startlogging:')
                 
-    my_module.foo()    
-    b = my_module.Bar()
-    b.bar()
+    #my_module.foo()    
+    #b = my_module.Bar()
+    #b.bar()
     
-    print logger.handlers
+    print(logger.handlers)
     
 if __name__ == '__main__':
-    main()
+    dir = '/Users/klein/git/speedtest/config/'
+    file = 'logger.json'
+    MyPath = dir+file
+    main(MyPath)

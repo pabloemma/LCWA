@@ -3,6 +3,7 @@ from os.path import exists                                     # WGH mod
 import ntplib
 import socket
 import time
+import logging
 
 
 
@@ -13,6 +14,8 @@ class MyTime():
     def __init__(self):
     
         self.cntp =ntplib.NTPClient()
+        logger = logging.getLogger(__name__)
+        logger.info('Startlogging in set time:')
  
 
     def GetTime(self):                                              # WGH mods
@@ -37,8 +40,10 @@ class MyTime():
 
         # Reverse the order of the servers on the theory that the last is the least busy
         NTPServers = NTPServers[::-1]
-            
-        print('NTPServers: ', NTPServers)
+
+
+        temp_txt =     'NTPServers: '+ str(NTPServers)
+        logging.info(temp_txt)
 
         for ntpserver in NTPServers:
             try:

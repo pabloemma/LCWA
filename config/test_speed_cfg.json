@@ -4,9 +4,9 @@
     "Darwin" : {
         "timeout" : "/usr/local/bin/timeout",
         "speedtest" : "/usr/local/bin/speedtest",
-        "srcdir" : "/Users/klein/visual studio/LCWA/src/",
+        "srcdir" : "/Users/klein/git/LCWA/src/",
         "datadir" : "/Users/klein/speedfiles/",
-        "conf_dir" : "/Users/klein/visual studio/LCWA/config/"
+        "conf_dir" : "/Users/klein/git/LCWA/config/"
 
     },
     "Linux" : {
@@ -602,8 +602,9 @@
                    
 
             "logging" : {
-                    "loglevel" : "info",
-                    "output"   : "screen"
+                    "loglevel" : "INFO",
+                    "output"   : "SCREEN",
+                    "log_conf_file" : "logger.json"
                     }   
             },
 

@@ -7,6 +7,19 @@ import os
 import sys
 import platform
 import socket
+import inspect
+
+class color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
 
 
 class MyConfig():
@@ -14,7 +27,7 @@ class MyConfig():
     def __init__(self,config_file):
         """ config_file contains all the infor for speedtest program"""
 
-
+ 
        
         
         # Open config file
@@ -40,6 +53,7 @@ class MyConfig():
         #bold face begin and end
         bfb = '\033[1m'
         bfe = '\033[0m'
+        TX = color
         #these are depending on the operating system
         mysystem = platform.system()
         self.srcdir = jsondict[mysystem]['srcdir']
@@ -165,13 +179,21 @@ class MyConfig():
         if "loglevel" in jsondict["ClusterControl"][self.host]["logging"].keys() :
             self.log_level = jsondict["ClusterControl"][self.host]["logging"]["loglevel"] 
         else:
-            self.log_level = "info"
+            self.log_level = "INFO"
 
         if "output" in jsondict["ClusterControl"][self.host]["logging"].keys() :
-            self.log_ouput = jsondict["ClusterControl"][self.host]["logging"]["output"] 
+            self.log_output = jsondict["ClusterControl"][self.host]["logging"]["output"] 
         else:
-            self.log_output = "screen"
-              
+            self.log_output = "SCREEN"
+
+        if "log_conf_file" in jsondict["ClusterControl"][self.host]["logging"].keys() :
+            self.log_conf_file = self.conf_dir+jsondict["ClusterControl"][self.host]["logging"]["log_conf_file"] 
+        else:
+            frame = inspect.currentframe()
+            prefix = TX.BOLD +TX.RED+'|'+frame.f_code.co_name+'>'+'no logger config file'+TX.END
+            print(prefix)
+            sys.exit(0)
+             
         #here we get the logging varaibles:
                 
 
