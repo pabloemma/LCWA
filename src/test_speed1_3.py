@@ -741,7 +741,7 @@ class test_speed1():
                     except:
                         logging.warning(' Cannot connect to dropbox, will try in 10 minues again')
 
-                        time.sleep(10*60)
+                        time.sleep(10)
                     #counter = 0 
                 elif self.FlushTime(): # It is close to midnight, we flush the last file and exit to ensure we laod trhe latest software
                     try:
