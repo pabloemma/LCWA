@@ -68,8 +68,9 @@
                     
             "logging" : {
                     "loglevel" : "info",
-                    "output"   : "screen"
-                }
+                    "output"   : "screen",
+                    "log_conf_file" : "logger.json"
+               }
             },
         "LC02" : {
             "runmode" : "Speedtest",
@@ -90,7 +91,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                    "loglevel" : "INFO",
+                    "output"   : "SCREEN",
+                    "log_conf_file" : "logger.json"
+                     }   
+
 
                     },
         "LC03" : {
@@ -112,8 +119,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
-
+                     },
+            "logging" : {
+                    "loglevel" : "INFO",
+                    "output"   : "SCREEN",
+                    "log_conf_file" : "logger.json"
+                     }   
+      
                     },
         "LC04" : {
             "runmode" : "Speedtest",
@@ -165,7 +177,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                    "loglevel" : "INFO",
+                    "output"   : "SCREEN",
+                    "log_conf_file" : "logger.json"
+                         }   
+                     
 
                     },
         "LC06" :  {
@@ -187,7 +205,14 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+ 
+            "logging" : {
+                    "loglevel" : "INFO",
+                    "output"   : "SCREEN",
+                    "log_conf_file" : "logger.json"
+                         }   
+                        
 
                     },
         "LC07" :  {
@@ -209,7 +234,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+                "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC08" :  {
@@ -231,7 +262,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+                "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC09" :  {
@@ -253,7 +290,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC10" :  {
@@ -275,7 +318,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC11" :   {
@@ -297,7 +346,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC12" :  {
@@ -319,7 +374,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC13" :  {
@@ -341,7 +402,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+                "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC14" :  {
@@ -363,7 +430,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC15" :  {
@@ -385,7 +458,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC16" :  {
@@ -407,7 +486,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC17" :  {
@@ -429,7 +514,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC18" :  {
@@ -451,7 +542,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC19" :  {
@@ -473,7 +570,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC20" :  {
@@ -495,7 +598,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC21" :  {
@@ -517,7 +626,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+                "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC22" :  {
@@ -539,7 +654,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC23" :  {
@@ -561,7 +682,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC24" :  {
@@ -582,7 +709,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : true
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "SCREEN",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
 
