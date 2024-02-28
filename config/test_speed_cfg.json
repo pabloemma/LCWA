@@ -16,7 +16,7 @@
         "srcdir" : "/home/pi/git/speedtest/src/",
         "datadir" : "/home/pi/speedfiles/",
         "logdir" : "/home/pi/git/speedtest/log/",
-        "conf_dir" : "/home/pi/git/speedtest/src/config/"
+        "conf_dir" : "/home/pi/git/speedtest/config/"
 
     },
     "Control" : {
