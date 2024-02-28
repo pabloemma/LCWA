@@ -19,6 +19,7 @@ import sys
 import os.path
 import dropbox
 import pandas as pd
+import logging
 
 
 
@@ -37,7 +38,9 @@ class MyPlot(object):
         plot both resulst on same plot
         '''
         
-        
+        logger = logging.getLogger(__name__)
+        #logger.info('Startlogging in set time:')
+
         
         # First check for python version, this is important for the matlob read part
         self.MyPythonVersion()
@@ -66,10 +69,10 @@ class MyPlot(object):
         """
 
         if (sys.version_info[0] == 3):
-            print(' we have python 3')
+            logging.info(' we have python 3')
             vers = True
         else:
-            print('python2 not supported anymore')
+            logging.error('python2 not supported anymore')
             vers = False
             sys.exit(0)
         return vers
@@ -88,11 +91,11 @@ class MyPlot(object):
         temp_data = pd.read_csv(self.InputFile)
       # now we drop some of the columns, pay attention to white space
         drop_list =['server id','jitter','package','latency measured']
-        print(temp_data)
+        #print(temp_data)
         try:
             lcwa_data = temp_data.drop(columns = drop_list)
         except:
-            print('error in pandas')
+            logging.error('error in pandas')
             return
         # convert date and time back to datetime
         lcwa_data["Time"] = pd.to_datetime(lcwa_data['time'], format='%H:%M:%S') 
@@ -138,8 +141,8 @@ class MyPlot(object):
         plt.xticks(rotation='vertical')
         plt.tight_layout()
         plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 6)
- 
-        print (self.output)
+        temp_txt = str(self.output)
+        logging.info(temp_txt)
         fig.savefig(self.output, bbox_inches='tight')
 
     
@@ -336,7 +339,8 @@ class MyPlot(object):
             return True
         
         except:
-            print('no file:   ' , filename)
+            temp_txt = 'no file:   ' + str(filename)
+            logging.error(temp_txt)
             sys.exit(0)
 
     def ConnectDropboxOld(self):
@@ -368,13 +372,13 @@ class MyPlot(object):
         """
         here we establish connection to the dropbox account
         """
-        print("at connect dropbox")
+        logging.info("at connect dropbox")
         #self.TokenFile=self.cryptofile.strip('\n')
         #f=open(self.TokenFile,"r")
 
         # now we branch out depending on which keyfile we are using:
         if  'LCWA_d.txt' in self.TokenFile:
-            print("old system")
+            logging.info("old system")
             f=open(self.TokenFile,"r")
             self.data =f.readline() #key for encryption
         
@@ -384,11 +388,12 @@ class MyPlot(object):
          
          #connect to dropbox 
             self.dbx=dropbox.Dropbox(self.data.strip('\n'))
-            print("self.dbx",self.dbx)
+            temp_txt ="self.dbx"+str(self.dbx)
+            print(temp_txt)
 
  
         elif 'LCWA_a.txt'  in self.TokenFile:
-            print('new system')
+            logging.info('new system')
             f=open(self.TokenFile,"r")
   
             temp =f.readlines() #key for encryption
@@ -420,20 +425,27 @@ class MyPlot(object):
                 app_secret = APP_SECRET,
                 oauth2_refresh_token = REFRESH_TOKEN
                 )
-            print("self.dbx",self.dbx)
+            temp_txt = 'self.dbx'+str(self.dbx)
+            logging.info(temp_txt)
 
         
         else:
-            print("wrong keyfile")
+            logging.error("wrong keyfile")
 
 
         
 
         self.myaccount = self.dbx.users_get_current_account()
-        print('***************************dropbox*******************\n\n\n')
-        print( self.myaccount.name.surname , self.myaccount.name.given_name)
-        print (self.myaccount.email)
-        print('\n\n ***************************dropbox*******************\n')
+     
+
+        logging.info('***************************dropbox*******************\n\n\n')
+        my_credentials = self.myaccount.name.surname +' '+ self.myaccount.name.given_name
+        logging.info(my_credentials)
+        my_email = self.myaccount.email
+        logging.info(my_email+'\n\n')
+        logging.info('***************************dropbox*******************\n')
+
+
 
         return self.dbx
 
@@ -460,7 +472,7 @@ class MyPlot(object):
         #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
 
         a = self.dbx.files_upload(f.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
-        print('this is a',a)
+        #print('this is a',a)
        
 if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
