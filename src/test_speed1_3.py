@@ -724,7 +724,7 @@ class test_speed1():
                     # write logfile
                         
                         f2=open(self.logfile_info,"rb")
-                        f3=open(self.logfile_errors,"rb")
+                        f3=open(self.logfile_error,"rb")
                         #logf_i and logf_e are defined in openfile and just the bare filename
                         self.dbx.files_upload(f2.read(),self.dropdir+self.logf_i,mode=dropbox.files.WriteMode('overwrite', None))
                         self.dbx.files_upload(f3.read(),self.dropdir+self.logf_e,mode=dropbox.files.WriteMode('overwrite', None))
@@ -763,7 +763,7 @@ class test_speed1():
                     # write logfile
                         
                         f2=open(self.logfile_info,"rb")
-                        f3=open(self.logfile_errors,"rb")
+                        f3=open(self.logfile_error,"rb")
                         #logf_i and logf_e are defined in openfile and just the bare filename
                         self.dbx.files_upload(f2.read(),self.dropdir+self.logf_i,mode=dropbox.files.WriteMode('overwrite', None))
                         self.dbx.files_upload(f3.read(),self.dropdir+self.logf_e,mode=dropbox.files.WriteMode('overwrite', None))
