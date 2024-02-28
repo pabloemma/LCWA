@@ -635,7 +635,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                    "loglevel" : "INFO",
+                    "output"   : "SCREEN",
+                    "log_conf_file" : "logger.json"
+                         }   
+                         
 
                     }
   
