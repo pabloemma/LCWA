@@ -69,7 +69,8 @@ from tcp_latency import measure_latency
 
 import iperf_client as ipe
 import config_speed as cs
-import set_time_gh as st
+#import set_time_gh as st
+import set_time_gh1 as st # new gordon time routine
 
 #from __builtin__ import True
 
@@ -136,10 +137,10 @@ class test_speed1():
 
         return 1
 
-    def QueueRuntime(self):                                              # WGH Mod: Allows for skipping the wait queue via cmdline arg
+    def QueueRuntimeOld(self):                                              # WGH Mod: Allows for skipping the wait queue via cmdline arg
         
         # here we wait for the program to start until we reach the time
-        MyT = st.MyTime()
+        MyT = st.MyTime(loop_time = 600, verbosity = 0)
         success = MyT.GetTime()
         
         # Only initiate the wait queue if our loop_time is 10 minutes or greater..
@@ -157,7 +158,62 @@ class test_speed1():
         else:
             logging.info("Jumping test wait queue..")
         
+    def QueueStartupWaitTime(self):                                             
+        if self.nowait == True:
+            # If running in test mode, don't query the ntp servers
+            #   and don't position ourselves in the test queue.
+            self.Logging("Jumping startup wait queue..")
+            self.ntp_offset = 0              # Stick to system time
+            self.ntp_querytime = 0
+        else:
+            # Hopefully, our startup ntp query happens after systemd-timesyncd has queried
+            # and set the system time, esp with RPIs, as they have no hardware clock.
+            # If our code us run as a systemd service with Wants=time-sync.target and
+            # After=time-sync.target, this shouldn't be a problem.
+            self.Logging("Getting NTP offset and query time..")
+            MyT = st.MyTime(loop_time = self.loop_time, verbosity = 0)
+            self.ntp_offset, self.ntp_querytime = MyT.GetNTPOffset()
         
+            self.Logging("Queueing startup wait time..")
+            host = socket.gethostname()
+            if(host[0:2] == 'LC'):
+                MyT.QueueWait(host, ntp_offset = self.ntp_offset)
+            else:
+                MyT.QueueWait('LC00', ntp_offset = self.ntp_offset)
+ 
+    def QueueNextTestTime(self):
+        MyT = st.MyTime(loop_time = self.loop_time,  verbosity = self.verbosity)
+
+        # Has the system time been synced (and adjusted) since our last NTP offset query?
+        # The modification time of this file tells us when the system time may have last changed and invalidated
+        #   our ntp_offset.
+        ntpsync_file = '/run/systemd/timesync/synchronized'
+        if os.path.isfile(ntpsync_file):
+            ntp_last_syssync = os.stat(ntpsync_file)[-2]
+            self.Logging('%-34s: %s' % ('Last system time sync occured at', datetime.datetime.fromtimestamp(ntp_last_syssync)), 0)
+            self.Logging('%-34s: %s' % ('Our last ntp query occured at', datetime.datetime.fromtimestamp(self.ntp_querytime)), 0)
+        else:
+            ntp_last_syssync = 1
+            
+        # If not running in test mode and if the previous ntp query failed, or the ntp_offset has expired:
+        if self.nowait == False and (self.ntp_offset == 0 or ntp_last_syssync > self.ntp_querytime):
+            self.Logging("Getting NTP offset and query time..")
+            self.ntp_offset, self.ntp_querytime = MyT.GetNTPOffset()
+        
+        self.Logging("Queueing next test wait time..")
+        host = socket.gethostname()
+
+        if(host[0:2] == 'LC'):
+            MyT.QueueWait(host, ntp_offset = self.ntp_offset)
+        else:
+            MyT.QueueWait('LC00', ntp_offset = self.ntp_offset)
+
+    def GetNTPOffset(self):
+        MyT = st.MyTime(loop_time = self.loop_time)
+        self.ntp_offset, self.ntp_querytime = MyT.GetNTPOffset()
+        return self.ntp_offset
+
+       
 
 
 
@@ -1295,7 +1351,8 @@ if __name__ == '__main__':
    # server1 = 'albuquerque.speedtest.centurylink.net:8080'
     ts = test_speed1(server=server1,chosentime=60)
     ts.GetArguments()  #commandline args
-    ts.QueueRuntime()
+    #ts.QueueRuntime()
+    ts.QueueStartupWaitTime()
     ts.OpenFile()  #output file
     
 #    ts.GetArguments()
