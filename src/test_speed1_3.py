@@ -137,32 +137,12 @@ class test_speed1():
 
         return 1
 
-    def QueueRuntimeOld(self):                                              # WGH Mod: Allows for skipping the wait queue via cmdline arg
-        
-        # here we wait for the program to start until we reach the time
-        MyT = st.MyTime(loop_time = 600, verbosity = 0)
-        success = MyT.GetTime()
-        
-        # Only initiate the wait queue if our loop_time is 10 minutes or greater..
-        if self.loop_time > 599 and not self.nowait:
-            logging.info("Queueing test wait time..")
-            host = socket.gethostname()
-            if success:
-                if(host[0:2] == 'LC'):
-                    MyT.SetStart(host)
-                else:
-                    MyT.SetStart('LC00')
-            else:
-                self.Logging('Could not connect to ntp server')
-                logging.warning('Could not connect to ntp server')
-        else:
-            logging.info("Jumping test wait queue..")
-        
+            
     def QueueStartupWaitTime(self):                                             
         if self.nowait == True:
             # If running in test mode, don't query the ntp servers
             #   and don't position ourselves in the test queue.
-            self.Logging("Jumping startup wait queue..")
+            logging.info("Jumping startup wait queue..")
             self.ntp_offset = 0              # Stick to system time
             self.ntp_querytime = 0
         else:
@@ -170,11 +150,11 @@ class test_speed1():
             # and set the system time, esp with RPIs, as they have no hardware clock.
             # If our code us run as a systemd service with Wants=time-sync.target and
             # After=time-sync.target, this shouldn't be a problem.
-            self.Logging("Getting NTP offset and query time..")
+            logging.info("Getting NTP offset and query time..")
             MyT = st.MyTime(loop_time = self.loop_time, verbosity = 0)
             self.ntp_offset, self.ntp_querytime = MyT.GetNTPOffset()
         
-            self.Logging("Queueing startup wait time..")
+            logging.info("Queueing startup wait time..")
             host = socket.gethostname()
             if(host[0:2] == 'LC'):
                 MyT.QueueWait(host, ntp_offset = self.ntp_offset)
@@ -190,17 +170,17 @@ class test_speed1():
         ntpsync_file = '/run/systemd/timesync/synchronized'
         if os.path.isfile(ntpsync_file):
             ntp_last_syssync = os.stat(ntpsync_file)[-2]
-            self.Logging('%-34s: %s' % ('Last system time sync occured at', datetime.datetime.fromtimestamp(ntp_last_syssync)), 0)
-            self.Logging('%-34s: %s' % ('Our last ntp query occured at', datetime.datetime.fromtimestamp(self.ntp_querytime)), 0)
+            logging.info('%-34s: %s' % ('Last system time sync occured at', datetime.datetime.fromtimestamp(ntp_last_syssync)))
+            logging.info('%-34s: %s' % ('Our last ntp query occured at', datetime.datetime.fromtimestamp(self.ntp_querytime)))
         else:
             ntp_last_syssync = 1
             
         # If not running in test mode and if the previous ntp query failed, or the ntp_offset has expired:
         if self.nowait == False and (self.ntp_offset == 0 or ntp_last_syssync > self.ntp_querytime):
-            self.Logging("Getting NTP offset and query time..")
+            logging.info("Getting NTP offset and query time..")
             self.ntp_offset, self.ntp_querytime = MyT.GetNTPOffset()
         
-        self.Logging("Queueing next test wait time..")
+        logging.info("Queueing next test wait time..")
         host = socket.gethostname()
 
         if(host[0:2] == 'LC'):
@@ -315,7 +295,7 @@ class test_speed1():
             self.random_click =     MyConfig.random_click # if 1 the program determines randomly to to iperf or speedtest
             
         else:
-            self.Logging('Unknown runmode')
+            logging.info('Unknown runmode')
             sys.exit(0)
         
         #logger variables
@@ -622,7 +602,7 @@ class test_speed1():
         
         #In case we have also None in the config file
         if (args.dpfile == None and self.cryptofile == None):
-            self.Logging('You need to provide path for cryptofile, will not connect to dropbox')
+            logging.info('You need to provide path for cryptofile, will not connect to dropbox')
 
         if(self.cryptofile[0] == 'L'): # need to add the system path
             self.cryptofile = self.speedtest_srcdir + self.cryptofile
@@ -829,7 +809,7 @@ class test_speed1():
                         logging.info('midnight exiting')
                         sys.exit(0)
                     except:
-                        self.Logging('Midnight save aborted due to network problem')
+                        logging.info('Midnight save aborted due to network problem')
                         sys.exit(0)
                         
                     #counter = 0 
