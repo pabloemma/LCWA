@@ -127,6 +127,12 @@ class test_speed1():
         logger = logging.getLogger(__name__)
         logger.info('Startlogging:')
 
+        #Here we get info on logger
+        for k,v in  logging.Logger.manager.loggerDict.items()  :
+            print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )
+            if not isinstance(v, logging.PlaceHolder):
+                for h in v.handlers:
+                    print('     +++',str(h.__class__)[8:-2] )
         
                 
         # test: change filename of output logger file, they will be changed to the LCWA convention later
