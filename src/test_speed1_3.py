@@ -85,23 +85,6 @@ class test_speed1():
         self.chosentime = chosentime # how long to wait in seconds before next reading
         self.vs = '9.01.00'
  
-         # here we read in the configuration file
-         # first we locate where the directory with test_speed1_3 py is located
-         # the configuration file is then  at ../config
-        
-          
-            
-        #self.WriteHeader()
-        
-        #self.DropFlag = False # default no dropbox connection
-        
-        #self.Debug = False
-        
-       
-        #self.GetMacAddress()
-        #self.Setup() # now done ir agrparse
-        # here we wait for the program to start until we rach the time
-
     def SetupLogger(self,output,default_path,default_level):
         """ this sets up the logger system, needs to be called after the json read
         we have to use a temporayr filename, since the real filename is only created later from
@@ -711,7 +694,7 @@ class test_speed1():
  
         #form command
 
-
+        '''
         if self.runmode == 'Speedtest':
             self.command_speed = temp1 
         elif self.runmode == 'Iperf':
@@ -725,6 +708,36 @@ class test_speed1():
             temp2.extend(["-s",self.iperf_server])
 
             self.command_iperf = temp2
+        '''
+
+        if self.runmode == 'Speedtest':
+            t=['--format=json-pretty']
+            temp1.extend(t)
+            self.command_speed = temp1
+            # WGH mod: 2nd chance speedtest if our selected server is unavailable..            
+            self.command_speed_alt = [self.timeout_command,"-k","300","200",self.speedtest,"--format=json-pretty"]
+            logging.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
+            logging.info('Speedtest alt command == %s' % self.command_speed_alt[4:(len(self.command_speed_alt))])
+            
+        elif self.runmode == 'Iperf':
+            temp2.extend(["-s",self.iperf_server])
+            self.command_iperf = temp2
+            logging.info('Iperf command == %s' % self.command_iperf[4:(len(self.command_iperf))])
+
+        elif self.runmode == 'Both':
+            t=['--format=json-pretty']
+            temp1.extend(t)
+            self.command_speed = temp1
+            # WGH mod: 2nd chance speedtest if our selected server is unavailable..            
+            self.command_speed_alt = [self.timeout_command,"-k","300","200",self.speedtest,"--format=json-pretty"]
+            logging.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
+            logging.info('Speedtest alt command == %s' % self.command_speed_alt[4:(len(self.command_speed_alt))])
+            
+            temp2.extend(["-s",self.iperf_server])
+            self.command_iperf = temp2
+            logging.info('Iperf command == %s' % self.command_iperf[4:(len(self.command_iperf))])
+
+
       
  
 
@@ -823,7 +836,7 @@ class test_speed1():
  
             time.sleep(self.loop_time)
 
-    def FlushTime(self):
+    def FlushTimeOld(self):
         
         """
         checks time and if its close tp midnight returns True
@@ -839,7 +852,29 @@ class test_speed1():
             return True
         else:
             return False
-            
+
+    def FlushTime(self):
+        # WGH mod: refactored for one second granularity
+        logging.info('Assessing EoD window..', 1)
+        epoch_now = int(time.time())
+        logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now), 1)
+        epoch_midnight = epoch_now - (epoch_now % 86400) + time.timezone
+
+        if epoch_midnight < epoch_now:
+            epoch_midnight += 86400
+
+        epoch_qt_midnight = epoch_midnight - 900 + self.ntp_offset
+        logging.info('Next quarter-to-midnight (ntp corrected): %s' % datetime.datetime.fromtimestamp(epoch_qt_midnight), 1)
+
+        if epoch_now >= epoch_qt_midnight:
+            logging.info('System time: %s is in EoD window.' % datetime.datetime.fromtimestamp(epoch_now), 1)
+            return True
+        else:
+            logging.info('System time: %s is not in EoD window.' % datetime.datetime.fromtimestamp(epoch_now), 1)
+            return False
+
+
+
     def GetLatency(self):
         """determines latency from speedbox to  speed server
         retunrs the average
@@ -852,7 +887,7 @@ class test_speed1():
         
         return sum/len(temp)
                  
-    def WriteTimer(self):
+    def WriteTimerOld(self):
         """
         determines the time
         so that we fill the dropbox file every hour
@@ -885,6 +920,31 @@ class test_speed1():
             return False
         
         
+    def WriteTimer(self):
+        # WGH mod: refactored for one second granularity, and simplified logic
+
+        # With testdb, we plot and post after every test..
+        if self.testdb == True:
+            return True
+
+        logging.info('Assessing write window..', 1)
+        epoch_now = int(time.time())
+        logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now), 1)
+
+        epoch_halfpast = epoch_now - (epoch_now % 3600) + 1800 + self.ntp_offset
+        if epoch_halfpast < epoch_now:
+            epoch_halfpast += 3600
+        logging.info('Next half-past the hour: %s' % datetime.datetime.fromtimestamp(epoch_halfpast), 1)
+
+        half_loop=int(self.loop_time / 2)
+        
+        if (epoch_now >= epoch_halfpast - half_loop) and \
+           (epoch_now <= epoch_halfpast + half_loop):
+            logging.info('System time of %s is in write window.' % datetime.datetime.fromtimestamp(epoch_now), 1)
+            return True
+        else:
+            logging.info('System time of %s is not in write window.' % datetime.datetime.fromtimestamp(epoch_now), 1)
+            return False
         
         
             
@@ -901,7 +961,7 @@ class test_speed1():
         sys.exit(0)
             
                     
-    def Run(self):
+    def RunOld(self):
         """
         this is the heart of the wrapper, using the CLI command
         """
@@ -997,6 +1057,138 @@ class test_speed1():
         self.output_file.write(myline)
         self.output_file.flush() # to write to disk
 
+
+    def Run(self):
+        """
+        this is the heart of the wrapper, using the CLI command
+        """
+        
+        # here we do split
+        if self.runmode == 'Both':
+            if self.random_click :  # we switch randomly between runmodes
+                if random.random() >.5 :
+                    self.click = 1
+                else:
+                    self.click = 0
+ 
+            if self.click == 1 :
+                temp_runmode = 'Iperf'
+                self.click = 0 # switch to opposite
+            else:
+                temp_runmode = 'Speedtest'
+                self.click = 1
+        else:
+            temp_runmode = self.runmode
+
+        # iperf3 test
+        if(temp_runmode == 'Iperf'):
+            #self.SetupIperf3()
+
+            logging.info('Beginning test %s' % self.command_iperf)
+            process = sp.Popen(self.command_iperf,
+                         #stdout=outfile,
+                         stdout=sp.PIPE,
+                         stderr=sp.PIPE,
+                         close_fds=True,
+                         universal_newlines=True)
+        
+            process.wait()
+            out,err = process.communicate()
+            if process.returncode != 0:
+                logging.info('_nostack_iperf3 error: iperf3 returned %s, %s' % (process.returncode,err))
+            else:
+                # WGH mod: only process valid results..
+                # ~ print('error',err)
+                # ~ print('runloop',out,type(out))
+                self.CreateIperfOutput(out)
+                # now create outputline from tuple
+                myline=''
+                for k in range(len(self.output)-1):
+                    myline=myline+str(self.output[k])+','
+                myline = myline+str(self.output[len(self.output)-1])+'\n'
+
+        # ookla speedtest test
+        elif(temp_runmode == 'Speedtest'):
+            logging.info('Beginning test %s' % self.command_speed[4:(len(self.command_speed))])
+            process = sp.Popen(self.command_speed,
+                         stdout=sp.PIPE,
+                         stderr=sp.PIPE,
+                         close_fds=True,
+                         universal_newlines=True)
+
+            process.wait()
+            out,err = process.communicate()
+
+            # WGH mod: if at first you don't succeed, try again, letting speedtest select the server..
+            if process.returncode != 0:
+                logging.info('_nostack_Primary speedtest error: speedtest returned %s:' % process.returncode)
+                print(err,  flush=True, file=sys.stderr)
+                logging.info('_toerr_ Re-running test, allowing speedtest binary to choose the server.')
+                logging.info('Beginning failover test %s' % self.command_speed_alt[4:(len(self.command_speed_alt))])
+                # Pause for a sec in case there is a momentary network glitch..
+                time.sleep(1)
+                process = sp.Popen(self.command_speed_alt,
+                             stdout=sp.PIPE,
+                             stderr=sp.PIPE,
+                             close_fds=True,
+                             universal_newlines=True)
+            
+                process.wait()
+                out,err = process.communicate()
+
+                if process.returncode != 0:
+                    logging.info('_nostack_Secondary speedtest error: speedtest returned %s, %s' % (process.returncode,err))
+
+            # WGH mod: only process valid results..
+            if process.returncode == 0:
+                try:
+                    mydata = json.loads(out)
+                    self.CreateOutputJson(mydata)
+                except:
+                    logging.info('Exception: Could not parse speedtest json ouput. Output that would not parse:')
+                    print(out, end =" ", flush=True, file=sys.stderr)
+                    logging.info('_tostd_Speedtest test results were not recorded due to a json parsing error.\n')
+                    # ~ return 
+
+                if(self.Debug):
+                    self.DebugProgram(5)
+
+                # now create outputline from the list
+                myline=''
+                for k in range(len(self.output)-1):
+                    myline=myline+str(self.output[k])+','
+
+                myline = myline+str(self.output[len(self.output)-1])+'\n'
+
+        else:
+            logging.info('Error: Unknown Run Mode "%s". Terminating program.' % self.runmode)
+            sys.exit(0)
+ 
+        # Write the processed output to the csv file..
+        if(date.today()>self.current_day):
+            #we have a new day
+            logging.info('\n')
+            logging.info("It's a new day!\n")
+            self.output_file.close()
+            self.OpenFile()
+ 
+        # WGH mod: don't write empty lines
+        if process.returncode == 0:
+            if(self.Debug):
+                self.myline = myline
+                self.DebugProgram(3)
+                
+            logging.info('Writing: %s' % myline, 0)
+            self.output_file.write(myline)
+            self.output_file.flush() # to write to disk
+            logging.info('%s test completed successfully.\n' % temp_runmode)
+        else:
+            logging.info('_toerr_%s test did not complete successfully.\n' % temp_runmode)
+
+
+
+
+
     def CreateIperfOutput(self,iperfout): 
         """create output for iperf run"""  
         b=iperfout.replace('"','')
@@ -1083,6 +1275,84 @@ class test_speed1():
         return 
 
 
+    def CreateOutputJson(self,jsondict):
+
+        # We are creating a CSV string from speedtest --format=json output
+        # ~ day,            time,       serrver name,server id, latency,    jitter, packet loss,download,   upload,     latency measured,63.233.220.21
+        # ~   28/01/2024,   00:07:52,   Speed,       10056,     55.668,     1.03,   0.0,        24.3854,    24.3092,    8.580843836534768
+        # ~ ['29/01/2024', '11:02:00', 'Speed',      10056,     55.825,     3.586,  0.0,        24.536904,  23.970072,  6.416478802566417]        
+
+        datatype   = jsondict['type']
+
+        # timestamp is the speedtest server's time in UTC *at the conclusion of the speedtest* when it
+        # transmits the json data.  Convert it into a datetime object and adjust for our local timezone:
+        now=datetime.datetime.now()
+        
+        self.output = [now.strftime("%d/%m/%Y"),now.strftime("%H:%M:%S")]
+        
+
+        try:
+            timestamp  = jsondict['timestamp']
+
+            from_zone = tz.tzutc()
+            to_zone = tz.tzlocal()
+
+            # ~ "2024-01-29T05:27:00Z" '%Y-%m-%dT%H:%M:%SZ'
+            tsformat='%Y-%m-%dT%H:%M:%SZ'
+            dt_utc  = datetime.datetime.strptime(timestamp, tsformat)
+            dt_utc = dt_utc.replace(tzinfo=from_zone)
+            dt = dt_utc.astimezone(to_zone)
+            self.output = [dt.strftime("%d/%m/%Y"),dt.strftime("%H:%M:%S")]
+
+            # ~ self.output.append(jsondict['server']['name'])
+            self.output.append("Speed")
+            self.output.append(int(jsondict['server']['id']))
+        except:
+            logging.info('Exception: bad date conversion.')
+            self.output = [dt.strftime("%d/%m/%Y"),dt.strftime("%H:%M:%S")] # we still need to define self.output
+
+
+        for key in ['latency', 'jitter']:
+            try:
+                # need 3 decimal precision?
+                float(jsondict['ping'][key])
+                self.output.append(float(jsondict['ping'][key]))
+            except ValueError:
+                logging.info('Exception: bad speedtest %s float conversion.' % key)
+                self.output.append(-10000.)
+
+        for key in ['packetLoss']:
+            try:
+                # need 1 decimal precision?
+                float(jsondict[key])
+                self.output.append(float(jsondict[key]))
+            except ValueError:
+                logging.info('Exception: bad speedtest %s float conversion.' % key)
+                self.output.append(-10000.)
+
+        for key in ['download', 'upload']:
+            try:
+                # need 3 decimal precision?
+                float(jsondict[key]['bandwidth'])
+                # convert bandwidth Bps (Bytes per second) to Mbps (Megabits per second)
+                self.output.append(float(jsondict[key]['bandwidth'])/125000.)
+            except ValueError:
+                logging.info('Exception: bad speedtest %s float conversion.' % key)
+                self.output.append(-999.)
+
+        lat = self.GetLatency()
+        self.output.append(lat)
+
+        header = ['day','time','server name','server id','latency','jitter','packet loss','download','upload','latency measured']
+        logging.info("Header: %s" % header, 2)
+        logging.info("Output: %s" % self.output, 2)
+
+        return True
+
+
+
+
+
     def OpenFile(self):
         ''' the default filename is going to be the date of the day
         and it will be in append mode
@@ -1167,7 +1437,13 @@ class test_speed1():
         
         stream = os.popen('dig +short myip.opendns.com @resolver1.opendns.com')
         return stream.read().strip('\n')
-    
+
+    def LocalIP(self):
+        MyIPs = sp.getoutput("hostname -I")
+        return MyIPs.strip('\n')
+
+
+
     def GetIPinfo(self):
         """
         gets the host info
