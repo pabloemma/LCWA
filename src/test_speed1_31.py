@@ -1163,7 +1163,7 @@ class test_speed1():
         else:
             logging.info('Error: Unknown Run Mode "%s". Terminating program.' % self.runmode)
             sys.exit(0)
-
+ 
         # Write the processed output to the csv file..
         if(date.today()>self.current_day):
             #we have a new day
