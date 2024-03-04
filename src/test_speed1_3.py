@@ -71,7 +71,7 @@ import iperf_client as ipe
 import config_speed as cs
 #import set_time_gh as st
 import set_time_gh1 as st # new gordon time routine
-
+from dateutil import tz
 #from __builtin__ import True
 
 
