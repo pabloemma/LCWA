@@ -1124,6 +1124,9 @@ class test_speed1():
                 logging.info('_nostack_Primary speedtest error: speedtest returned %s:' % process.returncode)
                 print(err,  flush=True, file=sys.stderr)
                 logging.info('_toerr_ Re-running test, allowing speedtest binary to choose the server.')
+
+
+
                 logging.info('Beginning failover test %s' % self.command_speed_alt[4:(len(self.command_speed_alt))])
                 # Pause for a sec in case there is a momentary network glitch..
                 time.sleep(1)
@@ -1187,6 +1190,11 @@ class test_speed1():
 
 
 
+    def ChooseSpeedtestServer(self):
+        # starting point for speedtest change over
+        # loop over all the speedtests
+        a = list(self.speedtest_server_list.keys())[1]
+        b = self.speedtest_server_list.get(a)
 
 
     def CreateIperfOutput(self,iperfout): 

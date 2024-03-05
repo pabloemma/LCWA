@@ -69,7 +69,9 @@ class MyConfig():
         self.click      = jsondict["Control"]["click"] # 1: start with iperf, 0 start with speedtest
         self.random_click     = jsondict["Control"]["random"]
         self.runmode = jsondict["Control"]["runmode"]   # WGH mod: Do we need this if the host isn't found in the ClusterControl block?
-
+        self.speedtest_server_list = jsondict["Control"]["server_list"]
+        #test if first key is working
+ 
         self.conf_dir = jsondict[mysystem]['conf_dir']
 
     # now we read in the variables which are crucial for running
