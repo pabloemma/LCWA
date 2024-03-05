@@ -83,7 +83,7 @@ class test_speed1():
         #print (' in init')        # before we do anything, let's determine the python version
 
         self.chosentime = chosentime # how long to wait in seconds before next reading
-        self.vs = '9.01.00'
+        self.vs = '9.01.01'
  
     def SetupLogger(self,output,default_path,default_level):
         """ this sets up the logger system, needs to be called after the json read
@@ -243,6 +243,8 @@ class test_speed1():
         self.Debug = MyConfig.debug
         self.cryptofile = MyConfig.cryptofile
         self.logdir = MyConfig.logdir
+        self.speedtest_server_list = MyConfig.speedtest_server_list
+        self.speedtest_counter = 0 # for every change of speedtestserver this counter get changed
         
 
         
@@ -287,6 +289,10 @@ class test_speed1():
             logging.info('Unknown runmode')
             sys.exit(0)
         
+        # store the speedtest server
+            self.speedtest_current = self.speedtest
+     
+     
         #logger variables
         
         self.log_level  = MyConfig.log_level
@@ -437,7 +443,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '9.01.00' # remember to also change it in init
+        self.vs = '9.01.01' # remember to also change it in init
  
         
         #print(' History')
@@ -486,6 +492,7 @@ class test_speed1():
         logging.info('Version 8.02.03  added an try clause in create iperf output to catch connection problems')
         logging.info('Version 9.00.01  new dropbox')
         logging.info('Version 9.01.00  Version with logger')
+        logging.info('Version 9.01.01  choose new server according to list if problems')
         
         #print('\n\n\n')
         
@@ -714,13 +721,10 @@ class test_speed1():
             t=['--format=json-pretty']
             temp1.extend(t)
             self.command_speed = temp1
-            # WGH mod: 2nd chance speedtest if our selected server is unavailable..            
-            self.command_speed_alt = [self.timeout_command,"-k","300","200",self.speedtest,"--format=json-pretty"]
             logging.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
-            logging.info('Speedtest alt command == %s' % self.command_speed_alt[4:(len(self.command_speed_alt))])
             
         elif self.runmode == 'Iperf':
-            temp2.extend(["-s",self.iperf_server])
+            self.command_iperf.extend(["-s",self.iperf_server])
             self.command_iperf = temp2
             logging.info('Iperf command == %s' % self.command_iperf[4:(len(self.command_iperf))])
 
@@ -728,10 +732,7 @@ class test_speed1():
             t=['--format=json-pretty']
             temp1.extend(t)
             self.command_speed = temp1
-            # WGH mod: 2nd chance speedtest if our selected server is unavailable..            
-            self.command_speed_alt = [self.timeout_command,"-k","300","200",self.speedtest,"--format=json-pretty"]
             logging.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
-            logging.info('Speedtest alt command == %s' % self.command_speed_alt[4:(len(self.command_speed_alt))])
             
             temp2.extend(["-s",self.iperf_server])
             self.command_iperf = temp2
@@ -746,7 +747,25 @@ class test_speed1():
         if(self.Debug):
             self.DebugProgram(2)     
         return 
-    
+
+    def BuildCommand(self):
+        """ Build command for speedtest engine"""
+        if self.runmode == 'Speedtest':
+            t=['--format=json-pretty']
+            self.command_speed.extend(t)
+            
+            logging.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
+            
+     
+        elif self.runmode == 'Both':
+            t=['--format=json-pretty']
+            self.command_speed.extend(t)
+            logging.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
+ 
+            logging.info('Iperf command == %s' % self.command_iperf[4:(len(self.command_iperf))])
+
+
+
     def RunLoop(self):
         """
         calls run and forms the loop
@@ -887,38 +906,7 @@ class test_speed1():
         
         return sum/len(temp)
                  
-    def WriteTimerOld(self):
-        """
-        determines the time
-        so that we fill the dropbox file every hour
-        """ 
-        
-        #determine the current time
-        b=  datetime.datetime.now()
-        #fill in tuple
-        a=b.timetuple()
-        # this is really a structure with 
-        # a.tm_hour
-        # a.tm_min
-        # a.tm_sec the various elements
-        # we want to make sure that our a.tm_min is between in a window around 30 minutes
-        # given by self.loop_time, which is in seconds
-        temp = int(self.loop_time/60.)
-        if(temp < 2): temp =2
-        temp = temp/2
-        # if we get negative time, that means we sleep longer than 60 minutes
-        if(30 - temp <0): 
-            return True # this way we write whenever we did a speedtest
-        # then we should just continue to write always at x:30
-        # now comes the test
-        #return True
-        #return True # part of debugging remove !!!!!!
-        if( a.tm_min > 30 - temp) and ( a.tm_min < 30 + temp):
-            return True
-        else:
-            #return False
-            return False
-        
+         
         
     def WriteTimer(self):
         # WGH mod: refactored for one second granularity, and simplified logic
@@ -957,112 +945,16 @@ class test_speed1():
         
         out,err = process.communicate()
         
-        print ( ' lione 839',out)
+        print ( ' line 839',out)
         sys.exit(0)
             
                     
-    def RunOld(self):
-        """
-        this is the heart of the wrapper, using the CLI command
-        """
-        
-        # here we do split
-        if self.runmode == 'Both':
-            if self.random_click :  # we switch randomly between runmodes
-                if random.random() >.5 :
-                    self.click = 1
-                else:
-                    self.click = 0
  
-            if self.click == 1 :
-                temp_runmode = 'Iperf'
-                self.click = 0 # switch to opposite
-            else:
-                temp_runmode = 'Speedtest'
-                self.click = 1
-        else:
-            temp_runmode = self.runmode
-
-                
-        
-
-        # split bewteen iperf and speedtest
-        if(temp_runmode == 'Iperf'):
-            #self.SetupIperf3()
-
-            print (self.command_iperf)
-            process = sp.Popen(self.command_iperf,
-                         #stdout=outfile,
-                         stdout=sp.PIPE,
-                         stderr=sp.PIPE,
-                         close_fds=True,
-                         universal_newlines=True)
-        
-            out,err = process.communicate()
-            print('error',err)
-            print('runloop',out,type(out))
-            self.CreateIperfOutput(out)
-       # now create outputline from tuple
-            myline=''
-            for k in range(len(self.output)-1):
-                myline=myline+str(self.output[k])+','
-            myline = myline+str(self.output[len(self.output)-1])+'\n'
-            logging.debug(myline)
-
-        elif(temp_runmode == 'Speedtest'):
-            process = sp.Popen(self.command_speed,
-                         #stdout=outfile,
-                         stdout=sp.PIPE,
-                         stderr=sp.PIPE,
-                         close_fds=True,
-                         universal_newlines=True)
-        
-            out,err = process.communicate()
-
-            if process.returncode != 0:
-                print("error",err)
-            a=str(out)
-            #a is now a tuple , which we fill into a csv list
-            self.CreateOutput(a)
-        
-            if(self.Debug):
-                self.DebugProgram(5)
-        
-
-            myline=''
-        # now create outputline from tuple
-            for k in range(len(self.output)-1):
-                myline=myline+str(self.output[k])+','
-            myline = myline+str(self.output[len(self.output)-1])+'\n'
-
-            print(self.output)
-            print(myline)
-        else:
-            temp_txt = 'Unknown Run Mode '+str(self.runmode)+ ' will exit'
-
-            logging.error(temp_txt)
-            sys.exit(0)
-        #check for date, we will open new file at midnight
-        if(date.today()>self.current_day):
-                #we have a new day
-            self.output_file.close()
-            self.OpenFile()
- 
-        
-        if(self.Debug):
-            self.myline = myline
-            self.DebugProgram(3)
-            logging.debug(str(myline))
-        #print (myline)
-        self.output_file.write(myline)
-        self.output_file.flush() # to write to disk
-
-
     def Run(self):
         """
         this is the heart of the wrapper, using the CLI command
         """
-        
+ 
         # here we do split
         if self.runmode == 'Both':
             if self.random_click :  # we switch randomly between runmodes
@@ -1119,18 +1011,18 @@ class test_speed1():
             process.wait()
             out,err = process.communicate()
 
-            # WGH mod: if at first you don't succeed, try again, letting speedtest select the server..
             if process.returncode != 0:
                 logging.info('_nostack_Primary speedtest error: speedtest returned %s:' % process.returncode)
                 print(err,  flush=True, file=sys.stderr)
                 logging.info('_toerr_ Re-running test, allowing speedtest binary to choose the server.')
 
-
-
-                logging.info('Beginning failover test %s' % self.command_speed_alt[4:(len(self.command_speed_alt))])
+                # pick new server
+                self.speedtest_current = self.ChooseSpeedtestServer()
+                
+                logging.info('Beginning failover test %s' % self.command_speed[4:(len(self.command_speed))])
                 # Pause for a sec in case there is a momentary network glitch..
                 time.sleep(1)
-                process = sp.Popen(self.command_speed_alt,
+                process = sp.Popen(self.command_speed,
                              stdout=sp.PIPE,
                              stderr=sp.PIPE,
                              close_fds=True,
@@ -1193,8 +1085,23 @@ class test_speed1():
     def ChooseSpeedtestServer(self):
         # starting point for speedtest change over
         # loop over all the speedtests
-        a = list(self.speedtest_server_list.keys())[1]
-        b = self.speedtest_server_list.get(a)
+        # the current used speedtest is self.speedtest_current
+        # the original is self.speedtest, currently comcast albuqerque
+        if(self.speedtest_counter < len(self.speedtest_server_list.keys())) :
+            a = list(self.speedtest_server_list.keys())[self.speedtest_counter]
+            self.speedtest_current = self.speedtest_server_list.get(a)
+            # increase self.speedtest_counter 
+
+            self.speedtest_counter = self.speedtest_counter +1
+        else:
+            # reset counter to original speedtest
+            self.speedtest_current = self.speedtest
+            self.speedtest_counter = 0
+            logging.warning('run out of server choices')
+            logging.warning('speedtest server reset to  %d',)
+
+        return self.speedtest_current
+        
 
 
     def CreateIperfOutput(self,iperfout): 

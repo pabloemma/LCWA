@@ -241,8 +241,6 @@ class MyConfig():
             print('Server ID            ',self.serverid)
             print('times intervals      ',self.time_window)
 
-            
- 
         print('***************************** end of configuration***************\n\n')
 
 
