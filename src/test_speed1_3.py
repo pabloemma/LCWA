@@ -350,7 +350,7 @@ class test_speed1():
                 stat = os.stat(path)
                 if stat.st_ctime < old:
                     logging.info("removing: %s" % path)
-                    os.remove(path) 
+                    #os.remove(path) # uncomment for real live
        
         return
 
