@@ -70,6 +70,7 @@ class MyConfig():
         self.random_click     = jsondict["Control"]["random"]
         self.runmode = jsondict["Control"]["runmode"]   # WGH mod: Do we need this if the host isn't found in the ClusterControl block?
         self.speedtest_server_list = jsondict["Control"]["server_list"]
+        self.keep_files_time = jsondict["Control"]["keep_files_time"]
         #test if first key is working
  
         self.conf_dir = jsondict[mysystem]['conf_dir']

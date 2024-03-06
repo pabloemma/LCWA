@@ -25,6 +25,7 @@
         "cryptofile" : "LCWA_a.txt",
         "click"      : "1",
         "random"     : false,
+        "keep_files_time" : 7,
         "server_list" : { "nmsurf":9686,"plateau":16869,"comcast":1773,"sacred_wind":62425,"vexus":62294,"santa_rosa":43754,"windstream":45706}
 
     },

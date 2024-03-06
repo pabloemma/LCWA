@@ -84,7 +84,7 @@ class test_speed1():
 
         self.chosentime = chosentime # how long to wait in seconds before next reading
         self.vs = '9.01.01'
- 
+
     def SetupLogger(self,output,default_path,default_level):
         """ this sets up the logger system, needs to be called after the json read
         we have to use a temporayr filename, since the real filename is only created later from
@@ -244,6 +244,8 @@ class test_speed1():
         self.cryptofile = MyConfig.cryptofile
         self.logdir = MyConfig.logdir
         self.speedtest_server_list = MyConfig.speedtest_server_list
+        self.keep_files_time = MyConfig.keep_files_time
+        self.datadir = MyConfig.datadir
         self.speedtest_counter = 0 # for every change of speedtestserver this counter get changed
         
 
@@ -314,10 +316,46 @@ class test_speed1():
         
        
         self.GetMacAddress()
+
+        self.CleanUp()
+         
                 
         return
     
+    def CleanUp(self):
+        """ at the beginning of each run clean up logfiles and old speedfiles (older than 5days)"""
+        # Here is cleanup from previous runs
+        # self.logdir is the directory where the logs are kept
+        # self.input_path is the data output directory
+
+        # First let's do the log directory, list the files which will be deletd
+        logging.info("removing files in %s" % self.logdir)
+        mydir = self.logdir
+        self.RemoveFiles(mydir,self.keep_files_time)
+
+        #cleanup speedfiles directory
+        logging.info("removing files in %s" % self.datadir)
+        mydir = self.datadir
+        self.RemoveFiles(mydir,self.keep_files_time)
        
+
+    def RemoveFiles(self,mydir,xtime):
+        """removes file solder than xtime dys"""
+        now = time.time()
+        old = now - xtime * 24 * 60 * 60
+
+        for f in os.listdir(mydir):
+            path = os.path.join(mydir, f)
+            if os.path.isfile(path):
+                stat = os.stat(path)
+                if stat.st_ctime < old:
+                    logging.info("removing: %s" % path)
+                    os.remove(path) 
+       
+        return
+
+ 
+        
     def ConnectDropBox(self):
         """
         here we establish connection to the dropbox account
