@@ -1274,14 +1274,19 @@ class test_speed1():
                 logging.info('Exception: bad speedtest %s float conversion.' % key)
                 self.output.append(-10000.)
 
-        for key in ['packetLoss']:
+        #for key in ['packetLoss']:
+        if "packetloss" in jsondict:
             try:
                 # need 1 decimal precision?
-                float(jsondict[key])
+                
                 self.output.append(float(jsondict[key]))
-            except ValueError:
+            except ValueError :
+            #except :
+                raise RuntimeWarning from None
                 logging.info('Exception: bad speedtest %s float conversion.' % key)
                 self.output.append(-10000.)
+        else:
+            logging.info("Packetloss not available on this server")
 
         for key in ['download', 'upload']:
             try:
