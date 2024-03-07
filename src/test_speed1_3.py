@@ -83,7 +83,7 @@ class test_speed1():
         #print (' in init')        # before we do anything, let's determine the python version
 
         self.chosentime = chosentime # how long to wait in seconds before next reading
-        self.vs = '9.01.01'
+        self.vs = '9.02.01'
 
     def SetupLogger(self,output,default_path,default_level):
         """ this sets up the logger system, needs to be called after the json read
@@ -519,7 +519,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '9.01.01' # remember to also change it in init
+        self.vs = '9.02.01' # remember to also change it in init
  
         
         #print(' History')
@@ -569,7 +569,8 @@ class test_speed1():
         logging.info('Version 9.00.01  new dropbox')
         logging.info('Version 9.01.00  Version with logger')
         logging.info('Version 9.01.01  choose new server according to list if problems')
-        
+        logging.info('Version 9.02.01  cleanup logfiles and datadirectory')
+         
         #print('\n\n\n')
         
          
