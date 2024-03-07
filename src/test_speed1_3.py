@@ -352,21 +352,22 @@ class test_speed1():
        
        # finally make sure the logfiles in the home directory don't get too large
         # if they are too large, delete them
-        home_dir = os.getcwd()+'/'
+        home_dir = os.path.expanduser('~')+'/'
         log_file_1 = home_dir+ 'run_speedtest_restart_error.log'
         log_file_2 = home_dir + 'run_speedtes_restart.log'
         size_limit =10e6
-        self.RemoveLogFile(log_file_1)
-        self.RemoveLogFile(log_file_2)
+        self.RemoveLogFile(log_file_1,size_limit)
+        self.RemoveLogFile(log_file_2,size_limit)
         return
 
-    def RemoveLogfiles(logfile, size_limit):
+
+    def RemoveLogFile(self,logfile, size_limit):
         #check if file exists:
         if os.path.exists(logfile):
             a = os.path.getsize(logfile)
             if  a > size_limit : # delete if larger tham size_limit
-                logging.warning('%s is larger than %d  MB' % logfile, size_limit)
-                logging.warning('deleting %s' log_file_1)
+                logging.warning('%s is larger than %4.1f  MB' % (logfile, size_limit/1.e6))
+                logging.warning('deleting %s' % logfile)
                 os.remove(logfile)
                 return
             else:
