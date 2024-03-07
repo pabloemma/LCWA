@@ -350,7 +350,32 @@ class test_speed1():
         mydir = self.datadir
         self.RemoveFiles(mydir,self.keep_files_time)
        
+       # finally make sure the logfiles in the home directory don't get too large
+        # if they are too large, delete them
+        home_dir = os.getcwd()+'/'
+        log_file_1 = home_dir+ 'run_speedtest_restart_error.log'
+        log_file_2 = home_dir + 'run_speedtes_restart.log'
+        size_limit =10e6
+        self.RemoveLogFile(log_file_1)
+        self.RemoveLogFile(log_file_2)
+        return
 
+    def RemoveLogfiles(logfile, size_limit):
+        #check if file exists:
+        if os.path.exists(logfile):
+            a = os.path.getsize(logfile)
+            if  a > size_limit : # delete if larger tham size_limit
+                logging.warning('%s is larger than %d  MB' % logfile, size_limit)
+                logging.warning('deleting %s' log_file_1)
+                os.remove(logfile)
+                return
+            else:
+                pass
+
+        return
+
+
+ 
     def RemoveFiles(self,mydir,xtime):
         """removes file solder than xtime dys"""
         now = time.time()
