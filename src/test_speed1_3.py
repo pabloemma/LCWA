@@ -1288,6 +1288,11 @@ class test_speed1():
         else:
             logging.info("Packetloss not available on this server")
 
+        
+        if "download" not in jsondict or "upload" not in jsondict:
+            logging.error(" no down or upload data")
+            return
+
         for key in ['download', 'upload']:
             try:
                 # need 3 decimal precision?
