@@ -92,8 +92,20 @@ class test_speed1():
         
         #env_key='LOG_CFG'
 
-
+     
         path = default_path
+
+        #check if default_path exists otherwise make it
+        if not os.path.exists(self.logdir):
+            logging.warning("log directory %s does not exist "   % self.logdir)
+            logging.info ("Creating logging directory %s" % self.logdir)
+            os.mkdir(self.logdir)
+        else:
+            pass # that should be the norm
+            
+
+
+
         #value = os.getenv(env_key, None)
         #if value:
         #    path = value
