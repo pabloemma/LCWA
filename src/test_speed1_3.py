@@ -951,7 +951,7 @@ class test_speed1():
 
     def FlushTime(self):
         # WGH mod: refactored for one second granularity
-        logging.info('Assessing EoD window..')
+        logging.debug('Assessing EoD window..')
         epoch_now = int(time.time())
         logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now))
         epoch_midnight = epoch_now - (epoch_now % 86400) + time.timezone
@@ -960,13 +960,13 @@ class test_speed1():
             epoch_midnight += 86400
 
         epoch_qt_midnight = epoch_midnight - 900 + self.ntp_offset
-        logging.info('Next quarter-to-midnight (ntp corrected): %s' % datetime.datetime.fromtimestamp(epoch_qt_midnight))
+        logging.debug('Next quarter-to-midnight (ntp corrected): %s' % datetime.datetime.fromtimestamp(epoch_qt_midnight))
 
         if epoch_now >= epoch_qt_midnight:
             logging.info('System time: %s is in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
             return True
         else:
-            logging.info('System time: %s is not in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
+            logging.debug('System time: %s is not in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
             return False
 
 
