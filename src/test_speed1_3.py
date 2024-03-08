@@ -951,7 +951,7 @@ class test_speed1():
 
     def FlushTime(self):
         # WGH mod: refactored for one second granularity
-        logging.info('Assessing EoD window..', 1)
+        logging.info('Assessing EoD window..')
         epoch_now = int(time.time())
         logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now))
         epoch_midnight = epoch_now - (epoch_now % 86400) + time.timezone
