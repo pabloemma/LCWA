@@ -984,8 +984,45 @@ class test_speed1():
         return sum/len(temp)
                  
          
-        
     def WriteTimer(self):
+        """
+        determines the time
+        so that we fill the dropbox file every hour
+        """ 
+        # With testdb, we plot and post after every test..
+        if self.testdb == True:
+            return True
+       
+        #determine the current time
+        b=  datetime.datetime.now()
+        #fill in tuple
+        a=b.timetuple()
+        # this is really a structure with 
+        # a.tm_hour
+        # a.tm_min
+        # a.tm_sec the various elements
+        # we want to make sure that our a.tm_min is between in a window around 30 minutes
+        # given by self.loop_time, which is in seconds
+        temp = int(self.loop_time/60.)
+        if(temp < 2): temp =2
+        temp = temp/2
+        # if we get negative time, that means we sleep longer than 60 minutes
+        if(30 - temp <0): 
+            return True # this way we write whenever we did a speedtest
+        # then we should just continue to write always at x:30
+        # now comes the test
+        #return True
+        #return True # part of debugging remove !!!!!!
+        if( a.tm_min > 30 - temp) and ( a.tm_min < 30 + temp):
+            return True
+        else:
+            #return False
+            return False
+
+
+
+
+    def WriteTimerOld(self):
         # WGH mod: refactored for one second granularity, and simplified logic
 
         # With testdb, we plot and post after every test..
