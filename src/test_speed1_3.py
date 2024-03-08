@@ -992,7 +992,7 @@ class test_speed1():
         if self.testdb == True:
             return True
 
-        logging.info('Assessing write window..', 1)
+        logging.info('Assessing write window..')
         epoch_now = int(time.time())
         logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now))
 
