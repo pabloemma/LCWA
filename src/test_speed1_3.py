@@ -953,20 +953,20 @@ class test_speed1():
         # WGH mod: refactored for one second granularity
         logging.info('Assessing EoD window..', 1)
         epoch_now = int(time.time())
-        logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now), 1)
+        logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now))
         epoch_midnight = epoch_now - (epoch_now % 86400) + time.timezone
 
         if epoch_midnight < epoch_now:
             epoch_midnight += 86400
 
         epoch_qt_midnight = epoch_midnight - 900 + self.ntp_offset
-        logging.info('Next quarter-to-midnight (ntp corrected): %s' % datetime.datetime.fromtimestamp(epoch_qt_midnight), 1)
+        logging.info('Next quarter-to-midnight (ntp corrected): %s' % datetime.datetime.fromtimestamp(epoch_qt_midnight))
 
         if epoch_now >= epoch_qt_midnight:
-            logging.info('System time: %s is in EoD window.' % datetime.datetime.fromtimestamp(epoch_now), 1)
+            logging.info('System time: %s is in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
             return True
         else:
-            logging.info('System time: %s is not in EoD window.' % datetime.datetime.fromtimestamp(epoch_now), 1)
+            logging.info('System time: %s is not in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
             return False
 
 
@@ -994,21 +994,21 @@ class test_speed1():
 
         logging.info('Assessing write window..', 1)
         epoch_now = int(time.time())
-        logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now), 1)
+        logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now))
 
         epoch_halfpast = epoch_now - (epoch_now % 3600) + 1800 + self.ntp_offset
         if epoch_halfpast < epoch_now:
             epoch_halfpast += 3600
-        logging.info('Next half-past the hour: %s' % datetime.datetime.fromtimestamp(epoch_halfpast), 1)
+        logging.info('Next half-past the hour: %s' % datetime.datetime.fromtimestamp(epoch_halfpast))
 
         half_loop=int(self.loop_time / 2)
         
         if (epoch_now >= epoch_halfpast - half_loop) and \
            (epoch_now <= epoch_halfpast + half_loop):
-            logging.info('System time of %s is in write window.' % datetime.datetime.fromtimestamp(epoch_now), 1)
+            logging.info('System time of %s is in write window.' % datetime.datetime.fromtimestamp(epoch_now))
             return True
         else:
-            logging.info('System time of %s is not in write window.' % datetime.datetime.fromtimestamp(epoch_now), 1)
+            logging.info('System time of %s is not in write window.' % datetime.datetime.fromtimestamp(epoch_now))
             return False
         
         
@@ -1150,7 +1150,7 @@ class test_speed1():
                 self.myline = myline
                 self.DebugProgram(3)
                 
-            logging.info('Writing: %s' % myline, 0)
+            logging.info('Writing: %s' % myline)
             self.output_file.write(myline)
             self.output_file.flush() # to write to disk
             logging.info('%s test completed successfully.\n' % temp_runmode)
@@ -1346,8 +1346,8 @@ class test_speed1():
         self.output.append(lat)
 
         header = ['day','time','server name','server id','latency','jitter','packet loss','download','upload','latency measured']
-        logging.info("Header: %s" % header, 2)
-        logging.info("Output: %s" % self.output, 2)
+        logging.info("Header: %s" % header)
+        logging.info("Output: %s" % self.output)
 
         return True
 
