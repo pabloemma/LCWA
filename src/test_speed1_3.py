@@ -929,8 +929,8 @@ class test_speed1():
                         
                     #counter = 0 
                     
- 
-            time.sleep(self.loop_time)
+            self.QueueNextTestTime()
+            #time.sleep(self.loop_time)
 
     def FlushTimeOld(self):
         
@@ -984,7 +984,7 @@ class test_speed1():
         return sum/len(temp)
                  
          
-    def WriteTimer(self):
+    def WriteTimer_ak(self):
         """
         determines the time
         so that we fill the dropbox file every hour
@@ -1022,12 +1022,12 @@ class test_speed1():
 
 
 
-    def WriteTimerOld(self):
+    def WriteTimer(self):
         # WGH mod: refactored for one second granularity, and simplified logic
 
         # With testdb, we plot and post after every test..
-        if self.testdb == True:
-            return True
+        #if self.testdb == True:
+        #    return True
 
         logging.info('Assessing write window..')
         epoch_now = int(time.time())
@@ -1039,7 +1039,7 @@ class test_speed1():
         logging.info('Next half-past the hour: %s' % datetime.datetime.fromtimestamp(epoch_halfpast))
 
         half_loop=int(self.loop_time / 2)
-        
+        logging.info('System time for debugging %s ' % datetime.datetime.fromtimestamp(epoch_now))
         if (epoch_now >= epoch_halfpast - half_loop) and \
            (epoch_now <= epoch_halfpast + half_loop):
             logging.info('System time of %s is in write window.' % datetime.datetime.fromtimestamp(epoch_now))

@@ -746,7 +746,7 @@
                    
 
             "logging" : {
-                    "loglevel" : "INFO",
+                    "loglevel" : "DEBUG",
                     "output"   : "SCREEN",
                     "log_conf_file" : "logger.json"
                     }   

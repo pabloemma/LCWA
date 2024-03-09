@@ -21,7 +21,7 @@
   
       "info_file_handler": {
         "class": "logging.FileHandler",
-        "level": "INFO",
+        "level": "DEBUG",
         "formatter": "extra",
         "filename": "info.log",
         "encoding": "utf8"
