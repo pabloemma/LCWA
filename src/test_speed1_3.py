@@ -929,8 +929,8 @@ class test_speed1():
                         
                     #counter = 0 
                     
-            #self.QueueNextTestTime()
-            time.sleep(self.loop_time)
+            self.QueueNextTestTime()
+            #time.sleep(self.loop_time)
 
     def FlushTimeOld(self):
         
