@@ -122,19 +122,6 @@ class test_speed1():
         logger = logging.getLogger(__name__)
         logger.info('Startlogging:')
 
-        #Here we get info on logger
-        for k,v in  logging.Logger.manager.loggerDict.items()  :
-            print('+ [%s] {%s} ' % (str.ljust( k, 20)  , str(v.__class__)[8:-2]) )
-            if not isinstance(v, logging.PlaceHolder):
-                for h in v.handlers:
-                    print('     +++',str(h.__class__)[8:-2] )
-        
-                
-        # test: change filename of output logger file, they will be changed to the LCWA convention later
-        #shutil.move('info.log','/Users/klein/git/LCWA/log/info.log')
-        #shutil.move('errors.log','/Users/klein/git/LCWA/log/errors.log') # putting the filename there ensures an overwrite
-
-       # print(logger.handlers)
 
         return 1
 
@@ -300,7 +287,7 @@ class test_speed1():
             self.random_click =     MyConfig.random_click # if 1 the program determines randomly to to iperf or speedtest
             
         else:
-            logging.info('Unknown runmode')
+            logging.error('Unknown runmode')
             sys.exit(0)
         
         # store the speedtest server
@@ -457,7 +444,7 @@ class test_speed1():
 
         
         else:
-            logging.errors("wrong keyfile")
+            logging.error("wrong keyfile")
 
 
         
@@ -495,7 +482,9 @@ class test_speed1():
             #print ('not implemented yet')
             #sys.exit(0)
         else:
-            logging.warning('you are behind the curve with python2')
+            logging.error('you are behind the curve with python2')
+            logging.error('this code does not run under python2')
+            sys.exit(0)
             self.vers = 2
        
         
@@ -676,7 +665,7 @@ class test_speed1():
         
         #In case we have also None in the config file
         if (args.dpfile == None and self.cryptofile == None):
-            logging.info('You need to provide path for cryptofile, will not connect to dropbox')
+            logging.warning('You need to provide path for cryptofile, will not connect to dropbox')
 
         if(self.cryptofile[0] == 'L'): # need to add the system path
             self.cryptofile = self.speedtest_srcdir + self.cryptofile
@@ -967,7 +956,7 @@ class test_speed1():
             logging.info('System time: %s is in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
             return True
         else:
-            logging.debug('System time: %s is not in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
+            logging.warning('System time: %s is not in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
             return False
 
 
@@ -1046,7 +1035,7 @@ class test_speed1():
             logging.info('System time of %s is in write window.' % datetime.datetime.fromtimestamp(epoch_now))
             return True
         else:
-            logging.info('System time of %s is not in write window.' % datetime.datetime.fromtimestamp(epoch_now))
+            logging.warning('System time of %s is not in write window.' % datetime.datetime.fromtimestamp(epoch_now))
             return False
         
         
@@ -1102,7 +1091,7 @@ class test_speed1():
             process.wait()
             out,err = process.communicate()
             if process.returncode != 0:
-                logging.info('_nostack_iperf3 error: iperf3 returned %s, %s' % (process.returncode,err))
+                logging.error('_nostack_iperf3 error: iperf3 returned %s, %s' % (process.returncode,err))
             else:
                 # WGH mod: only process valid results..
                 # ~ print('error',err)
@@ -1127,9 +1116,9 @@ class test_speed1():
             out,err = process.communicate()
 
             if process.returncode != 0:
-                logging.info('_nostack_Primary speedtest error: speedtest returned %s:' % process.returncode)
-                print(err,  flush=True, file=sys.stderr)
-                logging.info('_toerr_ Re-running test, allowing speedtest binary to choose the server.')
+                logging.error('_nostack_Primary speedtest error: speedtest returned %s:' % process.returncode)
+                #print(err,  flush=True, file=sys.stderr)
+                logging.error('_toerr_ Re-running test, choosing next server on list')
 
                 # pick new server
                 self.speedtest_current = self.ChooseSpeedtestServer()
@@ -1147,7 +1136,7 @@ class test_speed1():
                 out,err = process.communicate()
 
                 if process.returncode != 0:
-                    logging.info('_nostack_Secondary speedtest error: speedtest returned %s, %s' % (process.returncode,err))
+                    logging.error('_nostack_Secondary speedtest error: speedtest returned %s, %s' % (process.returncode,err))
 
             # WGH mod: only process valid results..
             if process.returncode == 0:
@@ -1155,9 +1144,9 @@ class test_speed1():
                     mydata = json.loads(out)
                     self.CreateOutputJson(mydata)
                 except:
-                    logging.info('Exception: Could not parse speedtest json ouput. Output that would not parse:')
+                    logging.warning('Exception: Could not parse speedtest json ouput. Output that would not parse:')
                     print(out, end =" ", flush=True, file=sys.stderr)
-                    logging.info('_tostd_Speedtest test results were not recorded due to a json parsing error.\n')
+                    logging.warning('_tostd_Speedtest test results were not recorded due to a json parsing error.\n')
                     # ~ return 
 
                 if(self.Debug):
@@ -1171,7 +1160,7 @@ class test_speed1():
                 myline = myline+str(self.output[len(self.output)-1])+'\n'
 
         else:
-            logging.info('Error: Unknown Run Mode "%s". Terminating program.' % self.runmode)
+            logging.error('Error: Unknown Run Mode "%s". Terminating program.' % self.runmode)
             sys.exit(0)
  
         # Write the processed output to the csv file..
@@ -1193,7 +1182,7 @@ class test_speed1():
             self.output_file.flush() # to write to disk
             logging.info('%s test completed successfully.\n' % temp_runmode)
         else:
-            logging.info('_toerr_%s test did not complete successfully.\n' % temp_runmode)
+            logging.warning('_toerr_%s test did not complete successfully.\n' % temp_runmode)
 
 
 
@@ -1338,7 +1327,7 @@ class test_speed1():
             self.output.append("Speed")
             self.output.append(int(jsondict['server']['id']))
         except:
-            logging.info('Exception: bad date conversion.')
+            logging.error('Exception: bad date conversion.')
             self.output = [dt.strftime("%d/%m/%Y"),dt.strftime("%H:%M:%S")] # we still need to define self.output
 
 
@@ -1348,7 +1337,7 @@ class test_speed1():
                 float(jsondict['ping'][key])
                 self.output.append(float(jsondict['ping'][key]))
             except ValueError:
-                logging.info('Exception: bad speedtest %s float conversion.' % key)
+                logging.error('Exception: bad speedtest %s float conversion.' % key)
                 self.output.append(-10000.)
 
         #for key in ['packetLoss']:
@@ -1360,10 +1349,10 @@ class test_speed1():
             except ValueError :
             #except :
                 raise RuntimeWarning from None
-                logging.info('Exception: bad speedtest %s float conversion.' % key)
+                logging.error('Exception: bad speedtest %s float conversion.' % key)
                 self.output.append(-10000.)
         else:
-            logging.info("Packetloss not available on this server")
+            logging.warning("Packetloss not available on this server")
 
         
         if "download" not in jsondict or "upload" not in jsondict:
@@ -1377,7 +1366,7 @@ class test_speed1():
                 # convert bandwidth Bps (Bytes per second) to Mbps (Megabits per second)
                 self.output.append(float(jsondict[key]['bandwidth'])/125000.)
             except ValueError:
-                logging.info('Exception: bad speedtest %s float conversion.' % key)
+                logging.error('Exception: bad speedtest %s float conversion.' % key)
                 self.output.append(-999.)
 
         lat = self.GetLatency()
@@ -1633,12 +1622,6 @@ class test_speed1():
         self.dbx.files_delete(path, parent_rev)
         pass
  
-    def Logging(self,message):
-        """
-        prints out erroro message with time
-        """
-        print(datetime.datetime.now(),' speedtest error > ',message)
-
     def SetupIperf3(self):
 
         """"instantiate the iperf client  for vs 7 and above"""
