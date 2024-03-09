@@ -1622,6 +1622,12 @@ class test_speed1():
         self.dbx.files_delete(path, parent_rev)
         pass
  
+    def Logging(self,message):
+        """
+        prints out erroro message with time
+        """
+        print(datetime.datetime.now(),' speedtest error > ',message)
+
     def SetupIperf3(self):
 
         """"instantiate the iperf client  for vs 7 and above"""
