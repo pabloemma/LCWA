@@ -15,13 +15,13 @@
       "console": {
         "class": "logging.StreamHandler",
         "level": "DEBUG",
-        "formatter": "simple",
+        "formatter": "extra",
         "stream": "ext://sys.stdout"
       },
   
       "info_file_handler": {
         "class": "logging.FileHandler",
-        "level": "DEBUG",
+        "level": "INFO",
         "formatter": "extra",
         "filename": "info.log",
         "encoding": "utf8"

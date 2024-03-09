@@ -1039,7 +1039,7 @@ class test_speed1():
         logging.info('Next half-past the hour: %s' % datetime.datetime.fromtimestamp(epoch_halfpast))
 
         half_loop=int(self.loop_time / 2)
-        logging.info('System time for debugging %s ' % datetime.datetime.fromtimestamp(epoch_now))
+        logging.debug('System time for debugging %s ' % datetime.datetime.fromtimestamp(epoch_now))
         if (epoch_now >= epoch_halfpast - half_loop) and \
            (epoch_now <= epoch_halfpast + half_loop):
             logging.info('System time of %s is in write window.' % datetime.datetime.fromtimestamp(epoch_now))
