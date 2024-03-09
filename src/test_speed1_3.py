@@ -311,6 +311,7 @@ class test_speed1():
         
         self.log_level  = MyConfig.log_level
         self.log_output = MyConfig.log_output
+        # change to forward slash test
         self.log_conf_file = MyConfig.log_conf_file
 
     # now initialize the logger

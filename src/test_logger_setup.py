@@ -40,9 +40,10 @@ def main(Mypath):
     #b = my_module.Bar()
     #b.bar()
     #logger.setLevel(logging.DEBUG)
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
-    logger.addHandler(ch)
+    #ch = logging.StreamHandler()
+    #ch.setLevel(logging.DEBUG)
+    #logger.addHandler(ch)
+    print('log level', logger.getEffectiveLevel())
     logger.info("this is info")
     logger.debug("this is debug")
     
