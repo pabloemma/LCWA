@@ -163,7 +163,7 @@ class test_speed1():
                 MyT.QueueWait('LC00', ntp_offset = self.ntp_offset)
  
     def QueueNextTestTime(self):
-        MyT = st.MyTime(loop_time = self.loop_time,  verbosity = self.verbosity)
+        MyT = st.MyTime(loop_time = self.loop_time)
 
         # Has the system time been synced (and adjusted) since our last NTP offset query?
         # The modification time of this file tells us when the system time may have last changed and invalidated
@@ -190,7 +190,7 @@ class test_speed1():
             MyT.QueueWait('LC00', ntp_offset = self.ntp_offset)
 
     def GetNTPOffset(self):
-        MyT = st.MyTime(loop_time = self.loop_time)
+        MyT = st.MyTime()
         self.ntp_offset, self.ntp_querytime = MyT.GetNTPOffset()
         return self.ntp_offset
 
