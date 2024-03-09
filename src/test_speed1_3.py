@@ -929,8 +929,8 @@ class test_speed1():
                         
                     #counter = 0 
                     
-            self.QueueNextTestTime()
-            #time.sleep(self.loop_time)
+            #self.QueueNextTestTime()
+            time.sleep(self.loop_time)
 
     def FlushTimeOld(self):
         
@@ -984,7 +984,7 @@ class test_speed1():
         return sum/len(temp)
                  
          
-    def WriteTimer_ak(self):
+    def WriteTimer(self):
         """
         determines the time
         so that we fill the dropbox file every hour
@@ -1022,7 +1022,7 @@ class test_speed1():
 
 
 
-    def WriteTimer(self):
+    def WriteTimer_gh(self):
         # WGH mod: refactored for one second granularity, and simplified logic
 
         # With testdb, we plot and post after every test..

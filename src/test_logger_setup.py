@@ -39,8 +39,12 @@ def main(Mypath):
     #my_module.foo()    
     #b = my_module.Bar()
     #b.bar()
-    
-    print(logger.handlers)
+    #logger.setLevel(logging.DEBUG)
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+    logger.addHandler(ch)
+    logger.info("this is info")
+    logger.debug("this is debug")
     
 if __name__ == '__main__':
     dir = '/Users/klein/git/speedtest/config/'
