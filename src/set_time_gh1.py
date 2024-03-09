@@ -20,7 +20,9 @@ class MyTime():
     def __init__(self, loop_time = 600, verbosity = 0):
 
 
-        
+        # create a module logger
+        logger = logging.getLogger(__name__)
+
  
         # WGH mod: loop_time defines the wait time between speedtests.  Defaults to 10 minutes.
     

@@ -39,6 +39,7 @@ class MyConfig():
         else:
             print(" Config file does not exist, exiting     ", config_file)
             sys.exit(0)
+
     def ReadJson(self,file_path):
 
         print("reading config file ", file_path)    # WGH mod: clarify which conf json we're actually reading

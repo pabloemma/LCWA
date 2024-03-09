@@ -26,7 +26,7 @@
         "click"      : "1",
         "random"     : false,
         "keep_files_time" : 7,
-        "server_list" : { "nmsurf":9686,"plateau":16869,"comcast":9686,"sacred_wind":62425,"vexus":62294,"santa_rosa":43754,"windstream":45706}
+        "server_list" : { "nmsurf":9686,"plateau":16869,"comcast":1773,"sacred_wind":62425,"vexus":62294,"santa_rosa":43754,"windstream":45706}
 
     },
     "Iperf" : {
@@ -700,7 +700,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",

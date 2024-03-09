@@ -33,13 +33,21 @@
         "formatter": "extra",
         "filename": "errors.log",
         "encoding": "utf8"
-      }
+      
     },
-  
+    "warning_file_handler": {
+      "class": "logging.FileHandler",
+      "level": "WARNING",
+      "formatter": "extra",
+      "filename": "warning.log",
+      "encoding": "utf8"
+    }
+  },
+
     "loggers": {
       "default": {
         "level": "DEBUG",
-        "handlers": ["console","info_file_handler","error_file_handler"], 
+        "handlers": ["console","info_file_handler","warning_file_handler","error_file_handler"], 
         "propagate": "no"
       }
     },

@@ -66,12 +66,13 @@ import json
 import shutil
 
 from tcp_latency import measure_latency
+from dateutil import tz
 
 import iperf_client as ipe
 import config_speed as cs
 #import set_time_gh as st
 import set_time_gh1 as st # new gordon time routine
-from dateutil import tz
+
 #from __builtin__ import True
 
 
@@ -477,7 +478,7 @@ class test_speed1():
 
         logging.info(sys.version_info[0])
         if (sys.version_info[0] == 3):
-            logging.info(' we have python 3')
+            logging.warning(' we have python 3')
             self.vers = 3
             #print ('not implemented yet')
             #sys.exit(0)
@@ -862,13 +863,19 @@ class test_speed1():
                         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
                         temp_txt = str(dt_string)+'   wrote dropbox file'
                         logging.info(temp_txt)
-                    # write logfile
+                    # write logfiles to dropbox
                         
+ 
                         f2=open(self.logfile_info,"rb")
                         f3=open(self.logfile_error,"rb")
-                        #logf_i and logf_e are defined in openfile and just the bare filename
+                        f4=open(self.logfile_warning,"rb")
+                        #logf_i and logf_e,w are defined in openfile and just the bare filename
                         self.dbx.files_upload(f2.read(),self.dropdir+self.logf_i,mode=dropbox.files.WriteMode('overwrite', None))
                         self.dbx.files_upload(f3.read(),self.dropdir+self.logf_e,mode=dropbox.files.WriteMode('overwrite', None))
+                        self.dbx.files_upload(f4.read(),self.dropdir+self.logf_w,mode=dropbox.files.WriteMode('overwrite', None))
+
+
+
 
                     # write textfile
                         self.WriteDescriptor()
@@ -905,9 +912,11 @@ class test_speed1():
                         
                         f2=open(self.logfile_info,"rb")
                         f3=open(self.logfile_error,"rb")
+                        f4=open(self.logfile_warning,"rb")
                         #logf_i and logf_e are defined in openfile and just the bare filename
                         self.dbx.files_upload(f2.read(),self.dropdir+self.logf_i,mode=dropbox.files.WriteMode('overwrite', None))
                         self.dbx.files_upload(f3.read(),self.dropdir+self.logf_e,mode=dropbox.files.WriteMode('overwrite', None))
+                        self.dbx.files_upload(f4.read(),self.dropdir+self.logf_w,mode=dropbox.files.WriteMode('overwrite', None))
 
 
 
@@ -1391,6 +1400,7 @@ class test_speed1():
         self.GetIPinfo()
         self.logf_e = self.hostname + a+'errors.log'
         self.logf_i = self.hostname + a+'info.log'
+        self.logf_w = self.hostname + a+'warning.log'
         filename =self.hostname + a+'speedfile.csv'  #add hostname
         # if filename exists we open in append mode
         #otherwise we will create it
@@ -1417,6 +1427,7 @@ class test_speed1():
         # there is an errors.log and an info.log
         
         self.logfile_info = self.logdir+self.logf_i
+        self.logfile_warning = self.logdir+self.logf_w
         self.logfile_error = self.logdir+self.logf_e
         # now move the temporary files created by logger to the log directory
         #first get filenames of the handlers
@@ -1426,7 +1437,8 @@ class test_speed1():
 
         shutil.move('info.log',self.logfile_info)
         shutil.move('errors.log',self.logfile_error) # putting the filename there ensures an overwrite
-
+        shutil.move('warning.log',self.logfile_warning)
+ 
 
             
             
