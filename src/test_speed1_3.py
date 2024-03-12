@@ -1151,7 +1151,8 @@ class test_speed1():
             if process.returncode == 0:
                 try:
                     mydata = json.loads(out)
-                    self.CreateOutputJson(mydata)
+                    #self.CreateOutputJson(mydata)
+                    self.CreateOutput(mydata)
                 except:
                     logging.warning('Exception: Could not parse speedtest json ouput. Output that would not parse:')
                     print(out, end =" ", flush=True, file=sys.stderr)
@@ -1569,7 +1570,7 @@ class test_speed1():
             temp_txt = 'dropbox dir for plot '+str(self.dropdir)
             logging.info(temp_txt)
             temp = a.ReturnNames(self.dropdir)
- 
+            logging.DEBUG('calling do plot with %s %s %s ' % (temp[0], temp[1] , temp[2]))
             f=open(temp[1],"rb")
             temp1 = self.dbx.files_upload(f.read(),temp[0]+temp[2],mode=dropbox.files.WriteMode('overwrite', None))
 

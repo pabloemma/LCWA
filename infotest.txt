@@ -1,6 +1,2 @@
-%(asctime)-16s  %(filename)-12s %(lineno)-6s %(funcName)-30s %(levelname)-8s %(message)s
-%(asctime)-16s  %(filename)-12s %(lineno)-6s %(funcName)-30s %(levelname)-8s %(message)s
-[%(asctime)s] %(levelname)s %(message)s
-2024-03-10 10:30:00,695  test_logger_setup_1.py 54     TestInfo                       INFO     this is an info)
-2024-03-10 10:41:07,425  test_logger_setup_1.py 56     TestInfo                       INFO     this is an info)
-2024-03-10 10:42:00,671  test_logger_setup_1.py 57     TestInfo                       INFO     this is an info)
+2024-03-11 19:15:35,115  test_logger_setup_1.py 70     TestInfo                       INFO     this is an info
+2024-03-11 19:15:35,115  test_logger_setup_1.py 72     TestInfo                       WARNING  this is now the second warning
