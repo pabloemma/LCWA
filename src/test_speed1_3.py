@@ -1151,8 +1151,8 @@ class test_speed1():
             if process.returncode == 0:
                 try:
                     mydata = json.loads(out)
-                    #self.CreateOutputJson(mydata)
-                    self.CreateOutput(mydata)
+                    self.CreateOutputJson(mydata)
+                    #self.CreateOutput(mydata)
                 except:
                     logging.warning('Exception: Could not parse speedtest json ouput. Output that would not parse:')
                     print(out, end =" ", flush=True, file=sys.stderr)
@@ -1363,7 +1363,8 @@ class test_speed1():
                 self.output.append(-10000.)
         else:
             logging.warning("Packetloss not available on this server")
-
+            self.output.append(-10000.)
+ 
         
         if "download" not in jsondict or "upload" not in jsondict:
             logging.error(" no down or upload data")
