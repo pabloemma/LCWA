@@ -1571,7 +1571,10 @@ class test_speed1():
             temp_txt = 'dropbox dir for plot '+str(self.dropdir)
             logging.info(temp_txt)
             temp = a.ReturnNames(self.dropdir)
-            logging.DEBUG('calling do plot with %s %s %s ' % (temp[0], temp[1] , temp[2]))
+
+            temp_list = list(temp)
+            #logging.DEBUG('calling do plot with %s %s %s ' % temp_list)
+ 
             f=open(temp[1],"rb")
             temp1 = self.dbx.files_upload(f.read(),temp[0]+temp[2],mode=dropbox.files.WriteMode('overwrite', None))
 
