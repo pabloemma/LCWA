@@ -62,7 +62,7 @@ import random
 import inspect
 #import logging    # get the logging facility
 #import logger.config
-#from loguru import logger
+from loguru import logger
 #import json
 import shutil
 
@@ -87,21 +87,7 @@ class test_speed1():
         self.chosentime = chosentime # how long to wait in seconds before next reading
         self.vs = '9.02.02'
 
-        import_list = ('json','loguru')
-        for package in import_list:
-            self.install_and_import('loguru')
-
-    def install_and_import(self,package):
-        import importlib
-        try:
-            importlib.import_module(package)
-        except ImportError:
-            import pip
-            pip.main(['install', package])
-        finally:
-            globals()[package] = importlib.import_module(package)
-
-
+ 
     def SetupLoggerOld(self,output,default_path,default_level):
         """ this sets up the logger system, needs to be called after the json read
         we have to use a temporayr filename, since the real filename is only created later from
@@ -110,7 +96,7 @@ class test_speed1():
         #env_key='LOG_CFG'
 
         from loguru import logger
-        
+
         path = default_path
 
         #check if default_path exists otherwise make it
