@@ -62,7 +62,7 @@ import random
 import inspect
 #import logging    # get the logging facility
 #import logger.config
-from loguru import logger
+#from loguru import logger
 #import json
 import shutil
 
@@ -109,7 +109,8 @@ class test_speed1():
         
         #env_key='LOG_CFG'
 
-     
+        from loguru import logger
+        
         path = default_path
 
         #check if default_path exists otherwise make it
