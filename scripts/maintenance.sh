@@ -7,8 +7,8 @@
 #
 echo "******************** this is the maintenance script ********************"
 
-    echo "translating file"
-	
+    #echo "translating file"
+	pip3 install loguru
 	echo $(pwd)
     # translating file
 
