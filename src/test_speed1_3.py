@@ -87,6 +87,19 @@ class test_speed1():
         self.chosentime = chosentime # how long to wait in seconds before next reading
         self.vs = '9.02.02'
 
+        self.install_and_import('loguru')
+
+    def install_and_import(self,package):
+        import importlib
+        try:
+            importlib.import_module(package)
+        except ImportError:
+            import pip
+            pip.main(['install', package])
+        finally:
+            globals()[package] = importlib.import_module(package)
+
+
     def SetupLoggerOld(self,output,default_path,default_level):
         """ this sets up the logger system, needs to be called after the json read
         we have to use a temporayr filename, since the real filename is only created later from
