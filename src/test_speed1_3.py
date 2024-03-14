@@ -63,7 +63,7 @@ import inspect
 #import logging    # get the logging facility
 #import logger.config
 from loguru import logger
-import json
+#import json
 import shutil
 
 from tcp_latency import measure_latency
@@ -87,7 +87,9 @@ class test_speed1():
         self.chosentime = chosentime # how long to wait in seconds before next reading
         self.vs = '9.02.02'
 
-        self.install_and_import('loguru')
+        import_list = ('json','loguru')
+        for package in import_list:
+            self.install_and_import('loguru')
 
     def install_and_import(self,package):
         import importlib
