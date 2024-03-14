@@ -186,11 +186,9 @@ class MyConfig():
         else:
             self.log_level = "INFO"
 
-        if "output" in jsondict["ClusterControl"][self.host]["logging"].keys() :
-            self.log_output = jsondict["ClusterControl"][self.host]["logging"]["output"] 
-        else:
-            self.log_output = "SCREEN"
-
+        
+        self.log_output = jsondict["ClusterControl"][self.host]["logging"]["output"] 
+ 
         if "log_conf_file" in jsondict["ClusterControl"][self.host]["logging"].keys() :
             self.log_conf_file = self.conf_dir+jsondict["ClusterControl"][self.host]["logging"]["log_conf_file"] 
         else:

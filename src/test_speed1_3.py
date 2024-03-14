@@ -60,8 +60,9 @@ import uuid
 import ntplib
 import random
 import inspect
-import logging    # get the logging facility
-import logging.config
+#import logging    # get the logging facility
+#import logger.config
+from loguru import logger
 import json
 import shutil
 
@@ -84,9 +85,9 @@ class test_speed1():
         #print (' in init')        # before we do anything, let's determine the python version
 
         self.chosentime = chosentime # how long to wait in seconds before next reading
-        self.vs = '9.02.01'
+        self.vs = '9.02.02'
 
-    def SetupLogger(self,output,default_path,default_level):
+    def SetupLoggerOld(self,output,default_path,default_level):
         """ this sets up the logger system, needs to be called after the json read
         we have to use a temporayr filename, since the real filename is only created later from
         """
@@ -114,24 +115,49 @@ class test_speed1():
             
             with open(path, 'rt') as f:
                 config = json.load(f)
-            logging.config.dictConfig(config)
+            logger.config.dictConfig(config)
         else:
-            logging.basicConfig(level=default_level)
+            logger.basicConfig(level=default_level)
 
         #print(config)
 
-        logger = logging.getLogger(__name__)
-        logger.info('Startlogging:')
+        logger = logger.getLogger(__name__)
+        logging.info('Startlogging:')
 
 
         return 1
+
+    def SetupLogger(self):
+
+
+        logger.remove(0)
+        #now we add color to the terminal output
+        logger.add(sys.stdout,
+                colorize = True,format="<green>{time}</green>{function} {level} <level>{message}</level>" ,
+                level = self.log_level)
+
+
+
+        fmt =  "{time} - {name}-{function} -{line}- {level} - {message}"
+        logger.add(self.log_output, format = fmt , level = self.log_level)
+
+
+        # set the colors of the different levels
+        logger.level("INFO",color ='<black>')
+        logger.level("WARNING",color='<green>')
+        logger.level("ERROR",color='<red>')
+        logger.level("DEBUG",color = '<blue>')
+ 
+        return
+
+
 
             
     def QueueStartupWaitTime(self):                                             
         if self.nowait == True:
             # If running in test mode, don't query the ntp servers
             #   and don't position ourselves in the test queue.
-            logging.info("Jumping startup wait queue..")
+            logger.info("Jumping startup wait queue..")
             self.ntp_offset = 0              # Stick to system time
             self.ntp_querytime = 0
         else:
@@ -139,11 +165,11 @@ class test_speed1():
             # and set the system time, esp with RPIs, as they have no hardware clock.
             # If our code us run as a systemd service with Wants=time-sync.target and
             # After=time-sync.target, this shouldn't be a problem.
-            logging.info("Getting NTP offset and query time..")
+            logger.info("Getting NTP offset and query time..")
             MyT = st.MyTime(loop_time = self.loop_time, verbosity = 0)
             self.ntp_offset, self.ntp_querytime = MyT.GetNTPOffset()
         
-            logging.info("Queueing startup wait time..")
+            logger.info("Queueing startup wait time..")
             host = socket.gethostname()
             if(host[0:2] == 'LC'):
                 MyT.QueueWait(host, ntp_offset = self.ntp_offset)
@@ -159,17 +185,17 @@ class test_speed1():
         ntpsync_file = '/run/systemd/timesync/synchronized'
         if os.path.isfile(ntpsync_file):
             ntp_last_syssync = os.stat(ntpsync_file)[-2]
-            logging.info('%-34s: %s' % ('Last system time sync occured at', datetime.datetime.fromtimestamp(ntp_last_syssync)))
-            logging.info('%-34s: %s' % ('Our last ntp query occured at', datetime.datetime.fromtimestamp(self.ntp_querytime)))
+            logger.info('%-34s: %s' % ('Last system time sync occured at', datetime.datetime.fromtimestamp(ntp_last_syssync)))
+            logger.info('%-34s: %s' % ('Our last ntp query occured at', datetime.datetime.fromtimestamp(self.ntp_querytime)))
         else:
             ntp_last_syssync = 1
             
         # If not running in test mode and if the previous ntp query failed, or the ntp_offset has expired:
         if self.nowait == False and (self.ntp_offset == 0 or ntp_last_syssync > self.ntp_querytime):
-            logging.info("Getting NTP offset and query time..")
+            logger.info("Getting NTP offset and query time..")
             self.ntp_offset, self.ntp_querytime = MyT.GetNTPOffset()
         
-        logging.info("Queueing next test wait time..")
+        logger.info("Queueing next test wait time..")
         host = socket.gethostname()
 
         if(host[0:2] == 'LC'):
@@ -218,7 +244,7 @@ class test_speed1():
                 
                 status = os.system('systemctl is-active --quiet lcwa-speed*')
                 if(status == 0):
-                    logging.info('we are running the program under systemd',status)  # will return 0 for active else inactive.    
+                    logger.info('we are running the program under systemd',status)  # will return 0 for active else inactive.    
                     confdir = '/etc/lcwa-speed/'
                     config_file = confdir+'/lcwa-speed.json'
  
@@ -288,7 +314,7 @@ class test_speed1():
             self.random_click =     MyConfig.random_click # if 1 the program determines randomly to to iperf or speedtest
             
         else:
-            logging.error('Unknown runmode')
+            logger.error('Unknown runmode')
             sys.exit(0)
         
         # store the speedtest server
@@ -306,8 +332,8 @@ class test_speed1():
         #use temporary filename until we create the full file name
         #this temp file will be temp.tmp
         
-        logger_ok = self.SetupLogger(self.log_output,self.log_conf_file,self.log_level)
-        
+        #old logger call logger_ok = self.SetupLogger(self.log_output,self.log_conf_file,self.log_level)
+        self.SetupLogger()
     # here are calls fro the original init
         self.WriteHeader()
         
@@ -330,12 +356,12 @@ class test_speed1():
         # self.input_path is the data output directory
 
         # First let's do the log directory, list the files which will be deletd
-        logging.info("removing files in %s" % self.logdir)
+        logger.info("removing files in %s" % self.logdir)
         mydir = self.logdir
         self.RemoveFiles(mydir,self.keep_files_time)
 
         #cleanup speedfiles directory
-        logging.info("removing files in %s" % self.datadir)
+        logger.info("removing files in %s" % self.datadir)
         mydir = self.datadir
         self.RemoveFiles(mydir,self.keep_files_time)
        
@@ -355,8 +381,8 @@ class test_speed1():
         if os.path.exists(logfile):
             a = os.path.getsize(logfile)
             if  a > size_limit : # delete if larger tham size_limit
-                logging.warning('%s is larger than %4.1f  MB' % (logfile, size_limit/1.e6))
-                logging.warning('deleting %s' % logfile)
+                logger.warning('%s is larger than %4.1f  MB' % (logfile, size_limit/1.e6))
+                logger.warning('deleting %s' % logfile)
                 os.remove(logfile)
                 return
             else:
@@ -376,7 +402,7 @@ class test_speed1():
             if os.path.isfile(path):
                 stat = os.stat(path)
                 if stat.st_ctime < old:
-                    logging.info("removing: %s" % path)
+                    logger.info("removing: %s" % path)
                     os.remove(path) # uncomment for real live
        
         return
@@ -393,7 +419,7 @@ class test_speed1():
 
         # now we branch out depending on which keyfile we are using:
         if  'LCWA_d.txt' in self.TokenFile:
-            logging.info("old system")
+            logger.info("old system")
             f=open(self.TokenFile,"r")
             self.data =f.readline() #key for encryption
         
@@ -404,11 +430,11 @@ class test_speed1():
          #connect to dropbox 
             self.dbx=dropbox.Dropbox(self.data.strip('\n'))
             my_dropbox = "self.dbx = "+str(self.dbx)
-            logging.info(my_dropbox)
+            logger.info(my_dropbox)
 
  
         elif 'LCWA_a.txt'  in self.TokenFile:
-            logging.info('new system')
+            logger.info('new system')
             f=open(self.TokenFile,"r")
   
             temp =f.readlines() #key for encryption
@@ -441,23 +467,23 @@ class test_speed1():
                 oauth2_refresh_token = REFRESH_TOKEN
                 )
             my_dropbox = 'self.dbx = '+str(self.dbx)
-            logging.info(my_dropbox)
+            logger.info(my_dropbox)
 
         
         else:
-            logging.error("wrong keyfile")
+            logger.error("wrong keyfile")
 
 
         
 
         self.myaccount = self.dbx.users_get_current_account()
         
-        logging.info('***************************dropbox*******************\n\n\n')
+        logger.info('***************************dropbox*******************\n\n\n')
         my_credentials = self.myaccount.name.surname +' '+ self.myaccount.name.given_name
-        logging.info(my_credentials)
+        logger.info(my_credentials)
         my_email = self.myaccount.email
-        logging.info(my_email+'\n\n')
-        logging.info('***************************dropbox*******************\n')
+        logger.info(my_email+'\n\n')
+        logger.info('***************************dropbox*******************\n')
         self.ConnectDropBox_ok = True
         return self.dbx
 
@@ -476,15 +502,15 @@ class test_speed1():
         #frame = inspect.currentframe()
         #print('**********************',frame.f_code.co_name,'***********************')
 
-        logging.info(sys.version_info[0])
+        logger.info(sys.version_info[0])
         if (sys.version_info[0] == 3):
-            logging.warning(' we have python 3')
+            logger.warning(' we have python 3')
             self.vers = 3
             #print ('not implemented yet')
             #sys.exit(0)
         else:
-            logging.error('you are behind the curve with python2')
-            logging.error('this code does not run under python2')
+            logger.error('you are behind the curve with python2')
+            logger.error('this code does not run under python2')
             sys.exit(0)
             self.vers = 2
        
@@ -496,71 +522,73 @@ class test_speed1():
 
         my_time = str(datetime.datetime.now())
         
-        logging.info('****************************************************************** \n')   
-        logging.info('* hello this is the LCWA speedtest version'+str(self.vs))
-        logging.info('* Written by Andi Klein using the CLI from speedtest')
-        logging.info('* Run date '+my_time) 
-        logging.info('* Running from ' + str(self.DigIP()) )
+        logger.info('****************************************************************** \n')   
+        logger.info('* hello this is the LCWA speedtest version'+str(self.vs))
+        logger.info('* Written by Andi Klein using the CLI from speedtest')
+        logger.info('* Run date '+my_time) 
+        logger.info('* Running from ' + str(self.DigIP()) )
            
         
-        logging.info('****************************************************************** \n')   
+        logger.info('****************************************************************** \n')   
         self.Progress()  
 
     def Progress(self):
         """
         keep track of the updates
         """
-        self.vs = '9.02.01' # remember to also change it in init
+        self.vs = '9.02.02' # remember to also change it in init
  
         
         #print(' History')
-        logging.info('version 2.02    trying to catch the random bad data sent by the CLI')
-        logging.info('version 2.03   fixed conversion problem for N/A')
-        logging.info('version 2.03.1   fixed rasp problem wit -L and -V')
-        logging.info('version 3.01.0  connect to dropbox and store file every 50 entries')
-        logging.info('version 3.01.1  added header line to output')
-        logging.info('version 3.02.0    made cybermesa default server unless requested ')
-        logging.info('version 3.02.01                     at midnight we open a new file')
-        logging.info('version 3.02.1 logging.info some info on dropbox')
-        logging.info('version 3.02.2 write dropbox file around the half hour mark')
-        logging.info('Version 3.02.3   Included a header which is needed for the raspberry pi to start test_speed1 at boot')
-        logging.info('Version 3.02.4   gives an acoustic signal at startup')
-        logging.info('Version 3.03.0   added a Debug switch')
-        logging.info('Version 3.04.0  get host name and add it to the filename')
-        logging.info('Version 4.00.0  runs on python3 now')
-        logging.info('Version 5.00.0  automatically does plots and ships them to dropbox')
-        logging.info('Version 5.01.0  new dropbox configuration')
-        logging.info('Version 5.01.1  added lookup of ip address')
-        logging.info('Version 5.01.2  stop at 23:45 to 24:00, flush data and exit')
-        logging.info('Version 5.01.3  Create textfile with important values')
-        logging.info('Version 5.01.4  test of distro')
-        logging.info('Version 5.01.5  timestamp in log file')
-        logging.info('Version 5.01.6  added close_fds=True to popen')
-        logging.info('Version 5.01.7  added using timeout command')
-        logging.info('Version 5.01.8  better error message')
-        logging.info('Version 5.01.9  date and time output')
-        logging.info('Version 5.01.10  catching network problems')
-        logging.info('Version 5.01.11  force LC12 to connect to NMSURF, done in the arg parse section')
-        logging.info('Version 5.01.12  force LC24 to connect to NMSURF, done in the arg parse section')
-        logging.info('Version 6.00.01  now with latency measurement to currently cybermese')
-        logging.info('Version 6.00.02  minor change in PlotCalss do do the scaling on the single pdf files better')
-        logging.info('Version 7.00.01  major upgrade , replace speetetst with iperf')
-        logging.info('Version 7.01.02  added config file')
-        logging.info('Version 7.01.03  added Gordon wish for /etc location for config file')
-        logging.info('Version 7.01.04  Revamped command line and arparse section')
-        logging.info('Version 7.01.05  added a call to ntp server, start of syncing the speedboxes')
-        logging.info('Version 7.01.06  add a line to txt file to write runmode')
-        logging.info('Version 7.02.01  modfy code such that it now reads in a second file to determine what host is running what ')
-        logging.info('Version 8.01.01  Code which allow you to switch between speedtest and iperf either pretermined or random ')
-        logging.info('Version 8.01.02  replace server name with speedtest in output csv file ')
+        logger.info('version 2.02    trying to catch the random bad data sent by the CLI')
+        logger.info('version 2.03   fixed conversion problem for N/A')
+        logger.info('version 2.03.1   fixed rasp problem wit -L and -V')
+        logger.info('version 3.01.0  connect to dropbox and store file every 50 entries')
+        logger.info('version 3.01.1  added header line to output')
+        logger.info('version 3.02.0    made cybermesa default server unless requested ')
+        logger.info('version 3.02.01                     at midnight we open a new file')
+        logger.info('version 3.02.1 logger.info some info on dropbox')
+        logger.info('version 3.02.2 write dropbox file around the half hour mark')
+        logger.info('Version 3.02.3   Included a header which is needed for the raspberry pi to start test_speed1 at boot')
+        logger.info('Version 3.02.4   gives an acoustic signal at startup')
+        logger.info('Version 3.03.0   added a Debug switch')
+        logger.info('Version 3.04.0  get host name and add it to the filename')
+        logger.info('Version 4.00.0  runs on python3 now')
+        logger.info('Version 5.00.0  automatically does plots and ships them to dropbox')
+        logger.info('Version 5.01.0  new dropbox configuration')
+        logger.info('Version 5.01.1  added lookup of ip address')
+        logger.info('Version 5.01.2  stop at 23:45 to 24:00, flush data and exit')
+        logger.info('Version 5.01.3  Create textfile with important values')
+        logger.info('Version 5.01.4  test of distro')
+        logger.info('Version 5.01.5  timestamp in log file')
+        logger.info('Version 5.01.6  added close_fds=True to popen')
+        logger.info('Version 5.01.7  added using timeout command')
+        logger.info('Version 5.01.8  better error message')
+        logger.info('Version 5.01.9  date and time output')
+        logger.info('Version 5.01.10  catching network problems')
+        logger.info('Version 5.01.11  force LC12 to connect to NMSURF, done in the arg parse section')
+        logger.info('Version 5.01.12  force LC24 to connect to NMSURF, done in the arg parse section')
+        logger.info('Version 6.00.01  now with latency measurement to currently cybermese')
+        logger.info('Version 6.00.02  minor change in PlotCalss do do the scaling on the single pdf files better')
+        logger.info('Version 7.00.01  major upgrade , replace speetetst with iperf')
+        logger.info('Version 7.01.02  added config file')
+        logger.info('Version 7.01.03  added Gordon wish for /etc location for config file')
+        logger.info('Version 7.01.04  Revamped command line and arparse section')
+        logger.info('Version 7.01.05  added a call to ntp server, start of syncing the speedboxes')
+        logger.info('Version 7.01.06  add a line to txt file to write runmode')
+        logger.info('Version 7.02.01  modfy code such that it now reads in a second file to determine what host is running what ')
+        logger.info('Version 8.01.01  Code which allow you to switch between speedtest and iperf either pretermined or random ')
+        logger.info('Version 8.01.02  replace server name with speedtest in output csv file ')
          
-        logging.info('Version 8.02.01  now better reflection on what is going on with iperf, and new more granular config file treatment ')
-        logging.info('Version 8.02.02  with Gordon time mods ')
-        logging.info('Version 8.02.03  added an try clause in create iperf output to catch connection problems')
-        logging.info('Version 9.00.01  new dropbox')
-        logging.info('Version 9.01.00  Version with logger')
-        logging.info('Version 9.01.01  choose new server according to list if problems')
-        logging.info('Version 9.02.01  cleanup logfiles and datadirectory')
+        logger.info('Version 8.02.01  now better reflection on what is going on with iperf, and new more granular config file treatment ')
+        logger.info('Version 8.02.02  with Gordon time mods ')
+        logger.info('Version 8.02.03  added an try clause in create iperf output to catch connection problems')
+        logger.info('Version 9.00.01  new dropbox')
+        logger.info('Version 9.01.00  Version with logger')
+        logger.info('Version 9.01.01  choose new server according to list if problems')
+        logger.info('Version 9.02.01  cleanup logfiles and datadirectory')
+        logger.info('Version 9.02.02  changed to loguru')
+        #logger.warning('this is now a warning')
          
         #print('\n\n\n')
         
@@ -666,7 +694,7 @@ class test_speed1():
         
         #In case we have also None in the config file
         if (args.dpfile == None and self.cryptofile == None):
-            logging.warning('You need to provide path for cryptofile, will not connect to dropbox')
+            logger.warning('You need to provide path for cryptofile, will not connect to dropbox')
 
         if(self.cryptofile[0] == 'L'): # need to add the system path
             self.cryptofile = self.speedtest_srcdir + self.cryptofile
@@ -739,7 +767,7 @@ class test_speed1():
  
         if self.runmode == 'Iperf' or self.runmode == 'Both' :
             if(args.iperf != None):
-                logging.info('running iperf version, setting up iperf')
+                logger.info('running iperf version, setting up iperf')
                 self.iperf_server = args.iperf
                 t=['-s',self.iperf_server]
                 temp2.extend(t)
@@ -789,22 +817,22 @@ class test_speed1():
             t=['--format=json-pretty']
             temp1.extend(t)
             self.command_speed = temp1
-            logging.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
+            logger.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
             
         elif self.runmode == 'Iperf':
             self.command_iperf.extend(["-s",self.iperf_server])
             self.command_iperf = temp2
-            logging.info('Iperf command == %s' % self.command_iperf[4:(len(self.command_iperf))])
+            logger.info('Iperf command == %s' % self.command_iperf[4:(len(self.command_iperf))])
 
         elif self.runmode == 'Both':
             t=['--format=json-pretty']
             temp1.extend(t)
             self.command_speed = temp1
-            logging.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
+            logger.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
             
             temp2.extend(["-s",self.iperf_server])
             self.command_iperf = temp2
-            logging.info('Iperf command == %s' % self.command_iperf[4:(len(self.command_iperf))])
+            logger.info('Iperf command == %s' % self.command_iperf[4:(len(self.command_iperf))])
 
 
       
@@ -822,15 +850,15 @@ class test_speed1():
             t=['--format=json-pretty']
             self.command_speed.extend(t)
             
-            logging.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
+            logger.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
             
      
         elif self.runmode == 'Both':
             t=['--format=json-pretty']
             self.command_speed.extend(t)
-            logging.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
+            logger.info('Speedtest command     == %s' % self.command_speed[4:(len(self.command_speed))])
  
-            logging.info('Iperf command == %s' % self.command_iperf[4:(len(self.command_iperf))])
+            logger.info('Iperf command == %s' % self.command_iperf[4:(len(self.command_iperf))])
 
 
 
@@ -856,23 +884,23 @@ class test_speed1():
                     
                     f =open(self.lcwa_filename,"rb")
                     temp_txt = str(self.dropdir)+ '   '+str(self.docfile)
-                    logging.info (temp_txt)
+                    logger.info (temp_txt)
                     try:
                         self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
                         now=datetime.datetime.now()
                         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
                         temp_txt = str(dt_string)+'   wrote dropbox file'
-                        logging.info(temp_txt)
+                        logger.info(temp_txt)
                     # write logfiles to dropbox
                         
  
                         f2=open(self.logfile_info,"rb")
-                        f3=open(self.logfile_error,"rb")
-                        f4=open(self.logfile_warning,"rb")
+                        #f3=open(self.logfile_error,"rb")
+                        #f4=open(self.logfile_warning,"rb")
                         #logf_i and logf_e,w are defined in openfile and just the bare filename
                         self.dbx.files_upload(f2.read(),self.dropdir+self.logf_i,mode=dropbox.files.WriteMode('overwrite', None))
-                        self.dbx.files_upload(f3.read(),self.dropdir+self.logf_e,mode=dropbox.files.WriteMode('overwrite', None))
-                        self.dbx.files_upload(f4.read(),self.dropdir+self.logf_w,mode=dropbox.files.WriteMode('overwrite', None))
+                        #self.dbx.files_upload(f3.read(),self.dropdir+self.logf_e,mode=dropbox.files.WriteMode('overwrite', None))
+                        #self.dbx.files_upload(f4.read(),self.dropdir+self.logf_w,mode=dropbox.files.WriteMode('overwrite', None))
 
 
 
@@ -884,10 +912,10 @@ class test_speed1():
                         self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
     
                         if(counter > 0):
-                            logging.info(' now saving plotfile')
+                            logger.info(' now saving plotfile')
                             self.DoPlots(textflag = False)
                     except:
-                        logging.warning(' Cannot connect to dropbox, will try in 10 minues again')
+                        logger.warning(' Cannot connect to dropbox, will try in 10 minues again')
 
                         time.sleep(10)
                     #counter = 0 
@@ -896,14 +924,14 @@ class test_speed1():
                         f =open(self.lcwa_filename,"rb")
                         drop_box_file = str(self.dropdir)+'   '+str(self.docfile)
                         #print (self.dropdir, '   ',self.docfile)
-                        logging.info(drop_box_file)
+                        logger.info(drop_box_file)
                         self.dbx.files_upload(f.read(),self.dropdir+self.docfile,mode=dropbox.files.WriteMode('overwrite', None))
                         self.WriteDescriptor()
                         self.docfile1 = self.docfile.replace('csv','txt')
                         now=datetime.datetime.now()
                         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
                         temp_txt = str(dt_string)+ ' now saving plotfile'
-                        logging.info(temp_txt)
+                        logger.info(temp_txt)
                         self.DoPlots(textflag =True)
                         f1=open(self.textfile,"rb")
                         self.dbx.files_upload(f1.read(),self.dropdir+self.docfile1,mode=dropbox.files.WriteMode('overwrite', None))
@@ -920,10 +948,10 @@ class test_speed1():
 
 
 
-                        logging.info('midnight exiting')
+                        logger.info('midnight exiting')
                         sys.exit(0)
                     except:
-                        logging.info('Midnight save aborted due to network problem')
+                        logger.info('Midnight save aborted due to network problem')
                         sys.exit(0)
                         
                     #counter = 0 
@@ -950,22 +978,22 @@ class test_speed1():
 
     def FlushTime(self):
         # WGH mod: refactored for one second granularity
-        logging.debug('Assessing EoD window..')
+        logger.debug('Assessing EoD window..')
         epoch_now = int(time.time())
-        logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now))
+        logger.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now))
         epoch_midnight = epoch_now - (epoch_now % 86400) + time.timezone
 
         if epoch_midnight < epoch_now:
             epoch_midnight += 86400
 
         epoch_qt_midnight = epoch_midnight - 900 + self.ntp_offset
-        logging.debug('Next quarter-to-midnight (ntp corrected): %s' % datetime.datetime.fromtimestamp(epoch_qt_midnight))
+        logger.debug('Next quarter-to-midnight (ntp corrected): %s' % datetime.datetime.fromtimestamp(epoch_qt_midnight))
 
         if epoch_now >= epoch_qt_midnight:
-            logging.info('System time: %s is in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
+            logger.info('System time: %s is in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
             return True
         else:
-            logging.warning('System time: %s is not in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
+            logger.warning('System time: %s is not in EoD window.' % datetime.datetime.fromtimestamp(epoch_now))
             return False
 
 
@@ -1028,23 +1056,23 @@ class test_speed1():
         #if self.testdb == True:
         #    return True
 
-        logging.info('Assessing write window..')
+        logger.info('Assessing write window..')
         epoch_now = int(time.time())
-        logging.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now))
+        logger.info('System time: %s' % datetime.datetime.fromtimestamp(epoch_now))
 
         epoch_halfpast = epoch_now - (epoch_now % 3600) + 1800 + self.ntp_offset
         if epoch_halfpast < epoch_now:
             epoch_halfpast += 3600
-        logging.info('Next half-past the hour: %s' % datetime.datetime.fromtimestamp(epoch_halfpast))
+        logger.info('Next half-past the hour: %s' % datetime.datetime.fromtimestamp(epoch_halfpast))
 
         half_loop=int(self.loop_time / 2)
-        logging.debug('System time for debugging %s ' % datetime.datetime.fromtimestamp(epoch_now))
+        logger.debug('System time for debugging %s ' % datetime.datetime.fromtimestamp(epoch_now))
         if (epoch_now >= epoch_halfpast - half_loop) and \
            (epoch_now <= epoch_halfpast + half_loop):
-            logging.info('System time of %s is in write window.' % datetime.datetime.fromtimestamp(epoch_now))
+            logger.info('System time of %s is in write window.' % datetime.datetime.fromtimestamp(epoch_now))
             return True
         else:
-            logging.warning('System time of %s is not in write window.' % datetime.datetime.fromtimestamp(epoch_now))
+            logger.warning('System time of %s is not in write window.' % datetime.datetime.fromtimestamp(epoch_now))
             return False
         
         
@@ -1089,7 +1117,7 @@ class test_speed1():
         if(temp_runmode == 'Iperf'):
             #self.SetupIperf3()
 
-            logging.info('Beginning test %s' % self.command_iperf)
+            logger.info('Beginning test %s' % self.command_iperf)
             process = sp.Popen(self.command_iperf,
                          #stdout=outfile,
                          stdout=sp.PIPE,
@@ -1100,7 +1128,7 @@ class test_speed1():
             process.wait()
             out,err = process.communicate()
             if process.returncode != 0:
-                logging.error('_nostack_iperf3 error: iperf3 returned %s, %s' % (process.returncode,err))
+                logger.error('_nostack_iperf3 error: iperf3 returned %s, %s' % (process.returncode,err))
             else:
                 # WGH mod: only process valid results..
                 # ~ print('error',err)
@@ -1114,7 +1142,7 @@ class test_speed1():
 
         # ookla speedtest test
         elif(temp_runmode == 'Speedtest'):
-            logging.info('Beginning test %s' % self.command_speed[4:(len(self.command_speed))])
+            logger.info('Beginning test %s' % self.command_speed[4:(len(self.command_speed))])
             process = sp.Popen(self.command_speed,
                          stdout=sp.PIPE,
                          stderr=sp.PIPE,
@@ -1125,14 +1153,14 @@ class test_speed1():
             out,err = process.communicate()
 
             if process.returncode != 0:
-                logging.error('_nostack_Primary speedtest error: speedtest returned %s:' % process.returncode)
+                logger.error('_nostack_Primary speedtest error: speedtest returned %s:' % process.returncode)
                 #print(err,  flush=True, file=sys.stderr)
-                logging.error('_toerr_ Re-running test, choosing next server on list')
+                logger.error('_toerr_ Re-running test, choosing next server on list')
 
                 # pick new server
                 self.speedtest_current = self.ChooseSpeedtestServer()
                 
-                logging.info('Beginning failover test %s' % self.command_speed[4:(len(self.command_speed))])
+                logger.info('Beginning failover test %s' % self.command_speed[4:(len(self.command_speed))])
                 # Pause for a sec in case there is a momentary network glitch..
                 time.sleep(1)
                 process = sp.Popen(self.command_speed,
@@ -1145,7 +1173,7 @@ class test_speed1():
                 out,err = process.communicate()
 
                 if process.returncode != 0:
-                    logging.error('_nostack_Secondary speedtest error: speedtest returned %s, %s' % (process.returncode,err))
+                    logger.error('_nostack_Secondary speedtest error: speedtest returned %s, %s' % (process.returncode,err))
 
             # WGH mod: only process valid results..
             if process.returncode == 0:
@@ -1154,9 +1182,9 @@ class test_speed1():
                     self.CreateOutputJson(mydata)
                     #self.CreateOutput(mydata)
                 except:
-                    logging.warning('Exception: Could not parse speedtest json ouput. Output that would not parse:')
+                    logger.warning('Exception: Could not parse speedtest json ouput. Output that would not parse:')
                     print(out, end =" ", flush=True, file=sys.stderr)
-                    logging.warning('_tostd_Speedtest test results were not recorded due to a json parsing error.\n')
+                    logger.warning('_tostd_Speedtest test results were not recorded due to a json parsing error.\n')
                     # ~ return 
 
                 if(self.Debug):
@@ -1170,14 +1198,14 @@ class test_speed1():
                 myline = myline+str(self.output[len(self.output)-1])+'\n'
 
         else:
-            logging.error('Error: Unknown Run Mode "%s". Terminating program.' % self.runmode)
+            logger.error('Error: Unknown Run Mode "%s". Terminating program.' % self.runmode)
             sys.exit(0)
  
         # Write the processed output to the csv file..
         if(date.today()>self.current_day):
             #we have a new day
-            logging.info('\n')
-            logging.info("It's a new day!\n")
+            logger.info('\n')
+            logger.info("It's a new day!\n")
             self.output_file.close()
             self.OpenFile()
  
@@ -1187,12 +1215,12 @@ class test_speed1():
                 self.myline = myline
                 self.DebugProgram(3)
                 
-            logging.info('Writing: %s' % myline)
+            logger.info('Writing: %s' % myline)
             self.output_file.write(myline)
             self.output_file.flush() # to write to disk
-            logging.info('%s test completed successfully.\n' % temp_runmode)
+            logger.info('%s test completed successfully.\n' % temp_runmode)
         else:
-            logging.warning('_toerr_%s test did not complete successfully.\n' % temp_runmode)
+            logger.warning('_toerr_%s test did not complete successfully.\n' % temp_runmode)
 
 
 
@@ -1211,8 +1239,8 @@ class test_speed1():
             # reset counter to original speedtest
             self.speedtest_current = self.speedtest
             self.speedtest_counter = 0
-            logging.warning('run out of server choices')
-            logging.warning('speedtest server reset to  %d',)
+            logger.warning('run out of server choices')
+            logger.warning('speedtest server reset to  %d',)
 
         return self.speedtest_current
         
@@ -1234,7 +1262,7 @@ class test_speed1():
             try:
                 self.output.append(e[k])
             except:
-                logging.warning('no iperf')
+                logger.warning('no iperf')
                 return
         for k in [5,6,11,8,9,10]:  # this funny e[11] ->e[7] has to do with the iperf3 system and what repesents download and what upload.
                                     # see link:https://github.com/esnet/iperf/issues/480##interpreting-the-results
@@ -1243,7 +1271,7 @@ class test_speed1():
                 self.output.append(float(e[k]))
             except ValueError:
 
-                logging.warning('bad float conversion')
+                logger.warning('bad float conversion')
                 self.output.append(-10000.)
         return
             
@@ -1267,10 +1295,10 @@ class test_speed1():
  
         # cehck data integrity
         if(len(inc) < 2):
-            logging.warning('bad data block')
+            logger.warning('bad data block')
             return
         if(len(inc) != 11):
-            logging.warning('bad block length')
+            logger.warning('bad block length')
             return
         
         
@@ -1285,7 +1313,7 @@ class test_speed1():
                 float(inc[k])
                 self.output.append(float(inc[k]))
             except ValueError:
-                logging.error('bad int conversion')
+                logger.error('bad int conversion')
                 self.output.append(-10000.)
             
             
@@ -1295,7 +1323,7 @@ class test_speed1():
             
                 self.output.append(float(inc[k])*8./1000000)
             except ValueError:
-                logging.error('bad float conversion')
+                logger.error('bad float conversion')
                 self.output.append(-999.)
         # now add the latency measurement 
         lat = self.GetLatency()
@@ -1337,7 +1365,7 @@ class test_speed1():
             self.output.append("Speed")
             self.output.append(int(jsondict['server']['id']))
         except:
-            logging.error('Exception: bad date conversion.')
+            logger.error('Exception: bad date conversion.')
             self.output = [dt.strftime("%d/%m/%Y"),dt.strftime("%H:%M:%S")] # we still need to define self.output
 
 
@@ -1347,7 +1375,7 @@ class test_speed1():
                 float(jsondict['ping'][key])
                 self.output.append(float(jsondict['ping'][key]))
             except ValueError:
-                logging.error('Exception: bad speedtest %s float conversion.' % key)
+                logger.error('Exception: bad speedtest %s float conversion.' % key)
                 self.output.append(-10000.)
 
         #for key in ['packetLoss']:
@@ -1359,15 +1387,15 @@ class test_speed1():
             except ValueError :
             #except :
                 raise RuntimeWarning from None
-                logging.error('Exception: bad speedtest %s float conversion.' % key)
+                logger.error('Exception: bad speedtest %s float conversion.' % key)
                 self.output.append(-10000.)
         else:
-            logging.warning("Packetloss not available on this server")
+            logger.warning("Packetloss not available on this server")
             self.output.append(-10000.)
  
         
         if "download" not in jsondict or "upload" not in jsondict:
-            logging.error(" no down or upload data")
+            logger.error(" no down or upload data")
             return
 
         for key in ['download', 'upload']:
@@ -1377,15 +1405,15 @@ class test_speed1():
                 # convert bandwidth Bps (Bytes per second) to Mbps (Megabits per second)
                 self.output.append(float(jsondict[key]['bandwidth'])/125000.)
             except ValueError:
-                logging.error('Exception: bad speedtest %s float conversion.' % key)
+                logger.error('Exception: bad speedtest %s float conversion.' % key)
                 self.output.append(-999.)
 
         lat = self.GetLatency()
         self.output.append(lat)
 
         header = ['day','time','server name','server id','latency','jitter','packet loss','download','upload','latency measured']
-        logging.info("Header: %s" % header)
-        logging.info("Output: %s" % self.output)
+        logger.info("Header: %s" % header)
+        logger.info("Output: %s" % self.output)
 
         return True
 
@@ -1400,9 +1428,7 @@ class test_speed1():
         self.current_day = date.today()
         a = datetime.datetime.today().strftime('%Y-%m-%d')
         self.GetIPinfo()
-        self.logf_e = self.hostname + a+'errors.log'
         self.logf_i = self.hostname + a+'info.log'
-        self.logf_w = self.hostname + a+'warning.log'
         filename =self.hostname + a+'speedfile.csv'  #add hostname
         # if filename exists we open in append mode
         #otherwise we will create it
@@ -1429,17 +1455,13 @@ class test_speed1():
         # there is an errors.log and an info.log
         
         self.logfile_info = self.logdir+self.logf_i
-        self.logfile_warning = self.logdir+self.logf_w
-        self.logfile_error = self.logdir+self.logf_e
         # now move the temporary files created by logger to the log directory
         #first get filenames of the handlers
 
 
 
 
-        shutil.move('info.log',self.logfile_info)
-        shutil.move('errors.log',self.logfile_error) # putting the filename there ensures an overwrite
-        shutil.move('warning.log',self.logfile_warning)
+        shutil.move(self.log_output,self.logfile_info)
  
 
             
@@ -1517,12 +1539,12 @@ class test_speed1():
             try:
                 sp.call('/usr/local/bin/espeak " LCWA speedtest starting on Raspberry Pi"',shell=True)
             except:
-                logging.warning( 'nospeak')
+                logger.warning( 'nospeak')
         elif platform.system() == 'Linux':
             try:
                 sp.call('/usr/bin/espeak " LCWA speedtest starting on Raspberry Pi"',shell=True)
             except:
-                logging.warning('nospeak')
+                logger.warning('nospeak')
 
         
     def SetDropDir(self):
@@ -1538,7 +1560,7 @@ class test_speed1():
             self.dropdir = '/LCWA/'+a+'/'
         else:
             self.dropdir = '/LCWA/ROTW'+'/'
-        logging.info(self.dropdir)
+        logger.info(self.dropdir)
         return 
     
     
@@ -1547,7 +1569,7 @@ class test_speed1():
         """ this creates the plot and ships it to dropbox"""
         a =PC.MyPlot(self.input_path,self.input_filename,self.cryptofile,False)
         inputfile = self.input_path+'   '+self.input_filename
-        logging.info(inputfile)
+        logger.info(inputfile)
         temp_file = self.input_path+self.input_filename
 
         
@@ -1555,7 +1577,7 @@ class test_speed1():
             count = 0
             for line in f:
                 count += 1
-        logging.debug(str(count))
+        logger.debug(str(count))
         
         
         #count = len(open(temp_file).readlines(  ))
@@ -1569,11 +1591,11 @@ class test_speed1():
             ##a.ConnectDropbox()
             ##a.PushFileDropbox(self.dropdir)
             temp_txt = 'dropbox dir for plot '+str(self.dropdir)
-            logging.info(temp_txt)
+            logger.info(temp_txt)
             temp = a.ReturnNames(self.dropdir)
 
             temp_list = list(temp)
-            #logging.DEBUG('calling do plot with %s %s %s ' % temp_list)
+            #logger.DEBUG('calling do plot with %s %s %s ' % temp_list)
  
             f=open(temp[1],"rb")
             temp1 = self.dbx.files_upload(f.read(),temp[0]+temp[2],mode=dropbox.files.WriteMode('overwrite', None))
@@ -1648,7 +1670,7 @@ class test_speed1():
     def SetupIperf3(self):
 
         """"instantiate the iperf client  for vs 7 and above"""
-        logging.info('setting up iperf client ')
+        logger.info('setting up iperf client ')
         self.myiperf = ipe.myclient(self.iperf_server,self.iperf_port,self.iperf_duration)
         self.myiperf.LoadParameters()
      

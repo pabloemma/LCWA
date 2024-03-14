@@ -71,7 +71,7 @@
                     
             "logging" : {
                     "loglevel" : "info",
-                    "output"   : "screen",
+                    "output"   : "info.log",
                     "log_conf_file" : "logger.json"
                }
             },
@@ -97,7 +97,7 @@
                      },
             "logging" : {
                     "loglevel" : "INFO",
-                    "output"   : "SCREEN",
+                    "output"   : "info.log",
                     "log_conf_file" : "logger.json"
                      }   
 
@@ -125,7 +125,7 @@
                      },
             "logging" : {
                     "loglevel" : "INFO",
-                    "output"   : "SCREEN",
+                    "output"   : "info.log",
                     "log_conf_file" : "logger.json"
                      }   
       
@@ -152,7 +152,7 @@
                      },
             "logging" : {
                     "loglevel" : "INFO",
-                     "output"   : "SCREEN",
+                     "output"   : "info.log",
                     "log_conf_file" : "logger.json"
                      }   
     
@@ -183,7 +183,7 @@
                      },
             "logging" : {
                     "loglevel" : "INFO",
-                    "output"   : "SCREEN",
+                    "output"   : "info.log",
                     "log_conf_file" : "logger.json"
                          }   
                      
@@ -212,7 +212,7 @@
  
             "logging" : {
                     "loglevel" : "INFO",
-                    "output"   : "SCREEN",
+                    "output"   : "info.log",
                     "log_conf_file" : "logger.json"
                          }   
                         
@@ -240,7 +240,7 @@
                      },
                 "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -268,7 +268,7 @@
                      },
                 "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -296,7 +296,7 @@
                      },
              "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -324,7 +324,7 @@
                      },
              "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -352,7 +352,7 @@
                      },
             "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -380,7 +380,7 @@
                      },
             "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -408,7 +408,7 @@
                      },
                 "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -436,7 +436,7 @@
                      },
             "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -464,7 +464,7 @@
                      },
             "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -492,7 +492,7 @@
                      },
              "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -520,7 +520,7 @@
                      },
             "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -548,7 +548,7 @@
                      },
              "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -576,7 +576,7 @@
                      },
             "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -604,7 +604,7 @@
                      },
              "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -632,7 +632,7 @@
                      },
                 "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -660,7 +660,7 @@
                      },
              "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -688,7 +688,7 @@
                      },
              "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -715,7 +715,7 @@
                      },
             "logging" : {
                         "loglevel" : "INFO",
-                         "output"   : "SCREEN",
+                         "output"   : "info.log",
                         "log_conf_file" : "logger.json"
                          }   
      
@@ -747,7 +747,7 @@
 
             "logging" : {
                     "loglevel" : "DEBUG",
-                    "output"   : "SCREEN",
+                    "output"   : "info.log",
                     "log_conf_file" : "logger.json"
                     }   
             },
@@ -774,7 +774,7 @@
                      },
              "logging" : {
                     "loglevel" : "INFO",
-                    "output"   : "SCREEN",
+                    "output"   : "info.log",
                     "log_conf_file" : "logger.json"
                          }   
                          

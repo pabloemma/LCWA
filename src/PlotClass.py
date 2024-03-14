@@ -19,8 +19,8 @@ import sys
 import os.path
 import dropbox
 import pandas as pd
-import logging
-
+#import logging
+from loguru import logger
 
 
 class MyPlot(object):
@@ -38,7 +38,7 @@ class MyPlot(object):
         plot both resulst on same plot
         '''
         
-        logger = logging.getLogger(__name__)
+        #old logger logger = logging.getLogger(__name__)
         #logger.info('Startlogging in set time:')
 
         
@@ -69,10 +69,10 @@ class MyPlot(object):
         """
 
         if (sys.version_info[0] == 3):
-            logging.info(' we have python 3')
+            logger.info(' we have python 3')
             vers = True
         else:
-            logging.error('python2 not supported anymore')
+            logger.error('python2 not supported anymore')
             vers = False
             sys.exit(0)
         return vers
@@ -95,7 +95,7 @@ class MyPlot(object):
         try:
             lcwa_data = temp_data.drop(columns = drop_list)
         except:
-            logging.error('error in pandas')
+            logger.error('error in pandas')
             return
         # convert date and time back to datetime
         lcwa_data["Time"] = pd.to_datetime(lcwa_data['time'], format='%H:%M:%S') 
@@ -142,7 +142,7 @@ class MyPlot(object):
         plt.tight_layout()
         plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 6)
         temp_txt = str(self.output)
-        logging.info(temp_txt)
+        logger.info(temp_txt)
         fig.savefig(self.output, bbox_inches='tight')
 
     
@@ -340,7 +340,7 @@ class MyPlot(object):
         
         except:
             temp_txt = 'no file:   ' + str(filename)
-            logging.error(temp_txt)
+            logger.error(temp_txt)
             sys.exit(0)
 
     def ConnectDropboxOld(self):
@@ -372,13 +372,13 @@ class MyPlot(object):
         """
         here we establish connection to the dropbox account
         """
-        logging.info("at connect dropbox")
+        logger.info("at connect dropbox")
         #self.TokenFile=self.cryptofile.strip('\n')
         #f=open(self.TokenFile,"r")
 
         # now we branch out depending on which keyfile we are using:
         if  'LCWA_d.txt' in self.TokenFile:
-            logging.info("old system")
+            logger.info("old system")
             f=open(self.TokenFile,"r")
             self.data =f.readline() #key for encryption
         
@@ -393,7 +393,7 @@ class MyPlot(object):
 
  
         elif 'LCWA_a.txt'  in self.TokenFile:
-            logging.info('new system')
+            logger.info('new system')
             f=open(self.TokenFile,"r")
   
             temp =f.readlines() #key for encryption
@@ -426,11 +426,11 @@ class MyPlot(object):
                 oauth2_refresh_token = REFRESH_TOKEN
                 )
             temp_txt = 'self.dbx'+str(self.dbx)
-            logging.info(temp_txt)
+            logger.info(temp_txt)
 
         
         else:
-            logging.error("wrong keyfile")
+            logger.error("wrong keyfile")
 
 
         
@@ -438,12 +438,12 @@ class MyPlot(object):
         self.myaccount = self.dbx.users_get_current_account()
      
 
-        logging.info('***************************dropbox*******************\n\n\n')
+        logger.info('***************************dropbox*******************\n\n\n')
         my_credentials = self.myaccount.name.surname +' '+ self.myaccount.name.given_name
-        logging.info(my_credentials)
+        logger.info(my_credentials)
         my_email = self.myaccount.email
-        logging.info(my_email+'\n\n')
-        logging.info('***************************dropbox*******************\n')
+        logger.info(my_email+'\n\n')
+        logger.info('***************************dropbox*******************\n')
 
 
 

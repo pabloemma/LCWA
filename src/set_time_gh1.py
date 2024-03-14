@@ -10,7 +10,7 @@ import time
 import os
 import logging
 from inspect import stack
-
+from loguru import logger
 
 
 class MyTime():
@@ -21,7 +21,7 @@ class MyTime():
 
 
         # create a module logger
-        logger = logging.getLogger(__name__)
+        #logger = logging.getLogger(__name__)
 
  
         # WGH mod: loop_time defines the wait time between speedtests.  Defaults to 10 minutes.
@@ -77,18 +77,18 @@ class MyTime():
         else:
             NTPServers = [ ntpserverarg ]
         
-        logging.info(('%-34s: %s' % ('NTPServers', NTPServers)))
+        logger.info(('%-34s: %s' % ('NTPServers', NTPServers)))
 
         for ntpserver in NTPServers:
             try:
                 
-                logging.info(('%-34s: %s' % ('Querying NTP server', ntpserver)))
+                logger.info(('%-34s: %s' % ('Querying NTP server', ntpserver)))
                 self.ntp_response = self.cntp.request(ntpserver,version=3)
-                logging.info(('%-34s: %s' % ('NTP query returned offset', self.ntp_response.offset)))
+                logger.info(('%-34s: %s' % ('NTP query returned offset', self.ntp_response.offset)))
                 
             except:
                 self.ntp_received = False
-                logging.warning(('Warning: no NTP response from %s' % ntpserver))
+                logger.warning(('Warning: no NTP response from %s' % ntpserver))
                 continue
             
             self.ntp_received = True
@@ -96,16 +96,16 @@ class MyTime():
             self.ntp_querytime = int(time.time())
             
             if(abs(self.ntp_response.offset) > 10):
-                logging.warning(('Warning: System time is out of sync with NTP by %d seconds.' % self.ntp_offset))
+                logger.warning(('Warning: System time is out of sync with NTP by %d seconds.' % self.ntp_offset))
             else:
-                logging.info(('%-34s: %s' % ('System time offset from NTP',self.ntp_offset)))
+                logger.info(('%-34s: %s' % ('System time offset from NTP',self.ntp_offset)))
             break
 
         if self.ntp_received == False:
-            logging.error(('Warning: All NTP queries unsuccessful.'))
-            logging.warning(('Warning: Falling back to using system time without NTP offset.'))
+            logger.error(('Warning: All NTP queries unsuccessful.'))
+            logger.warning(('Warning: Falling back to using system time without NTP offset.'))
         else:
-            logging.info(('%-34s: %s' % ('NTP offset query time',datetime.fromtimestamp(self.ntp_querytime))))
+            logger.info(('%-34s: %s' % ('NTP offset query time',datetime.fromtimestamp(self.ntp_querytime))))
 
         # A 0 return means that the ntp query was unsuccessful
         return self.ntp_offset, self.ntp_querytime
@@ -129,7 +129,7 @@ class MyTime():
 
         # If we're not an LCnn, just sleep the loop_time. Use the test_speed1_3.py --time arg to shorten the loop_time
         if not hostnum.isnumeric():
-            logging.warning('Warning: hostname %s not numeric. Setting queue position to 0.' % hostname)
+            logger.warning('Warning: hostname %s not numeric. Setting queue position to 0.' % hostname)
             hostnum = 0
 
         # Seconds after the self.loop_time intervals to wait until.
@@ -155,21 +155,21 @@ class MyTime():
         # Correct for the ntp offset
         self.et_checktime += ntp_offset
 
-        logging.info(('  %-32s: %s' % ('Current system time', datetime.fromtimestamp(self.et_systime))))
-        if ntp_offset != 0: logging.info(('  %-32s: %s\n' % ('Corrected NTP time', datetime.fromtimestamp(self.et_checktime))))
+        logger.info(('  %-32s: %s' % ('Current system time', datetime.fromtimestamp(self.et_systime))))
+        if ntp_offset != 0: logger.info(('  %-32s: %s\n' % ('Corrected NTP time', datetime.fromtimestamp(self.et_checktime))))
     
         # Calculate the run window in ntp corrected time..
         et_runwindow_start = self.et_checktime - (self.et_checktime % self.loop_time) + self.loop_time
         et_runwindow_end   = et_runwindow_start + self.loop_time
 
-        if ntp_offset != 0: logging.info(('  %-32s: %s' % ('NTP Run window start', datetime.fromtimestamp(et_runwindow_start))))
-        if ntp_offset != 0: logging.info(('  %-32s: %s\n' % ('NTP Run window end', datetime.fromtimestamp(et_runwindow_end))))
+        if ntp_offset != 0: logger.info(('  %-32s: %s' % ('NTP Run window start', datetime.fromtimestamp(et_runwindow_start))))
+        if ntp_offset != 0: logger.info(('  %-32s: %s\n' % ('NTP Run window end', datetime.fromtimestamp(et_runwindow_end))))
 
         et_sysrunwindow_start = et_runwindow_start - ntp_offset
         et_sysrunwindow_end   = et_runwindow_end - ntp_offset
 
-        logging.info(('  %-32s: %s' % ('Sys Run window start', datetime.fromtimestamp(et_sysrunwindow_start))))
-        logging.info(('  %-32s: %s\n' % ('Sys Run window end', datetime.fromtimestamp(et_sysrunwindow_end))))
+        logger.info(('  %-32s: %s' % ('Sys Run window start', datetime.fromtimestamp(et_sysrunwindow_start))))
+        logger.info(('  %-32s: %s\n' % ('Sys Run window end', datetime.fromtimestamp(et_sysrunwindow_end))))
         
 
         # Calculate the time of the next speedtest as a corrected epoch time
@@ -184,12 +184,12 @@ class MyTime():
         self.et_waitsecs = self.et_runtime - self.et_checktime
 
         if self.verbosity > 0:
-            if ntp_offset != 0: logging.info(('  %-32s: %s' % ('Next test time (NTP) for '+host, datetime.fromtimestamp(self.et_runtime))))
-            logging.info(('  %-32s: %s' % ('Next test time (Sys) for '+host, datetime.fromtimestamp(self.et_sysruntime))))
+            if ntp_offset != 0: logger.info(('  %-32s: %s' % ('Next test time (NTP) for '+host, datetime.fromtimestamp(self.et_runtime))))
+            logger.info(('  %-32s: %s' % ('Next test time (Sys) for '+host, datetime.fromtimestamp(self.et_sysruntime))))
         else:
-            logging.info(('  %-32s: %s' % ('Scheduling next test runtime for', datetime.fromtimestamp(self.et_sysruntime))))
+            logger.info(('  %-32s: %s' % ('Scheduling next test runtime for', datetime.fromtimestamp(self.et_sysruntime))))
             
-        logging.info(('  %-32s: %03d seconds..' % ('Waiting', self.et_waitsecs)))
+        logger.info(('  %-32s: %03d seconds..' % ('Waiting', self.et_waitsecs)))
 
         while(True):
             time.sleep(1)
@@ -197,17 +197,17 @@ class MyTime():
 
             # Show a countdown timer..
             #temp_txt = str('\r%66s' % int(self.et_runtime - et_ntp_now), end = ' ')
-            #logging.info(temp_txt)
+            #logger.info(temp_txt)
 
             if( et_ntp_now >= self.et_runtime ):
                 break
 
         
-        if ntp_offset != 0: logging.info(('  %-32s: %s' % ('NTP time now', datetime.fromtimestamp(self.et_runtime))))
-        if ntp_offset != 0: logging.info(('  %-32s: %s\n' % ('Reached scheduled ntp runtime of', datetime.fromtimestamp(et_ntp_now))))
+        if ntp_offset != 0: logger.info(('  %-32s: %s' % ('NTP time now', datetime.fromtimestamp(self.et_runtime))))
+        if ntp_offset != 0: logger.info(('  %-32s: %s\n' % ('Reached scheduled ntp runtime of', datetime.fromtimestamp(et_ntp_now))))
 
-        logging.info(('  %-32s: %s' % ('System time now', datetime.fromtimestamp(et_ntp_now - ntp_offset))))
-        logging.info(('  %-32s: %s' % ('Reached scheduled test runtime', datetime.fromtimestamp(et_ntp_now))))
+        logger.info(('  %-32s: %s' % ('System time now', datetime.fromtimestamp(et_ntp_now - ntp_offset))))
+        logger.info(('  %-32s: %s' % ('Reached scheduled test runtime', datetime.fromtimestamp(et_ntp_now))))
 
         return 0
 
