@@ -63,7 +63,7 @@ import inspect
 #import logging    # get the logging facility
 #import logger.config
 from loguru import logger
-#import json
+import json
 import shutil
 
 from tcp_latency import measure_latency
@@ -135,7 +135,7 @@ class test_speed1():
         logger.remove(0)
         #now we add color to the terminal output
         logger.add(sys.stdout,
-                colorize = True,format="<green>{time}</green>{function} {level} <level>{message}</level>" ,
+                colorize = True,format="<green>{time}</green>{function}- -{line}- -{level} <level>{message}</level>" ,
                 level = self.log_level)
 
 
