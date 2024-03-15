@@ -135,13 +135,13 @@ class test_speed1():
         logger.remove(0)
         #now we add color to the terminal output
         logger.add(sys.stdout,
-                colorize = True,format="<green>{time}</green>{function}- -{line}- -{level} <level>{message}</level>" ,
+                colorize = True,format="<green>{time}</green>    {function}   {line}    {level}     <level>{message}</level>" ,
                 level = self.log_level)
 
 
 
-        fmt =  "{time} - {name}-{function} -{line}- {level} - {message}"
-        logger.add(self.log_output, format = fmt , level = self.log_level)
+        fmt =  "{time} - {name}-   {function} -{line}- {level}    - {message}"
+        logger.add(self.log_output, format = fmt , level = self.log_level,rotation="1 day")
 
 
         # set the colors of the different levels
@@ -504,6 +504,12 @@ class test_speed1():
         #frame = inspect.currentframe()
         #print('**********************',frame.f_code.co_name,'***********************')
 
+        greeting_txt = ' \n\n\n\n\n\n $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ \n \
+                        new run \
+                        \n $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ \n\n\n'
+
+        logger.info(greeting_txt)
+     
         logger.info(sys.version_info[0])
         if (sys.version_info[0] == 3):
             logger.warning(' we have python 3')
@@ -1462,8 +1468,8 @@ class test_speed1():
 
 
 
-
-        shutil.move(self.log_output,self.logfile_info)
+        # we copy the file since we rotate every day
+        shutil.copy(self.log_output,self.logfile_info)
  
 
             
