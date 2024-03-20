@@ -8,8 +8,8 @@
 echo "******************** this is the maintenance script ********************"
 
     #echo "translating file"
-	pip3 install loguru
-	echo $(pwd)
+	#pip3 install loguru
+	#echo $(pwd)
     # translating file
 
 	#/Users/klein/git/speedtest/scripts/lcwa_dec.sh LCWA_translate
