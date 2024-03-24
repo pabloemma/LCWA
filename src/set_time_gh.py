@@ -3,6 +3,7 @@ from os.path import exists                                     # WGH mod
 import ntplib
 import socket
 import time
+import logging
 
 
 
@@ -13,6 +14,8 @@ class MyTime():
     def __init__(self):
     
         self.cntp =ntplib.NTPClient()
+        logger = logging.getLogger(__name__)
+        logger.info('Startlogging in set time:')
  
 
     def GetTime(self):                                              # WGH mods
@@ -37,26 +40,32 @@ class MyTime():
 
         # Reverse the order of the servers on the theory that the last is the least busy
         NTPServers = NTPServers[::-1]
-            
-        print('NTPServers: ', NTPServers)
+
+
+        temp_txt =     'NTPServers: '+ str(NTPServers)
+        logging.info(temp_txt)
 
         for ntpserver in NTPServers:
             try:
                 self.ntp_response = self.cntp.request(ntpserver,version=3)
-                print('Got time from ', ntpserver)
+                temp_txt = 'Got time from '+ str(ntpserver)
+                logging.info(temp_txt)
             except:
                 self.ntp_received = False
-                print('No NTP response from ', ntpserver)
+                temp_txt = 'No NTP response from '+str(ntpserver)
+                logging.warning(temp_txt)
                 continue
             
             self.ntp_received = True
             
-            print (datetime.fromtimestamp(self.ntp_response.tx_time))
+            temp_txt =str(datetime.fromtimestamp(self.ntp_response.tx_time))
+            logging.info(temp_txt)
             
             if(abs(self.ntp_response.offset) > 10):
-                print('Warning: System time is not in sync with NTP.')
-            
-            print('System time offset from NTP:',self.ntp_response.offset)
+                logging.warning('Warning: System time is not in sync with NTP.')
+            temp_txt = 'System time offset from NTP:'+str(self.ntp_response.offset)
+            logging.warning(temp_txt)
+             
             break
 
         return self.ntp_received

@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "disable_existing_loggers": true,
+    "formatters": {
+      "simple": {
+        "format": "%(asctime)s  - %(message)s"
+      },
+      "extra": {
+        "format": "%(asctime)-16s  %(filename)-12s %(lineno)-6s %(funcName)-30s %(levelname)-8s %(message)s",
+        "datefmt": "%m-%d %H:%M:%S"
+      }
+    },
+  
+    "handlers": {
+      "console": {
+        "class": "logging.StreamHandler",
+        "level": "DEBUG",
+        "formatter": "simple",
+        "stream": "ext://sys.stdout"
+      },
+  
+      "info_file_handler": {
+        "class": "logging.FileHandler",
+        "level": "DEBUG",
+        "formatter": "extra",
+        "filename": "info.log",
+        "encoding": "utf8"
+      },
+  
+      "error_file_handler": {
+        "class": "logging.FileHandler",
+        "level": "ERROR",
+        "formatter": "extra",
+        "filename": "errors.log",
+        "encoding": "utf8"
+      
+    },
+    "warning_file_handler": {
+      "class": "logging.FileHandler",
+      "level": "WARNING",
+      "formatter": "extra",
+      "filename": "warning.log",
+      "encoding": "utf8"
+    }
+  },
+
+    "loggers": {
+      "default": {
+        "level": "DEBUG",
+        "handlers": ["console","info_file_handler","warning_file_handler","error_file_handler"], 
+        "propagate": "no"
+      }
+    },
+  
+    "root": {
+      "level": "DEBUG",
+      "handlers": ["console", "info_file_handler", "error_file_handler"]
+    }
+  }

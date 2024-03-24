@@ -7,6 +7,19 @@ import os
 import sys
 import platform
 import socket
+import inspect
+
+class color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
 
 
 class MyConfig():
@@ -14,7 +27,7 @@ class MyConfig():
     def __init__(self,config_file):
         """ config_file contains all the infor for speedtest program"""
 
-
+ 
        
         
         # Open config file
@@ -26,6 +39,7 @@ class MyConfig():
         else:
             print(" Config file does not exist, exiting     ", config_file)
             sys.exit(0)
+
     def ReadJson(self,file_path):
 
         print("reading config file ", file_path)    # WGH mod: clarify which conf json we're actually reading
@@ -40,10 +54,12 @@ class MyConfig():
         #bold face begin and end
         bfb = '\033[1m'
         bfe = '\033[0m'
+        TX = color
         #these are depending on the operating system
         mysystem = platform.system()
         self.srcdir = jsondict[mysystem]['srcdir']
         self.datadir = jsondict[mysystem]['datadir']
+        self.logdir = jsondict[mysystem]['logdir']
 
         self.timeout = jsondict[mysystem]['timeout']
         self.speedtest = jsondict[mysystem]['speedtest']
@@ -54,7 +70,10 @@ class MyConfig():
         self.click      = jsondict["Control"]["click"] # 1: start with iperf, 0 start with speedtest
         self.random_click     = jsondict["Control"]["random"]
         self.runmode = jsondict["Control"]["runmode"]   # WGH mod: Do we need this if the host isn't found in the ClusterControl block?
-
+        self.speedtest_server_list = jsondict["Control"]["server_list"]
+        self.keep_files_time = jsondict["Control"]["keep_files_time"]
+        #test if first key is working
+ 
         self.conf_dir = jsondict[mysystem]['conf_dir']
 
     # now we read in the variables which are crucial for running
@@ -149,7 +168,37 @@ class MyConfig():
             if "iperf_reverse" in jsondict["ClusterControl"][self.host]["nondefault"].keys() :
                 self.iperf_reverse = jsondict["ClusterControl"][self.host]["nondefault"]["iperf_reverse"] 
 
+    
+        #Possible loglevels
+        # DEBUG
+        # INFO
+        # WARNING
+        # ERROR
+        # CRITICAL
+        
+        #Output choices
+        # screen
+        # outfile
+        # both
 
+        if "loglevel" in jsondict["ClusterControl"][self.host]["logging"].keys() :
+            self.log_level = jsondict["ClusterControl"][self.host]["logging"]["loglevel"] 
+        else:
+            self.log_level = "INFO"
+
+        
+        self.log_output = jsondict["ClusterControl"][self.host]["logging"]["output"] 
+ 
+        if "log_conf_file" in jsondict["ClusterControl"][self.host]["logging"].keys() :
+            self.log_conf_file = self.conf_dir+jsondict["ClusterControl"][self.host]["logging"]["log_conf_file"] 
+        else:
+            frame = inspect.currentframe()
+            prefix = TX.BOLD +TX.RED+'|'+frame.f_code.co_name+'>'+'no logger config file'+TX.END
+            print(prefix)
+            sys.exit(0)
+             
+        #here we get the logging varaibles:
+                
 
         print('\n\n ***************** configuration**************\n')
         print(' We are running on platform ' , mysystem, '\n')
@@ -192,8 +241,6 @@ class MyConfig():
             print('Server ID            ',self.serverid)
             print('times intervals      ',self.time_window)
 
-            
- 
         print('***************************** end of configuration***************\n\n')
 
 

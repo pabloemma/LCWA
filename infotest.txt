@@ -1,0 +1,2 @@
+2024-03-11 19:15:35,115  test_logger_setup_1.py 70     TestInfo                       INFO     this is an info
+2024-03-11 19:15:35,115  test_logger_setup_1.py 72     TestInfo                       WARNING  this is now the second warning
