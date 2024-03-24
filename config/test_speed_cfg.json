@@ -4,9 +4,10 @@
     "Darwin" : {
         "timeout" : "/usr/local/bin/timeout",
         "speedtest" : "/usr/local/bin/speedtest",
-        "srcdir" : "/Users/klein/visual studio/LCWA/src/",
+        "srcdir" : "/Users/klein/git/LCWA/src/",
         "datadir" : "/Users/klein/speedfiles/",
-        "conf_dir" : "/Users/klein/visual studio/LCWA/config/"
+        "logdir" : "/Users/klein/git/speedtest/log/",
+        "conf_dir" : "/Users/klein/git/LCWA/config/"
 
     },
     "Linux" : {
@@ -14,7 +15,8 @@
         "speedtest" : "/usr/bin/speedtest",
         "srcdir" : "/home/pi/git/speedtest/src/",
         "datadir" : "/home/pi/speedfiles/",
-        "conf_dir" : "/home/pi/git/speedtest/src/config/"
+        "logdir" : "/home/pi/git/speedtest/log/",
+        "conf_dir" : "/home/pi/git/speedtest/config/"
 
     },
     "Control" : {
@@ -22,7 +24,10 @@
         "debug"   : false,
         "cryptofile" : "LCWA_a.txt",
         "click"      : "1",
-        "random"     : false
+        "random"     : false,
+        "keep_files_time" : 7,
+        "server_list" : { "nmsurf":9686,"plateau":16869,"comcast":1773,"sacred_wind":62425,"vexus":62294,"santa_rosa":43754,"windstream":45706}
+
     },
     "Iperf" : {
         "iperf_serverport"  : "5201",
@@ -37,10 +42,10 @@
     },
     "Speedtest" : {
         "serverip" : "63.229.162.245",
-        "serverid" : 16869,
+        "serverid" : 10056,
         "time_window" : 10,
         "latency_ip" : "65.19.14.51" 
-    },
+     },
     "ClusterControl" : {
         "LC01" :  {
             "runmode" : "Speedtest",
@@ -48,7 +53,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -61,16 +66,22 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
 
-                    },
+                    
+            "logging" : {
+                    "loglevel" : "info",
+                    "output"   : "info.log",
+                    "log_conf_file" : "logger.json"
+               }
+            },
         "LC02" : {
             "runmode" : "Speedtest",
 
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -83,7 +94,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                    "loglevel" : "INFO",
+                    "output"   : "info.log",
+                    "log_conf_file" : "logger.json"
+                     }   
+
 
                     },
         "LC03" : {
@@ -105,8 +122,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
-
+                     },
+            "logging" : {
+                    "loglevel" : "INFO",
+                    "output"   : "info.log",
+                    "log_conf_file" : "logger.json"
+                     }   
+      
                     },
         "LC04" : {
             "runmode" : "Speedtest",
@@ -114,7 +136,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -127,19 +149,25 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                    "loglevel" : "INFO",
+                     "output"   : "info.log",
+                    "log_conf_file" : "logger.json"
+                     }   
+    
 
-                    }
+                    },
 
 
-        ,
+        
         "LC05" :  {
             "runmode" : "Speedtest",
 
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -152,7 +180,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                    "loglevel" : "INFO",
+                    "output"   : "info.log",
+                    "log_conf_file" : "logger.json"
+                         }   
+                     
 
                     },
         "LC06" :  {
@@ -161,7 +195,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -174,7 +208,14 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+ 
+            "logging" : {
+                    "loglevel" : "INFO",
+                    "output"   : "info.log",
+                    "log_conf_file" : "logger.json"
+                         }   
+                        
 
                     },
         "LC07" :  {
@@ -183,7 +224,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -196,7 +237,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+                "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC08" :  {
@@ -205,7 +252,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -218,7 +265,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+                "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC09" :  {
@@ -227,7 +280,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -240,7 +293,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC10" :  {
@@ -249,7 +308,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -262,7 +321,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC11" :   {
@@ -271,7 +336,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -284,7 +349,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC12" :  {
@@ -293,7 +364,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -306,7 +377,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC13" :  {
@@ -315,7 +392,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -328,7 +405,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+                "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC14" :  {
@@ -337,7 +420,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -350,7 +433,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC15" :  {
@@ -359,7 +448,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -372,7 +461,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC16" :  {
@@ -381,7 +476,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -394,7 +489,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC17" :  {
@@ -403,7 +504,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -416,7 +517,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC18" :  {
@@ -425,7 +532,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -438,7 +545,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC19" :  {
@@ -447,7 +560,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -460,7 +573,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC20" :  {
@@ -469,7 +588,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -482,7 +601,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC21" :  {
@@ -491,7 +616,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -504,7 +629,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+                "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC22" :  {
@@ -513,7 +644,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -526,7 +657,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC23" :  {
@@ -548,7 +685,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
         "LC24" :  {
@@ -557,7 +700,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 9686,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -569,7 +712,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : true
-                     }
+                     },
+            "logging" : {
+                        "loglevel" : "INFO",
+                         "output"   : "info.log",
+                        "log_conf_file" : "logger.json"
+                         }   
+     
 
                     },
 
@@ -579,7 +728,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -592,11 +741,16 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
 
-                    },
+                   
 
-
+            "logging" : {
+                    "loglevel" : "DEBUG",
+                    "output"   : "info.log",
+                    "log_conf_file" : "logger.json"
+                    }   
+            },
 
         "miska" : {
             "runmode" : "Speedtest",
@@ -604,7 +758,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 16869,
+                    "serverid" : 10056,
                     "time_window" : 1,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -617,7 +771,13 @@
             
                     "iperf_reverse"   : false,
                     "random" : false
-                     }
+                     },
+             "logging" : {
+                    "loglevel" : "INFO",
+                    "output"   : "info.log",
+                    "log_conf_file" : "logger.json"
+                         }   
+                         
 
                     }
   
