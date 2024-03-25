@@ -612,3 +612,115 @@
 2024-03-15T09:44:20.856339-0600 - __main__-   DoPlots -1588- DEBUG    - 7
 2024-03-15T09:44:21.041957-0600 - PlotClass-   PlotData -145- INFO    - /Users/klein/speedfiles//solv_2024-03-15speedfile.pdf
 2024-03-15T09:44:26.712090-0600 - __main__-   DoPlots -1602- INFO    - dropbox dir for plot /LCWA/ROTW/
+2024-03-25T07:06:50.728341-0600 - __main__-   WriteHeader -472- INFO    -  
+
+
+
+
+
+ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+                         new run                         
+ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+
+
+
+2024-03-25T07:06:50.728830-0600 - __main__-   WriteHeader -474- INFO    - 3
+2024-03-25T07:06:50.729019-0600 - __main__-   WriteHeader -476- WARNING    -  we have python 3
+2024-03-25T07:06:50.729112-0600 - __main__-   WriteHeader -494- INFO    - ****************************************************************** 
+
+2024-03-25T07:06:50.729189-0600 - __main__-   WriteHeader -495- INFO    - * hello this is the LCWA speedtest version9.02.02
+2024-03-25T07:06:50.729248-0600 - __main__-   WriteHeader -496- INFO    - * Written by Andi Klein using the CLI from speedtest
+2024-03-25T07:06:50.729301-0600 - __main__-   WriteHeader -497- INFO    - * Run date 2024-03-25 07:06:50.729098
+2024-03-25T07:06:50.982190-0600 - __main__-   WriteHeader -498- INFO    - * Running from 63.233.221.150
+2024-03-25T07:06:50.983056-0600 - __main__-   WriteHeader -501- INFO    - ****************************************************************** 
+
+2024-03-25T07:06:50.983167-0600 - __main__-   Progress -512- INFO    - version 2.02    trying to catch the random bad data sent by the CLI
+2024-03-25T07:06:50.983240-0600 - __main__-   Progress -513- INFO    - version 2.03   fixed conversion problem for N/A
+2024-03-25T07:06:50.983304-0600 - __main__-   Progress -514- INFO    - version 2.03.1   fixed rasp problem wit -L and -V
+2024-03-25T07:06:50.983378-0600 - __main__-   Progress -515- INFO    - version 3.01.0  connect to dropbox and store file every 50 entries
+2024-03-25T07:06:50.983431-0600 - __main__-   Progress -516- INFO    - version 3.01.1  added header line to output
+2024-03-25T07:06:50.983482-0600 - __main__-   Progress -517- INFO    - version 3.02.0    made cybermesa default server unless requested 
+2024-03-25T07:06:50.983533-0600 - __main__-   Progress -518- INFO    - version 3.02.01                     at midnight we open a new file
+2024-03-25T07:06:50.983591-0600 - __main__-   Progress -519- INFO    - version 3.02.1 logger.info some info on dropbox
+2024-03-25T07:06:50.983642-0600 - __main__-   Progress -520- INFO    - version 3.02.2 write dropbox file around the half hour mark
+2024-03-25T07:06:50.983689-0600 - __main__-   Progress -521- INFO    - Version 3.02.3   Included a header which is needed for the raspberry pi to start test_speed1 at boot
+2024-03-25T07:06:50.983745-0600 - __main__-   Progress -522- INFO    - Version 3.02.4   gives an acoustic signal at startup
+2024-03-25T07:06:50.983793-0600 - __main__-   Progress -523- INFO    - Version 3.03.0   added a Debug switch
+2024-03-25T07:06:50.983866-0600 - __main__-   Progress -524- INFO    - Version 3.04.0  get host name and add it to the filename
+2024-03-25T07:06:50.983913-0600 - __main__-   Progress -525- INFO    - Version 4.00.0  runs on python3 now
+2024-03-25T07:06:50.983958-0600 - __main__-   Progress -526- INFO    - Version 5.00.0  automatically does plots and ships them to dropbox
+2024-03-25T07:06:50.984005-0600 - __main__-   Progress -527- INFO    - Version 5.01.0  new dropbox configuration
+2024-03-25T07:06:50.984051-0600 - __main__-   Progress -528- INFO    - Version 5.01.1  added lookup of ip address
+2024-03-25T07:06:50.984099-0600 - __main__-   Progress -529- INFO    - Version 5.01.2  stop at 23:45 to 24:00, flush data and exit
+2024-03-25T07:06:50.984144-0600 - __main__-   Progress -530- INFO    - Version 5.01.3  Create textfile with important values
+2024-03-25T07:06:50.984194-0600 - __main__-   Progress -531- INFO    - Version 5.01.4  test of distro
+2024-03-25T07:06:50.984242-0600 - __main__-   Progress -532- INFO    - Version 5.01.5  timestamp in log file
+2024-03-25T07:06:50.984289-0600 - __main__-   Progress -533- INFO    - Version 5.01.6  added close_fds=True to popen
+2024-03-25T07:06:50.984334-0600 - __main__-   Progress -534- INFO    - Version 5.01.7  added using timeout command
+2024-03-25T07:06:50.984394-0600 - __main__-   Progress -535- INFO    - Version 5.01.8  better error message
+2024-03-25T07:06:50.984442-0600 - __main__-   Progress -536- INFO    - Version 5.01.9  date and time output
+2024-03-25T07:06:50.984488-0600 - __main__-   Progress -537- INFO    - Version 5.01.10  catching network problems
+2024-03-25T07:06:50.984534-0600 - __main__-   Progress -538- INFO    - Version 5.01.11  force LC12 to connect to NMSURF, done in the arg parse section
+2024-03-25T07:06:50.984580-0600 - __main__-   Progress -539- INFO    - Version 5.01.12  force LC24 to connect to NMSURF, done in the arg parse section
+2024-03-25T07:06:50.984626-0600 - __main__-   Progress -540- INFO    - Version 6.00.01  now with latency measurement to currently cybermese
+2024-03-25T07:06:50.984676-0600 - __main__-   Progress -541- INFO    - Version 6.00.02  minor change in PlotCalss do do the scaling on the single pdf files better
+2024-03-25T07:06:50.984724-0600 - __main__-   Progress -542- INFO    - Version 7.00.01  major upgrade , replace speetetst with iperf
+2024-03-25T07:06:50.984772-0600 - __main__-   Progress -543- INFO    - Version 7.01.02  added config file
+2024-03-25T07:06:50.984817-0600 - __main__-   Progress -544- INFO    - Version 7.01.03  added Gordon wish for /etc location for config file
+2024-03-25T07:06:50.984873-0600 - __main__-   Progress -545- INFO    - Version 7.01.04  Revamped command line and arparse section
+2024-03-25T07:06:50.984919-0600 - __main__-   Progress -546- INFO    - Version 7.01.05  added a call to ntp server, start of syncing the speedboxes
+2024-03-25T07:06:50.984969-0600 - __main__-   Progress -547- INFO    - Version 7.01.06  add a line to txt file to write runmode
+2024-03-25T07:06:50.985018-0600 - __main__-   Progress -548- INFO    - Version 7.02.01  modfy code such that it now reads in a second file to determine what host is running what 
+2024-03-25T07:06:50.985080-0600 - __main__-   Progress -549- INFO    - Version 8.01.01  Code which allow you to switch between speedtest and iperf either pretermined or random 
+2024-03-25T07:06:50.985127-0600 - __main__-   Progress -550- INFO    - Version 8.01.02  replace server name with speedtest in output csv file 
+2024-03-25T07:06:50.985181-0600 - __main__-   Progress -552- INFO    - Version 8.02.01  now better reflection on what is going on with iperf, and new more granular config file treatment 
+2024-03-25T07:06:50.985228-0600 - __main__-   Progress -553- INFO    - Version 8.02.02  with Gordon time mods 
+2024-03-25T07:06:50.985276-0600 - __main__-   Progress -554- INFO    - Version 8.02.03  added an try clause in create iperf output to catch connection problems
+2024-03-25T07:06:50.985321-0600 - __main__-   Progress -555- INFO    - Version 9.00.01  new dropbox
+2024-03-25T07:06:50.985374-0600 - __main__-   Progress -556- INFO    - Version 9.01.00  Version with logger
+2024-03-25T07:06:50.985420-0600 - __main__-   Progress -557- INFO    - Version 9.01.01  choose new server according to list if problems
+2024-03-25T07:06:50.985471-0600 - __main__-   Progress -558- INFO    - Version 9.02.01  cleanup logfiles and datadirectory
+2024-03-25T07:06:50.985517-0600 - __main__-   Progress -559- INFO    - Version 9.02.02  changed to loguru
+2024-03-25T07:06:50.985911-0600 - __main__-   CleanUp -322- INFO    - removing files in /Users/klein/git/speedtest/log/
+2024-03-25T07:06:50.986963-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/git/speedtest/log/solv_2024-03-15info.log
+2024-03-25T07:06:50.987587-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/git/speedtest/log/solv_2024-03-14info.log
+2024-03-25T07:06:50.987857-0600 - __main__-   CleanUp -327- INFO    - removing files in /Users/klein/speedfiles/
+2024-03-25T07:06:50.989318-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-08speedfile.txt
+2024-03-25T07:06:50.990496-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-12speedfile.csv
+2024-03-25T07:06:50.990971-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-15speedfile.csv
+2024-03-25T07:06:50.991558-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-09speedfile.txt
+2024-03-25T07:06:50.991966-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-14speedfile.csv
+2024-03-25T07:06:50.992644-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-13speedfile.csv
+2024-03-25T07:06:50.993138-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-08speedfile.pdf
+2024-03-25T07:06:50.993482-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-09speedfile.pdf
+2024-03-25T07:06:50.993627-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-08speedfile.csv
+2024-03-25T07:06:50.993742-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-12speedfile.txt
+2024-03-25T07:06:50.993873-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-09speedfile.csv
+2024-03-25T07:06:50.994300-0600 - __main__-   RemoveFiles -368- INFO    - removing: /Users/klein/speedfiles/solv_2024-03-12speedfile.pdf
+2024-03-25T07:06:50.995238-0600 - __main__-   ConnectDropBox -400- INFO    - new system
+2024-03-25T07:06:50.996824-0600 - __main__-   ConnectDropBox -433- INFO    - self.dbx = <dropbox.dropbox_client.Dropbox object at 0x165a51f90>
+2024-03-25T07:06:51.779214-0600 - __main__-   ConnectDropBox -444- INFO    - ***************************dropbox*******************
+
+
+
+2024-03-25T07:06:51.779780-0600 - __main__-   ConnectDropBox -446- INFO    - Tech Group LCWA
+2024-03-25T07:06:51.779924-0600 - __main__-   ConnectDropBox -448- INFO    - tech.admin@lcwireless.net
+
+
+2024-03-25T07:06:51.780045-0600 - __main__-   ConnectDropBox -449- INFO    - ***************************dropbox*******************
+
+2024-03-25T07:06:51.780296-0600 - __main__-   ConnectDropBox -400- INFO    - new system
+2024-03-25T07:06:51.783776-0600 - __main__-   ConnectDropBox -433- INFO    - self.dbx = <dropbox.dropbox_client.Dropbox object at 0x165a52090>
+2024-03-25T07:06:52.540644-0600 - __main__-   ConnectDropBox -444- INFO    - ***************************dropbox*******************
+
+
+
+2024-03-25T07:06:52.541124-0600 - __main__-   ConnectDropBox -446- INFO    - Tech Group LCWA
+2024-03-25T07:06:52.541281-0600 - __main__-   ConnectDropBox -448- INFO    - tech.admin@lcwireless.net
+
+
+2024-03-25T07:06:52.541399-0600 - __main__-   ConnectDropBox -449- INFO    - ***************************dropbox*******************
+
+2024-03-25T07:06:52.541711-0600 - __main__-   GetArguments -789- INFO    - Speedtest command     == ['/usr/local/bin/speedtest', '--progress=no', '-f', 'csv', '-s', '1773', '--format=json-pretty']
+2024-03-25T07:06:52.541909-0600 - __main__-   QueueStartupWaitTime -123- INFO    - Jumping startup wait queue..
+2024-03-25T07:06:52.542178-0600 - __main__-   SetDropDir -1533- INFO    - /LCWA/ROTW/

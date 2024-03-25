@@ -7,7 +7,8 @@
         "srcdir" : "/Users/klein/git/LCWA/src/",
         "datadir" : "/Users/klein/speedfiles/",
         "logdir" : "/Users/klein/git/speedtest/log/",
-        "conf_dir" : "/Users/klein/git/LCWA/config/"
+        "conf_dir" : "/Users/klein/git/LCWA/config/",
+        "doc_dir"     : "/Users/klein/git/LCWA/doc/"
 
     },
     "Linux" : {
@@ -16,8 +17,8 @@
         "srcdir" : "/home/pi/git/speedtest/src/",
         "datadir" : "/home/pi/speedfiles/",
         "logdir" : "/home/pi/git/speedtest/log/",
-        "conf_dir" : "/home/pi/git/speedtest/config/"
-
+        "conf_dir" : "/home/pi/git/speedtest/config/",
+        "doc_dir"     : "/Users/klein/git/LCWA/doc/"
     },
     "Control" : {
         "runmode" : "Speedtest",
@@ -26,6 +27,7 @@
         "click"      : "1",
         "random"     : false,
         "keep_files_time" : 7,
+        "server_file" : "ookla_us.csv",
         "server_list" : { "nmsurf":9686,"plateau":16869,"comcast":1773,"sacred_wind":62425,"vexus":62294,"santa_rosa":43754,"windstream":45706}
 
     },

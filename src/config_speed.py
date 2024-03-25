@@ -60,6 +60,7 @@ class MyConfig():
         self.srcdir = jsondict[mysystem]['srcdir']
         self.datadir = jsondict[mysystem]['datadir']
         self.logdir = jsondict[mysystem]['logdir']
+        self.doc_dir =jsondict[mysystem]['doc_dir']
 
         self.timeout = jsondict[mysystem]['timeout']
         self.speedtest = jsondict[mysystem]['speedtest']
@@ -72,6 +73,7 @@ class MyConfig():
         self.runmode = jsondict["Control"]["runmode"]   # WGH mod: Do we need this if the host isn't found in the ClusterControl block?
         self.speedtest_server_list = jsondict["Control"]["server_list"]
         self.keep_files_time = jsondict["Control"]["keep_files_time"]
+        self.server_file = jsondict["Control"]["server_file"]
         #test if first key is working
  
         self.conf_dir = jsondict[mysystem]['conf_dir']

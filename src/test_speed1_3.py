@@ -1431,7 +1431,7 @@ class test_speed1():
 
         # we copy the file since we rotate every day
         #shutil.copy(self.log_output,self.logfile_info)
-        shutil.mv(self.log_output,self.logfile_info)
+        shutil.move(self.log_output,self.logfile_info)
  
 
             
