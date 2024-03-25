@@ -68,7 +68,7 @@ import shutil
 
 from tcp_latency import measure_latency
 from dateutil import tz
-
+import pandas as pd
 import iperf_client as ipe
 import config_speed as cs
 #import set_time_gh as st
@@ -114,6 +114,28 @@ class test_speed1():
         return
 
 
+    def ReadSpeedServer(self):
+        """Determines the name of the speedserver according to the list"""
+        # read csv file into panda data dataframe
+        temp_data = pd.read_csv(self.server_file)
+      # now we drop some of the columns, pay attention to white space
+       
+        drop_list = ['Country',	'Host']
+
+        #print(temp_data)
+        try:
+            ookla_data = temp_data.drop(columns = drop_list)
+            self.server_bytown = dict(zip( ookla_data.ID,ookla_data.City))
+            self.server_byprovider = dict(zip( ookla_data.ID,ookla_data.Provider))
+        except:
+            logger.error('error in pandas read of ookla server')
+            return
+        
+        return
+
+    def GetSpeedServer(self):
+        """returns tuple with ID, City and Provider"""  
+        return self.serverid , self.server_bytown[self.serverid],self.server_byprovider[self.serverid]
 
             
     def QueueStartupWaitTime(self):                                             
@@ -237,6 +259,8 @@ class test_speed1():
         self.datadir = MyConfig.datadir
         self.speedtest_counter = 0 # for every change of speedtestserver this counter get changed
         
+        self.doc_dir = MyConfig.doc_dir
+        self.server_file = self.doc_dir+MyConfig.server_file #dtermines the ookla server file
 
         
 
@@ -297,6 +321,10 @@ class test_speed1():
         
         #old logger call logger_ok = self.SetupLogger(self.log_output,self.log_conf_file,self.log_level)
         self.SetupLogger()
+
+        # read the speeserver file
+        self.ReadSpeedServer()
+
     # here are calls fro the original init
         self.WriteHeader()
         
@@ -1600,8 +1628,11 @@ class test_speed1():
                           'time window' : self.loop_time})
 
         if self.runmode == "Speedtest" or self.runmode == 'Both':
+            id, town, provider = self.GetSpeedServer()
             self.output_dict.update({
                          'ookla server id' : self.serverid,
+                         'ookla_server_town': town,
+                         'ookla_server_provider' : provider,
                           'latency ip' : self.latency_server})
 
         if self.runmode  == "Both":
