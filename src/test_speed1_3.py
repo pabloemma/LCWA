@@ -88,46 +88,7 @@ class test_speed1():
         self.vs = '9.02.02'
 
  
-    def SetupLoggerOld(self,output,default_path,default_level):
-        """ this sets up the logger system, needs to be called after the json read
-        we have to use a temporayr filename, since the real filename is only created later from
-        """
-        
-        #env_key='LOG_CFG'
 
-        from loguru import logger
-
-        path = default_path
-
-        #check if default_path exists otherwise make it
-        if not os.path.exists(self.logdir):
-            logging.warning("log directory %s does not exist "   % self.logdir)
-            logging.info ("Creating logging directory %s" % self.logdir)
-            os.mkdir(self.logdir)
-        else:
-            pass # that should be the norm
-            
-
-
-
-        #value = os.getenv(env_key, None)
-        #if value:
-        #    path = value
-        if os.path.exists(path):
-            
-            with open(path, 'rt') as f:
-                config = json.load(f)
-            logger.config.dictConfig(config)
-        else:
-            logger.basicConfig(level=default_level)
-
-        #print(config)
-
-        logger = logger.getLogger(__name__)
-        logging.info('Startlogging:')
-
-
-        return 1
 
     def SetupLogger(self):
 
@@ -1469,7 +1430,8 @@ class test_speed1():
 
 
         # we copy the file since we rotate every day
-        shutil.copy(self.log_output,self.logfile_info)
+        #shutil.copy(self.log_output,self.logfile_info)
+        shutil.mv(self.log_output,self.logfile_info)
  
 
             
