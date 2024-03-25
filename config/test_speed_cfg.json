@@ -18,7 +18,7 @@
         "datadir" : "/home/pi/speedfiles/",
         "logdir" : "/home/pi/git/speedtest/log/",
         "conf_dir" : "/home/pi/git/speedtest/config/",
-        "doc_dir"     : "/Users/klein/git/LCWA/doc/"
+        "doc_dir"     : "/home/pi/git/LCWA/doc/"
     },
     "Control" : {
         "runmode" : "Speedtest",
