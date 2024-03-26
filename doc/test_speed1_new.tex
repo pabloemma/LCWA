@@ -16,8 +16,8 @@
 \begin{document}
 \author{ Andi Klein \\ pabloemma@gmail.com}
 \title{ test\_speed program1\_3 LCWA \\ 
-		\bf{version: 8.02.01} \\
-		doc version 1.1}
+		\bf{version: 9.02.03} \\
+		doc version 1.2}
 %\date{12 Nov 2002}
 %\today
 \maketitle
@@ -33,12 +33,14 @@
 
 
 \section{Overview}
-test\_speed is a python program written by Andi Klein. It's main purpose is to collect data from different raspberry pi's distributed across the LCWA to check the bandwidth over 24 hours. This is strictly a program for \textbf{La Canada Wireless Association}, which is a notforprofit volunteer organization , which provides internet access to mostly rural communities around Santa Fe.If you want to use this code for other places, feel free to modify it to suit your needs.
+test\_speed is a python program written by Andi Klein. It's main purpose is to collect data from different raspberry pi's distributed across the LCWA to check the bandwidth over 24 hours. This is strictly a program for \textbf{La Canada Wireless Association}, which is a not forprofit volunteer organization , which provides internet access to mostly rural communities around Santa Fe.If you want to use this code for other places, feel free to modify it to suit your needs.
 
 The heart of the code are calls to the \textbf{Ookla} speedtest servers and/or the \textbf{iperf3} library. 
 
-The test gets executed every 10 minutes and the data are stored locally. Every hour the program connects to dropbox, and uploads the datafile and the plot file. At midnight every day, the program flushes all the data to dropbox and exits. The computer then does a git pull to a central repository, performs a pull and the restarts. This ensures that any program updates are caught by the clients.
+The test gets executed every 10 minutes and the data are stored locally. Every hour the program connects to dropbox, and uploads the datafile and the plot file. At midnight every day, the program flushes all the data to dropbox and exits. The computer then does a git pull to a central repository, performs a pull and the restarts. This ensures that any program updates are caught by the clients. Since this is used on a cluster, with nodes which are not easily accessible, after the git pull, you can perform a limited task of maintenance through the {\bf maintain.sh} script.
 Until 2022, the program was using Ookla's speedtest and reporting those numbers. As is documented below, the user can choose the Ookla server, according to their preferences. Over time it has become clear that we would like to have a speedtest which is strictly within the LCWA network, and not a combination of this network and the internet. Several times we noticed strange test resulst, which were driven by an overloaded Ookla server and not a degradation of the LCWA network. This led to the development of a new addition to the code using iperf3. This iperf3 connection goes to a LCWA iperf3 server, therefore providing a more honest picture of what is going on in our network. This program runs on \textbf{Mac} and \textbf{Linux} but \textbf{NOT} on Windows. There are currently no plans to ever port it to Windows.
+
+As of late 2023, there is no iperf server locally accessible anymore. This is a real shortcoming, since a comparion of local iperfdata with ookla speedserver data would allow us to isolate our real network performance from the internet. Basically subtracting the iperf results from the speedtest data, would deconvolute the two.
 
 \section{Installation and upgrade}
 
@@ -47,7 +49,7 @@ Before you can do anything, you have to clone the repo. Create a directory ~/git
 \begin{itemize}
 \item cd git/speedtest
 \item git clone https://github.com/pabloemma/LCWA .
-\item if you need a different branch: git fetch; git branch -v -a; git checkout branchname
+\item if you need a different branch: git fetch; git branch -v -a; git checkout branchname. You can also get to another existing branch by typing git checkout {\bf branch}
 %\item cd ../src
 %item ./install\_speedtest  2$>$\&1 $|$ tee install.log
 
@@ -59,6 +61,7 @@ Sometimes I will make changes which require an upgrade, and then the script upgr
 \vspace{3cm}
 
 \subsection{Installing on a Linux raspberry pi system}
+{\b outdated needs to be rewritten}
 In this case you should be able to use the provided install script : install|\_speedtest. There is also a mac installation script, but this is currently outdated.
 \begin{verbatim}
 
@@ -68,35 +71,13 @@ In this case you should be able to use the provided install script : install|\_s
 
 If the installation crashes, please send me the install.log file.
 
-\subsection{general instructions for running the system on your own}
-In the following a discussion on what you need to install the project:
-\begin{enumerate}
-\item	Install the speedtest CLI from  https://www.speedtest.net/apps/cli
-\item Once installed you need to run it once to accept the license
-\item pip install dropbox
-%\item pip install pycryptodome
-\item Mac: brew install git, Linux it is usually supplied, otherwise sudo apt get install git , or yum install git
-\item mkdir ~/speedfiles (below your home directory)
-\item mkdir git
-\item cd git
-\item git clone https://github.com/pabloemma/speedtest.git speedtest (this you only do once, after this your command will be git pull , which will update you to the latest version)
-\item You will need a dropbox account and setup an app. If you have a dropbox account, log in and then go to https://www.dropbox.com/developers/documentation, click on ``App console'' in the upper right corner and create a new app. There click on permission type and select which one you want. Once you generated the app, click on the button Generate under``Generated Access Token ''
-\item Copy into clipboard the Access token, which is very long
-\item open the file LCWA\_d.txt in your speedtest directory, remove the line and paste your access token.
-\item On dropbox also create a folder called ``LCWA'', this is where the files will go.
-\end{enumerate}
-
-
-\begin{enumerate}
-\item install iperf3 \textbf{(not iperf or iperf2)}
-\end{enumerate}
 
 
 
-\section{Running and controlling the program}
+\section{Running  the program}
 
 The program has currently two different ways to run; either speedtest, which is a wrapper around the OOkla speedtest  or iperf, which will run an iperf test to a server on the LCWA network. The issue with the Ookla server is, that the result is depending on quite a few parameters beyond LCWA's control. The current server is with cybermesa,
-and we have noticed that the server is sometimes slow. Also, since we go outside onto the internet, the results are  influenced by whatever traffic is going on. The iperf test really checks thge available bandwidth within the LCWA network, and is therefore a better measure of what we provide.
+and we have noticed that the server is sometimes slow. Also, since we go outside onto the internet, the results are  influenced by whatever traffic is going on. The iperf test really checks the available bandwidth within the LCWA network, and is therefore a better measure of what we provide.
 
 The program checks every 10 minutes the bandwith, and records this is a file in the directory /home/pi/speedfiles. Every hour around xx:30 the csv file gets plotted into a pdf file and both are shipped to the corresponding dropbox.
 At midnight a second program collates all the different speedboxes, and creates a full 24 plot file. Also at midnight the program terminates, performs a git pull for updates, and then restarts again. In order not to blast the servers at the same time, each speedbox has a delay in the startup corresponding to the 2 digits in the name.
@@ -112,7 +93,7 @@ In order for me to support the program, I require the following directory struct
 /home/pi/git/speedtest is where all the components for the speedtest are located. The data files produced will be in /home/pi/speedfiles . If you choose a different configuration, you have to change the config file and you are on your own.
  
 
-\subsection{config file}
+\subsection{Controlling and the config file}
 Here is an example of a config file:
 \begin{verbatim}
 {
@@ -120,49 +101,58 @@ Here is an example of a config file:
     "Darwin" : {
         "timeout" : "/usr/local/bin/timeout",
         "speedtest" : "/usr/local/bin/speedtest",
-        "srcdir" : "/Users/klein/visual studio/LCWA/src/",
+        "srcdir" : "/Users/klein/git/LCWA/src/",
         "datadir" : "/Users/klein/speedfiles/",
-        "conf_dir" : "/Users/klein/visual studio/LCWA/config/"
+        "logdir" : "/Users/klein/git/speedtest/log/",
+        "conf_dir" : "/Users/klein/git/LCWA/config/",
+        "doc_dir"     : "/Users/klein/git/LCWA/doc/"
 
     },
     "Linux" : {
         "timeout" : "/usr/bin/timeout",
         "speedtest" : "/usr/bin/speedtest",
         "srcdir" : "/home/pi/git/speedtest/src/",
-        "datadir" : "/home/git/speedfiles/",
-        "conf_dir" : "/home/pi/git/speedtest/src/config/"
-
+        "datadir" : "/home/pi/speedfiles/",
+        "logdir" : "/home/pi/git/speedtest/log/",
+        "conf_dir" : "/home/pi/git/speedtest/config/",
+        "doc_dir"     : "/home/pi/git/speedtest/doc/"
     },
     "Control" : {
-        "runmode" : "Iperf",
+        "runmode" : "Speedtest",
         "debug"   : false,
-        "cryptofile" : "LCWA_d.txt"
+        "cryptofile" : "LCWA_a.txt",
+        "click"      : "1",
+        "random"     : false,
+        "keep_files_time" : 7,
+        "server_file" : "ookla_us.csv",
+        "server_list" : { "nmsurf":9686,"plateau":16869,"comcast":1773,"sacred_wind":62425,"vexus":62294,"santa_rosa":43754,"windstream":45706}
+
     },
     "Iperf" : {
-        "serverport"  : "5201",
-        "serverip" : "63.229.162.245",
-        "duration"  : 10,
-        "numstreams" : 2,
-        "blksize"   : 1024,
-        "latency_ip" : "65.19.14.51",
-        "time_window" : 10,
+        "iperf_serverport"  : "5201",
+        "iperf_serverip" : "63.229.162.245",
+        "iperf_duration"  : 10,
+        "iperf_numstreams" : 2,
+        "iperf_blksize"   : 1024,
+        "iperf_latency_ip" : "65.19.14.51",
+        "iperf_time_window" : 10,
 
-        "reverse"   : false
+        "iperf_reverse"   : false
     },
     "Speedtest" : {
         "serverip" : "63.229.162.245",
-        "serverid" : 18002,
+        "serverid" : 9686,
         "time_window" : 10,
         "latency_ip" : "65.19.14.51" 
-    }
-        "ClusterControl" : {
+     },
+    "ClusterControl" : {
         "LC01" :  {
-            "runmode" : "Both",
+            "runmode" : "Speedtest",
 
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 18002,
+                    "serverid" : 9686,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -174,18 +164,24 @@ Here is an example of a config file:
                     "iperf_time_window" : 10,
             
                     "iperf_reverse"   : false,
-                    "random" : true
-                     }
+                    "random" : false
+                     },
 
-                    },
-
-}
+                    
+            "logging" : {
+                    "loglevel" : "info",
+                    "output"   : "info.log",
+                    "log_conf_file" : "logger.json"
+               }
+            },
 
 \end{verbatim}
 
+
+
 As you can see , this is a json file (which personally I don't like; who in their right mind develops a system, which does not allow comments) and we can look at it in some more details:
 
-The first two block deal with the runtime environment. Since Apple and Linux have their stuff not in the same location (thank you apple) , we have to specify the locations of some critical files and directories. The next block \textbf{Control} deal;s with issues which are common to both runmodes and operating systems. \textbf{Iperf} selects the iperf test, while \textbf{Speedtest} controls space aliens (just kidding and making sure you haven't fallen asleep yet).
+The first two block deal with the runtime environment. Since Apple and Linux have their stuff not in the same location (thank you apple) , we have to specify the locations of some critical files and directories. The next block \textbf{Control} deals with issues which are common to both runmodes and operating systems. \textbf{Iperf} selects the iperf test, while \textbf{Speedtest} controls space aliens (just kidding and making sure you haven't fallen asleep yet).
 
 The last two blocks contain control parameters used for the two different runmodes.
 
@@ -258,7 +254,7 @@ Below is the typical output of one of the speedboxes for a 24 hr period. During 
   \label{fig:LC04}
 \end{figure}
 
-There are three files produced with extensions pdf, csv and txt. The csv file contains the raw data , the pdf is a plot of the data and the txt file has a list of parameters the program run under, plus at midnight a statistics output.
+There are four files produced with extensions pdf, csv and txt and log. The csv file contains the raw data , the pdf is a plot of the data and the txt file has a list of parameters the program run under, plus at midnight a statistics output. The last file (log), records all logging messages from the system. There are three levels; info, warning and error.
 In the following the midnight output from the plotted run. The important info are the run conditions at the beginning, which in this case is \textbf{Both} , and then the different parameters for iperf and speedtest.
 
 \begin{verbatim}
