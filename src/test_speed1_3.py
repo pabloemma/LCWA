@@ -1149,15 +1149,16 @@ class test_speed1():
 
             process.wait()
             out,err = process.communicate()
-
+            
             if process.returncode != 0:
                 logger.error('_nostack_Primary speedtest error: speedtest returned %s:' % process.returncode)
                 #print(err,  flush=True, file=sys.stderr)
-                logger.error('_toerr_ Re-running test, choosing next server on list')
+                logger.error(' choosing next server on list')
 
                 # pick new server
                 self.speedtest_current = self.ChooseSpeedtestServer()
-                
+                speed_temp = self.GetSpeedServer()
+                logger.warning('The new speedserver {} by {} is located in {}'.format(speed_temp[0],speed_temp[2],speed_temp[1]))
                 logger.info('Beginning failover test %s' % self.command_speed[4:(len(self.command_speed))])
                 # Pause for a sec in case there is a momentary network glitch..
                 time.sleep(1)
