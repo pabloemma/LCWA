@@ -190,7 +190,9 @@ class MyTime():
             logger.info(('  %-32s: %s' % ('Scheduling next test runtime for', datetime.fromtimestamp(self.et_sysruntime))))
             
         logger.info(('  %-32s: %03d seconds..' % ('Waiting', self.et_waitsecs)))
-
+        self.CountDownTimer()
+ 
+ 
         while(True):
             time.sleep(1)
             et_ntp_now = time.time() + ntp_offset
@@ -251,7 +253,18 @@ class MyTime():
             
         elif verbosity <= self.verbosity:
             print(datetime.now(), message, flush=True)
-        
+
+
+    def CountDownTimer(self):
+        seconds = self.et_waitsecs
+        interval = 1
+        while seconds > 0:
+            print(f"\033[1m \033[91m Time remaining: {seconds} seconds \033[0m",end='\r')
+            time.sleep(interval)  # Delay for 1 second
+            seconds -= interval
+        return
+
+      
 
 if __name__ == '__main__':
 

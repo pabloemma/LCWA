@@ -1,5 +1,7 @@
 mkdir ~/speedfiles
 
+sudo apt install dnsutils
+
 sudo apt install --force-yes python3-matplotlib
 sudo apt install --force-yes python3-dropbox
 
