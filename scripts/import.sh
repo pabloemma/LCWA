@@ -8,7 +8,7 @@ sudo apt install  --force-yes python3-iperf3
 
 sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 
-sudo apt-get install curl
-curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
-
-sudo apt-get install speedtest
+#sudo apt-get install curl
+#curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+pip3 install speedtest
+#sudo apt-get install speedtest
