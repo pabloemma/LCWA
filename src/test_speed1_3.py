@@ -1611,8 +1611,10 @@ class test_speed1():
         
     def WriteDescriptor(self): 
         """ this writes a short descriptor file for the speedtest"""
+        self.mycomputer = platform.platform()
         self.output_dict={'IP':self.DigIP(),
                           'Date':datetime.datetime.now(),
+                          'Running on': self.mycomputer,
                           'Dropbox':self.dropdir, 
                           'MacAddress':self.Mac,
                           'File':self.docfile,
