@@ -6,9 +6,10 @@ sudo apt install  --force-yes python3-pandas
 sudo apt install  --force-yes python3-iperf3
 
 
+
 sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 
-#sudo apt-get install curl
-#curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
-pip3 install speedtest
-#sudo apt-get install speedtest
+curl -O  https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-armel.tgz
+tar -zxf ookla-speedtest-1.2.0-linux-armel.tgz
+sudo mv speedtest /usr/bin/speedtest
+speedtest
