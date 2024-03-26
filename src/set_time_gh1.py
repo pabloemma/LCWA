@@ -190,8 +190,11 @@ class MyTime():
             logger.info(('  %-32s: %s' % ('Scheduling next test runtime for', datetime.fromtimestamp(self.et_sysruntime))))
             
         logger.info(('  %-32s: %03d seconds..' % ('Waiting', self.et_waitsecs)))
-        timer = self.et_waitsecs
-        self.CountDownTimer(timer)
+        # cound down on screen:
+
+        if sys.stdout.isatty():
+            timer = self.et_waitsecs
+            self.CountDownTimer(timer)
  
  
         while(True):
