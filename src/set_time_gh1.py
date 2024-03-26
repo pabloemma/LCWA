@@ -258,7 +258,10 @@ class MyTime():
 
     def CountDownTimer(self, timer):
         seconds = round(timer)
-        interval = 1
+        if seconds > 60 :
+            interval = 10
+        else :
+            interval = 1 
         while seconds > 0:
             print(f"\033[1m \033[91m Time remaining: {seconds} seconds \033[0m",end='\r')
             time.sleep(interval)  # Delay for 1 second
