@@ -1348,6 +1348,7 @@ class test_speed1():
         
         self.output = [now.strftime("%d/%m/%Y"),now.strftime("%H:%M:%S")]
         
+        print(jsondict)
 
         try:
             timestamp  = jsondict['timestamp']
