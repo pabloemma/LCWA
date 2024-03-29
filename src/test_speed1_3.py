@@ -1141,7 +1141,6 @@ class test_speed1():
         # ookla speedtest test
         elif(temp_runmode == 'Speedtest'):
             logger.info('Beginning test %s' % self.command_speed[4:(len(self.command_speed))])
-            print(self.command_speed[9]),self.serverid
             process = sp.Popen(self.command_speed,
                          stdout=sp.PIPE,
                          stderr=sp.PIPE,
@@ -1380,12 +1379,11 @@ class test_speed1():
                 logger.error('Exception: bad speedtest %s float conversion.' % key)
                 self.output.append(-10000.)
 
-        #for key in ['packetLoss']:
-        if "packetloss" in jsondict:
+        if "packetLoss" in jsondict:
             try:
                 # need 1 decimal precision?
                 
-                self.output.append(float(jsondict[key]))
+                self.output.append(float(jsondict['packetLoss']))
             except ValueError :
             #except :
                 raise RuntimeWarning from None
