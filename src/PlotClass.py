@@ -134,6 +134,7 @@ class MyPlot(object):
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["upload"],'r^',label='\n speedtest red UP ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["jitter"]*10.,'y^',label='\n jitter*10 yellow  ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["latency measured"],'m^',label='\n latency measured magenta  ')
+        plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["package"],'c^',label='\n package loss cyan  ')
         
 
 
