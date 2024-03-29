@@ -90,7 +90,8 @@ class MyPlot(object):
     # read csv file into panda data dataframe
         temp_data = pd.read_csv(self.InputFile)
       # now we drop some of the columns, pay attention to white space
-        drop_list =['server id','jitter','package','latency measured']
+        #drop_list =['server id','jitter','package','latency measured']
+        drop_list =['server id']
         #print(temp_data)
         try:
             lcwa_data = temp_data.drop(columns = drop_list)
@@ -131,6 +132,8 @@ class MyPlot(object):
         plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["upload"],'g^',label='\n iperf green UP ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["download"],'ks',label='\n speedtest black DOWN ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["upload"],'r^',label='\n speedtest red UP ')
+        plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["jitter"]*10.,'y^',label='\n jitter*10 yellow  ')
+        plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["latency measured"],'m^',label='\n latency measured magenta  ')
         
 
 
@@ -140,7 +143,7 @@ class MyPlot(object):
 
         plt.xticks(rotation='vertical')
         plt.tight_layout()
-        plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 6)
+        plt.legend(facecolor='ivory',loc="center left",shadow=True, fancybox=True,fontsize = 6)
         temp_txt = str(self.output)
         logger.info(temp_txt)
         fig.savefig(self.output, bbox_inches='tight')
@@ -478,9 +481,9 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/Users/klein/speedfiles'
     #path='/Users/klein/scratch/'
-    file = 'solv_2023-12-10speedfile.csv'
+    file = 'LC20_2024-03-28speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
-    token ='/Users/klein/git/speedtest/src/LCWA_a.txt'
+    token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
