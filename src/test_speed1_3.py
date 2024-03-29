@@ -1141,6 +1141,7 @@ class test_speed1():
         # ookla speedtest test
         elif(temp_runmode == 'Speedtest'):
             logger.info('Beginning test %s' % self.command_speed[4:(len(self.command_speed))])
+            print(self.command_speed[9]),self.serverid
             process = sp.Popen(self.command_speed,
                          stdout=sp.PIPE,
                          stderr=sp.PIPE,
@@ -1157,7 +1158,9 @@ class test_speed1():
 
                 # pick new server
                 self.speedtest_current = self.ChooseSpeedtestServer()
+                self.serverid = self.speedtest_current
                 speed_temp = self.GetSpeedServer()
+                self.command_speed[9] = str(self.serverid)
                 logger.warning('The new speedserver {} by {} is located in {}'.format(speed_temp[0],speed_temp[2],speed_temp[1]))
                 logger.info('Beginning failover test %s' % self.command_speed[4:(len(self.command_speed))])
                 # Pause for a sec in case there is a momentary network glitch..
