@@ -1157,7 +1157,9 @@ class test_speed1():
 
                 # pick new server
                 self.speedtest_current = self.ChooseSpeedtestServer()
+                self.serverid = self.speedtest_current
                 speed_temp = self.GetSpeedServer()
+                self.command_speed[9] = str(self.serverid)
                 logger.warning('The new speedserver {} by {} is located in {}'.format(speed_temp[0],speed_temp[2],speed_temp[1]))
                 logger.info('Beginning failover test %s' % self.command_speed[4:(len(self.command_speed))])
                 # Pause for a sec in case there is a momentary network glitch..
@@ -1346,6 +1348,7 @@ class test_speed1():
         
         self.output = [now.strftime("%d/%m/%Y"),now.strftime("%H:%M:%S")]
         
+        print(jsondict)
 
         try:
             timestamp  = jsondict['timestamp']
@@ -1377,12 +1380,11 @@ class test_speed1():
                 logger.error('Exception: bad speedtest %s float conversion.' % key)
                 self.output.append(-10000.)
 
-        #for key in ['packetLoss']:
-        if "packetloss" in jsondict:
+        if "packetLoss" in jsondict:
             try:
                 # need 1 decimal precision?
                 
-                self.output.append(float(jsondict[key]))
+                self.output.append(float(jsondict['packetLoss']))
             except ValueError :
             #except :
                 raise RuntimeWarning from None
