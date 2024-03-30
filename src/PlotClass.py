@@ -114,7 +114,13 @@ class MyPlot(object):
         ax=fig.add_subplot(1,1,1)
         #plt.plot(self.lcwa_speed["jitter"],self.lcwa_speed["package"],'c^',label='\n package loss cyan  ')
         #plt.plot(self.lcwa_speed["jitter"],self.lcwa_speed["download"],'c^',label='\n package loss cyan  ')
-        plt.plot(self.lcwa_speed[x],self.lcwa_speed[y],'c^',label='\n package loss cyan  ')
+        plt.plot(self.lcwa_speed[x],self.lcwa_speed[y],'b^',label='\n package loss cyan  ')
+        plt.xlabel(x)
+        plt.ylabel(y)
+        plt.ylim(bottom = 0.)
+        plt.ylim(top = 1.10*self.lcwa_speed[y].max())
+        plt.xlim(left = 0.)
+        plt.xlim(right = 1.10*self.lcwa_speed[x].max())
         plt.show()
 
     
@@ -511,6 +517,6 @@ if __name__ == '__main__':
     MP.ConnectDropBox()
     MP.ReadTestData()    #MP.ReadTestData(legend)
     #MP.Analyze('/home/klein/scratch/text.txt')
-    MP.Plot2d(x='jitter',y='download')
+    MP.Plot2d(x='package',y='download')
     MP.Analyze()
     MP.PushFileDropbox('/LCWA/LC04/')
