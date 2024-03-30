@@ -109,7 +109,15 @@ class MyPlot(object):
 
         self.PlotData()    
 
+    def Plot2d(self,x=None,y=None):
+        fig = plt.figure()
+        ax=fig.add_subplot(1,1,1)
+        #plt.plot(self.lcwa_speed["jitter"],self.lcwa_speed["package"],'c^',label='\n package loss cyan  ')
+        #plt.plot(self.lcwa_speed["jitter"],self.lcwa_speed["download"],'c^',label='\n package loss cyan  ')
+        plt.plot(self.lcwa_speed[x],self.lcwa_speed[y],'c^',label='\n package loss cyan  ')
+        plt.show()
 
+    
     def PlotData(self):
         """plots the data structure using pandas and matplotlib"""
 
@@ -493,7 +501,7 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/Users/klein/speedfiles'
     #path='/Users/klein/scratch/'
-    file = 'LC20_2024-03-28speedfile.csv'
+    file = 'LC04_2024-03-30speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
@@ -503,5 +511,6 @@ if __name__ == '__main__':
     MP.ConnectDropBox()
     MP.ReadTestData()    #MP.ReadTestData(legend)
     #MP.Analyze('/home/klein/scratch/text.txt')
+    MP.Plot2d(x='jitter',y='download')
     MP.Analyze()
     MP.PushFileDropbox('/LCWA/LC04/')
