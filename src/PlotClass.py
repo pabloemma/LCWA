@@ -140,7 +140,17 @@ class MyPlot(object):
 
         # remove limit
         plt.ylim(bottom = 0.)
-        plt.ylim(top = 1.10*self.lcwa_speed['download'].max())
+        # simple determination of scaling
+        if(self.lcwa_speed['download'].max() > 80.):
+            ymax = 120.
+        elif(self.lcwa_speed['download'].max() > 45.):
+            ymax = 60.
+        elif(self.lcwa_speed['download'].max() > 15.):
+            ymax = 30.
+        
+        
+        #plt.ylim(top = 1.10*self.lcwa_speed['download'].max())
+        plt.ylim(top = ymax)
         plt.grid(True)
 
         plt.xticks(rotation='vertical')
