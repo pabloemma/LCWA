@@ -140,6 +140,7 @@ class MyPlot(object):
 
         # remove limit
         plt.ylim(bottom = 0.)
+        plt.ylim(top = 100.)
         plt.grid(True)
 
         plt.xticks(rotation='vertical')
