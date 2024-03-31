@@ -155,9 +155,10 @@ class MyPlot(object):
         # remove limit
         plt.ylim(bottom = 0.)
         # simple determination of scaling
-        if(self.lcwa_speed['download'].max() > 80.):
+        if(self.lcwa_speed['download'].max() > 60.):
             ymax = 120.
-        elif(self.lcwa_speed['download'].max() > 45.):
+        
+        elif(self.lcwa_speed['download'].max() > 40.):
             ymax = 60.
         elif(self.lcwa_speed['download'].max() > 15.):
             ymax = 30.
@@ -507,16 +508,16 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/Users/klein/speedfiles'
     #path='/Users/klein/scratch/'
-    file = 'LC04_2024-03-30speedfile.csv'
+    file = 'LC03_2024-03-31speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag)
-    MP.ConnectDropBox()
+    #MP.ConnectDropBox()
     MP.ReadTestData()    #MP.ReadTestData(legend)
     #MP.Analyze('/home/klein/scratch/text.txt')
     MP.Plot2d(x='package',y='download')
     MP.Analyze()
-    MP.PushFileDropbox('/LCWA/LC04/')
+    #MP.PushFileDropbox('/LCWA/LC04/')
