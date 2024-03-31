@@ -52,6 +52,7 @@ class MyPlot(object):
         if(self.IsFile(file)):
             self.InputFile = file
             self.output = self.InputFile.replace('csv','pdf')
+            self.output_2d = self.output.replace('.pdf','_2d.pdf')
 
         if(self.IsFile(token)):
             self.TokenFile = token
@@ -115,6 +116,7 @@ class MyPlot(object):
 
 
         fig = plt.figure()
+        fig.set_size_inches(10., 8.)
         for k in range(len(x)):
 
             ax=fig.add_subplot(2,2,k+1)
@@ -141,6 +143,8 @@ class MyPlot(object):
         plt.xlim(left = 0.)
         plt.xlim(right = 1.10*self.lcwa_speed[x].max())
         """
+        fig.savefig(self.output_2d, bbox_inches='tight')
+
         plt.show()
 
     
@@ -538,6 +542,13 @@ class MyPlot(object):
         #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
 
         a = self.dbx.files_upload(f.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
+
+        f1 =open(self.output_2d,"rb")
+        #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
+
+        b = self.dbx.files_upload(f1.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
+
+
         #print('this is a',a)
        
 if __name__ == '__main__':
@@ -556,4 +567,4 @@ if __name__ == '__main__':
     #MP.Analyze('/home/klein/scratch/text.txt')
     MP.Plot2d(x=['package','jitter','latency measured','upload'],y=['download','download','download','download'])
     MP.Analyze()
-    #MP.PushFileDropbox('/LCWA/LC04/')
+    MP.PushFileDropbox('/LCWA/LC04_/')
