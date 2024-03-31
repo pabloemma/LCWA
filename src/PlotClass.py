@@ -91,10 +91,11 @@ class MyPlot(object):
         temp_data = pd.read_csv(self.InputFile)
       # now we drop some of the columns, pay attention to white space
         #drop_list =['server id','jitter','package','latency measured']
-        drop_list =['server id']
+        #drop_list =['server id']
         #print(temp_data)
         try:
-            lcwa_data = temp_data.drop(columns = drop_list)
+ #           lcwa_data = temp_data.drop(columns = drop_list)
+            lcwa_data = temp_data
         except:
             logger.error('error in pandas')
             return
@@ -140,7 +141,7 @@ class MyPlot(object):
         plt.title('Speedtest LCWA '+self.InputFile)
 
 
-
+        self.FindServerChange()
 
         plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["download"],'bs',label='\n iperf blue DOWN ')
         plt.plot(self.lcwa_iperf["Time"],self.lcwa_iperf["upload"],'g^',label='\n iperf green UP ')
@@ -149,8 +150,7 @@ class MyPlot(object):
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["jitter"],'y^',label='\n jitter yellow  ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["latency measured"],'m^',label='\n latency measured magenta  ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["package"],'c^',label='\n package loss cyan  ')
-        
-
+ 
 
         # remove limit
         plt.ylim(bottom = 0.)
@@ -163,6 +163,9 @@ class MyPlot(object):
         elif(self.lcwa_speed['download'].max() > 15.):
             ymax = 30.
         
+        for k in range (len(self.myserver)):
+            plt.text(self.mytime[k],ymax*.85,self.myserver[k],rotation = 90 ,weight = 'bold',color='red' )
+
         
         #plt.ylim(top = 1.10*self.lcwa_speed['download'].max())
         plt.ylim(top = ymax)
@@ -179,8 +182,22 @@ class MyPlot(object):
         plt.show()
 
         
-        
+    def FindServerChange(self):
+        """To find and mark the time the server changed"""   
+        #loop over panda
+        self.myserver = []
+        self.mytime = []
+        for index, row in self.lcwa_speed.iterrows():
+                if(index == 0):
+                    self.myserver.append(row['server id'])
+                    self.mytime.append(row['Time'])
+                if row['server id'] != self.myserver[-1] :
+                    self.myserver.append(row['server id'])  
+                    self.mytime.append(row['Time'])
+                    #print(row['Time'], row['server id'])
 
+        return
+    
     def Analyze(self, filename = None):
         """analyze the data we collected"""
 
@@ -508,14 +525,14 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/Users/klein/speedfiles'
     #path='/Users/klein/scratch/'
-    file = 'LC03_2024-03-31speedfile.csv'
+    file = 'LC03_2024-03-30speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
     legend = {'IP':'63.233.221.150','Date':'more tests','Dropbox':'test', 'version':'5.01.01'}
     PlotFlag = True # flag to plot or not on screen
     MP = MyPlot(path,file,token,PlotFlag)
-    #MP.ConnectDropBox()
+    MP.ConnectDropBox()
     MP.ReadTestData()    #MP.ReadTestData(legend)
     #MP.Analyze('/home/klein/scratch/text.txt')
     MP.Plot2d(x='package',y='download')
