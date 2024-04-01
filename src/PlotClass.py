@@ -111,10 +111,67 @@ class MyPlot(object):
 
         self.PlotData()    
 
+    def Plot2dDict(self,plot_dict=None):
+
+
+        if(len(plot_dict) > 8):
+            logger.warniung(' your number of plots is {} but only 8 allowerd'.format(len(plot_dict)))
+        fig = plt.figure()
+        fig.set_size_inches(10., 8.)
+         # general figure properties
+
+        plt.title('Two dimensional plots')
+
+        color_list=['g','b','c','y']
+        marker_list = ['o','*','^','p']
+        k = 0
+        for keys in plot_dict:
+            x = keys
+            y = plot_dict[keys]
+
+            ax=fig.add_subplot(2,2,k+1)
+            label_txt = '\n '+(x)+' vs '+y
+            #plt.plot(self.lcwa_speed[x],self.lcwa_speed[y],'b^',label=label_txt  )
+            plt.plot(self.lcwa_speed[x],self.lcwa_speed[y],color=color_list[k],marker = marker_list[k],linestyle="",label=label_txt  )
+            plt.xlabel(x)
+            plt.ylabel(y)
+            plt.ylim(bottom = 0.)
+            plt.ylim(top = 1.1*self.lcwa_speed[y].max())
+            plt.xlim(left = 0.)
+            plt.xlim(right = 1.1*self.lcwa_speed[x].max())
+ 
+            plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 8)
+            k = k +1
+            if k == 8:      #only allow for 8 plots
+                break
+        """
+        ax=fig.add_subplot(2,2,2)
+        plt.plot(self.lcwa_speed["upload"],self.lcwa_speed["download"],'c^',label='\n package loss cyan  ')
+        ax=fig.add_subplot(2,2,3)
+        plt.plot(self.lcwa_speed[x],self.lcwa_speed[y],'b^',label='\n package loss cyan  ')
+        ax=fig.add_subplot(2,2,4)
+        plt.plot(self.lcwa_speed[x],self.lcwa_speed[y],'b^',label='\n package loss cyan  ')
+        plt.xlabel(x)
+        plt.ylabel(y)
+        plt.ylim(bottom = 0.)
+        plt.ylim(top = 1.10*self.lcwa_speed[y].max())
+        plt.xlim(left = 0.)
+        plt.xlim(right = 1.10*self.lcwa_speed[x].max())
+        """
+        fig.savefig(self.output_2d, bbox_inches='tight')
+        
+       
+        plt.show()
+
     def Plot2d(self,x=None,y=None):
 
 
-
+        if(len(x) > 8):
+            logger.warning(' your number of plots is {} but only 8 allowed, will truncate'.format(len(plot_dict)))
+        if(len(x) != len(y)):
+            logger.error('number of x variables in plot not same as y, returning')
+            return
+        
         fig = plt.figure()
         fig.set_size_inches(10., 8.)
          # general figure properties
@@ -137,7 +194,8 @@ class MyPlot(object):
             plt.xlim(right = 1.1*self.lcwa_speed[x[k]].max())
  
             plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 8)
- 
+            if k == 8:
+                break
         """
         ax=fig.add_subplot(2,2,2)
         plt.plot(self.lcwa_speed["upload"],self.lcwa_speed["download"],'c^',label='\n package loss cyan  ')
@@ -156,6 +214,7 @@ class MyPlot(object):
 
        
         plt.show()
+
 
     
     def PlotData(self):
@@ -575,6 +634,8 @@ if __name__ == '__main__':
     MP.ConnectDropBox()
     MP.ReadTestData()    #MP.ReadTestData(legend)
     #MP.Analyze('/home/klein/scratch/text.txt')
+    plot_dict = {"jitter":"download","package":"download","latency measured":"download","upload":"download","latency measured":"package","latency measured":"jitter"}
     MP.Plot2d(x=['package','jitter','latency measured','upload'],y=['download','download','download','download'])
+    #MP.Plot2d(plot_dict = plot_dict)
     MP.Analyze()
     MP.PushFileDropbox('/LCWA/LC04_/')

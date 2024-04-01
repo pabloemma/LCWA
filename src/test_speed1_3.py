@@ -255,6 +255,8 @@ class test_speed1():
         self.cryptofile = MyConfig.cryptofile
         self.logdir = MyConfig.logdir
         self.speedtest_server_list = MyConfig.speedtest_server_list
+        self.plot_variable_x = MyConfig.plot_variable_x
+        self.plot_variable_y = MyConfig.plot_variable_y
         self.keep_files_time = MyConfig.keep_files_time
         self.datadir = MyConfig.datadir
         self.speedtest_counter = 0 # for every change of speedtestserver this counter get changed
@@ -1603,7 +1605,7 @@ class test_speed1():
             f=open(temp[1],"rb")
             temp1 = self.dbx.files_upload(f.read(),temp[0]+temp[2],mode=dropbox.files.WriteMode('overwrite', None))
              # now do the two dimensional
-            a.Plot2d(x=['package','jitter','latency measured','upload'],y=['download','download','download','download'])
+            a.Plot2d(x=self.plot_variable_x , y = self.plot_variable_y )
             f1=open(a.output_2d,"rb")
             
             self.dbx.files_upload(f1.read(),temp[0]+temp[2].replace('.pdf','_2d.pdf'),mode=dropbox.files.WriteMode('overwrite', None))

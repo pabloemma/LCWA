@@ -71,6 +71,8 @@ class MyConfig():
         self.click      = jsondict["Control"]["click"] # 1: start with iperf, 0 start with speedtest
         self.random_click     = jsondict["Control"]["random"]
         self.runmode = jsondict["Control"]["runmode"]   # WGH mod: Do we need this if the host isn't found in the ClusterControl block?
+        self.plot_variable_x= jsondict["Control"]["plot_variable_x"] # list of plotvariables
+        self.plot_variable_y= jsondict["Control"]["plot_variable_y"] # list of plotvariables
         self.speedtest_server_list = jsondict["Control"]["server_list"]
         self.keep_files_time = jsondict["Control"]["keep_files_time"]
         self.server_file = jsondict["Control"]["server_file"]
