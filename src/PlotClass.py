@@ -166,8 +166,9 @@ class MyPlot(object):
     def Plot2d(self,x=None,y=None):
 
 
-        if(len(x) > 8):
-            logger.warning(' your number of plots is {} but only 8 allowed, will truncate'.format(len(plot_dict)))
+        if(len(x) > 4):
+            logger.error(' your number of plots is {} but only 4 allowed, will truncate'.format(len(plot_dict)))
+            return
         if(len(x) != len(y)):
             logger.error('number of x variables in plot not same as y, returning')
             return
@@ -194,8 +195,7 @@ class MyPlot(object):
             plt.xlim(right = 1.1*self.lcwa_speed[x[k]].max())
  
             plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 8)
-            if k == 8:
-                break
+            
         """
         ax=fig.add_subplot(2,2,2)
         plt.plot(self.lcwa_speed["upload"],self.lcwa_speed["download"],'c^',label='\n package loss cyan  ')
