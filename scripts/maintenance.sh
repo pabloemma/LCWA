@@ -10,5 +10,5 @@ echo "******************** this is the maintenance script ********************"
     #echo "translating file"
 	#pip3 install loguru
 	#echo $(pwd)
-    sudo apt install python3-pandas
-
+    #sudo apt install python3-pandas
+    pip3 install pygit
