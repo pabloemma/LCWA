@@ -11,4 +11,4 @@ echo "******************** this is the maintenance script ********************"
 	#pip3 install loguru
 	#echo $(pwd)
     #sudo apt install python3-pandas
-    pip3 install pygit
+    pip3 install pygit2
