@@ -1604,7 +1604,8 @@ class test_speed1():
              # now do the two dimensional
             a.Plot2d(x=['package','jitter','latency measured','upload'],y=['download','download','download','download'])
             f1=open(a.output_2d,"rb")
-            self.dbx.files_upload(f1.read(),temp[0]+temp[2],mode=dropbox.files.WriteMode('overwrite', None))
+            
+            self.dbx.files_upload(f1.read(),temp[0]+temp[2].replace('.pdf','_2d.pdf'),mode=dropbox.files.WriteMode('overwrite', None))
             if textflag:
                 a.Analyze(filename = self.textfile)
                 f.close()
