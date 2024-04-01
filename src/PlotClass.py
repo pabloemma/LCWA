@@ -117,10 +117,18 @@ class MyPlot(object):
 
         fig = plt.figure()
         fig.set_size_inches(10., 8.)
+         # general figure properties
+
+        plt.title('Two dimensional plots')
+    
+        color_list=['g','b','c','y']
+        marker_list = ['o','*','^','p']
         for k in range(len(x)):
 
             ax=fig.add_subplot(2,2,k+1)
-            plt.plot(self.lcwa_speed[x[k]],self.lcwa_speed[y[k]],'b^')
+            label_txt = '\n '+(x[k])+' vs '+y[k]
+            #plt.plot(self.lcwa_speed[x[k]],self.lcwa_speed[y[k]],'b^',label=label_txt  )
+            plt.plot(self.lcwa_speed[x[k]],self.lcwa_speed[y[k]],color=color_list[k],marker = marker_list[k],linestyle="",label=label_txt  )
             plt.xlabel(x[k])
             plt.ylabel(y[k])
             plt.ylim(bottom = 0.)
@@ -128,7 +136,8 @@ class MyPlot(object):
             plt.xlim(left = 0.)
             plt.xlim(right = 1.1*self.lcwa_speed[x[k]].max())
  
-
+            plt.legend(facecolor='ivory',loc="lower left",shadow=True, fancybox=True,fontsize = 8)
+ 
         """
         ax=fig.add_subplot(2,2,2)
         plt.plot(self.lcwa_speed["upload"],self.lcwa_speed["download"],'c^',label='\n package loss cyan  ')
@@ -145,6 +154,7 @@ class MyPlot(object):
         """
         fig.savefig(self.output_2d, bbox_inches='tight')
 
+       
         plt.show()
 
     
