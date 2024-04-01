@@ -85,7 +85,7 @@ class test_speed1():
         #print (' in init')        # before we do anything, let's determine the python version
 
         self.chosentime = chosentime # how long to wait in seconds before next reading
-        self.vs = '9.02.03'
+        self.vs = '9.03.01'
 
  
 
@@ -533,7 +533,7 @@ class test_speed1():
         """
         keep track of the updates
         """
-        self.vs = '9.02.03' # remember to also change it in init
+        self.vs = '9.03.01' # remember to also change it in init
  
         
         #print(' History')
@@ -586,6 +586,7 @@ class test_speed1():
         logger.info('Version 9.02.01  cleanup logfiles and datadirectory')
         logger.info('Version 9.02.02  changed to loguru')
         logger.info('Version 9.02.03  use OOKLA server list')
+        logger.info('Version 9.03.01  two dimensional plots')
         #logger.warning('this is now a warning')
          
         #print('\n\n\n')
