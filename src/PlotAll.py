@@ -405,19 +405,19 @@ class PlotAll(object):
         xpos = .05 #text position
         ypos = 1.02
         ylow = 0. #regular y axis limits
-        yhigh = 35.
+        yhigh = 60.
         ylow1=0. # limits for packet loss, now for latency
         yhigh1=100.
         
-        yhigh2 = 12. #limits for 10 Mbs
-        yhigh3 = 7. #limits for 5 Mbs
-        yhigh4 = 80. #limits for LC19, double pppoe accounts
+        yhigh2 = 25. #limits for 10 Mbs
+        yhigh3 = 15. #limits for 5 Mbs
+        yhigh4 = 100. #limits for LC19, double pppoe accounts
         
         #overwrite default max axis
         
-        yhigh2=yhigh3=24.
-        yveryhigh = 70.
-        ystarlink = 100.
+        #yhigh2=yhigh3=30.
+        yveryhigh = 110.
+        ystarlink = 120.
         
         bbox=(0.03,.03,1.,0.25)
         print('number',k)
@@ -783,7 +783,7 @@ class PlotAll(object):
                 self.axarr4[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
                         
             elif(np.around(np.mean(y1),2) <= 25. and np.around(np.mean(y1),2) > 12.):
-                self.axarr4[i][l].set_ylim(ylow,yhigh) # set yaxis limit
+                self.axarr4[i][l].set_ylim(ylow,yveryhigh) # set yaxis limit
 
 
 
@@ -953,7 +953,7 @@ if __name__ == '__main__':
     #create the list
     temp = 'LC'
     dirlist = []
-    for k in range(1,21+1):
+    for k in range(1,21+3):
         if (k<10):
             temp1 = temp+'0'+str(k)+'_'
         else:
@@ -962,7 +962,7 @@ if __name__ == '__main__':
         dirlist.append(temp1)
     token_file = '/git/speedtest/src/LCWA_a.txt'
     tempdir = 'scratch'
-    datefile = '2023-12-28' 
+    datefile = '2024-04-01' 
      # " default is none"
     PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropBox()
