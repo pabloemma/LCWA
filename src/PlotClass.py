@@ -165,25 +165,32 @@ class MyPlot(object):
 
     def Plot2d(self,x=None,y=None):
 
+        #try to determine plot arrangement
+        n_plots = len(x) # (or however many you programatically figure out you need)
+        n_cols = 2
+        n_rows = (n_plots + 1) // n_cols
 
-        if(len(x) > 4):
-            logger.error(' your number of plots is {} but only 4 allowed, will truncate'.format(len(plot_dict)))
+
+        if(len(x) > 8):
+            logger.error(' your number of plots is {} but only 8 allowed, will truncate'.format(len(plot_dict)))
             return
         if(len(x) != len(y)):
             logger.error('number of x variables in plot not same as y, returning')
             return
         
         fig = plt.figure()
-        fig.set_size_inches(10., 8.)
+        #fig, subplots = plt.subplots(n_cols, n_rows)
+        fig.set_size_inches(15., 7.)
          # general figure properties
 
         plt.title('Two dimensional plots')
     
-        color_list=['g','b','c','y']
-        marker_list = ['o','*','^','p']
+        color_list=['g','b','c','y','k','m','r','g']
+        marker_list = ['o','*','^','p','4','8','D','x']
+        
         for k in range(len(x)):
-
-            ax=fig.add_subplot(2,2,k+1)
+            ax = plt.subplot(n_cols, n_rows, k+1)
+            #ax=fig.add_subplot(2,2,k+1)
             label_txt = '\n '+(x[k])+' vs '+y[k]
             #plt.plot(self.lcwa_speed[x[k]],self.lcwa_speed[y[k]],'b^',label=label_txt  )
             plt.plot(self.lcwa_speed[x[k]],self.lcwa_speed[y[k]],color=color_list[k],marker = marker_list[k],linestyle="",label=label_txt  )
@@ -635,7 +642,7 @@ if __name__ == '__main__':
     MP.ReadTestData()    #MP.ReadTestData(legend)
     #MP.Analyze('/home/klein/scratch/text.txt')
     plot_dict = {"jitter":"download","package":"download","latency measured":"download","upload":"download","latency measured":"package","latency measured":"jitter"}
-    MP.Plot2d(x=['package','jitter','latency measured','upload'],y=['download','download','download','download'])
+    MP.Plot2d(x=['package','jitter','latency measured','upload','package','package'],y=['download','download','download','download','jitter','latency measured'])
     #MP.Plot2d(plot_dict = plot_dict)
     MP.Analyze()
     MP.PushFileDropbox('/LCWA/LC04_/')
