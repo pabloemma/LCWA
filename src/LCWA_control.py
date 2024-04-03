@@ -124,7 +124,10 @@ class MyControl(object):
 
         
         
-        message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n \
+        #message = ' this is the daily Raspberry PI report, \n blue is download green upload, \n \
+        # \n  \n'  
+        message = ' If you want to continue to get the daily Raspberry PI report, \n please send me an email at \
+        : \n pabloemma@gmail.com by 14th of April \
          \n  \n'
 
         file = self.PA.pdf   
