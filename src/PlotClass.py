@@ -10,6 +10,8 @@ version which takes two different runs
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as md
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+
 
 import datetime
 import numpy as np
@@ -163,6 +165,60 @@ class MyPlot(object):
        
         plt.show()
 
+    def PlotScatter(self):
+        """Make scatter plots so we can get the projection"""
+
+        # first convert the dataframe to a numpy array
+
+
+        # create scatterplot
+        fig, ax = plt.subplots(figsize=(5.5, 5.5))
+        #fig = plt.figure()
+        try:
+            ax = self.lcwa_speed.plot.scatter(x='download',
+                      y='upload',
+                      c='DarkBlue')
+            ax.set_aspect(1.)
+            divider = make_axes_locatable(ax)
+            # below height and pad are in inches
+            ax_histx = divider.append_axes("top", 1.2, pad=0.1, sharex=ax)
+            ax_histy = divider.append_axes("right", 1.2, pad=0.1, sharey=ax)
+
+            # make some labels invisible
+            ax_histx.xaxis.set_tick_params(labelbottom=False)
+            ax_histy.yaxis.set_tick_params(labelleft=False)
+
+
+            # now determine nice limits by hand:
+            binwidth = 1.
+            xymax = max(self.lcwa_speed['download'].max(), self.lcwa_speed['upload'].max())
+            lim = (int(xymax/binwidth) + 1)*binwidth
+
+            bins = np.arange(0., lim + binwidth, binwidth)
+            #bins = 1
+            ax_histx.hist(self.lcwa_speed['download'], bins=bins)
+            ax_histy.hist(self.lcwa_speed['upload'], bins=bins, orientation='horizontal')
+
+            # the xaxis of ax_histx and yaxis of ax_histy are shared with ax,
+            # thus there is no need to manually adjust the xlim and ylim of these
+            # axis.
+
+            #ax_histx.set_yticks([0, 50, 100])
+            ax_histx.set_xticks([0, 10,20,30,40,50])
+            #ax = self.lcwa_speed['download'].plot.hist(bins=bins, alpha=0.5)
+
+            ax_histy.set_yticks([0, 10,20,30,40,50])
+            #ax = self.lcwa_speed['upload'].plot.hist(bins=bins, alpha=0.5, orientation='horizontal')
+            #plt.show()
+
+
+        except:
+            logger.warning('cannot plot {} as scatter'.format(self.lcwa_speed))
+
+        # now get projection onto x and y
+        #ax = self.lcwa_speed.plot.hist(bins=12, alpha=0.5)
+        plt.show()
+
     def Plot2d(self,x=None,y=None):
 
         #try to determine plot arrangement
@@ -194,6 +250,7 @@ class MyPlot(object):
             label_txt = '\n '+(x[k])+' vs '+y[k]
             #plt.plot(self.lcwa_speed[x[k]],self.lcwa_speed[y[k]],'b^',label=label_txt  )
             plt.plot(self.lcwa_speed[x[k]],self.lcwa_speed[y[k]],color=color_list[k],marker = marker_list[k],linestyle="",label=label_txt  )
+            #plt.scatter(self.lcwa_speed[x[k]],self.lcwa_speed[y[k]],color=color_list[k],marker = marker_list[k],linestyle="",label=label_txt  )
             plt.xlabel(x[k])
             plt.ylabel(y[k])
             plt.ylim(bottom = 0.)
@@ -641,8 +698,9 @@ if __name__ == '__main__':
     MP.ConnectDropBox()
     MP.ReadTestData()    #MP.ReadTestData(legend)
     #MP.Analyze('/home/klein/scratch/text.txt')
+    MP.PlotScatter()
     plot_dict = {"jitter":"download","package":"download","latency measured":"download","upload":"download","latency measured":"package","latency measured":"jitter"}
-    MP.Plot2d(x=['package','jitter','latency measured','upload','package','package'],y=['download','download','download','download','jitter','latency measured'])
+    #MP.Plot2d(x=['package','jitter','latency measured','upload','package','package'],y=['download','download','download','download','jitter','latency measured'])
     #MP.Plot2d(plot_dict = plot_dict)
     MP.Analyze()
     MP.PushFileDropbox('/LCWA/LC04_/')
