@@ -61,6 +61,8 @@ class MyPlot(object):
             self.TokenFile = token
         
         self.dropbox_name = filename.replace('csv','pdf')
+        self.dropbox_name_2d = self.dropbox_name.replace('.pdf','_2d.pdf')
+        self.dropbox_name_2d_1 = self.dropbox_name.replace('.pdf','_2d_1.pdf')
          
         self.path = path
         self.PlotFlag = PlotFlag    #Controls if there is a plot
@@ -623,12 +625,12 @@ class MyPlot(object):
         #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
         logger.info("saving {} to dropbox ".format(self.output_2d))
 
-        b = self.dbx.files_upload(f1.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
+        b = self.dbx.files_upload(f1.read(),dropdir+self.dropbox_name_2d,mode=dropbox.files.WriteMode('overwrite', None))
         f2 =open(self.output_2d_1,"rb")
         #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
         logger.info("saving {} to dropbox ".format(self.output_2d_1))
 
-        b = self.dbx.files_upload(f2.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
+        c = self.dbx.files_upload(f2.read(),dropdir+self.dropbox_name_2d_1,mode=dropbox.files.WriteMode('overwrite', None))
 
 
         #print('this is a',a)
