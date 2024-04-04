@@ -124,7 +124,7 @@ class MyPlot(object):
         #fig = plt.figure()
         logger.info("making scatter plot")
         try:
-            fig , ax = plt.subplots(figsize=(8.0, 8.0))
+            fig , ax = plt.subplots(figsize=(5.0, 5.0))
             #ax = fig.add_subplots(figsize=(8.0,8.0))
             plt.scatter(x=self.lcwa_speed['download'], y=self.lcwa_speed['upload'])
             plt.xlabel('download')
