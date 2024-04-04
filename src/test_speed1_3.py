@@ -1609,6 +1609,9 @@ class test_speed1():
             f1=open(a.output_2d,"rb")
             
             self.dbx.files_upload(f1.read(),temp[0]+temp[2].replace('.pdf','_2d.pdf'),mode=dropbox.files.WriteMode('overwrite', None))
+            f2=open(a.output_2d_1,"rb")
+            
+            self.dbx.files_upload(f2.read(),temp[0]+temp[2].replace('.pdf','_2d_1.pdf'),mode=dropbox.files.WriteMode('overwrite', None))
             if textflag:
                 a.Analyze(filename = self.textfile)
                 f.close()
