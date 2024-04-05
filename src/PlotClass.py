@@ -126,7 +126,7 @@ class MyPlot(object):
         #fig = plt.figure()
         logger.info("making scatter plot")
         try:
-            fig , ax = plt.subplots(figsize=(5.0, 5.0))
+            fig , ax = plt.subplots(figsize=(7.5, 5.0))
             #ax = fig.add_subplots(figsize=(8.0,8.0))
             plt.scatter(x=self.lcwa_speed['download'], y=self.lcwa_speed['upload'])
             plt.xlabel('download')
@@ -150,8 +150,14 @@ class MyPlot(object):
 
 
             # now determine nice limits by hand:
-            binwidth = .5
             xymax = max(self.lcwa_speed['download'].max(), self.lcwa_speed['upload'].max())
+            if xymax >55:
+                binwidth = 2.
+                binlist = [0,20,40,60,80,100,120]
+            else:
+                binwidth = 1.
+                binlist = [0,10,20,30,40,50,60]
+
             lim = (int(xymax/binwidth) + 1)*binwidth
 
             bins = np.arange(0., lim + binwidth, binwidth)
@@ -163,9 +169,9 @@ class MyPlot(object):
             # thus there is no need to manually adjust the xlim and ylim of these
             # axis.
 
-            ax_histx.set_xticks([0, 10,20,30,40,50])
+            ax_histx.set_xticks(binlist)
 
-            ax_histy.set_yticks([0, 10,20,30,40,50])
+            ax_histy.set_yticks(binlist)
 
     
 
@@ -617,29 +623,28 @@ class MyPlot(object):
     def PushFileDropbox(self,dropdir): 
          
         f =open(self.output,"rb")
-        #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
         logger.info("saving {} to dropbox ".format(self.output))
         a = self.dbx.files_upload(f.read(),dropdir+self.dropbox_name,mode=dropbox.files.WriteMode('overwrite', None))
 
         f1 =open(self.output_2d,"rb")
-        #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
         logger.info("saving {} to dropbox ".format(self.output_2d))
 
         b = self.dbx.files_upload(f1.read(),dropdir+self.dropbox_name_2d,mode=dropbox.files.WriteMode('overwrite', None))
+        
         f2 =open(self.output_2d_1,"rb")
-        #print('plotclass1  ',dropdir,self.output,self.dropbox_name)
         logger.info("saving {} to dropbox ".format(self.output_2d_1))
 
         c = self.dbx.files_upload(f2.read(),dropdir+self.dropbox_name_2d_1,mode=dropbox.files.WriteMode('overwrite', None))
 
-
         #print('this is a',a)
        
+        return
+
 if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
-    path = '/Users/klein/speedfiles'
+    path = '/Users/klein/LCWA_backup'
     #path='/Users/klein/scratch/'
-    file = 'LC03_2024-03-30speedfile.csv'
+    file = 'LC08_2024-04-03speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
