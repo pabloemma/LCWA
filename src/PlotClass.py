@@ -265,7 +265,7 @@ class MyPlot(object):
         if(self.lcwa_speed['download'].max() > 60.):
             ymax = 120.
         
-        elif(self.lcwa_speed['download'].max() > 40.):
+        elif(self.lcwa_speed['download'].max() > 30.):
             ymax = 60.
         elif(self.lcwa_speed['download'].max() > 15.):
             ymax = 30.
@@ -644,7 +644,7 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/Users/klein/LCWA_backup'
     #path='/Users/klein/scratch/'
-    file = 'LC08_2024-04-03speedfile.csv'
+    file = 'LC15_2024-04-04speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
