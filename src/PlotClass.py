@@ -644,7 +644,7 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/Users/klein/LCWA_backup'
     #path='/Users/klein/scratch/'
-    file = 'LC15_2024-04-04speedfile.csv'
+    file = 'LC15_2024-04-05speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
@@ -659,4 +659,4 @@ if __name__ == '__main__':
     MP.Plot2d(x=['package','jitter','latency measured','upload','package','package'],y=['download','download','download','download','jitter','latency measured'])
     #MP.Plot2d(plot_dict = plot_dict)
     MP.Analyze()
-    MP.PushFileDropbox('/LCWA/LC04_/')
+    MP.PushFileDropbox('/LCWA/LC99_/')
