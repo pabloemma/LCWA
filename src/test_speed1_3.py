@@ -1182,6 +1182,7 @@ class test_speed1():
             # WGH mod: only process valid results..
             if process.returncode == 0:
                 try:
+
                     mydata = json.loads(out)
                     self.CreateOutputJson(mydata)
                     #self.CreateOutput(mydata)
