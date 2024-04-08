@@ -184,6 +184,7 @@ class MyControl(object):
                 temp1 = temp+str(k)+'_'
             
             dirlist.append(temp1)
+        #dirlist = ['LC15_']
         token_file = '/git/speedtest/src/LCWA_a.txt'
         #tempdir = 'scratch'
         if(self.debug):
@@ -191,7 +192,7 @@ class MyControl(object):
             self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = self.report_date)
             #self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = '2023-12-10')
         else:
-            self.PA =PA =PL.PlotAll(token_file,dirlist)
+            self.PA =PA =PL.PlotAll(token_file,dirlist,filedate = self.report_date)
 
         PA.ConnectDropBox()
         PA.GetFiles() 
@@ -285,8 +286,8 @@ class MyControl(object):
 if __name__ == '__main__':
     #create the list
     debug = False
-    report_date = '2024-04-01'
-    #report_date = None  # use this for norma run
+    #report_date = '2024-04-06'
+    report_date = None  # use this for norma run
     from pathlib import Path
     # next we get current time so that we can calculate how long the program took
     prog_start_time = datetime.datetime.now()
@@ -297,7 +298,7 @@ if __name__ == '__main__':
     if(debug):
         MC = MyControl(backupdir,debug=debug,report_date=report_date)
     else:
-        MC = MyControl(backupdir)
+        MC = MyControl(backupdir,report_date=report_date)
     
     #Here we check if we are close to a time window
     timestamp = datetime.datetime.now().time() # Throw away the date information

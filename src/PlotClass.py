@@ -644,7 +644,7 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/Users/klein/LCWA_backup'
     #path='/Users/klein/scratch/'
-    file = 'LC12_2024-04-05speedfile.csv'
+    file = 'LC15_2024-04-06speedfile_1.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
