@@ -153,10 +153,10 @@ class MyPlot(object):
             xymax = max(self.lcwa_speed['download'].max(), self.lcwa_speed['upload'].max())
             if xymax >55:
                 binwidth = 2.
-                binlist = [0,20,40,60,80,100,120]
+                binlist = [20,40,60,80,100,120]
             else:
                 binwidth = 1.
-                binlist = [0,10,20,30,40,50,60]
+                binlist = [10,20,30,40,50,60]
 
             lim = (int(xymax/binwidth) + 1)*binwidth
 
@@ -644,7 +644,7 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/Users/klein/LCWA_backup'
     #path='/Users/klein/scratch/'
-    file = 'LC15_2024-04-06speedfile_1.csv'
+    file = 'LC15_2024-04-08speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
