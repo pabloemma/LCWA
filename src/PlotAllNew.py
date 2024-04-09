@@ -19,6 +19,8 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import ast
 from os.path import expanduser
 
+import PlotClass as PC
+
 
 
 class PlotAll(object):
@@ -43,31 +45,6 @@ class PlotAll(object):
         
         
  
-    def ConnectDropboxOld(self):
-        """
-        here we establish connection to the dropbox account
-        """
-        #f=open(self.keyfile,"r")
-        #self.key =f.readline() #key for encryption
-        #self.key = pad(self.key,16)
-        #f.close()
-
-        f=open(self.TokenFile,"r")
-        self.data =f.readline() #key for encryption
-        
-
-         
-         
-         
-         #connect to dropbox 
-        self.dbx=dropbox.Dropbox(self.data.strip('\n'))
-
-        self.myaccount = self.dbx.users_get_current_account()
-        print('***************************dropbox*******************\n\n\n')
-        print( self.myaccount.name.surname , self.myaccount.name.given_name)
-        print (self.myaccount.email)
-        print('\n\n ***************************dropbox*******************\n')
-
 
     def ConnectDropBox(self):
         """
@@ -341,42 +318,7 @@ class PlotAll(object):
             counter = counter +1
             
 
-    def PlotTestData1(self,k):
-        """
-        Plots the tests
-        x1: date
-        y1: download
-        y2:upload
-        k_spectrum # number of graph we have done
-        """
-        
-        np.set_printoptions(precision=2)
-        
-        #Add Ip address
-        
-        
-        #ax.text(.1,.36,'Average $\mu$ and Standard deviation $\sigma$',weight='bold',transform=ax.transAxes,fontsize=13)
-        #ax.text(.1,.23,r'$\mu_{up}     = $'+str(np.around(np.mean(y2),2))+' '+'[Mb/s]'+r'   $\sigma_{up} =     $'+str(np.around(np.std(y2),2)),transform=ax.transAxes,fontsize=12)
-        #ax.text(.1,.3,r'$\mu_{down} = $'+str(np.around(np.mean(y1),2))+' '+'[Mb/s]'+r'   $\sigma_{down} = $'+str(np.around(np.std(y1),2)),transform=ax.transAxes,fontsize=12)
 
-        #add legend
-        #print(self.legend)
-        x1,y0,y1,y2 = self.x1,self.y0,self.y1,self.y2
-        
-        
-        ms1=3. #markersize
-        xpos = .05 #text position
-        ypos = 1.02
-        ylow = 0. #regular y axis limits
-        yhigh = 30.
-        ylow1=0. # limits for packet loss
-        yhigh1=30.
-        
-        yhigh2 = 12.
-        yhigh3 = 7.
-        
-        bbox=(0.03,.03,1.,0.25)
-        print('number',k)
 
             
     def PlotTestData(self,k):
