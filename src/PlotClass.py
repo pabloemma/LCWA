@@ -111,8 +111,9 @@ class MyPlot(object):
     # Create an iper and a speedtest frame
 
         iperf_opt = [' iperf3']
+        speed_opt = ['Speed']
         self.lcwa_iperf = lcwa_data[lcwa_data['server name'].isin(iperf_opt)]  #all the iperf values
-        self.lcwa_speed = lcwa_data[~lcwa_data['server name'].isin(iperf_opt)]  #all the not iperf values        
+        self.lcwa_speed = lcwa_data[lcwa_data['server name'].isin(speed_opt)]  #all the not iperf values        
 
         self.PlotData()    
 
@@ -644,7 +645,7 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/Users/klein/LCWA_backup'
     #path='/Users/klein/scratch/'
-    file = 'LC15_2024-04-08speedfile.csv'
+    file = 'LC03_2024-04-08speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
