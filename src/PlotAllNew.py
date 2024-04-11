@@ -172,7 +172,7 @@ class PlotAll(object):
         #plt.show()        
         #self.fig.savefig(self.pdffilepath, bbox_inches='tight')
 
-        #plt.show()
+        plt.show()
         with PdfPages(self.pdffilepath) as pdf:
             pdf.savefig(self.fig)
             pdf.savefig(self.fig1)
@@ -362,17 +362,17 @@ class PlotAll(object):
         ylow = 0. #regular y axis limits
         yhigh = 60.
         ylow1=0. # limits for packet loss, now for latency
-        yhigh1=100.
+        yveryhigh = yhigh1=80.
         
         yhigh2 = 25. #limits for 10 Mbs
         yhigh3 = 15. #limits for 5 Mbs
-        yhigh4 = 100. #limits for LC19, double pppoe accounts
+        #yhigh4 = 100. #limits for LC19, double pppoe accounts
         
         #overwrite default max axis
         
         #yhigh2=yhigh3=30.
-        yveryhigh = 110.
-        ystarlink = 120.
+        
+        ystarlink = 110.
         
         bbox=(0.03,.03,1.,0.25)
         print('number',k)
@@ -787,8 +787,8 @@ class PlotAll(object):
                 self.axarr4[i][l].set_ylim(ylow,yhigh2) # set yaxis limit
             elif(np.around(np.mean(y1),2) <= 7. ):
                 self.axarr4[i][l].set_ylim(ylow,yhigh3) # set yaxis limit
-            if(k ==19):
-                self.axarr4[i][l].set_ylim(ylow,yhigh4)    
+            #if(k ==19):
+            #    self.axarr4[i][l].set_ylim(ylow,yhigh4)    
                 #self.axarr5[i][l].set_ylim(0.,1000.)    
 
 ##########
