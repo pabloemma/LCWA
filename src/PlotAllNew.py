@@ -172,7 +172,7 @@ class PlotAll(object):
         #plt.show()        
         #self.fig.savefig(self.pdffilepath, bbox_inches='tight')
 
-        plt.show()
+        #plt.show()
         with PdfPages(self.pdffilepath) as pdf:
             pdf.savefig(self.fig)
             pdf.savefig(self.fig1)
