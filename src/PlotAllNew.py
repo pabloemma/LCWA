@@ -310,7 +310,14 @@ class PlotAll(object):
         self.fig4, self.axarr4 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         self.fig5, self.axarr5 = plt.subplots(row,column)  # this plot will have x rows and y columns        
         
-        
+        self.total_array = []
+        self.total_array.append(self.axarr)
+        self.total_array.append(self.axarr1)
+        self.total_array.append(self.axarr2)
+        self.total_array.append(self.axarr3)
+        self.total_array.append(self.axarr4)
+        self.total_array.append(self.axarr5)
+         
         
  # the nex section is for pyhhtonizing the plotting
         
