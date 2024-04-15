@@ -14,6 +14,8 @@ import SendFileMail as SFM
 import os
 import datetime
 from pathlib import Path
+from loguru import logger
+
 
 
  
@@ -87,8 +89,8 @@ class MyControl(object):
                     now = datetime.datetime.now() #determine how old a file is
                     #print('hallelujah',temp,'  ',item.name, '  ',item.server_modified)
                     diff = now - item.server_modified #take the difference
-                    print('difference in days',diff.days)
-                    print(now,item.server_modified)
+                    #print('difference in days',diff.days)
+                    #print(now,item.server_modified)
                     #if diff.days == 1 or  diff.days == 2 or  diff.days == 3:  # changed to or so that we backup the last 2 days
                     if diff.days >= -1:  # changed to or so that we backup the last 2 days
                         print ('name = ' , item.name)
@@ -97,7 +99,7 @@ class MyControl(object):
                         print ('date = ', item.server_modified)
                     # here we backup and delete the files
                         backupfile = self.backupdir+item.name
-                        #print("backing up file ",item.path_display, ' to',backupfile)
+                        logger.info("backing up file ",item.path_display, ' to',backupfile)
                         try:
                             a = self.PA.dbx.files_download_to_file(backupfile,item.path_display)
                             #print("return type ",a)
