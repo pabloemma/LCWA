@@ -93,10 +93,10 @@ class MyControl(object):
                     #print(now,item.server_modified)
                     #if diff.days == 1 or  diff.days == 2 or  diff.days == 3:  # changed to or so that we backup the last 2 days
                     if diff.days >= -1:  # changed to or so that we backup the last 2 days
-                        print ('name = ' , item.name)
-                        print ('path  = ', item.path_display )
-                        print ('fileID = ' , item.id)
-                        print ('date = ', item.server_modified)
+                        logger.info ('name = ' , item.name)
+                        logger.info ('path  = ', item.path_display )
+                        logger.info ('fileID = ' , item.id)
+                        logger.info ('date = ', item.server_modified)
                     # here we backup and delete the files
                         backupfile = self.backupdir+item.name
                         logger.info("backing up file ",item.path_display, ' to',backupfile)
