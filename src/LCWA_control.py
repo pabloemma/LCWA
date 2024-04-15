@@ -87,7 +87,8 @@ class MyControl(object):
                     now = datetime.datetime.now() #determine how old a file is
                     #print('hallelujah',temp,'  ',item.name, '  ',item.server_modified)
                     diff = now - item.server_modified #take the difference
-                    #print('difference in days',diff.days)
+                    print('difference in days',diff.days)
+                    print(now,item.server_modified)
                     #if diff.days == 1 or  diff.days == 2 or  diff.days == 3:  # changed to or so that we backup the last 2 days
                     if diff.days >= -1:  # changed to or so that we backup the last 2 days
                         print ('name = ' , item.name)
@@ -231,7 +232,7 @@ class MyControl(object):
                 if isinstance(item, dropbox.files.FileMetadata):
                     now = datetime.datetime.now() #determine how old a file is
                     diff = now - item.server_modified #take the difference
-                   
+                    
                     if(diff.days > 4 ):
                         pass# we are only using 7 days
                     else:
