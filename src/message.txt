@@ -1,8 +1,3 @@
 this is the daily Raspberry PI report , 
 blue is download green upload
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-If you want to continue to get the daily Raspberry PI report,
-please send me an email to pabloemma@gmail.com by 14th of April 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-New scaling on plots, sorry for the repeat sending
