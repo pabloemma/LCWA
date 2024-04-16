@@ -78,7 +78,6 @@ class MyControl(object):
             
         for k in range(len(dirlist)):
             temp = '/LCWA/'+dirlist[k] # file on dropbox
-            #print('now checking ',temp)
 
         
             MyDir = self.PA.dbx.files_list_folder(temp) #do NOT use recursive, since that does not work for shared folders
@@ -93,18 +92,18 @@ class MyControl(object):
                     #print(now,item.server_modified)
                     #if diff.days == 1 or  diff.days == 2 or  diff.days == 3:  # changed to or so that we backup the last 2 days
                     if diff.days >= -1:  # changed to or so that we backup the last 2 days
-                        print('name = ' , item.name)
-                        print ('path  = ', item.path_display )
-                        print('fileID = ' , item.id)
-                        print('date = ', item.server_modified)
+                        logger.info('name = {}'.format(item.name))
+                        logger.info ('path  = {}'.format(item.path_display ))
+                        logger.info('fileID = {}'.format(item.id))
+                        logger.info('date = {}'.format(item.server_modified))
                     # here we backup and delete the files
                         backupfile = self.backupdir+item.name
-                        print("backing up file ",item.path_display, ' to',backupfile)
+                        logger.info('backing up file {}  to {}'.format(item.path_display ,backupfile))
                         try:
                             a = self.PA.dbx.files_download_to_file(backupfile,item.path_display)
                             #print("return type ",a)
                         except:
-                            print("problems with backing up ",item.path_display )
+                            logger.warning("problems with backing up {} ".format(item.path_display ))
                         if(diff.days > 4 ):  # changed to -1 so that we backup every day
  
                             #print("deleting file ",item.path_display )
@@ -226,7 +225,7 @@ class MyControl(object):
         self.dirlist = dirlist    
         for k in range(len(dirlist)):
             temp = '/LCWA/'+dirlist[k] # file on dropbox
-            print('now working on combining files in  ',temp)
+            logger.info('now working on combining files in {} '.format(temp))
 
         
             MyDir = self.PA.dbx.files_list_folder(temp)
@@ -270,7 +269,7 @@ class MyControl(object):
        
        
             file = str(self.myhome_path)+'/scratch/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.csv'   
-            print('plotting history file  ' ,file)
+            logger.info('plotting history file {} '.format(file))
 
             if os.path.isfile(file):
             
