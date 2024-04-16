@@ -12,6 +12,7 @@ import time
 import sys
 import os.path
 import dropbox
+from loguru import logger
 
 class MakePlots(object):
     '''
@@ -45,8 +46,8 @@ class MakePlots(object):
                 a=l.split(',')
                 #print(l)
                 if(len(a)< 9):
-                    print ('problem',a)
-                    print ('ignore data point at line ',counter+1)
+                    logger.warning ('problem with count {}'.format(a))
+                    logger.warning ('ignore data point at line {} '.format(counter+1))
                 else:
                     
                     temp_file.write(l)
@@ -66,7 +67,7 @@ class MakePlots(object):
         format_file = "%d/%m/%Y %H:%M:%S"
 
          
-        print('filename',filename)
+        logger.info('filename : {}'.format(filename))
         
         #  fille the arrays
         with open('temp.txt',newline='') as csvfile:
@@ -83,7 +84,7 @@ class MakePlots(object):
                         temp = time.mktime(datetime.datetime.strptime(date_str, "%d/%m/%Y %H:%M:%S").timetuple())
                         #print(temp)
                     except: 
-                        print("problems with file",self.filename)
+                        logger.warning("problems with file : {}".format(self.filename))
                         continue
                         
                     aa =md.date2num(datetime.datetime.strptime(date_str,format_file))
@@ -122,7 +123,7 @@ class MakePlots(object):
         plt.ylabel('Speed in Mbs')
         
         plt.title('Speedtest LCWA using '+self.filename)
-        print(' mean',np.around(np.mean(y1),2))
+        logger.info(' mean : {}'.format(np.around(np.mean(y1),2)))
         plt.legend(facecolor='ivory',loc="upper left",shadow=True, fancybox=True)
  
         if(np.around(np.mean(y1),2) >25.): 
@@ -145,7 +146,7 @@ class MakePlots(object):
         plt.tight_layout()
         self.file2 = file2 = self.filename.replace('csv','pdf')
 
-        print (file2)
+        logger.info (' file {}'.format(file2))
         fig.savefig(file2, bbox_inches='tight')
         #plt.show()
 

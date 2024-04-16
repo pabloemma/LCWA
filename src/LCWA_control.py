@@ -104,7 +104,8 @@ class MyControl(object):
                             #print("return type ",a)
                         except:
                             logger.warning("problems with backing up {} ".format(item.path_display ))
-                        if(diff.days > 4 ):  # changed to -1 so that we backup every day
+            
+                        if(diff.days > 2 ):  # changed to -1 so that we backup every day
  
                             #print("deleting file ",item.path_display )
                             self.PA.dbx.files_delete(item.path_display)

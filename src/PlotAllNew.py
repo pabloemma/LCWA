@@ -10,6 +10,7 @@ Gets all the csv files from the different directories and plots them
 
 import dropbox
 import datetime
+import sys
 import numpy as np
 from pathlib import Path # this is python 3
 import matplotlib.pyplot as plt
@@ -52,13 +53,13 @@ class PlotAll(object):
         """
         here we establish connection to the dropbox account
         """
-        print("at connect dropbox")
+        logger.info("at connect dropbox")
         #self.TokenFile=self.cryptofile.strip('\n')
         #f=open(self.TokenFile,"r")
 
         # now we branch out depending on which keyfile we are using:
         if  'LCWA_d.txt' in self.TokenFile:
-            print("old system")
+            logger.warning("old system")
             f=open(self.TokenFile,"r")
             self.data =f.readline() #key for encryption
         
@@ -68,11 +69,11 @@ class PlotAll(object):
          
          #connect to dropbox 
             self.dbx=dropbox.Dropbox(self.data.strip('\n'))
-            print("self.dbx",self.dbx)
+            logger.info("self.dbx {}".format(self.dbx))
 
  
         elif 'LCWA_a.txt'  in self.TokenFile:
-            print('new system')
+            logger.info('new system')
             f=open(self.TokenFile,"r")
   
             temp =f.readlines() #key for encryption
@@ -104,11 +105,12 @@ class PlotAll(object):
                 app_secret = APP_SECRET,
                 oauth2_refresh_token = REFRESH_TOKEN
                 )
-            print("self.dbx",self.dbx)
+            logger.info("self.dbx {}".format(self.dbx))
 
         
         else:
-            print("wrong keyfile")
+            logger.error("wrong keyfile")
+            sys.exit(0)
 
 
         
@@ -137,12 +139,12 @@ class PlotAll(object):
 
         for k in range(len(self.DirList)):
             temp = '/LCWA/'+self.DirList[k]+'/'+self.DirList[k]+MyFileName # file on dropbox
-            print(temp)
+            logger.info('file {}'.format(temp))
             if self.DropFileExists(temp):
                 graph_count = graph_count+1
         
         self.graph_count=graph_count
-        print ('we have ',graph_count,'  plots')
+        logger.info ('we have {} plots'.format(graph_count))
         
         # setup the canvas
         
@@ -155,7 +157,7 @@ class PlotAll(object):
             temp_local = self.SetTempDirectory()+'/'+self.DirList[k]+MyFileName
             temp_local_text = self.SetTempDirectory()+'/'+self.DirList[k]+MyFileName.replace('csv','txt')
             if self.DropFileExists(temp):
-                print ("getting file " ,temp, '   and storing it at : ',temp_local)
+                logger.info ('getting file {}   and storing it at : {} '.format(temp,temp_local))
                 
                 self.dbx.files_download_to_file(temp_local,temp)
                 self.MyIP ='' #will be overwritten by readtextfile                               
@@ -218,8 +220,8 @@ class PlotAll(object):
         for line in open(InputFile, 'r'):
             a = line.split(',')
             if(len(a)< 9):
-                print ('problem',a)
-                print ('ignore data point at line ',counter+1)
+                logger.warning('problem {}'.format(a))
+                logger.warning ('ignore data point at line {}'.format(counter+1))
             else:
                 self.temp_file.write(line)
 
@@ -278,7 +280,7 @@ class PlotAll(object):
             return MyTempDir
         else:
             Path(MyTempDir).mkdir()
-            print(" Creating  ",MyTempDir)
+            logger.info(" Creating {} ".format(MyTempDir))
             return MyTempDir
             
     def MyTime(self,b):
@@ -382,7 +384,7 @@ class PlotAll(object):
         ystarlink = 110.
         
         bbox=(0.03,.03,1.,0.25)
-        print('number',k)
+        logger.info('number {}'.format(k))
         if k < 2:
             i=0
             self.axarr[i][k].plot(x1,y1,'bs',label='\n blue DOWN ',ms=ms1)
@@ -449,7 +451,7 @@ class PlotAll(object):
             self.axarr[i][k-2].text(xpos,ypos,'MyIP = '+self.MyIP+'    '+self.DirList[k],weight='bold',transform=self.axarr[i][k-2].transAxes,fontsize=8)
             self.axarr[i][k-2].xaxis.set_major_locator(md.MinuteLocator(interval=360))
             self.axarr[i][k-2].xaxis.set_major_formatter(md.DateFormatter('%H:%M'))
-            print('mean',np.around(np.mean(y1),2))
+            logger.info('mean {}'.format(np.around(np.mean(y1),2)))
             if(np.around(np.mean(y1),2) >25.): 
                  # set yaxis limit
                 self.axarr[i][k-2].set_ylim(ylow,yveryhigh) # set yaxis limit
@@ -924,7 +926,7 @@ if __name__ == '__main__':
         dirlist.append(temp1)
     token_file = '/git/speedtest/src/LCWA_a.txt'
     tempdir = 'scratch'
-    datefile = '2024-04-09' 
+    datefile = '2024-04-14' 
      # " default is none"
     PA=PlotAll(token_file,dirlist,datefile)
     PA.ConnectDropBox()
