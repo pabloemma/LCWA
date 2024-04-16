@@ -14,6 +14,8 @@ import SendFileMail as SFM
 import os
 import datetime
 from pathlib import Path
+from loguru import logger
+
 
 
  
@@ -88,15 +90,16 @@ class MyControl(object):
                     #print('hallelujah',temp,'  ',item.name, '  ',item.server_modified)
                     diff = now - item.server_modified #take the difference
                     #print('difference in days',diff.days)
+                    #print(now,item.server_modified)
                     #if diff.days == 1 or  diff.days == 2 or  diff.days == 3:  # changed to or so that we backup the last 2 days
                     if diff.days >= -1:  # changed to or so that we backup the last 2 days
-                        print ('name = ' , item.name)
+                        print('name = ' , item.name)
                         print ('path  = ', item.path_display )
-                        print ('fileID = ' , item.id)
-                        print ('date = ', item.server_modified)
+                        print('fileID = ' , item.id)
+                        print('date = ', item.server_modified)
                     # here we backup and delete the files
                         backupfile = self.backupdir+item.name
-                        #print("backing up file ",item.path_display, ' to',backupfile)
+                        print("backing up file ",item.path_display, ' to',backupfile)
                         try:
                             a = self.PA.dbx.files_download_to_file(backupfile,item.path_display)
                             #print("return type ",a)
@@ -231,7 +234,7 @@ class MyControl(object):
                 if isinstance(item, dropbox.files.FileMetadata):
                     now = datetime.datetime.now() #determine how old a file is
                     diff = now - item.server_modified #take the difference
-                   
+                    
                     if(diff.days > 4 ):
                         pass# we are only using 7 days
                     else:
@@ -285,7 +288,7 @@ class MyControl(object):
         
 if __name__ == '__main__':
     #create the list
-    debug = False
+    debug = False 
     #report_date = '2024-04-11'
     report_date = None  # use this for norma run
     from pathlib import Path
@@ -305,8 +308,8 @@ if __name__ == '__main__':
     start = datetime.time(23, 49)
     end = datetime.time(23,59)
     # for a different date use the line 132
-    start = datetime.time(1,25)
-    end = datetime.time(23,59)
+    #start = datetime.time(1,25)
+    #end = datetime.time(23,59)
     if(start<timestamp<=end):
         print (start <= timestamp <= end) # >>> depends on what time it is
     
