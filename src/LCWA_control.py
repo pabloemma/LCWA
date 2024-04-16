@@ -288,7 +288,7 @@ class MyControl(object):
         
 if __name__ == '__main__':
     #create the list
-    debug = False
+    debug = False 
     #report_date = '2024-04-11'
     report_date = None  # use this for norma run
     from pathlib import Path
