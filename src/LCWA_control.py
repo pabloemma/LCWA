@@ -80,14 +80,42 @@ class MyControl(object):
             temp = '/LCWA/'+dirlist[k] # file on dropbox
 
         
-            MyDir = self.PA.dbx.files_list_folder(temp) #do NOT use recursive, since that does not work for shared folders
-        
+            metadata = MyDir = self.PA.dbx.files_list_folder(temp,recursive=True ) #do NOT use recursive, since that does not work for shared folders
+            #for item in MyDir.entries:
+            #    if('LC24_' in  item.name):
+            #        print(('break'))
+ 
+            ###############
+            flist = []
+            if metadata.has_more == True:
+                m1 = metadata.entries
+                cur = metadata.cursor
+                for i in m1:
+                    if isinstance(i, dropbox.files.FileMetadata):
+                        flist.append([i.name, i.size])
+                
+                m2 = self.PA.dbx.files_list_folder_continue(cur)
+                while m2.has_more == True:
+                    for i in m2.entries:
+                        if isinstance(i, dropbox.files.FileMetadata):
+                            flist.append([i.name, i.size])
+                    cur = m2.cursor
+                    m2 = self.PA.dbx.files_list_folder_continue(cur)
+                    
+            ################################
+
+
+
+
             for item in MyDir.entries:
                 #print("item",item,' ',MyDir.entries)
                 if isinstance(item, dropbox.files.FileMetadata):
                     now = datetime.datetime.now() #determine how old a file is
                     #print('hallelujah',temp,'  ',item.name, '  ',item.server_modified)
                     diff = now - item.server_modified #take the difference
+                    if('LC24_' in  item.name):
+                        print(('break'))
+ 
                     #print('difference in days',diff.days)
                     #print(now,item.server_modified)
                     #if diff.days == 1 or  diff.days == 2 or  diff.days == 3:  # changed to or so that we backup the last 2 days
@@ -104,7 +132,6 @@ class MyControl(object):
                             #print("return type ",a)
                         except:
                             logger.warning("problems with backing up {} ".format(item.path_display ))
-            
                         if(diff.days > 2 ):  # changed to -1 so that we backup every day
  
                             #print("deleting file ",item.path_display )
