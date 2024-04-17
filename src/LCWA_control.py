@@ -80,34 +80,26 @@ class MyControl(object):
             temp = '/LCWA/'+dirlist[k] # file on dropbox
 
         
-            metadata = MyDir = self.PA.dbx.files_list_folder(temp,recursive=True ) #do NOT use recursive, since that does not work for shared folders
+            result = MyDir = self.PA.dbx.files_list_folder(temp,recursive=True ) #do NOT use recursive, since that does not work for shared folders
             #for item in MyDir.entries:
             #    if('LC24_' in  item.name):
             #        print(('break'))
  
-            ###############
-            flist = []
-            if metadata.has_more == True:
-                m1 = metadata.entries
-                cur = metadata.cursor
-                for i in m1:
-                    if isinstance(i, dropbox.files.FileMetadata):
-                        flist.append([i.name, i.size])
-                
-                m2 = self.PA.dbx.files_list_folder_continue(cur)
-                while m2.has_more == True:
-                    for i in m2.entries:
-                        if isinstance(i, dropbox.files.FileMetadata):
-                            flist.append([i.name, i.size])
-                    cur = m2.cursor
-                    m2 = self.PA.dbx.files_list_folder_continue(cur)
-                    
-            ################################
+
+            
+            self.file_list = []
+            self.process_entries(result.entries)
+
+            while result.has_more:
+                result = self.PA.dbx.files_list_folder_continue(result.cursor)
+
+                self.process_entries(result.entries)
+
+            print(len(self.file_list))
 
 
-
-
-            for item in MyDir.entries:
+            #for item in MyDir.entries:
+            for item in result.entries:
                 #print("item",item,' ',MyDir.entries)
                 if isinstance(item, dropbox.files.FileMetadata):
                     now = datetime.datetime.now() #determine how old a file is
@@ -132,7 +124,7 @@ class MyControl(object):
                             #print("return type ",a)
                         except:
                             logger.warning("problems with backing up {} ".format(item.path_display ))
-                        if(diff.days > 2 ):  # changed to -1 so that we backup every day
+                        if(diff.days > 3 ):  # changed to -1 so that we backup every day
  
                             #print("deleting file ",item.path_display )
                             self.PA.dbx.files_delete(item.path_display)
@@ -311,7 +303,16 @@ class MyControl(object):
         f = open(str(self.myhome_path)+'/scratch/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.pdf',"rb") 
         dropdirfile = '/LCWA/'+self.dirlist[k]+'/'+self.dirlist[k]+datetime.datetime.today().strftime('%Y-%m-%d')+'history.pdf'
         self.PA.dbx.files_upload(f.read(),dropdirfile,mode=dropbox.files.WriteMode('overwrite', None))
- 
+
+
+
+    def process_entries(self,entries):
+        for entry in entries:
+            if isinstance(entry, dropbox.files.FileMetadata):
+                self.file_list.append([entry.name])
+
+
+
         
 if __name__ == '__main__':
     #create the list
