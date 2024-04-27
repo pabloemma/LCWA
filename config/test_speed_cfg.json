@@ -30,7 +30,7 @@
         "plot_variable_x" : ["jitter","package","latency measured","upload","package","package"],
         "plot_variable_y" : ["download","download","download","download","jitter","latency measured"],
         "server_file" : "ookla_us.csv",
-        "server_list" : { "nmsurf":9686,"plateau":16869,"comcast":1773,"sacred_wind":62425,"vexus":62294,"santa_rosa":43754,"windstream":45706}
+        "server_list" : { "nmsurf":9686,"sacred_wind":62425,"vexus":62294,"plateau":16869,"comcast":1773,"santa_rosa":43754,"windstream":45706}
 
     },
     "Iperf" : {
