@@ -442,11 +442,11 @@ class PlotHistory(object):
 if __name__ == "__main__":  
     config_file =  'PlotHistory.json'
     speed_box = None #creates loop
-    speed_box = 'LC03' # sngle speedbox
-    begin_time="2024-04-15"
+    speed_box = 'LC15' # sngle speedbox
+    begin_time="2024-09-23"
     #begin_time="month"
-    #end_time = 'Today'
-    end_time = "2024-05-15"
+    end_time = 'Today'
+    #end_time = "2024-05-15"
     PH = PlotHistory(config_file = config_file , begin_time=begin_time,end_time = end_time,speed_box = speed_box)
     try:
         PH.run_program()

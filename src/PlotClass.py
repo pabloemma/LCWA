@@ -256,7 +256,8 @@ class MyPlot(object):
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["download"],'ks',label='\n speedtest black DOWN ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["upload"],'r^',label='\n speedtest red UP ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["jitter"],'y^',label='\n jitter yellow  ')
-        plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["latency measured"],'m^',label='\n latency measured magenta  ')
+        #plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["latency measured"],'m^',label='\n latency measured magenta  ')
+        plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["latency"],'m^',label='\n latency measured magenta  ')
         plt.plot(self.lcwa_speed["Time"],self.lcwa_speed["package"],'c^',label='\n package loss cyan  ')
  
 
@@ -645,7 +646,7 @@ if __name__ == '__main__':
     #path = '/home/pi/speedfiles'
     path = '/Users/klein/LCWA_backup'
     #path='/Users/klein/scratch/'
-    file = 'LC03_2024-02-15speedfile.csv'
+    file = 'LC16_2024-06-19speedfile.csv'
     #file = 'LC04_2022-02-14speedfile.csv'
     token ='/Users/klein/git/LCWA/src/LCWA_a.txt'
     #token ='/Users/klein/visual studio/LCWA/src/LCWA_d.txt'
@@ -657,7 +658,8 @@ if __name__ == '__main__':
     #MP.Analyze('/home/klein/scratch/text.txt')
     #MP.PlotScatter()
     #plot_dict = {"jitter":"download","package":"download","latency measured":"download","upload":"download","latency measured":"package","latency measured":"jitter"}
-    MP.Plot2d(x=['package','jitter','latency measured','upload','package','package'],y=['download','download','download','download','jitter','latency measured'])
+    #MP.Plot2d(x=['package','jitter','latency measured','upload','package','package'],y=['download','download','download','download','jitter','latency measured'])
+    MP.Plot2d(x=['package','jitter','latency','upload','package','package'],y=['download','download','download','download','jitter','latency'])
     #MP.Plot2d(plot_dict = plot_dict)
     MP.Analyze()
     MP.PushFileDropbox('/LCWA/LC99_/')
