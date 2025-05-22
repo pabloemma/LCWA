@@ -57,7 +57,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -85,7 +85,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -113,7 +113,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -140,7 +140,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 17730,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -171,7 +171,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -199,7 +199,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -228,7 +228,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -256,7 +256,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -284,7 +284,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -312,7 +312,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -340,7 +340,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -368,7 +368,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -396,7 +396,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -424,7 +424,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -452,7 +452,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -480,7 +480,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -508,7 +508,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -536,7 +536,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -564,7 +564,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -592,7 +592,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -620,7 +620,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -648,7 +648,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -676,7 +676,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -704,7 +704,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
@@ -762,7 +762,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 9686,
+                    "serverid" : 1773,
                     "time_window" : 1,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
