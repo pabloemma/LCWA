@@ -140,7 +140,7 @@
             "nondefault" : {
 
                     "server_ip" :"63.229.162.245" ,
-                    "serverid" : 1773,
+                    "serverid" : 17730,
                     "time_window" : 10,
                     "latency_ip" : "65.19.14.51" ,
                     "iperf_serverport"  : "5201",
