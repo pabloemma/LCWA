@@ -1,3 +1,5 @@
 this is the daily Raspberry PI report , 
 blue is download green upload
 
+THIS SYSTEM WILL SHUTDOWN ON 8/15
+
